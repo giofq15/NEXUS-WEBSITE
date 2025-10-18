@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Ocorrência - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">NEXUS ADMIN</div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <a href="painel-admin.html">Dashboard</a>
+            <a href="moradores.html">Moradores</a>
+            <a href="ocorrencias.html" class="active">Ocorrências</a>
+            <a href="#">Financeiro</a>
+            <a href="#">Monitoramento IoT</a>
+            <a href="index.html">Sair</a>
+        </aside>
+
+        <section class="content">
+            <div class="header-with-action">
+                <h1>Ocorrência #0015: Vazamento no Teto da Garagem</h1>
+                <a href="ocorrencias.html" class="secondary-button back-button">← Voltar para Ocorrências</a>
+            </div>
+            
+            <div class="occurrence-layout">
+                <div class="occurrence-details-column">
+                    <div class="info-card details-card">
+                        <h2>Descrição Completa</h2>
+                        <p>Morador reportou um vazamento significativo vindo do teto da garagem, localizado próximo à vaga 35. O problema aparenta ser de origem hidráulica do apartamento acima (Unidade 305).</p>
+                        
+                        <div class="details-grid">
+                            <div><strong>Tipo de Problema:</strong> Hidráulico</div>
+                            <div><strong>Unidade Afetada:</strong> Garagem (Vaga 35)</div>
+                            <div><strong>Morador:</strong> Ana Silva (Unidade 305)</div>
+                            <div><strong>Telefone:</strong> (11) 98765-4321</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card timeline-card">
+                        <h2>Linha do Tempo e Histórico</h2>
+                        <ul class="timeline">
+                            <li class="timeline-item timeline-active">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <strong>25/10/2025 (14:30)</strong>
+                                    <p>Ocorrência aberta como Alta Prioridade. Notificação automática enviada à Ana Silva.</p>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <strong>25/10/2025 (15:00)</strong>
+                                    <p>Síndico (Você) atribuiu a ocorrência ao Encanador Jorge.</p>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <strong>26/10/2025 (09:00)</strong>
+                                    <p>Agendamento de visita técnica para inspeção inicial. Status alterado para Em Andamento.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="occurrence-actions-column">
+                    <div class="profile-card status-box">
+                        <h2>Status e Ações Rápidas</h2>
+                        <p class="current-status priority-high">PENDENTE</p>
+
+                        <div class="status-summary">
+                            <p><strong>Prioridade:</strong> <span class="priority-high">Alta</span></p>
+                            <p><strong>Abertura:</strong> 25/10/2025</p>
+                            <p><strong>Atribuído a:</strong> Encanador Jorge</p>
+                        </div>
+                        
+                        <hr>
+                        
+                        <h3 class="action-title">Atualizar Status</h3>
+                        <select class="action-select">
+                            <option>Pendente</option>
+                            <option>Em Andamento</option>
+                            <option>Aguardando Peça</option>
+                            <option>Resolvida</option>
+                        </select>
+
+                        <button class="primary-button full-width-btn action-update-btn">Salvar Alteração</button>
+
+                        <h3 class="action-title">Mais Ações</h3>
+                        <button class="action-btn view full-width-btn">Enviar E-mail ao Morador</button>
+                        <button class="action-btn edit full-width-btn">Adicionar Novo Comentário</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

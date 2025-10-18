@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Morador - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">NEXUS ADMIN</div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <a href="painel-admin.html">Dashboard</a>
+            <a href="moradores.html" class="active">Moradores</a>
+            <a href="ocorrencias.html">Ocorrências</a>
+            <a href="#">Financeiro</a>
+            <a href="#">Monitoramento IoT</a>
+            <a href="index.html">Sair</a>
+        </aside>
+
+        <section class="content">
+            <div class="header-with-action">
+                <h1>Detalhes do Morador: Ana Silva</h1>
+                <a href="moradores.html" class="secondary-button back-button">← Voltar para Moradores</a>
+            </div>
+            
+            <div class="profile-layout">
+                <div class="profile-card info-card">
+                    <h2>Informações de Contato</h2>
+                    <p><strong>Status:</strong> <span class="status-active">Ativo</span></p>
+                    <p><strong>Unidade:</strong> 101 - Bloco A</p>
+                    <p><strong>E-mail:</strong> ana.silva@exemplo.com</p>
+                    <p><strong>Telefone:</strong> (11) 98765-4321</p>
+                    <p><strong>Data de Cadastro:</strong> 15/01/2024</p>
+                    <button class="primary-button full-width-btn edit-button">Editar Dados</button>
+                </div>
+
+                <div class="profile-details-column">
+                    
+                    <div class="profile-card access-card">
+                        <h2>Controle de Acesso (Veículos)</h2>
+                        <div class="data-list">
+                            <p><strong>Placa 1:</strong> ABC-1234 <span class="tag tag-car">Carro</span></p>
+                            <p><strong>Placa 2:</strong> XYZ-9876 <span class="tag tag-moto">Moto</span></p>
+                        </div>
+                        <button class="action-btn full-width-btn add-placa-btn">Adicionar Placa</button>
+                    </div>
+
+                    <div class="profile-card logs-card">
+                        <h2>Logs e Histórico</h2>
+                        <div class="data-list">
+                            <p><strong>Ocorrências em Aberto:</strong> 1</p>
+                            <p><strong>Economia Média (Água):</strong> 15% acima da média</p>
+                            <a href="#" class="view-log-link">Ver Histórico de Ocorrências</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

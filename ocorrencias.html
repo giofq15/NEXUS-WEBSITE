@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Ocorrências - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">NEXUS ADMIN</div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <a href="painel-admin.html">Dashboard</a>
+            <a href="moradores.html">Moradores</a>
+            <a href="ocorrencias.html" class="active">Ocorrências</a>
+            <a href="#">Financeiro</a>
+            <a href="#">Monitoramento IoT</a>
+            <a href="index.html">Sair</a>
+        </aside>
+
+        <section class="content">
+            <h1>Gerenciamento de Ocorrências</h1>
+            <p>Monitore e resolva os problemas reportados pelos moradores.</p>
+            
+            <div class="actions-bar">
+                <input type="text" placeholder="Buscar por assunto ou unidade..." class="search-input">
+                <button class="primary-button add-button new-occurrence-button">+ Nova Ocorrência Manual</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Assunto</th>
+                        <th>Unidade</th>
+                        <th>Prioridade</th>
+                        <th>Status</th>
+                        <th>Abertura</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#0015</td>
+                        <td>Vazamento no Teto da Garagem</td>
+                        <td>305 - Bloco C</td>
+                        <td class="priority-high">Alta</td>
+                        <td class="status-pending">Pendente</td>
+                        <td>25/10/2025</td>
+                        <td><a href="detalhes-ocorrencia.html"><button class="action-btn view">Ver Detalhes</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>#0014</td>
+                        <td>Barulho excessivo após 22h</td>
+                        <td>101 - Bloco A</td>
+                        <td class="priority-medium">Média</td>
+                        <td class="status-active">Em Andamento</td>
+                        <td>24/10/2025</td>
+                        <td><a href="detalhes-ocorrencia.html"><button class="action-btn view">Ver Detalhes</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>#0013</td>
+                        <td>Lâmpada queimada na área comum</td>
+                        <td>205 - Bloco B</td>
+                        <td class="priority-low">Baixa</td>
+                        <td class="status-resolved">Resolvida</td>
+                        <td>23/10/2025</td>
+                        <td><a href="detalhes-ocorrencia.html"><button class="action-btn view">Ver Detalhes</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>#0012</td>
+                        <td>Problema no elevador (Intermitente)</td>
+                        <td>Admin</td>
+                        <td class="priority-high">Alta</td>
+                        <td class="status-pending">Pendente</td>
+                        <td>22/10/2025</td>
+                        <td><a href="detalhes-ocorrencia.html"><button class="action-btn view">Ver Detalhes</button></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

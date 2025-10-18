@@ -1,0 +1,955 @@
+/*
+    ----------------------------------------------------------------------
+    NEXUS - ERP para Condomínios | CÓDIGO CSS COMPLETO E FINALIZADO (18 PARTES)
+    ----------------------------------------------------------------------
+*/
+
+/*
+    Parte 1: Estilos Globais
+*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+section {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+header {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+footer {
+    background-color: #2c3e50;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+/*
+    Parte 2: Estilo do Painel de Admin (Layout base) - Ajustado na Parte 14
+*/
+main {
+    display: flex;
+    min-height: calc(100vh - 120px); 
+    background-color: #fff; 
+}
+
+/*
+    Parte 3: Estilo da Tabela de Moradores (Moradores.html) - Estilo Base
+*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+/*
+    Parte 4: Estilo do Grafico de Consumo (Funcionalidades.html - SIMULACAO) - DEPRECADO/REPLACADO
+*/
+
+
+/*
+    ----------------------------------------------------------------------
+    ESTILOS DA INTERFACE PÚBLICA (INDEX E LOGIN)
+    ----------------------------------------------------------------------
+*/
+
+/*
+    Parte 10: Estilo da Pagina Inicial - Versão Profissional
+*/
+
+.hero {
+    height: 100vh;
+    background: url('predio.jpg') no-repeat center center/cover;
+    color: #fff;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    padding: 0 4rem;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.hero nav a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem;
+    transition: opacity 0.3s;
+}
+
+.hero nav a:hover {
+    opacity: 0.8;
+}
+
+.cta-button {
+    background-color: #e67e22;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    border: none; 
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #d35400;
+}
+
+.hero-content {
+    margin-top: auto;
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    max-width: 600px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 500px;
+    margin-top: 1rem;
+}
+
+.hero-buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.primary-button, .secondary-button {
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.primary-button {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.primary-button:hover {
+    background-color: #34495e;
+}
+
+.secondary-button {
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+.secondary-button:hover {
+    background-color: #fff;
+    color: #333;
+}
+
+/*
+    Parte 13: Estilo e Logica do Dropdown (Acessar o Sistema)
+*/
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 5px 0;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/*
+    Parte 11: Estilo da Pagina de Login (Login.html)
+*/
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); 
+    padding: 2rem;
+    background: url('predio.jpg') no-repeat center center/cover;
+}
+
+.login-box {
+    background-color: #fff;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/*
+    Parte 12: Estilo do Logo na Pagina de Login
+*/
+.login-logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.login-box h2 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.login-button {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 2rem;
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #34495e;
+}
+
+
+/*
+    ----------------------------------------------------------------------
+    ESTILOS DA INTERFACE DE ADMINISTRAÇÃO (PAINEL E MÓDULOS)
+    ----------------------------------------------------------------------
+*/
+
+/*
+    Parte 14: Estilo do Painel de Administração (painel-admin.html)
+*/
+
+header .logo {
+    padding-left: 2rem;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar a {
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: #495057;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background-color: #e9ecef;
+    color: #2c3e50;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #fff;
+}
+
+/* NOVO LAYOUT DO DASHBOARD (IoT) */
+.dashboard-grid {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.main-charts-column {
+    flex-basis: 70%;
+}
+
+.summary-cards-column {
+    flex-basis: 30%;
+}
+
+.main-charts-column h2, .summary-cards-column h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Estilo dos Cartões de Estatísticas no Dashboard */
+.stat-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem; 
+}
+
+.stat-card h3 {
+    color: #495057;
+    font-size: 1.1rem;
+    margin-top: 0;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0.5rem 0 0;
+}
+
+.stat-number.alert {
+    color: #e67e22; /* Laranja para alerta/pendente */
+}
+
+.stat-number.positive {
+    color: #28a745; /* Verde para resultados positivos (Economia) */
+}
+
+/* Estilo para placeholders de Gráficos */
+.chart-container {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.chart-container h3 {
+    font-size: 1.2rem;
+    color: #495057;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.chart-placeholder {
+    height: 250px;
+    background-color: #f4f4f4;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+    font-style: italic;
+    font-weight: bold;
+}
+
+
+/*
+    Parte 15: Estilo da Tabela e Ações de Gestão (moradores.html)
+*/
+
+.actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.search-input {
+    padding: 0.8rem 1rem;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.add-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    margin: 0; 
+}
+
+/* Estilo da Tabela de Dados (Versão Admin) */
+.data-table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden; 
+}
+
+.data-table th, .data-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+}
+
+.data-table th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Status Colors Moradores */
+.status-active {
+    color: #28a745; /* Verde */
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #ffc107; /* Amarelo */
+    font-weight: bold;
+}
+
+/* Action Buttons (Geral) */
+.action-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-right: 5px;
+    transition: background-color 0.2s;
+}
+
+.action-btn.view {
+    background-color: #007bff;
+    color: white;
+}
+.action-btn.view:hover {
+    background-color: #0056b3;
+}
+
+.action-btn.edit {
+    background-color: #6c757d;
+    color: white;
+}
+.action-btn.edit:hover {
+    background-color: #5a6268;
+}
+
+
+/*
+    Parte 16: Estilo da Tela de Detalhes do Morador (detalhes-morador.html)
+*/
+
+.header-with-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.back-button {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    color: #495057;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: normal;
+    transition: background-color 0.2s;
+}
+
+.back-button:hover {
+    background-color: #e9ecef;
+}
+
+.profile-layout {
+    display: flex;
+    gap: 2rem;
+}
+
+.profile-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.info-card {
+    flex-basis: 35%; 
+}
+
+.profile-details-column {
+    flex-basis: 65%; 
+}
+
+.profile-card h2 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.profile-card p {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+}
+
+.full-width-btn {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.edit-button {
+    background-color: #3498db; 
+}
+
+.edit-button:hover {
+    background-color: #2980b9;
+}
+
+/* Estilo para tags (Placas) */
+.tag {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.tag-car {
+    background-color: #28a745; 
+    color: white;
+}
+
+.tag-moto {
+    background-color: #6c757d; 
+    color: white;
+}
+
+.add-placa-btn {
+    background-color: #e67e22; 
+}
+
+.add-placa-btn:hover {
+    background-color: #d35400;
+}
+
+.view-log-link {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    transition: color 0.2s;
+}
+
+.view-log-link:hover {
+    color: #e67e22;
+    text-decoration: underline;
+}
+
+
+/*
+    Parte 17: Estilo do Gerenciamento de Ocorrências (ocorrencias.html)
+*/
+
+.new-occurrence-button {
+    background-color: #3498db; 
+}
+
+.new-occurrence-button:hover {
+    background-color: #2980b9;
+}
+
+/* Cores dos Status de Ocorrência */
+.status-resolved {
+    color: #28a745; 
+    font-weight: bold;
+}
+
+.status-active {
+    color: #007bff; 
+    font-weight: bold;
+}
+
+/* Cores das Prioridades */
+.priority-high {
+    color: #dc3545; 
+    font-weight: bold;
+}
+
+.priority-medium {
+    color: #ffc107; 
+    font-weight: bold;
+}
+
+.priority-low {
+    color: #6c757d; 
+    font-weight: bold;
+}
+
+
+/*
+    Parte 18: Estilo da Tela de Detalhes da Ocorrência (detalhes-ocorrencia.html)
+*/
+
+.occurrence-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start; 
+}
+
+.occurrence-details-column {
+    flex-basis: 70%; 
+}
+
+.occurrence-actions-column {
+    flex-basis: 30%; 
+}
+
+.details-card h2, .timeline-card h2, .status-box h2 {
+    font-size: 1.4rem;
+}
+
+/* Layout de Informações Detalhadas */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* Estilo da Linha do Tempo (Timeline) */
+.timeline {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 2px;
+    background-color: #ddd; 
+}
+
+.timeline-item {
+    position: relative;
+    margin-left: 30px;
+    padding-bottom: 20px;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -24px; 
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #3498db; 
+    border: 2px solid #fff; 
+}
+
+.timeline-active .timeline-dot {
+    background-color: #e67e22; 
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.4);
+}
+
+.timeline-content strong {
+    display: block;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+/* Estilo da Coluna de Ações */
+.status-box {
+    padding: 1.5rem;
+}
+
+.current-status {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    margin: 1rem 0;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(220, 53, 69, 0.1); 
+}
+
+.status-summary p {
+    margin: 0.5rem 0;
+}
+
+.action-title {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.action-select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.action-update-btn {
+    background-color: #28a745; 
+}
+.action-update-btn:hover {
+    background-color: #218838;
+}
+
+/*
+    Parte 19: Estilo do Monitoramento IoT (monitoramento-iot.html)
+*/
+
+/* Barra de Filtros */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #eef2f6; /* Fundo suave para a barra */
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.input-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group-inline label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.filter-select {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.export-button {
+    background-color: #1abc9c; /* Verde água/claro para Exportar */
+    padding: 0.8rem 1.5rem;
+    margin: 0;
+}
+.export-button:hover {
+    background-color: #16a085;
+}
+
+
+/* Grid de Métricas Chave */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.metric-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid;
+}
+
+.water-metric {
+    border-left-color: #3498db; /* Azul Água */
+}
+.energy-metric {
+    border-left-color: #f39c12; /* Laranja Energia */
+}
+.economy-metric {
+    border-left-color: #27ae60; /* Verde Economia */
+}
+
+.metric-card h3 {
+    font-size: 1rem;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.metric-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0.2rem 0;
+}
+
+.metric-change {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.metric-change.positive {
+    color: #28a745;
+}
+.metric-change.negative {
+    color: #dc3545;
+}
+
+
+/* Área de Gráficos de Detalhes */
+.charts-section h2 {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.chart-full-width {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.chart-full-width h3 {
+    font-size: 1.2rem;
+    color: #495057;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.line-chart-placeholder, .bar-chart-placeholder {
+    height: 350px; /* Maior para gráficos detalhados */
+    background-color: #f8f8f8;
+    border: 1px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+    font-style: italic;
+    font-weight: bold;
+}
