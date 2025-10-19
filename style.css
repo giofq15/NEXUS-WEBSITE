@@ -10,7 +10,6 @@
 html,
 body {
     height: 100%;
-    /* FUNDAMENTAL: Garante 100% da altura da viewport */
     margin: 0;
     padding: 0;
 }
@@ -23,15 +22,11 @@ body {
     color: #333;
 }
 
-/* NOVO BLOCO: Estilo FULL-SCREEN (Tela de Login) */
 body.login-page {
-    /* Força o body a ter o fundo em 100% da tela visível */
     background: url('predios.jpg') no-repeat center center/cover;
     height: 100vh;
-    /* Garante que o BODY ocupe 100% da altura visível */
     width: 100vw;
     background-color: transparent;
-    /* Regras Flexbox movidas do .login-container para garantir centralização completa */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -183,10 +178,7 @@ tr:nth-child(even) {
 /*
     Parte 10: Estilo da Pagina Inicial - Versão Profissional (AJUSTADA)
 */
-/* ... (Mantenha o restante da Parte 10, mas substitua hero-content) ... */
-
 .hero-content {
-    /* Removido margin-top: auto; e margin-bottom: 5rem; */
     position: relative;
     z-index: 2;
     text-align: center;
@@ -198,14 +190,12 @@ tr:nth-child(even) {
 
 .hero-content h1 {
     font-size: 3.5rem;
-    /* Maior e mais impactante */
     max-width: 800px;
     line-height: 1.2;
     margin: 0 auto;
     /* Melhora a visibilidade do texto com sombra forte */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
     color: #fff;
-    /* Garante que a cor seja branca */
 }
 
 .hero-content p {
@@ -302,8 +292,7 @@ tr:nth-child(even) {
 /*
     Parte 11: Estilo da Pagina de Login (Login.html) - CORRIGIDO
 */
-.login-container {
-}
+
 
 .login-box {
     background-color: #fff;
