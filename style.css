@@ -30,6 +30,7 @@ body.login-page {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
 }
 
 section {
@@ -289,6 +290,7 @@ tr:nth-child(even) {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
 /*
     Parte 11: Estilo da Pagina de Login (Login.html) - CORRIGIDO
 */
@@ -302,6 +304,10 @@ tr:nth-child(even) {
     width: 100%;
     max-width: 400px;
     text-align: center;
+}
+
+.login-container {
+    height: 100%;
 }
 
 /*
