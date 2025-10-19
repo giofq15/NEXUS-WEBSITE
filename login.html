@@ -4,34 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus - Sistema para Administradoras de Condomínios</title>
+    <title>Login - NEXUS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <main class="login-container">
+<body class="login-page"> 
+
+    <section class="login-container">
         <div class="login-box">
-            <h1 class="login-logo">NEXUS</h1>
+            <div class="login-logo">NEXUS</div>
             <h2>Acesse sua conta</h2>
-            <form>
+
+            <form action="painel-admin.html" method="GET">
+                
                 <div class="input-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="email">E-mail ou usuário</label>
+                    <input type="text" id="email" name="email" placeholder="Insira o nome do seu usuário ou e-mail de acesso" required>
                 </div>
+
                 <div class="input-group">
                     <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" required>
+                    <input type="password" id="senha" name="senha" placeholder="Insira sua senha" required>
                 </div>
-                <a href="painel-admin.html" class="login-button">Entrar</a>
+
+                <div class="login-links">
+                    <a href="#" class="link-action">Esqueci minha senha</a>
+                </div>
+
+                <button type="submit" class="cta-button primary-button full-width">Entrar</button>
+
+                <div class="divider">ou acesse via</div>
+
+                <div class="social-login-buttons">
+                    <button type="button" class="social-button google-button full-width">
+                        <span class="icon">G</span> Entrar com Google
+                    </button>
+                    <button type="button" class="social-button facebook-button full-width">
+                        <span class="icon">f</span> Entrar com Facebook
+                    </button>
+                </div>
+
+                <div class="signup-link">
+                    Ainda não tem cadastro? <a href="#" class="link-action">Inscreva-se agora</a>
+                </div>
+                
             </form>
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
+    </body>
 
 </html>

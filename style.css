@@ -1,19 +1,40 @@
 /*
-    ----------------------------------------------------------------------
-    NEXUS - ERP para Condomínios | CÓDIGO CSS COMPLETO E FINALIZADO (18 PARTES)
-    ----------------------------------------------------------------------
+    ----------------------------------------------------------------------
+    NEXUS - ERP para Condomínios | CÓDIGO CSS COMPLETO E FINALIZADO (23 PARTES)
+    ----------------------------------------------------------------------
 */
 
 /*
-    Parte 1: Estilos Globais
+    Parte 1: Estilos Globais - CORRIGIDO PARA FULL-SCREEN
 */
+html,
 body {
-    font-family: Arial, sans-serif;
+    height: 100%;
+    /* FUNDAMENTAL: Garante 100% da altura da viewport */
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
+    /* Fundo padrão para as demais páginas */
     color: #333;
+}
+
+/* NOVO BLOCO: Estilo FULL-SCREEN (Tela de Login) */
+body.login-page {
+    /* Força o body a ter o fundo em 100% da tela visível */
+    background: url('predios.jpg') no-repeat center center/cover;
+    height: 100vh;
+    /* Garante que o BODY ocupe 100% da altura visível */
+    width: 100vw;
+    background-color: transparent;
+    /* Regras Flexbox movidas do .login-container para garantir centralização completa */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 section {
@@ -43,7 +64,7 @@ footer {
 }
 
 /*
-    Parte 2: Estilo do Painel de Admin (Layout base) - Ajustado na Parte 14
+    Parte 2: Estilo do Painel de Admin (Layout base) - Ajustado na Parte 14
 */
 main {
     display: flex;
@@ -52,7 +73,7 @@ main {
 }
 
 /*
-    Parte 3: Estilo da Tabela de Moradores (Moradores.html) - Estilo Base
+    Parte 3: Estilo da Tabela de Moradores (Moradores.html) - Estilo Base
 */
 table {
     width: 100%;
@@ -78,23 +99,23 @@ tr:nth-child(even) {
 
 
 /*
-    Parte 4: Estilo do Grafico de Consumo (Funcionalidades.html - SIMULACAO) - DEPRECADO/REPLACADO
+    Parte 4: Estilo do Grafico de Consumo (Funcionalidades.html - SIMULACAO) - DEPRECADO/REPLACADO
 */
 
 
 /*
-    ----------------------------------------------------------------------
-    ESTILOS DA INTERFACE PÚBLICA (INDEX E LOGIN)
-    ----------------------------------------------------------------------
+    ----------------------------------------------------------------------
+    ESTILOS DA INTERFACE PÚBLICA (INDEX E LOGIN)
+    ----------------------------------------------------------------------
 */
 
 /*
-    Parte 10: Estilo da Pagina Inicial - Versão Profissional
+    Parte 10: Estilo da Pagina Inicial - Versão Profissional
 */
 
 .hero {
     height: 100vh;
-    background: url('predio.jpg') no-repeat center center/cover;
+    background: url('predios.jpg') no-repeat center center/cover;
     color: #fff;
     text-align: left;
     display: flex;
@@ -160,7 +181,7 @@ tr:nth-child(even) {
 }
 
 /*
-    Parte 10: Estilo da Pagina Inicial - Versão Profissional (AJUSTADA)
+    Parte 10: Estilo da Pagina Inicial - Versão Profissional (AJUSTADA)
 */
 /* ... (Mantenha o restante da Parte 10, mas substitua hero-content) ... */
 
@@ -241,7 +262,7 @@ tr:nth-child(even) {
 }
 
 /*
-    Parte 13: Estilo e Logica do Dropdown (Acessar o Sistema)
+    Parte 13: Estilo e Logica do Dropdown (Acessar o Sistema)
 */
 
 .dropdown {
@@ -278,18 +299,10 @@ tr:nth-child(even) {
 .dropdown:hover .dropdown-content {
     display: block;
 }
-
-
 /*
-    Parte 11: Estilo da Pagina de Login (Login.html)
+    Parte 11: Estilo da Pagina de Login (Login.html) - CORRIGIDO
 */
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 80px);
-    padding: 2rem;
-    background: url('predio.jpg') no-repeat center center/cover;
 }
 
 .login-box {
@@ -303,7 +316,7 @@ tr:nth-child(even) {
 }
 
 /*
-    Parte 12: Estilo do Logo na Pagina de Login
+    Parte 12: Estilo do Logo na Pagina de Login
 */
 .login-logo {
     font-size: 2.5rem;
@@ -358,13 +371,13 @@ tr:nth-child(even) {
 
 
 /*
-    ----------------------------------------------------------------------
-    ESTILOS DA INTERFACE DE ADMINISTRAÇÃO (PAINEL E MÓDULOS)
-    ----------------------------------------------------------------------
+    ----------------------------------------------------------------------
+    ESTILOS DA INTERFACE DE ADMINISTRAÇÃO (PAINEL E MÓDULOS)
+    ----------------------------------------------------------------------
 */
 
 /*
-    Parte 14: Estilo do Painel de Administração (painel-admin.html)
+    Parte 14: Estilo do Painel de Administração (painel-admin.html)
 */
 
 header .logo {
@@ -491,7 +504,7 @@ header .logo {
 
 
 /*
-    Parte 15: Estilo da Tabela e Ações de Gestão (moradores.html)
+    Parte 15: Estilo da Tabela e Ações de Gestão (moradores.html)
 */
 
 .actions-bar {
@@ -583,7 +596,7 @@ header .logo {
 
 
 /*
-    Parte 16: Estilo da Tela de Detalhes do Morador (detalhes-morador.html)
+    Parte 16: Estilo da Tela de Detalhes do Morador (detalhes-morador.html)
 */
 
 .header-with-action {
@@ -703,7 +716,7 @@ header .logo {
 
 
 /*
-    Parte 17: Estilo do Gerenciamento de Ocorrências (ocorrencias.html)
+    Parte 17: Estilo do Gerenciamento de Ocorrências (ocorrencias.html)
 */
 
 .new-occurrence-button {
@@ -743,7 +756,7 @@ header .logo {
 
 
 /*
-    Parte 18: Estilo da Tela de Detalhes da Ocorrência (detalhes-ocorrencia.html)
+    Parte 18: Estilo da Tela de Detalhes da Ocorrência (detalhes-ocorrencia.html)
 */
 
 .occurrence-layout {
@@ -865,7 +878,7 @@ header .logo {
 }
 
 /*
-    Parte 19: Estilo do Monitoramento IoT (monitoramento-iot.html)
+    Parte 19: Estilo do Monitoramento IoT (monitoramento-iot.html)
 */
 
 /* Barra de Filtros */
@@ -1008,7 +1021,7 @@ header .logo {
 }
 
 /*
-    Parte 21: Estilo da Seção Conheça Mais (Features Section)
+    Parte 21: Estilo da Seção Conheça Mais (Features Section)
 */
 .features-section {
     padding: 60px 20px;
@@ -1059,7 +1072,7 @@ header .logo {
 }
 
 /*
-    Parte 22: Estilo dos Formulários de Cadastro (novo-morador.html)
+    Parte 22: Estilo dos Formulários de Cadastro (novo-morador.html)
 */
 
 .form-container {
@@ -1124,4 +1137,152 @@ header .logo {
 
 .form-actions .primary-button {
     padding: 1rem 2rem;
+}
+
+/*
+    Parte 23 (FINALIZADA): Estilo Adicional do Login (Social e Links)
+*/
+
+/* Layout Geral do Formulário */
+/* Garante que os input-group tenham espaço */
+.login-box .input-group {
+    margin-bottom: 1.5rem;
+    /* Mais espaço entre os campos */
+}
+
+.login-box label {
+    display: block;
+    /* Garante que o label fique acima do input */
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #495057;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"],
+.login-box input[type="email"] {
+    width: 100%;
+    /* Ocupa a largura total */
+    padding: 0.8rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* Inclui padding na largura */
+    font-size: 1rem;
+}
+
+/* Botão Entrar */
+.login-box .primary-button.full-width {
+    width: 100%;
+    margin-top: 1rem;
+    /* Espaçamento após o último campo */
+    padding: 1rem;
+}
+
+/* Divisor "ou acesse via" */
+.divider {
+    text-align: center;
+    margin: 2rem 0;
+    /* Mais espaço */
+    position: relative;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    /* Ajuste para centralizar melhor */
+    height: 1px;
+    background: #e9ecef;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+/* Links de Ação (Esqueci a senha, Criar conta) */
+.login-links {
+    text-align: right;
+    margin-bottom: 1.5rem;
+    /* Espaço antes do botão de Entrar */
+    font-size: 0.9rem;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 2rem;
+    /* Espaço após botões sociais */
+    font-size: 0.95rem;
+}
+
+.link-action {
+    color: #e67e22;
+    /* Cor de destaque do NEXUS */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-action:hover {
+    text-decoration: underline;
+}
+
+/* Botões de Login Social */
+.social-login-buttons {
+    display: flex;
+    flex-direction: column;
+    /* Um botão abaixo do outro */
+    gap: 10px;
+    /* Espaço entre os botões */
+}
+
+.social-button {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #495057;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    font-weight: 500;
+}
+
+.social-button .icon {
+    font-size: 1.2rem;
+    /* Tamanho do ícone de texto */
+    margin-right: 10px;
+    width: 20px;
+    /* Garante que o ícone tenha um espaço fixo */
+    text-align: center;
+}
+
+.google-button:hover {
+    background-color: #f0f2f5;
+    border-color: #aeb2b7;
+}
+
+.facebook-button {
+    color: #1877f2;
+    /* Cor do Facebook */
+    border-color: #1877f2;
+    /* Borda azul */
+}
+
+.facebook-button:hover {
+    background-color: #e5f0ff;
+    /* Fundo azul claro no hover */
+    border-color: #1562c2;
+    color: #1562c2;
 }
