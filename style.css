@@ -157,29 +157,48 @@ tr:nth-child(even) {
     background-color: #d35400;
 }
 
+/*
+    Parte 10: Estilo da Pagina Inicial - Versão Profissional (AJUSTADA)
+*/
+/* ... (Mantenha o restante da Parte 10, mas substitua hero-content) ... */
+
 .hero-content {
-    margin-top: auto;
-    margin-bottom: 5rem;
+    /* Removido margin-top: auto; e margin-bottom: 5rem; */
     position: relative;
     z-index: 2;
+    text-align: center; /* Centraliza o texto */
+    width: 100%;
+    margin-top: 10vh; /* Empurra para baixo do cabeçalho */
 }
 
 .hero-content h1 {
-    font-size: 3rem;
-    max-width: 600px;
+    font-size: 3.5rem; /* Maior e mais impactante */
+    max-width: 800px;
     line-height: 1.2;
+    margin: 0 auto;
+    /* Melhora a visibilidade do texto com sombra forte */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    color: #fff; /* Garante que a cor seja branca */
 }
 
 .hero-content p {
-    font-size: 1.2rem;
-    max-width: 500px;
-    margin-top: 1rem;
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin: 1rem auto 0; /* Centraliza o parágrafo */
+    /* Melhora a visibilidade do texto com sombra */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    color: #fff; /* Garante que a cor seja branca */
 }
 
 .hero-buttons {
-    margin-top: 2rem;
-    display: flex;
-    gap: 1rem;
+    display: none; /* Removemos esses botões do topo */
+}
+
+/* Garante que o botão 'Acessar o Sistema' e dropdown não fiquem tortos */
+.dropdown {
+    position: relative;
+    display: flex; /* Garante alinhamento */
+    align-items: center;
 }
 
 .primary-button, .secondary-button {
@@ -952,4 +971,52 @@ header .logo {
     color: #888;
     font-style: italic;
     font-weight: bold;
+}
+
+/*
+    Parte 21: Estilo da Seção Conheça Mais (Features Section)
+*/
+.features-section {
+    padding: 60px 20px;
+    background-color: #f8f9fa; /* Fundo mais claro para contraste */
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+}
+
+.feature-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+    height: 100%; /* Garante altura uniforme */
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+    color: #e67e22; /* Laranja de destaque */
+    font-size: 1.3rem;
+    margin-top: 0;
+}
+
+.cta-contact-button {
+    margin-top: 2rem;
+    display: inline-block;
 }
