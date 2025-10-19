@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - NEXUS</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <div class="logo">NEXUS ADMIN</div>
@@ -13,62 +15,64 @@
 
     <main>
         <aside class="sidebar">
-    <a href="painel-admin.html" class="active">Dashboard</a>
-    <a href="moradores.html">Moradores</a>
-    <a href="ocorrencias.html">Ocorrências</a>
-    <a href="financeiro.html">Financeiro</a>
-    <a href="monitoramento-iot.html">Monitoramento IoT</a> 
-    <a href="index.html">Sair</a>
-</aside>
+            <a href="painel-admin.html" class="active">Dashboard</a>
+            <a href="moradores.html">Moradores</a>
+            <a href="ocorrencias.html">Ocorrências</a>
+            <a href="financeiro.html">Financeiro</a>
+            <a href="monitoramento-iot.html">Monitoramento IoT</a>
+            <a href="index.html">Sair</a>
+        </aside>
 
         <section class="content">
-    <h1>Dashboard de Gestão do Condomínio</h1>
-    <p>Visão geral e status do Projeto Nexus.</p>
+            <h1>Dashboard de Gestão do Condomínio</h1>
+            <p>Visão geral e status do Projeto Nexus.</p>
 
-    <div class="dashboard-grid">
-        
-        <div class="main-charts-column">
-            <h2>Monitoramento de Consumo (IoT)</h2>
-            
-            <div class="chart-container">
-                <h3>Consumo Mensal de Água (m³)</h3>
-                <div class="chart-placeholder water-chart">Gráfico Simulado: Histórico de Consumo de Água</div>
+            <div class="dashboard-grid">
+
+                <div class="main-charts-column">
+                    <h2>Monitoramento de Consumo (IoT)</h2>
+
+                    <div class="chart-container">
+                        <h3>Consumo Mensal de Água (m³)</h3>
+                        <div class="chart-placeholder water-chart">Gráfico Simulado: Histórico de Consumo de Água</div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Consumo Mensal de Energia (kWh)</h3>
+                        <div class="chart-placeholder energy-chart">Gráfico Simulado: Histórico de Consumo de Energia
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-cards-column">
+                    <h2>Resumos Rápidos</h2>
+
+                    <div class="stat-card">
+                        <h3>Ocorrências Pendentes</h3>
+                        <p class="stat-number alert">5</p>
+                        <a href="ocorrencias.html" class="view-log-link">Ver todas as Ocorrências</a>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Economia de Água (Mês)</h3>
+                        <p class="stat-number positive">+12%</p>
+                        <a href="#" class="view-log-link">Detalhes do Monitoramento</a>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Moradores Ativos</h3>
+                        <p class="stat-number">120</p>
+                    </div>
+                </div>
             </div>
-
-            <div class="chart-container">
-                <h3>Consumo Mensal de Energia (kWh)</h3>
-                <div class="chart-placeholder energy-chart">Gráfico Simulado: Histórico de Consumo de Energia</div>
-            </div>
-        </div>
-
-        <div class="summary-cards-column">
-            <h2>Resumos Rápidos</h2>
-
-            <div class="stat-card">
-                <h3>Ocorrências Pendentes</h3>
-                <p class="stat-number alert">5</p>
-                <a href="ocorrencias.html" class="view-log-link">Ver todas as Ocorrências</a>
-            </div>
-
-            <div class="stat-card">
-                <h3>Economia de Água (Mês)</h3>
-                <p class="stat-number positive">+12%</p>
-                <a href="#" class="view-log-link">Detalhes do Monitoramento</a>
-            </div>
-
-            <div class="stat-card">
-                <h3>Moradores Ativos</h3>
-                <p class="stat-number">120</p>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
     </main>
-    
+
     <footer>
         <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

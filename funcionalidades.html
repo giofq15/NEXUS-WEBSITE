@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Funcionalidades do Nexus</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <h1>Funcionalidades do Projeto Nexus</h1>
         <p>Conheça os módulos que tornam o Nexus um ERP inteligente.</p>
-        
+
         <nav>
             <a href="index.html">Início</a>
             <a href="funcionalidades.html">Funcionalidades</a>
@@ -20,20 +22,31 @@
 
     <section id="monitoramento">
         <h2>Monitoramento de Consumo Sustentável</h2>
-        <p>O módulo de monitoramento é a espinha dorsal da sustentabilidade no Nexus. Ele utiliza sensores IoT para coletar dados em tempo real sobre o consumo de água e energia de cada unidade. Essa informação é processada e armazenada em um banco de dados **MongoDB**.</p>
-        <p>Quando o consumo excede um limite pré-definido, o sistema **dispara alertas automáticos** para os moradores e síndicos, promovendo a conscientização e a economia de recursos.</p>
+        <p>O módulo de monitoramento é a espinha dorsal da sustentabilidade no Nexus. Ele utiliza sensores IoT para
+            coletar dados em tempo real sobre o consumo de água e energia de cada unidade. Essa informação é processada
+            e armazenada em um banco de dados **MongoDB**.</p>
+        <p>Quando o consumo excede um limite pré-definido, o sistema **dispara alertas automáticos** para os moradores e
+            síndicos, promovendo a conscientização e a economia de recursos.</p>
     </section>
 
     <section id="ocorrencias">
         <h2>Gerenciamento de Ocorrências</h2>
-        <p>Este módulo simplifica a comunicação entre moradores e a administração do condomínio. Um morador pode registrar uma ocorrência (como um problema no elevador ou vazamento de água) que é enviada diretamente para o síndico.</p>
-        <p>Cada ocorrência tem um status que evolui conforme o problema é tratado. Inicialmente, o status é **"Pendente"**. Após ser analisada pelo síndico, a ocorrência pode se tornar um comunicado ou ser resolvida.</p>
+        <p>Este módulo simplifica a comunicação entre moradores e a administração do condomínio. Um morador pode
+            registrar uma ocorrência (como um problema no elevador ou vazamento de água) que é enviada diretamente para
+            o síndico.</p>
+        <p>Cada ocorrência tem um status que evolui conforme o problema é tratado. Inicialmente, o status é
+            **"Pendente"**. Após ser analisada pelo síndico, a ocorrência pode se tornar um comunicado ou ser resolvida.
+        </p>
     </section>
 
     <section id="seguranca">
         <h2>Segurança com Integração IoT</h2>
-        <p>O Nexus eleva a segurança do condomínio ao integrar o controle de acesso com dispositivos IoT. O sistema permite o cadastro e a gestão de visitantes de forma segura, usando um banco de dados **PostgreSQL** para garantir a integridade dos dados, conforme exigido pela LGPD.</p>
-        <p>A autenticação é reforçada por tecnologias como **JWT (JSON Web Tokens)**, que garantem que apenas usuários autorizados tenham acesso às informações. Essa arquitetura de segurança é projetada para ser robusta e escalável, protegendo tanto os dados quanto os moradores.</p>
+        <p>O Nexus eleva a segurança do condomínio ao integrar o controle de acesso com dispositivos IoT. O sistema
+            permite o cadastro e a gestão de visitantes de forma segura, usando um banco de dados **PostgreSQL** para
+            garantir a integridade dos dados, conforme exigido pela LGPD.</p>
+        <p>A autenticação é reforçada por tecnologias como **JWT (JSON Web Tokens)**, que garantem que apenas usuários
+            autorizados tenham acesso às informações. Essa arquitetura de segurança é projetada para ser robusta e
+            escalável, protegendo tanto os dados quanto os moradores.</p>
     </section>
 
     <section id="grafico-consumo">
@@ -41,14 +54,16 @@
         <p>Acompanhe o consumo diário, semanal e mensal de recursos através de gráficos intuitivos.</p>
         <div class="grafico-container">
             <p><strong>Espaço para o Gráfico de Consumo.</strong></p>
-            <p>Em um sistema real, aqui seria exibido um gráfico interativo com dados em tempo real, gerado a partir do banco de dados MongoDB do seu projeto.</p>
+            <p>Em um sistema real, aqui seria exibido um gráfico interativo com dados em tempo real, gerado a partir do
+                banco de dados MongoDB do seu projeto.</p>
         </div>
     </section>
-    
+
     <footer>
         <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>
