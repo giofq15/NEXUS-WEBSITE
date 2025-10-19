@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financeiro - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">NEXUS ADMIN</div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <a href="painel-admin.html">Dashboard</a>
+            <a href="moradores.html">Moradores</a>
+            <a href="ocorrencias.html">Ocorrências</a>
+            <a href="financeiro.html" class="active">Financeiro</a>
+            <a href="monitoramento-iot.html">Monitoramento IoT</a>
+            <a href="index.html">Sair</a>
+        </aside>
+
+        <section class="content">
+            <h1>Gestão Financeira</h1>
+            <p>Controle de receitas e despesas do condomínio.</p>
+
+            <div class="financial-summary">
+                <div class="stat-card">
+                    <h3>Saldo Atual</h3>
+                    <p class="stat-number positive">R$ 55.450,00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Contas a Pagar (30 dias)</h3>
+                    <p class="stat-number alert">R$ 12.800,00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Inadimplência (Total)</h3>
+                    <p class="stat-number negative">R$ 4.120,00</p>
+                </div>
+            </div>
+
+            <div class="tabs-container">
+                <button class="tab-button active" onclick="showTab('contas-pagar')">Contas a Pagar</button>
+                <button class="tab-button" onclick="showTab('contas-receber')">Contas a Receber</button>
+                <button class="primary-button add-button" style="margin-left: auto;">+ Novo Lançamento</button>
+            </div>
+
+            <div id="contas-pagar" class="tab-content active">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Conta de Energia Elétrica</td>
+                            <td>10/11/2025</td>
+                            <td class="negative">R$ 6.500,00</td>
+                            <td class="status-pending">A Pagar</td>
+                            <td><button class="action-btn edit">Pagar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Salário do Zelador (Out)</td>
+                            <td>05/11/2025</td>
+                            <td class="negative">R$ 2.800,00</td>
+                            <td class="status-pending">A Pagar</td>
+                            <td><button class="action-btn edit">Pagar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Manutenção do Elevador</td>
+                            <td>15/10/2025</td>
+                            <td class="negative">R$ 1.200,00</td>
+                            <td class="status-resolved">Paga</td>
+                            <td><button class="action-btn view">Ver</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="contas-receber" class="tab-content">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Taxa Condominial Unid 201</td>
+                            <td>05/11/2025</td>
+                            <td class="positive">R$ 750,00</td>
+                            <td class="status-pending">A Receber</td>
+                            <td><button class="action-btn edit">Cobrar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Fundo de Reserva (Out)</td>
+                            <td>30/10/2025</td>
+                            <td class="positive">R$ 15.000,00</td>
+                            <td class="status-resolved">Recebida</td>
+                            <td><button class="action-btn view">Ver</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script src="script.js"></script> 
+</body>
+</html>
