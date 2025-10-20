@@ -1,111 +1,108 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Moradores - NEXUS</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<body class="admin-body">
 
-<body>
-    <header>
-        <div class="logo">NEXUS ADMIN</div>
-    </header>
+    <aside class="sidebar">
+        <div class="sidebar-header">NEXUS ADMIN</div>
+        <nav>
+            <ul>
+                <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
+                <li><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
 
-    <main>
-        <aside class="sidebar">
-            <a href="painel-admin.html">Dashboard</a>
-            <a href="moradores.html">Moradores</a>
-            <a href="ocorrencias.html">Ocorrências</a>
-            <a href="financeiro.html">Financeiro</a>
-            <a href="monitoramento-iot.html">Monitoramento IoT</a>
-            <a href="index.html">Sair</a>
-        </aside>
-
-        <section class="content">
+    <main class="main-content">
+        
+        <div class="dashboard-header">
             <h1>Controle de Moradores</h1>
+            <p>Visão geral de todas as unidades ativas e pendentes.</p>
+        </div>
 
-            <div class="actions-bar">
-                <input type="text" class="search-input" placeholder="Buscar por unidade, nome ou bloco...">
-                <a href="novo-morador.html" class="cta-button add-button">+ Novo Morador</a>
+        <div class="controls-container">
+            <div class="search-group">
+                <input type="search" class="search-input" placeholder="Buscar por unidade, nome, bloco...">
             </div>
+            <a href="novo-morador.html" class="new-button">+ Novo Morador</a>
+        </div>
 
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Unidade</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Ana Silva</td>
-                        <td>101 - Bloco A</td>
-                        <td class="status-active">Ativo</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Carlos Pereira</td>
-                        <td>205 - Bloco B</td>
-                        <td class="status-active">Ativo</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Mariana Costa</td>
-                        <td>302 - Bloco A</td>
-                        <td class="status-pending">Pendente</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-
-                    <tr>
-                        <td>João Fernandes</td>
-                        <td>102 - Bloco A</td>
-                        <td class="status-active">Ativo</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Beatriz Mendes</td>
-                        <td>401 - Bloco C</td>
-                        <td class="status-pending">Pendente</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Felipe Castro</td>
-                        <td>201 - Bloco B</td>
-                        <td class="status-active">Ativo</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Gabriela Lima</td>
-                        <td>305 - Bloco C</td>
-                        <td class="status-active">Ativo</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Ricardo Alves</td>
-                        <td>501 - Bloco A</td>
-                        <td class="status-pending">Pendente</td>
-                        <td><a href="detalhes-morador.html"><button class="action-btn view">Ver</button></a> <button
-                                class="action-btn edit">Editar</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Unidade</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ana Silva</td>
+                    <td>101 - Bloco A</td>
+                    <td class="status-ativo">Ativo</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td>Carlos Pereira</td>
+                    <td>205 - Bloco B</td>
+                    <td class="status-ativo">Ativo</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td>Mariana Costa</td>
+                    <td>302 - Bloco A</td>
+                    <td class="status-pendente">Pendente</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td>João Fernandes</td>
+                    <td>102 - Bloco A</td>
+                    <td class="status-ativo">Ativo</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td>Beatriz Mendes</td>
+                    <td>401 - Bloco C</td>
+                    <td class="status-pendente">Pendente</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td>Felipe Castro</td>
+                    <td>201 - Bloco B</td>
+                    <td class="status-ativo">Ativo</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td>Gabriela Lima</td>
+                    <td>305 - Bloco C</td>
+                    <td class="status-ativo">Ativo</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td>Ricardo Alves</td>
+                    <td>501 - Bloco A</td>
+                    <td class="status-pendente">Pendente</td>
+                    <td><a href="detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="content-footer">
+            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </div>
     </main>
-
-    <footer>
-        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
-    </footer>
+    
+    <script src="script.js"></script>
 </body>
-
 </html>

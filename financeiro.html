@@ -1,128 +1,152 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financeiro - NEXUS</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
-<body>
-    <header>
-        <div class="logo">NEXUS ADMIN</div>
-    </header>
+<body class="admin-body">
 
-    <main>
-        <aside class="sidebar">
-            <a href="painel-admin.html">Dashboard</a>
-            <a href="moradores.html">Moradores</a>
-            <a href="ocorrencias.html">Ocorrências</a>
-            <a href="financeiro.html" class="active">Financeiro</a>
-            <a href="monitoramento-iot.html">Monitoramento IoT</a>
-            <a href="index.html">Sair</a>
-        </aside>
+    <aside class="sidebar">
+        <div class="sidebar-header">NEXUS ADMIN</div>
+        <nav>
+            <ul>
+                <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
+                <li><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li class="active"><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a>
+                </li>
+                <li><a href="monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
 
-        <section class="content">
+    <main class="main-content">
+
+        <div class="dashboard-header">
             <h1>Gestão Financeira</h1>
             <p>Controle de receitas e despesas do condomínio.</p>
+        </div>
 
-            <div class="financial-summary">
-                <div class="stat-card">
-                    <h3>Saldo Atual</h3>
-                    <p class="stat-number positive">R$ 55.450,00</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Contas a Pagar (30 dias)</h3>
-                    <p class="stat-number alert">R$ 12.800,00</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Inadimplência (Total)</h3>
-                    <p class="stat-number negative">R$ 4.120,00</p>
-                </div>
+        <div class="financial-summary">
+            <div class="widget">
+                <i class="fas fa-money-check-alt icon-positive"></i>
+                <h3>Saldo Atual</h3>
+                <p class="stat-number positive">R$ 55.450,00</p>
             </div>
-
-            <div class="tabs-container">
-                <button class="tab-button active" onclick="showTab('contas-pagar')">Contas a Pagar</button>
-                <button class="tab-button" onclick="showTab('contas-receber')">Contas a Receber</button>
-                <button class="primary-button add-button" style="margin-left: auto;">+ Novo Lançamento</button>
+            <div class="widget">
+                <i class="fas fa-calendar-alt icon-alert"></i>
+                <h3>Contas a Pagar (30 dias)</h3>
+                <p class="stat-number alert">R$ 12.800,00</p>
             </div>
-
-            <div id="contas-pagar" class="tab-content active">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Descrição</th>
-                            <th>Vencimento</th>
-                            <th>Valor</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Conta de Energia Elétrica</td>
-                            <td>10/11/2025</td>
-                            <td class="negative">R$ 6.500,00</td>
-                            <td class="status-pending">A Pagar</td>
-                            <td><button class="action-btn edit">Pagar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Salário do Zelador (Out)</td>
-                            <td>05/11/2025</td>
-                            <td class="negative">R$ 2.800,00</td>
-                            <td class="status-pending">A Pagar</td>
-                            <td><button class="action-btn edit">Pagar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Manutenção do Elevador</td>
-                            <td>15/10/2025</td>
-                            <td class="negative">R$ 1.200,00</td>
-                            <td class="status-resolved">Paga</td>
-                            <td><button class="action-btn view">Ver</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="widget">
+                <i class="fas fa-exclamation-triangle icon-negative"></i>
+                <h3>Inadimplência (Total)</h3>
+                <p class="stat-number negative">R$ 4.120,00</p>
             </div>
+        </div>
 
-            <div id="contas-receber" class="tab-content">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Descrição</th>
-                            <th>Vencimento</th>
-                            <th>Valor</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Taxa Condominial Unid 201</td>
-                            <td>05/11/2025</td>
-                            <td class="positive">R$ 750,00</td>
-                            <td class="status-pending">A Receber</td>
-                            <td><button class="action-btn edit">Cobrar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Fundo de Reserva (Out)</td>
-                            <td>30/10/2025</td>
-                            <td class="positive">R$ 15.000,00</td>
-                            <td class="status-resolved">Recebida</td>
-                            <td><button class="action-btn view">Ver</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="tabs-container">
+            <button class="tab-button active" onclick="showTab('contas-pagar')">Contas a Pagar</button>
+            <button class="tab-button" onclick="showTab('contas-receber')">Contas a Receber</button>
+            <a href="novo-lancamento.html" class="new-button tabs-right-button">+ Novo Lançamento</a>
+        </div>
 
-        </section>
+        <div id="contas-pagar" class="tab-content active">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Conta de Energia Elétrica</td>
+                        <td>10/11/2025</td>
+                        <td class="negative-value">R$ 6.500,00</td>
+                        <td class="status-pendente">A Pagar</td>
+                        <td><a href="#" class="action-link action-pay">Pagar</a></td>
+                    </tr>
+                    <tr>
+                        <td>Salário do Zelador (Out)</td>
+                        <td>05/11/2025</td>
+                        <td class="negative-value">R$ 2.800,00</td>
+                        <td class="status-pendente">A Pagar</td>
+                        <td><a href="#" class="action-link action-pay">Pagar</a></td>
+                    </tr>
+                    <tr>
+                        <td>Manutenção do Elevador</td>
+                        <td>15/10/2025</td>
+                        <td class="negative-value">R$ 1.200,00</td>
+                        <td class="status-ativo">Paga</td>
+                        <td><a href="#" class="action-link">Ver</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="contas-receber" class="tab-content hidden">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Taxa Condominial Unid 201</td>
+                        <td>05/11/2025</td>
+                        <td class="positive-value">R$ 750,00</td>
+                        <td class="status-pendente">A Receber</td>
+                        <td><a href="#" class="action-link action-collect">Cobrar</a></td>
+                    </tr>
+                    <tr>
+                        <td>Fundo de Reserva (Out)</td>
+                        <td>30/10/2025</td>
+                        <td class="positive-value">R$ 15.000,00</td>
+                        <td class="status-ativo">Recebida</td>
+                        <td><a href="#" class="action-link">Ver</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-footer">
+            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
-    </footer>
+    <script>
+        function showTab(tabId) {
+            // Esconde todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            // Remove o estado ativo de todos os botões
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
 
-    <script src="script.js"></script>
+            // Mostra a aba selecionada
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Ativa o botão correspondente
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 
 </html>

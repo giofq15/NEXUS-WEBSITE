@@ -1,26 +1,51 @@
-// Este script e para adicionar interatividade ao seu site.
-// A nova funcao controla o envio do formulario de contato.
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Lógica do Dropdown (Página Inicial - index.html)
+    const dropdownBtn = document.getElementById('dropdown-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
 
-// Quando a pagina terminar de carregar, executa a funcao:
-window.onload = function() {
-    console.log("Bem-vindo ao Projeto Nexus!");
-    console.log("Site carregado com sucesso.");
-    
-    // 1. Encontra o formulario na pagina, usando a tag <form>
-    const formulario = document.querySelector('form');
+    if (dropdownBtn && dropdownMenu) {
+        dropdownBtn.addEventListener('click', function(event) {
+            // Previne que o clique dispare ações padrão do botão
+            event.preventDefault(); 
+            // Alterna a classe 'show' no menu
+            dropdownMenu.classList.toggle('show');
+        });
 
-    // 2. Adiciona um 'ouvinte' para quando o evento de 'submit' (envio) acontecer
-    formulario.addEventListener('submit', function(event) {
-        // 3. Impede o comportamento padrao do formulario (nao recarrega a pagina)
-        event.preventDefault();
+        // Fecha o dropdown se o usuário clicar fora dele
+        window.addEventListener('click', function(event) {
+            // Verifica se o clique não foi no botão e se o menu está visível
+            if (!event.target.matches('#dropdown-btn')) {
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownMenu.classList.remove('show');
+                }
+            }
+        });
+    }
 
-        // 4. Exibe uma mensagem de sucesso (voce pode ver no console do navegador)
-        console.log("Formulario enviado com sucesso! Entraremos em contato em breve.");
-        
-        // Exemplo: mostrar um alerta na tela para o usuario
-        alert("Mensagem enviada! Agradecemos o seu contato.");
-
-        // 5. Limpa os campos do formulario depois de enviar
-        formulario.reset();
+    // 2. Lógica para mostrar/esconder senha (Página de Login - login.html)
+    const passwordToggles = document.querySelectorAll('.toggle-password');
+    passwordToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            // O input de senha é o elemento anterior ao ícone no HTML
+            const passwordInput = this.previousElementSibling;
+            
+            // Alterna entre os tipos 'password' e 'text'
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Altera o ícone de olho aberto/fechado
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+        });
     });
-};
+
+    // 3. Lógica para simular o Login e Redirecionar (Página de Login - login.html)
+    const loginBtn = document.getElementById('login-button-final');
+
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function() {
+            // Simulação de login bem-sucedido para continuar o desenvolvimento do Front-End
+            window.location.href = 'painel-admin.html';
+        });
+    }
+});

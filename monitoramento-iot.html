@@ -6,79 +6,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoramento IoT - NEXUS</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
-<body>
-    <header>
-        <div class="logo">NEXUS ADMIN</div>
-    </header>
+<body class="admin-body"> 
 
-    <main>
-        <aside class="sidebar">
-            <a href="painel-admin.html">Dashboard</a>
-            <a href="moradores.html">Moradores</a>
-            <a href="ocorrencias.html">Ocorrências</a>
-            <a href="financeiro.html">Financeiro</a>
-            <a href="monitoramento-iot.html">Monitoramento IoT</a>
-            <a href="index.html">Sair</a>
-        </aside>
+    <div class="sidebar">
+        <div class="sidebar-header">NEXUS ADMIN</div> 
+        <nav>
+            <ul>
+                <li><a href="painel-admin.html">Dashboard</a></li>
+                <li><a href="moradores.html">Moradores</a></li>
+                <li><a href="ocorrencias.html">Ocorrências</a></li>
+                <li><a href="financeiro.html">Financeiro</a></li>
+                <li class="active"><a href="monitoramento-iot.html">Monitoramento IoT</a></li> 
+                <li><a href="index.html">Sair</a></li>
+            </ul>
+        </nav>
+    </div>
 
-        <section class="content">
+    <div class="main-content">
+        <div class="dashboard-header">
             <h1>Monitoramento de Consumo e Sustentabilidade (IoT)</h1>
             <p>Análise detalhada do consumo de recursos do condomínio.</p>
+        </div>
 
-            <div class="controls-bar">
-                <div class="input-group-inline">
-                    <label for="periodo">Período:</label>
-                    <select id="periodo" class="filter-select">
-                        <option>Últimos 30 dias</option>
-                        <option>Mês Atual (Outubro)</option>
-                        <option>Trimestre</option>
-                        <option>Personalizado</option>
-                    </select>
-                </div>
-                <button class="primary-button export-button">Exportar Relatório (PDF)</button>
+        <div class="controls-container">
+            <div class="search-group">
+                <label for="periodo" style="font-weight: bold; margin-right: 10px;">Período:</label>
+                <select id="periodo" class="search-input">
+                    <option>Últimos 30 dias</option>
+                    <option>Mês Atual (Outubro)</option>
+                    <option>Trimestre</option>
+                    <option>Personalizado</option>
+                </select>
             </div>
+            <button class="new-button"><i class="fas fa-file-export"></i> Exportar Relatório (PDF)</button>
+        </div>
 
-            <div class="metrics-grid">
-                <div class="metric-card water-metric">
-                    <h3>Consumo Total de Água (Mês)</h3>
-                    <p class="metric-value">520 m³</p>
-                    <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
-                </div>
-                <div class="metric-card energy-metric">
-                    <h3>Consumo Total de Energia (Mês)</h3>
-                    <p class="metric-value">15.800 kWh</p>
-                    <span class="metric-change positive">↑ 8% vs Mês Anterior</span>
-                </div>
-                <div class="metric-card economy-metric">
-                    <h3>Projeção de Economia (Anual)</h3>
-                    <p class="metric-value">R$ 15.200</p>
-                    <span class="metric-change positive">Melhor que a média histórica</span>
-                </div>
+        <div class="metrics-grid">
+            <div class="metric-card widget water-metric">
+                <i class="fas fa-tint"></i>
+                <h3>Consumo Total de Água (Mês)</h3>
+                <p class="metric-value">520 m³</p>
+                <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
             </div>
+            <div class="metric-card widget energy-metric">
+                <i class="fas fa-bolt"></i>
+                <h3>Consumo Total de Energia (Mês)</h3>
+                <p class="metric-value">15.800 kWh</p>
+                <span class="metric-change positive">↑ 8% vs Mês Anterior</span>
+            </div>
+            <div class="metric-card widget economy-metric">
+                <i class="fas fa-leaf"></i>
+                <h3>Projeção de Economia (Anual)</h3>
+                <p class="metric-value">R$ 15.200</p>
+                <span class="metric-change positive">Melhor que a média histórica</span>
+            </div>
+        </div>
 
+        <div class="widget">
             <div class="charts-section">
                 <h2>Gráfico de Tendência (Água e Energia)</h2>
 
                 <div class="chart-full-width">
                     <h3>Consumo Diário Consolidado (30 dias)</h3>
-                    <div class="chart-placeholder line-chart-placeholder">Gráfico Simulado: Consumo Diário Agregado
-                        (Água vs Energia)</div>
+                    <div class="graph-placeholder line-chart-placeholder">Gráfico Simulado: Consumo Diário Agregado (Água vs Energia)</div>
                 </div>
 
-                <div class="chart-full-width">
+                <div class="chart-full-width" style="margin-top: 2rem;">
                     <h3>Consumo por Bloco / Unidade (Mês)</h3>
-                    <div class="chart-placeholder bar-chart-placeholder">Gráfico Simulado: Ranking de Consumo por
-                        Unidade</div>
+                    <div class="graph-placeholder bar-chart-placeholder">Gráfico Simulado: Ranking de Consumo por Unidade</div>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
-    </footer>
+        </div>
+        
+        <footer class="content-footer">
+            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </div>
 </body>
 
 </html>
