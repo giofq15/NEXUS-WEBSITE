@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocorrências - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="sidebar">
+        <div class="sidebar-header">NEXUS MORADOR</div>
+        <nav>
+            <ul>
+                <li><a href="painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                <li><a href="financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li class="active"><a href="ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li><a href="consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1>Central de Ocorrências</h1>
+            <p>Reporte problemas e acompanhe o status das suas solicitações.</p>
+        </div>
+
+        <div class="form-container">
+            <h2><i class="fas fa-plus-circle"></i> Abrir Nova Ocorrência</h2>
+            <form action="#" method="POST">
+                <fieldset class="form-section">
+                    <legend>Detalhes do Problema</legend>
+                    <div class="form-grid">
+                        
+                        <div class="form-group">
+                            <label for="tipo">Tipo de Ocorrência</label>
+                            <select id="tipo" required>
+                                <option value="">Selecione o Tipo...</option>
+                                <option>Estrutural / Manutenção (Áreas Comuns)</option>
+                                <option>Ruído / Comportamental (Vizinhança)</option>
+                                <option>Segurança / Portaria</option>
+                                <option>Problema em Minha Unidade (Vazamento, etc.)</option>
+                                <option>Financeiro / Administrativo</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="local">Local Afetado</label>
+                            <input type="text" id="local" placeholder="Ex: Elevador do Bloco B, Salão de Festas, Minha Unidade 405">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descricao">Descrição Detalhada da Ocorrência</label>
+                        <textarea id="descricao" rows="4" required placeholder="Descreva o problema com o máximo de detalhes. Ex: 'O elevador do Bloco B está parado no 3º andar desde as 14h, com cheiro de queimado.'"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="anexo"><i class="fas fa-paperclip"></i> Anexar Foto ou Documento (Opcional)</label>
+                        <input type="file" id="anexo" accept="image/*, .pdf">
+                    </div>
+                </fieldset>
+
+                <div class="button-group">
+                    <button type="submit" class="submit-button"><i class="fas fa-bullhorn"></i> Enviar Ocorrência</button>
+                    <button type="reset" class="reset-button"><i class="fas fa-eraser"></i> Limpar Formulário</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="widget">
+            <h2><i class="fas fa-clipboard-list"></i> Minhas Ocorrências Ativas</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Local</th>
+                        <th>Data Abertura</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#0045</td>
+                        <td>Estrutural</td>
+                        <td>Elevador do Bloco B</td>
+                        <td>18/10/2025</td>
+                        <td class="status-andamento">Em Análise</td>
+                        <td>
+                            <a href="#" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
+                            <a href="#" class="action-link" style="color: #e67e22;"><i class="fas fa-reply"></i> Responder</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#0044</td>
+                        <td>Ruído / Comportamental</td>
+                        <td>Unidade 305</td>
+                        <td>15/10/2025</td>
+                        <td class="status-resolvida">Resolvida</td>
+                        <td>
+                            <a href="#" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
+                            <a href="#" class="action-link" style="color: #3498db;"><i class="fas fa-redo"></i> Reabrir</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#0043</td>
+                        <td>Problema em Unidade</td>
+                        <td>Minha Unidade 405 (Vazamento)</td>
+                        <td>01/09/2025</td>
+                        <td class="status-baixa">Concluída</td>
+                        <td>
+                            <a href="#" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

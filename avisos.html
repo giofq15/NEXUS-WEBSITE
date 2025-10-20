@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avisos e Comunicados - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="sidebar">
+        <div class="sidebar-header">NEXUS MORADOR</div>
+        <nav>
+            <ul>
+                <li><a href="painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                <li><a href="financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li><a href="ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li><a href="consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
+                <li class="active"><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1>Mural de Avisos e Comunicados</h1>
+            <p>Informações oficiais da Administração e do Síndico.</p>
+        </div>
+
+        <div class="controls-container">
+            <div class="search-group">
+                <input type="search" placeholder="Buscar por assunto..." class="search-input">
+            </div>
+            <button class="new-button" style="background-color: #3498db;"><i class="fas fa-filter"></i> Filtrar Categoria</button>
+        </div>
+        
+        <div class="dashboard-grid" style="grid-template-columns: 1fr;"> 
+
+            <div class="widget" style="border-left: 5px solid #e74c3c;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="color: #e74c3c;"><i class="fas fa-exclamation-triangle"></i> INTERRUPÇÃO DE ENERGIA PROGRAMADA</h3>
+                    <span style="font-size: 0.8rem; color: #999;"><i class="fas fa-calendar-day"></i> Publicado em 20/11/2025</span>
+                </div>
+                <p>Informamos que será realizada manutenção emergencial na subestação do condomínio. A energia será interrompida em **25/11/2025 (Terça-feira), das 09h às 12h**.</p>
+                <p style="margin-top: 10px;">Pedimos que todos se preparem e desliguem equipamentos sensíveis. A portaria está disponível para dúvidas.</p>
+                <a href="#" class="action-link" style="margin-top: 15px; display: block;"><i class="fas fa-file-pdf"></i> Ver Aviso Oficial em PDF</a>
+            </div>
+
+            <div class="widget" style="border-left: 5px solid #f39c12;">
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="color: #f39c12;"><i class="fas fa-dollar-sign"></i> ASSEMBLEIA GERAL ORDINÁRIA (AGO)</h3>
+                    <span style="font-size: 0.8rem; color: #999;"><i class="fas fa-calendar-day"></i> Publicado em 15/11/2025</span>
+                </div>
+                <p>Convocamos todos os moradores para a Assembleia Geral, que ocorrerá no dia **10/12/2025** no Salão de Festas. Pauta: Prestação de contas 2025 e Aprovação da Previsão Orçamentária 2026.</p>
+                <p style="margin-top: 10px;">Sua presença é essencial. O edital completo foi enviado por e-mail.</p>
+                <a href="#" class="action-link" style="margin-top: 15px; display: block;"><i class="fas fa-hand-point-right"></i> Confirmar Presença</a>
+            </div>
+
+            <div class="widget" style="border-left: 5px solid #27ae60;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="color: #27ae60;"><i class="fas fa-tree"></i> HORÁRIOS DE USO DA PISCINA (VERÃO)</h3>
+                    <span style="font-size: 0.8rem; color: #999;"><i class="fas fa-calendar-day"></i> Publicado em 01/11/2025</span>
+                </div>
+                <p>Lembramos que, com a chegada do Verão, o horário de funcionamento da piscina passa a ser das 08:00h às 21:00h. É obrigatória a realização de exame médico e o uso de trajes de banho adequados.</p>
+                <a href="#" class="action-link" style="margin-top: 15px; display: block;">Ler Regras Completas</a>
+            </div>
+
+        </div>
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

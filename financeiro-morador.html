@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financeiro Morador - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="sidebar">
+        <div class="sidebar-header">NEXUS MORADOR</div>
+        <nav>
+            <ul>
+                <li><a href="painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                <li class="active"><a href="financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li><a href="ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li><a href="consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1>Minhas Faturas e Boletos</h1>
+            <p>Acompanhe o status financeiro da sua unidade (Bloco B / 405).</p>
+        </div>
+
+        <h2>Resumo Mensal</h2>
+        <div class="financial-summary">
+            <div class="widget">
+                <i class="fas fa-receipt icon-alert"></i>
+                <h3>Próximo Vencimento</h3>
+                <p class="stat-number alert">25/11/2025</p>
+            </div>
+            <div class="widget">
+                <i class="fas fa-money-bill-wave stat-number negative"></i>
+                <h3>Débito Total Pendente</h3>
+                <p class="stat-number negative">R$ 850,00</p>
+            </div>
+            <div class="widget">
+                <i class="fas fa-check-circle icon-positive"></i>
+                <h3>Último Pagamento</h3>
+                <p class="stat-number positive">05/10/2025</p>
+            </div>
+        </div>
+        
+        <div class="tabs-container">
+            <button class="tab-button active" id="btn-pendentes">Boletos Pendentes</button>
+            <button class="tab-button" id="btn-historico">Histórico de Pagamentos</button>
+            
+            <button class="new-button"><i class="fas fa-file-pdf"></i> Exportar 2ª Via</button>
+        </div>
+        
+        <div id="content-pendentes" class="widget tab-content">
+            <h2>Boletos Pendentes de Pagamento</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Mês / Referência</th>
+                        <th>Vencimento</th>
+                        <th>Valor (R$)</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Novembro/2025 (Atual)</td>
+                        <td>25/11/2025</td>
+                        <td class="negative-value">850,00</td>
+                        <td class="status-pendente">Aberto</td>
+                        <td>
+                            <a href="#" class="action-link action-pay"><i class="fas fa-barcode"></i> Gerar Boleto</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Outubro/2025</td>
+                        <td>05/10/2025</td>
+                        <td class="negative-value">795,00</td>
+                        <td class="status-alta">Atrasado</td>
+                        <td>
+                            <a href="#" class="action-link action-pay"><i class="fas fa-exclamation-circle"></i> Pagar c/ Multa</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="content-historico" class="widget tab-content hidden">
+            <h2>Histórico de Pagamentos (Últimos 12 Meses)</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Mês / Referência</th>
+                        <th>Pagamento em</th>
+                        <th>Valor Pago (R$)</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Setembro/2025</td>
+                        <td>03/09/2025</td>
+                        <td class="positive-value">800,00</td>
+                        <td class="status-resolvida">Pago</td>
+                        <td>
+                            <a href="#" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Agosto/2025</td>
+                        <td>20/08/2025</td>
+                        <td class="positive-value">780,00</td>
+                        <td class="status-resolvida">Pago</td>
+                        <td>
+                            <a href="#" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btns = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = 'content-' + btn.id.split('-')[1];
+
+                    // Remove ativo de todos os botões e esconde todos os conteúdos
+                    btns.forEach(b => b.classList.remove('active'));
+                    contents.forEach(c => c.classList.add('hidden'));
+
+                    // Ativa o botão clicado e mostra o conteúdo correspondente
+                    btn.classList.add('active');
+                    document.getElementById(targetId).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

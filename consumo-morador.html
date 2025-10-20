@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Consumo (IoT) - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="sidebar">
+        <div class="sidebar-header">NEXUS MORADOR</div>
+        <nav>
+            <ul>
+                <li><a href="painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                <li><a href="financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li><a href="ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li class="active"><a href="consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1>Monitoramento de Consumo (Unidade B / 405)</h1>
+            <p>Acompanhe seu consumo individual de água e energia em tempo real.</p>
+        </div>
+
+        <div class="controls-container">
+            <div class="search-group">
+                <label for="periodo-select" style="font-weight: bold; color: #555;">Visualizar Período:</label>
+                <select id="periodo-select" class="search-input">
+                    <option>Últimos 7 dias</option>
+                    <option selected>Últimos 30 dias</option>
+                    <option>Últimos 6 meses</option>
+                </select>
+            </div>
+            <button class="new-button" style="background-color: #3498db;"><i class="fas fa-file-download"></i> Exportar Relatório</button>
+        </div>
+
+        <h2>Consumo Detalhado (Mês Atual)</h2>
+        <div class="metrics-grid">
+            
+            <div class="metric-card widget water-metric">
+                <i class="fas fa-tint"></i>
+                <h3>Consumo de Água (m³)</h3>
+                <p class="metric-value">12.8</p>
+                <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
+            </div>
+            
+            <div class="metric-card widget energy-metric">
+                <i class="fas fa-bolt"></i>
+                <h3>Consumo de Energia (kWh)</h3>
+                <p class="metric-value">185</p>
+                <span class="metric-change positive">↑ 8% vs Mês Anterior</span>
+            </div>
+
+            <div class="metric-card widget financial-metric" style="border-left: 5px solid #e67e22;">
+                <i class="fas fa-money-check-alt" style="color: #e67e22;"></i>
+                <h3>Previsão de Custo (IoT)</h3>
+                <p class="metric-value" style="color: #e67e22;">R$ 155,00</p>
+                <span class="metric-change">Cálculo Baseado no Consumo</span>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            
+            <h2>Histórico Mensal de Água</h2>
+            <div class="widget">
+                <div class="graph-placeholder line-chart-placeholder" style="height: 350px;">
+                    Gráfico Simulado: Consumo de Água (m³) nos Últimos 6 Meses.
+                    <br><small>Recomendação: Média do condomínio é 10 m³.</small>
+                </div>
+            </div>
+            
+            <h2>Histórico Mensal de Energia</h2>
+            <div class="widget">
+                <div class="graph-placeholder line-chart-placeholder" style="height: 350px;">
+                    Gráfico Simulado: Consumo de Energia (kWh) nos Últimos 6 Meses.
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

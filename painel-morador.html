@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Morador - NEXUS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            NEXUS MORADOR 
+            </div>
+        <nav>
+            <ul>
+                <li class="active"><a href="painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                <li><a href="financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li><a href="ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li><a href="consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1>Bem-vindo, [Nome do Morador]!</h1>
+            <p>Unidade **Bloco B / 405**</p>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="main-column">
+                
+                <h2>Informações da Unidade</h2>
+                <div class="metrics-grid">
+                    
+                    <div class="metric-card widget water-metric">
+                        <i class="fas fa-tint"></i>
+                        <h3>Consumo Água (Último Mês)</h3>
+                        <p class="metric-value">12.8 m³</p>
+                        <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
+                    </div>
+                    
+                    <div class="metric-card widget financial-metric">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <h3>Próximo Boleto Vence em</h3>
+                        <p class="metric-value" style="color: #e67e22;">5 Dias</p>
+                        <span class="metric-change positive">Valor: R$ 850,00</span>
+                    </div>
+
+                    <div class="metric-card widget alert-metric">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Minhas Próximas Reservas</h3>
+                        <p class="metric-value">1</p>
+                        <span class="metric-change">Churrasqueira (15/11)</span>
+                    </div>
+                </div>
+                
+                <h2>Avisos Importantes do Condomínio</h2>
+                <div class="widget">
+                    <h3>Substituição de Elevadores</h3>
+                    <p>Prezados moradores, informamos que a substituição do elevador do Bloco B está programada para iniciar em 01/12/2025. Pedimos a compreensão...</p>
+                    <a href="avisos.html" class="action-link">Ver todos os avisos</a>
+                </div>
+
+                <h2>Seu Consumo nos Últimos 6 Meses</h2>
+                <div class="widget">
+                    <div class="graph-placeholder line-chart-placeholder">
+                        Gráfico Simulado: Consumo de Água e Energia por Mês
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="side-column">
+                
+                <h2>Ações Rápidas</h2>
+                <div class="widget">
+                    <button class="new-button" style="width: 100%; margin-bottom: 10px;"><i class="fas fa-calendar-plus"></i> Fazer Nova Reserva</button>
+                    <button class="new-button" style="width: 100%; background-color: #3498db; margin-bottom: 10px;"><i class="fas fa-ticket-alt"></i> Abrir Nova Ocorrência</button>
+                    <button class="new-button" style="width: 100%; background-color: #27ae60;"><i class="fas fa-money-check-alt"></i> Pagar Boleto Atual</button>
+                </div>
+                
+                <h2>Minhas Ocorrências Recentes</h2>
+                <div class="widget">
+                    <p style="font-size: 0.9rem; color: #777;">**Ocorrência 1:** Vazamento no Banheiro - <span class="status-andamento">Em Andamento</span></p>
+                    <p style="font-size: 0.9rem; color: #777;">**Ocorrência 2:** Barulho Excessivo (21/10) - <span class="status-resolvida">Resolvida</span></p>
+                    <a href="ocorrencias-morador.html" class="action-link">Ver todas</a>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
