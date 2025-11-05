@@ -1,0 +1,715 @@
+/*
+    -----------------------------------------------------
+    PAGES.CSS - Estilos Específicos de Páginas e Contextos
+    -----------------------------------------------------
+*/
+
+/*
+    Parte 3: Estrutura da Página de Login (login.html)
+*/
+.login-body {
+    background: url('../predios.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.login-body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    z-index: 2;
+}
+
+.login-container h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+}
+
+.login-container .logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+/*
+    Parte 4: Estilo dos Campos de Formulário (Login)
+*/
+.form-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.form-group .password-input {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.form-group .password-input input {
+    padding-right: 2.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group .password-input i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+}
+/*
+    Parte 5: Botões de Login
+*/
+.login-button {
+    width: 100%;
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.login-button:hover {
+    background-color: #34495e;
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 0.9rem;
+    color: #e67e22;
+    text-decoration: none;
+    margin-top: 0.5rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/*
+    Parte 6: Divisor "Ou"
+*/
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #eee;
+}
+
+.divider:not(:empty)::before {
+    margin-right: 1rem;
+}
+
+.divider:not(:empty)::after {
+    margin-left: 1rem;
+}
+
+/*
+    Parte 7: Botões de Social Login
+*/
+.social-login button {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.social-login .google-btn {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.social-login .google-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.social-login .facebook-btn {
+    background-color: #fff;
+    color: #3b5998;
+    border: 1px solid #ccc;
+}
+
+.social-login .facebook-btn:hover {
+    background-color: #f0f2f5;
+}
+
+.social-login i {
+    font-size: 1.2rem;
+}
+
+/*
+    Parte 8: Link de Cadastro
+*/
+.signup-link {
+    display: block;
+    margin-top: 2rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+.signup-link a {
+    color: #e67e22;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+/*
+    Parte 10: Estilo da Pagina Inicial - Hero
+*/
+
+/* ======= ESTILO GERAL ======= */
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    color: #222;
+    background: #f8f9fb;
+}
+
+/* ======= HERO SECTION ======= */
+.hero {
+    position: relative;
+    background: url('../../public/predios.jpg') center/cover no-repeat;
+    height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hero .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 60px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.cta-button {
+    background: #f97316;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #ea580c;
+    transform: scale(1.05);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px 20px;
+    color: #222;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.dropdown-content a:hover {
+    background: #f3f4f6;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+/* ======= HERO CONTENT ======= */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 120px;
+    animation: fadeIn 1.5s ease;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 5px 0;
+}
+
+/* ======= FEATURES ======= */
+.features {
+    text-align: center;
+    padding: 80px 60px;
+}
+
+.features h2 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 50px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 35px 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 300px;
+    transition: all 0.3s ease;
+}
+
+.card i {
+    font-size: 35px;
+    color: #f97316;
+    margin-bottom: 15px;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+    color: #f97316;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ======= BUTTONS ======= */
+.primary-button-lg {
+    display: inline-block;
+    background: #1f2937;
+    color: white;
+    padding: 15px 35px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 40px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.primary-button-lg:hover {
+    background: #111827;
+    transform: scale(1.05);
+}
+
+/* ======= FOOTER ======= */
+.main-footer {
+    background: #1f2937;
+    color: #d1d5db;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+/* ======= ANIMAÇÃO ======= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/*
+    Parte 17: Estilos Específicos para Ocorrências (Status)
+*/
+
+.data-table .status-ativo {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.data-table .status-pendente {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.data-table .status-alta {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.data-table .status-media {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.data-table .status-baixa {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.data-table .status-andamento {
+    color: #2980b9;
+    font-weight: bold;
+}
+
+.data-table .status-resolvida {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+/*
+    Parte 18: Estilos Específicos para Gestão Financeira (Cores de Valores)
+*/
+
+.financial-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.financial-summary .widget {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+}
+
+.financial-summary .widget i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.financial-summary .widget h3 {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+}
+
+.financial-summary .stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.stat-number.positive,
+.icon-positive {
+    color: #27ae60;
+}
+
+.stat-number.alert,
+.icon-alert {
+    color: #e67e22;
+}
+
+.stat-number.negative,
+.icon-negative {
+    color: #e74c3c;
+}
+
+.data-table .positive-value {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.data-table .negative-value {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.action-link.action-pay {
+    color: #e74c3c;
+}
+
+.action-link.action-pay:hover {
+    color: #c0392b;
+}
+
+.action-link.action-collect {
+    color: #27ae60;
+}
+
+.action-link.action-collect:hover {
+    color: #2ecc71;
+}
+
+
+/*
+    Parte 19: Estilos Específicos para Monitoramento IoT (Cards de Métricas)
+*/
+
+/* --- Grid de Métricas --- */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* --- Cards de Métricas (Apenas o visual) --- */
+.metric-card {
+    /* Reutiliza .widget */
+    text-align: left;
+}
+
+.metric-card i {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+    display: block;
+}
+
+.metric-card h3 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.metric-card .metric-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.metric-card .metric-change {
+    display: block;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Cores específicas para os cards */
+.metric-card.water-metric i,
+.metric-card.water-metric .metric-value {
+    color: #3498db;
+}
+
+.metric-card.energy-metric i,
+.metric-card.energy-metric .metric-value {
+    color: #f1c40f;
+}
+
+.metric-card.economy-metric i,
+.metric-card.economy-metric .metric-value {
+    color: #27ae60;
+}
+
+/* Cores para o status de mudança */
+.metric-change.positive {
+    color: #27ae60;
+    /* Verde */
+    font-weight: bold;
+}
+
+.metric-change.negative {
+    color: #e74c3c;
+    /* Vermelho */
+    font-weight: bold;
+}
+
+/* --- Seção de Gráficos --- */
+.charts-section h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.charts-section h3 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    /* mantém o menu junto do botão */
+    z-index: 1000;
+    margin: 0;
+}
+
+/* botão sem transformação que altera tamanho (evita criar gap) */
+.cta-button {
+    background: #f97316;
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        /* Remove transform para evitar mudanças de layout */
+        transform: none !important;
+}
+
+/* efeito visual no hover sem alterar o fluxo (sem scale) */
+.cta-button:hover {
+    background: #ea580c;
+}
+
+/* menu posicionado colado ao botão (sem gap) */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Botão principal */
+.dropdown-button {
+    background-color: #e67e22;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.dropdown-button:hover {
+    background-color: #d35400;
+}
+
+/* Conteúdo do dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* CORREÇÃO FINAL AJUSTADA: Sobrepõe o menu levemente no botão (1px) */
+    top: calc(100% - 1px); 
+    
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    min-width: 200px;
+    overflow: hidden;
+    z-index: 1100;
+}
+
+/* Links do menu */
+.dropdown-content a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* Cores dos itens */
+.dropdown-content a:nth-child(1) {
+    background-color: #e67e22;
+}
+.dropdown-content a:nth-child(2) {
+    background-color: #2c3e50;
+}
+
+/* Efeitos ao passar o mouse */
+.dropdown-content a:hover {
+    opacity: 0.9;
+}
+
+/* Exibe o menu ao passar o mouse */
+.dropdown:hover .dropdown-content {
+    display: block;
+}

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Acesso ao Sistema - NEXUS</title>
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* ====== ESTILO GERAL ====== */
+        body.login-body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+                url('../../public/predios.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* ====== LOGO ====== */
+        .top-logo {
+            color: #fff;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ====== CONTAINER DE LOGIN ====== */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+            width: 350px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #1b2c48;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        /* ====== CAMPO DE SENHA ====== */
+        .password-input {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-input input {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .password-input .toggle-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 16px;
+            width: 25px;
+            text-align: center;
+            user-select: none;
+        }
+
+        /* O ícone muda via CSS, mas mantém o mesmo tamanho */
+        .password-input .toggle-icon::before {
+            content: "\f070";
+            /* fa-eye-slash */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+        }
+
+        .password-input .toggle-icon.show::before {
+            content: "\f06e";
+            /* fa-eye */
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            color: #ff6600;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1b2c48;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #223c5c;
+            transform: scale(1.03);
+        }
+
+        .divider {
+            margin: 20px 0;
+            color: #aaa;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ccc;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .social-login button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .google-btn:hover,
+        .facebook-btn:hover {
+            background: #f5f5f5;
+            transform: scale(1.02);
+        }
+
+        .facebook-btn {
+            color: #3b5998;
+        }
+
+        .signup-link {
+            font-size: 13px;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .signup-link a {
+            color: #1b2c48;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 400px) {
+            .login-container {
+                width: 90%;
+                padding: 30px 25px;
+            }
+
+            .top-logo {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body class="login-body">
+    <div class="top-logo">NEXUS</div>
+
+    <div class="login-container">
+        <h2 id="login-heading"></h2>
+
+        <form action="#" method="POST" id="login-form">
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="seu.email@exemplo.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="password-input">
+                    <input type="password" id="password" placeholder="********" required>
+                    <span class="toggle-icon" id="togglePassword"></span>
+                </div>
+            </div>
+
+            <a href="#" class="forgot-password">Esqueceu a senha?</a>
+
+            <button type="submit" class="login-button">Acessar</button>
+
+            <div class="divider">OU</div>
+
+            <div class="social-login">
+                <button type="button" class="google-btn"><i class="fab fa-google"></i> Continuar com Google</button>
+                <button type="button" class="facebook-btn"><i class="fab fa-facebook-f"></i> Continuar com
+                    Facebook</button>
+            </div>
+
+            <p class="signup-link">
+                É novo por aqui? <a href="#">Solicite seu Cadastro</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const role = params.get('role');
+            const heading = document.getElementById('login-heading');
+            const form = document.getElementById('login-form');
+            const password = document.getElementById('password');
+            const togglePassword = document.getElementById('togglePassword');
+
+            let destino;
+
+            // Define título e redirecionamento
+            if (role === 'admin') {
+                heading.textContent = 'Acesso do Administrador';
+                destino = '../admin/painel-admin.html';
+            } else {
+                heading.textContent = 'Acesso do Morador';
+                destino = '../morador/painel-morador.html';
+            }
+
+            // Simula login
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (form.checkValidity()) {
+                    window.location.href = destino;
+                }
+            });
+
+            // Mostrar/esconder senha sem trocar o ícone (pra não mover)
+            togglePassword.addEventListener('click', function () {
+                const isPassword = password.getAttribute('type') === 'password';
+                password.setAttribute('type', isPassword ? 'text' : 'password');
+                this.classList.toggle('show', isPassword);
+            });
+        });
+    </script>
+</body>
+
+</html>

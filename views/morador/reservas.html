@@ -1,0 +1,129 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reservas de Áreas - NEXUS</title>
+        <link rel="stylesheet" href="../../public/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+
+    <body class="admin-body">
+
+        <div class="sidebar">
+            <div class="sidebar-header">NEXUS MORADOR</div>
+            <nav>
+                <ul>
+                    <li><a href="painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                    <li class="active"><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                    <li><a href="../financeiro/financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                    <li><a href="../ocorrencias/ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                    <li><a href="../financeiro/consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
+                    <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                    <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="dashboard-header">
+                <h1>Reservas de Áreas Comuns</h1>
+                <p>Verifique a disponibilidade e agende o seu evento.</p>
+            </div>
+
+            <div class="form-container">
+                <h2><i class="fas fa-calendar-plus"></i> Fazer Nova Reserva</h2>
+                <form action="#" method="POST">
+                    <fieldset class="form-section">
+                        <legend>Detalhes do Agendamento</legend>
+                        <div class="form-grid">
+                            
+                            <div class="form-group">
+                                <label for="area">Área Desejada</label>
+                                <select id="area" required>
+                                    <option value="">Selecione a Área...</option>
+                                    <option>Salão de Festas Principal</option>
+                                    <option>Churrasqueira 1</option>
+                                    <option>Espaço Gourmet</option>
+                                    <option>Sala de Reuniões</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="data">Data do Evento</label>
+                                <input type="date" id="data" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="periodo">Período (Horário)</label>
+                                <select id="periodo" required>
+                                    <option value="">Selecione o Período...</option>
+                                    <option>Manhã (08h - 13h)</option>
+                                    <option>Tarde (14h - 22h)</option>
+                                    <option>Dia Inteiro (08h - 22h)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="convidados">Nº Estimado de Convidados</label>
+                                <input type="number" id="convidados" min="1" placeholder="Ex: 50">
+                            </div>
+                            
+                        </div>
+                    </fieldset>
+
+                    <div class="button-group">
+                        <button type="submit" class="submit-button"><i class="fas fa-check-circle"></i> Verificar e Reservar</button>
+                        <button type="reset" class="reset-button"><i class="fas fa-eraser"></i> Limpar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="widget">
+                <h2><i class="fas fa-list-alt"></i> Minhas Próximas Reservas</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Área</th>
+                            <th>Data</th>
+                            <th>Período</th>
+                            <th>Convidados</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Churrasqueira 1</td>
+                            <td>25/11/2025</td>
+                            <td>Tarde</td>
+                            <td>20</td>
+                            <td class="status-ativo">Confirmada</td>
+                            <td>
+                                <a href="#" class="action-link"><i class="fas fa-edit"></i> Editar</a>
+                                <a href="#" class="action-link" style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Cancelar</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Salão de Festas Principal</td>
+                            <td>10/01/2026</td>
+                            <td>Dia Inteiro</td>
+                            <td>80</td>
+                            <td class="status-pendente">Aguardando Pagamento</td>
+                            <td>
+                                <a href="#" class="action-link action-pay" style="color: #e67e22;"><i class="fas fa-money-check-alt"></i> Pagar Taxa</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <footer class="content-footer">
+                <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+            </footer>
+        </div>
+    </body>
+
+    </html>

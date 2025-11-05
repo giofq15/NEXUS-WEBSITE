@@ -1,0 +1,17 @@
+/*
+    -----------------------------------------------------
+    STYLE.CSS - Arquivo Principal que Importa Todos os Estilos
+    -----------------------------------------------------
+*/
+
+/* Importando estilos base (Reset e Globais) */
+@import url('base.css');
+
+/* Importando estilos de layout e responsividade (Sidebar, Grids) */
+@import url('layout.css');
+
+/* Importando módulos e componentes reutilizáveis (Formulários, Tabelas, Widgets) */
+@import url('modules.css');
+
+/* Importando estilos específicos de páginas (Home, Login, Status de Ocorrências) */
+@import url('pages.css');

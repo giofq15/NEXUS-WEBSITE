@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Dashboard Nexus</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="admin-body">
@@ -15,10 +15,10 @@
             <ul>
                 <li class="active"><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
-                <li><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
-                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../morador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
+                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
@@ -43,7 +43,7 @@
                     <h3>Manutenção de Elevador - Torre B</h3>
                     <p>Status: <span style="color: red; font-weight: bold;">Pendente</span></p>
                     <p style="font-size: 0.9rem; color: #777;">Aberta há 2 dias.</p>
-                    <a href="detalhes-ocorrencia.html">Ver Detalhes</a>
+                    <a href="../ocorrencias/detalhes-ocorrencia.html">Ver Detalhes</a>
                 </div>
             </div>
 
@@ -53,13 +53,13 @@
                 <div class="widget">
                     <h3>Ocorrências Pendentes</h3>
                     <p class="data">5</p>
-                    <a href="ocorrencias.html">Ver todas as Ocorrências</a>
+                    <a href="../ocorrencias/ocorrencias.html">Ver todas as Ocorrências</a>
                 </div>
                 
                 <div class="widget">
                     <h3>Economia de Água (Mês)</h3>
                     <p class="percentage">+12%</p>
-                    <a href="monitoramento-iot.html">Detalhes do Monitoramento</a>
+                    <a href="../morador/monitoramento-iot.html">Detalhes do Monitoramento</a>
                 </div>
                 
                 <div class="widget">
@@ -71,6 +71,6 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <script src="../../public/js/script.js"></script>
 </body>
 </html>
