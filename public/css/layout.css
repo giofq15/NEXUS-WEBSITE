@@ -27,6 +27,47 @@
     font-weight: bold;
 }
 
+
+.nexus-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nexus-brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.nexus-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+}
+
+.nexus-brand-text strong {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+}
+
+.nexus-brand-text span {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: #f5b27a;
+    font-weight: 700;
+}
+
+.logo-with-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: transparent;
+    padding: 0;
+}
+
 .sidebar nav ul {
     list-style: none;
     padding: 0;
@@ -134,6 +175,15 @@
     .sidebar nav ul li.active a {
         border-left-color: transparent;
         border-bottom-color: #e67e22;
+    }
+
+    .nexus-brand-mark {
+        width: 34px;
+        height: 34px;
+    }
+
+    .nexus-brand-text strong {
+        font-size: 0.95rem;
     }
 
     .main-content {
