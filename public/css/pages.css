@@ -4,6 +4,20 @@
     -----------------------------------------------------
 */
 
+/* Variáveis globais rápidas (ajuste se quiser) */
+:root{
+  --accent: #f97316;        /* laranja principal */
+  --accent-dark: #e67e22;
+  --dark: #2c3e50;          /* azul escuro */
+  --dark-700: #34495e;
+  --white: #ffffff;
+  --muted: #f3f4f6;
+  --shadow: 0 10px 30px rgba(2,6,23,0.18);
+  --radius: 12px;
+  --menu-gap: 8px;         /* espaço entre botão e menu */
+  --menu-width: 220px;     /* fallback para telas grandes */
+}
+
 /*
     Parte 3: Estrutura da Página de Login (login.html)
 */
@@ -85,8 +99,8 @@
 */
 .login-button {
     width: 100%;
-    background-color: #2c3e50;
-    color: #fff;
+    background-color: var(--dark);
+    color: var(--white);
     padding: 0.8rem;
     border: none;
     border-radius: 5px;
@@ -98,14 +112,14 @@
 }
 
 .login-button:hover {
-    background-color: #34495e;
+    background-color: var(--dark-700);
 }
 
 .forgot-password {
     display: block;
     text-align: right;
     font-size: 0.9rem;
-    color: #e67e22;
+    color: var(--accent);
     text-decoration: none;
     margin-top: 0.5rem;
 }
@@ -193,7 +207,7 @@
 }
 
 .signup-link a {
-    color: #e67e22;
+    color: var(--accent);
     text-decoration: none;
     font-weight: bold;
 }
@@ -264,52 +278,35 @@ header {
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
+/* Default CTA styling (improved) */
 .cta-button {
-    background: #f97316;
+    appearance: none;
+    -webkit-appearance: none;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--white);
     border: none;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
+    padding: 10px 20px;
+    font-weight: 700;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     cursor: pointer;
-    transition: all 0.3s ease;
+    display: inline-block;
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    user-select: none;
+    font-size: 15px;
+    text-align: center;
+    white-space: nowrap;
 }
 
+/* hover/active effects */
 .cta-button:hover {
-    background: #ea580c;
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    filter: brightness(1.02);
 }
 
-/* Dropdown */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-.dropdown-content a {
-    display: block;
-    padding: 12px 20px;
-    color: #222;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.dropdown-content a:hover {
-    background: #f3f4f6;
-}
-
-.dropdown-content.show {
-    display: block;
+.cta-button:active {
+    transform: translateY(0);
+    filter: brightness(.98);
 }
 
 /* ======= HERO CONTENT ======= */
@@ -366,7 +363,7 @@ header {
 
 .card i {
     font-size: 35px;
-    color: #f97316;
+    color: var(--accent);
     margin-bottom: 15px;
 }
 
@@ -376,7 +373,7 @@ header {
 }
 
 .card h3 {
-    color: #f97316;
+    color: var(--accent);
     margin-bottom: 10px;
 }
 
@@ -389,8 +386,8 @@ header {
 /* ======= BUTTONS ======= */
 .primary-button-lg {
     display: inline-block;
-    background: #1f2937;
-    color: white;
+    background: var(--dark);
+    color: var(--white);
     padding: 15px 35px;
     border-radius: 10px;
     font-weight: 600;
@@ -406,7 +403,7 @@ header {
 
 /* ======= FOOTER ======= */
 .main-footer {
-    background: #1f2937;
+    background: var(--dark);
     color: #d1d5db;
     text-align: center;
     padding: 20px;
@@ -437,7 +434,7 @@ header {
 }
 
 .data-table .status-pendente {
-    color: #e67e22;
+    color: var(--accent);
     font-weight: bold;
 }
 
@@ -508,7 +505,7 @@ header {
 
 .stat-number.alert,
 .icon-alert {
-    color: #e67e22;
+    color: var(--accent);
 }
 
 .stat-number.negative,
@@ -522,7 +519,7 @@ header {
 }
 
 .data-table .negative-value {
-    color: #e74c3c;
+    color: #e74c3e;
     font-weight: bold;
 }
 
@@ -631,96 +628,103 @@ header {
     margin-top: 0;
 }
 
+/* ===========================
+   DROPDOWN / CTA (ALINHAMENTO CORRIGIDO + SEM BORDAS BRANCAS)
+   =========================== */
+
 .dropdown {
-    position: relative;
-    display: inline-block;
-    /* mantém o menu junto do botão */
-    z-index: 1000;
-    margin: 0;
-}
-
-/* botão sem transformação que altera tamanho (evita criar gap) */
-.cta-button {
-    background: #f97316;
-        border: none;
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        /* Remove transform para evitar mudanças de layout */
-        transform: none !important;
-}
-
-/* efeito visual no hover sem alterar o fluxo (sem scale) */
-.cta-button:hover {
-    background: #ea580c;
-}
-
-/* menu posicionado colado ao botão (sem gap) */
-.dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+  margin: 0;
 }
 
 /* Botão principal */
-.dropdown-button {
-    background-color: #e67e22;
-    color: #fff;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: background 0.3s;
+#dropdown-btn,
+.cta-button {
+  appearance: none;
+  background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.25s ease;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
 
-.dropdown-button:hover {
-    background-color: #d35400;
+#dropdown-btn:hover,
+.cta-button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
 }
 
 /* Conteúdo do dropdown */
 .dropdown-content {
-    display: none;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    
-    /* CORREÇÃO FINAL AJUSTADA: Sobrepõe o menu levemente no botão (1px) */
-    top: calc(100% - 1px); 
-    
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-    min-width: 200px;
-    overflow: hidden;
-    z-index: 1100;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 100%;
+  background-color: transparent;
+  border-radius: 10px;
+  margin-top: 8px;
+  z-index: 1100;
+  overflow: hidden; /* <-- corta qualquer borda branca ou sombra */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
-/* Links do menu */
+/* Itens internos */
 .dropdown-content a {
-    display: block;
-    padding: 12px;
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    text-align: center;
-    font-size: 0.95rem;
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  padding: 14px 0;
+  font-size: 15px;
+  transition: background 0.3s ease;
 }
 
-/* Cores dos itens */
+/* Cores individuais */
 .dropdown-content a:nth-child(1) {
-    background-color: #e67e22;
+  background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
 }
 .dropdown-content a:nth-child(2) {
-    background-color: #2c3e50;
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
 }
 
-/* Efeitos ao passar o mouse */
+/* Hover */
 .dropdown-content a:hover {
-    opacity: 0.9;
+  filter: brightness(1.1);
+}
+
+/* Mostrar dropdown */
+.dropdown.show .dropdown-content {
+  display: block;
+}
+
+/* Remove “pontas brancas” e desalinhamentos */
+.dropdown-content a:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.dropdown-content a:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  .dropdown-content {
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 /* Exibe o menu ao passar o mouse */

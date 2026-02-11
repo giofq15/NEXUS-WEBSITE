@@ -39,3 +39,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Dropdown toggle: abre/fecha por clique, fecha ao clicar fora, fecha com Esc
+(function() {
+  document.addEventListener('click', function (e) {
+    // encontra todos os dropdowns abertos e fecha quando clicar fora
+    const openDropdowns = document.querySelectorAll('.dropdown.show');
+    openDropdowns.forEach(dd => {
+      if (!dd.contains(e.target)) dd.classList.remove('show');
+    });
+  });
+
+  // Abre/fecha ao clicar no botão específico
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('#dropdown-btn, .cta-button[data-target="dropdown"]');
+    if (!btn) return;
+    const dropdown = btn.closest('.dropdown');
+    if (!dropdown) return;
+    dropdown.classList.toggle('show');
+    e.stopPropagation(); // evita disparar o listener global que fecharia imediatamente
+  });
+
+  // fecha com Esc
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      document.querySelectorAll('.dropdown.show').forEach(dd => dd.classList.remove('show'));
+    }
+  });
+})();
