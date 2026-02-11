@@ -250,6 +250,20 @@ header {
     letter-spacing: 1px;
 }
 
+
+.home-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.home-brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
 .cta-button {
     background: #f97316;
     border: none;
@@ -712,4 +726,11 @@ header {
 /* Exibe o menu ao passar o mouse */
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+@media (max-width: 768px) {
+    .home-brand-mark {
+        width: 32px;
+        height: 32px;
+    }
 }
