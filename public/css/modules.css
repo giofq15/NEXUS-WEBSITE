@@ -411,3 +411,248 @@
         flex-wrap: wrap;
     }
 }
+/* --- Dashboard Admin: card de ocorrência e editor de comunicados --- */
+.occurrence-preview-card {
+    border-left: 4px solid #e67e22;
+}
+
+.occurrence-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-pill.status-pendente {
+    background: #fde8e8;
+    color: #c0392b;
+}
+
+.status-pill.status-ativo {
+    background: #e8f8ef;
+    color: #27ae60;
+}
+
+.occurrence-preview-meta {
+    color: #65717d;
+    font-size: 0.92rem;
+}
+
+.comunicados-editor {
+    margin-top: 2rem;
+}
+
+.comunicados-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.comunicados-editor h2 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.comunicados-editor-header p {
+    margin: 0.4rem 0 0 0;
+    color: #6b7785;
+}
+
+.comunicados-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+}
+
+.comunicados-form .form-group {
+    margin-bottom: 0;
+}
+
+.comunicados-form .form-group-full {
+    grid-column: 1 / -1;
+}
+
+.comunicados-form textarea,
+.comunicados-form input,
+.comunicados-form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d5dce3;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.comunicados-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* --- Página Detalhes de Ocorrência --- */
+.occurrence-page {
+    background: #f4f7f9;
+}
+
+.occurrence-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.occurrence-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.details-grid {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 0.8rem;
+}
+
+.details-grid>div {
+    background: #f7fafc;
+    border: 1px solid #e4ebf1;
+    padding: 0.7rem 0.85rem;
+    border-radius: 8px;
+    color: #334155;
+}
+
+.timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.timeline-item {
+    display: flex;
+    gap: 0.9rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+}
+
+.timeline-item.timeline-active .timeline-dot {
+    background: #e67e22;
+    box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.15);
+}
+
+.timeline-content {
+    background: #f8fafc;
+    border: 1px solid #e6edf3;
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    width: 100%;
+}
+
+.status-box .current-status {
+    margin: 0.25rem 0 1rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+.priority-high {
+    color: #c0392b;
+}
+
+.status-summary p {
+    margin: 0.45rem 0;
+    color: #3f4a56;
+}
+
+.action-title {
+    margin: 1rem 0 0.5rem;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.action-select {
+    width: 100%;
+    padding: 0.72rem;
+    border: 1px solid #d6dce3;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+}
+
+.full-width-btn {
+    width: 100%;
+    margin-bottom: 0.6rem;
+}
+
+.action-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.action-btn.view {
+    background: #2c7be5;
+}
+
+.action-btn.edit {
+    background: #34495e;
+}
+
+.action-btn:hover,
+.primary-button:hover,
+.submit-button:hover,
+.reset-button:hover {
+    filter: brightness(0.96);
+}
+
+@media (max-width: 1024px) {
+    .occurrence-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .occurrence-header {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .details-grid,
+    .comunicados-form {
+        grid-template-columns: 1fr;
+    }
+
+    .comunicados-actions {
+        justify-content: stretch;
+    }
+
+    .comunicados-actions button {
+        width: 100%;
+    }
+}

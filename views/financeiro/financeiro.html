@@ -12,7 +12,15 @@
 <body class="admin-body">
 
     <aside class="sidebar">
-        <div class="sidebar-header">NEXUS ADMIN</div>
+        <div class="sidebar-header">
+            <div class="nexus-brand" aria-label="Nexus Admin">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
+                <div class="nexus-brand-text">
+                    <strong>NEXUS</strong>
+                    <span>ADMIN</span>
+                </div>
+            </div>
+        </div>
         <nav>
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -52,9 +60,9 @@
         </div>
 
         <div class="tabs-container">
-            <button class="tab-button active" onclick="showTab('contas-pagar')">Contas a Pagar</button>
-            <button class="tab-button" onclick="showTab('contas-receber')">Contas a Receber</button>
-            <a href="novo-lancamento.html" class="new-button tabs-right-button">+ Novo Lançamento</a>
+            <button class="tab-button active" onclick="showTab(event, 'contas-pagar')">Contas a Pagar</button>
+            <button class="tab-button" onclick="showTab(event, 'contas-receber')">Contas a Receber</button>
+            <button type="button" class="new-button tabs-right-button">+ Novo Lançamento</button>
         </div>
 
         <div id="contas-pagar" class="tab-content active">
@@ -130,7 +138,7 @@
     </main>
 
     <script>
-        function showTab(tabId) {
+        function showTab(event, tabId) {
             // Esconde todas as abas
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
