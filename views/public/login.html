@@ -292,11 +292,45 @@
                 destino = '../morador/painel-morador.html';
             }
 
-            // Simula login
-            form.addEventListener('submit', function (e) {
+            // Login via API
+            form.addEventListener('submit', async function (e) {
                 e.preventDefault();
-                if (form.checkValidity()) {
-                    window.location.href = destino;
+                if (!form.checkValidity()) return;
+
+                const email = document.getElementById('email').value;
+                const pwd = password.value;
+                const btn = form.querySelector('.login-button');
+                btn.disabled = true;
+                btn.textContent = 'Entrando...';
+
+                try {
+                    const res = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password: pwd }),
+                    });
+
+                    const data = await res.json();
+
+                    if (!res.ok) {
+                        alert(data.error || 'Erro ao fazer login');
+                        btn.disabled = false;
+                        btn.textContent = 'Acessar';
+                        return;
+                    }
+
+                    localStorage.setItem('nexus_token', data.token);
+                    localStorage.setItem('nexus_user', JSON.stringify(data.user));
+
+                    if (data.user.role === 'ADMIN') {
+                        window.location.href = '../admin/painel-admin.html';
+                    } else {
+                        window.location.href = '../morador/painel-morador.html';
+                    }
+                } catch (err) {
+                    alert('Erro de conexão com o servidor');
+                    btn.disabled = false;
+                    btn.textContent = 'Acessar';
                 }
             });
 
