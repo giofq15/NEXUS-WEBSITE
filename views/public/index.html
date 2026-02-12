@@ -2,34 +2,44 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nexus - Gestão Condominial Inteligente</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../public/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 
 <body>
 
     <section class="hero">
         <div class="overlay"></div>
+
+        <!-- HEADER: substitua pela versão abaixo -->
         <header>
             <div class="logo home-brand" aria-label="Nexus">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="home-brand-mark">
                 <span>NEXUS</span>
             </div>
             <div class="dropdown">
-                <button class="cta-button" id="dropdown-btn">Acessar o Sistema</button>
-                <div class="dropdown-content" id="dropdown-menu">
-                    <a href="login.html" class="primary-button">Acesso Morador</a>
-                    <a href="login.html?role=admin" class="secondary-button">Acesso Administrador</a>
+                <!-- botão principal -->
+                <button id="dropdown-btn" class="cta-button" aria-haspopup="true" aria-expanded="false">
+                    Acessar o Sistema
+                </button>
+
+                <!-- conteúdo do dropdown (visualmente controlado pelo CSS / classe .show) -->
+                <div class="dropdown-content" role="menu" aria-hidden="true">
+                    <div class="dropdown-panel">
+                        <a href="login.html" role="menuitem">Acesso Morador</a>
+                        <a href="login.html?role=admin" role="menuitem">Acesso Administrador</a>
+                    </div>
                 </div>
             </div>
         </header>
+        <!-- fim do header -->
 
         <div class="hero-content">
-            <h1>A Solução Inteligente para uma<br>Gestão Condominial Sustentável.</h1>
+            <h1>A Solução Inteligente para uma<br />Gestão Condominial Sustentável.</h1>
             <p>Administração, síndico e monitoramento IoT em um só lugar.</p>
             <p>Focado em eficiência e economia de recursos.</p>
         </div>
@@ -64,12 +74,75 @@
         <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
     </footer>
 
+    <!-- SCRIPT: dropdown toggle + fechar ao clicar fora + Esc -->
     <script>
-        const btn = document.getElementById('dropdown-btn');
-        const menu = document.getElementById('dropdown-menu');
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('show');
-        });
+        (function () {
+            // encontra botão(s) e delega via evento
+            document.addEventListener('click', function (e) {
+                // clique no botão do dropdown: abre/fecha o dropdown correspondente
+                const btn = e.target.closest('#dropdown-btn, .cta-button[data-target="dropdown"]');
+                if (btn) {
+                    const dropdown = btn.closest('.dropdown');
+                    if (!dropdown) return;
+                    // toggle .show no wrapper
+                    const isShown = dropdown.classList.toggle('show');
+
+                    // atualiza atributos ARIA e a visibilidade do painel
+                    const panel = dropdown.querySelector('.dropdown-content');
+                    if (panel) {
+                        panel.style.visibility = isShown ? 'visible' : 'hidden';
+                        panel.style.opacity = isShown ? '1' : '0';
+                        panel.setAttribute('aria-hidden', (!isShown).toString());
+                    }
+                    btn.setAttribute('aria-expanded', isShown ? 'true' : 'false');
+
+                    // evita que o clique no botão dispare o listener global que fecha tudo
+                    e.stopPropagation();
+                    return;
+                }
+
+                // clique FORA: fecha todos os dropdowns abertos
+                document.querySelectorAll('.dropdown.show').forEach(dd => {
+                    if (!dd.contains(e.target)) {
+                        dd.classList.remove('show');
+                        const p = dd.querySelector('.dropdown-content');
+                        if (p) {
+                            p.style.visibility = 'hidden';
+                            p.style.opacity = '0';
+                            p.setAttribute('aria-hidden', 'true');
+                        }
+                        const b = dd.querySelector('#dropdown-btn');
+                        if (b) b.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+
+            // Fechar com a tecla Esc
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' || e.key === 'Esc') {
+                    document.querySelectorAll('.dropdown.show').forEach(dd => {
+                        dd.classList.remove('show');
+                        const p = dd.querySelector('.dropdown-content');
+                        if (p) {
+                            p.style.visibility = 'hidden';
+                            p.style.opacity = '0';
+                            p.setAttribute('aria-hidden', 'true');
+                        }
+                        const b = dd.querySelector('#dropdown-btn');
+                        if (b) b.setAttribute('aria-expanded', 'false');
+                    });
+                }
+            });
+
+            // Inicializa estado (garante que painéis começam ocultos)
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.dropdown .dropdown-content').forEach(p => {
+                    p.style.visibility = 'hidden';
+                    p.style.opacity = '0';
+                    p.setAttribute('aria-hidden', 'true');
+                });
+            });
+        })();
     </script>
 </body>
 
