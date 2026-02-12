@@ -738,3 +738,16 @@ header {
         height: 32px;
     }
 }
+/*
+    Parte 20: Estilos de Inadimplência (Admin)
+*/
+
+.delay-pill {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background-color: rgba(231, 76, 60, 0.12);
+    color: #c0392b;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
