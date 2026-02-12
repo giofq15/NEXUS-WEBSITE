@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moradores Inadimplentes - NEXUS</title>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="nexus-brand" aria-label="Nexus Admin">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
+                <div class="nexus-brand-text">
+                    <strong>NEXUS</strong>
+                    <span>ADMIN</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
+                <li class="active"><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Moradores Inadimplentes</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../morador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
+                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="dashboard-header">
+            <h1>Moradores Inadimplentes</h1>
+            <p>Unidades com taxa de condomínio em atraso há mais de 30 dias.</p>
+        </div>
+
+        <div class="financial-summary">
+            <div class="widget">
+                <i class="fas fa-user-slash icon-negative"></i>
+                <h3>Total de Moradores Inadimplentes</h3>
+                <p class="stat-number negative" data-qtd-inadimplentes>0</p>
+            </div>
+            <div class="widget">
+                <i class="fas fa-file-invoice-dollar icon-alert"></i>
+                <h3>Total em Aberto</h3>
+                <p class="stat-number alert" data-total-inadimplencia>R$ 0,00</p>
+            </div>
+        </div>
+
+        <table class="data-table" data-inadimplencia-table>
+            <thead>
+                <tr>
+                    <th>Morador</th>
+                    <th>Bloco</th>
+                    <th>Apartamento</th>
+                    <th>Total em Aberto</th>
+                    <th>Dias em Atraso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-vencimento="2025-01-10" data-valor="1320.00">
+                    <td>Ana Luiza Martins</td>
+                    <td>Bloco A</td>
+                    <td>101</td>
+                    <td class="negative-value">R$ 1.320,00</td>
+                    <td><span class="delay-pill" data-dias-atraso>0 dias</span></td>
+                </tr>
+                <tr data-vencimento="2024-12-05" data-valor="2875.40">
+                    <td>Paulo Henrique Souza</td>
+                    <td>Bloco B</td>
+                    <td>205</td>
+                    <td class="negative-value">R$ 2.875,40</td>
+                    <td><span class="delay-pill" data-dias-atraso>0 dias</span></td>
+                </tr>
+                <tr data-vencimento="2025-02-14" data-valor="980.00">
+                    <td>Mariana Costa</td>
+                    <td>Bloco C</td>
+                    <td>304</td>
+                    <td class="negative-value">R$ 980,00</td>
+                    <td><span class="delay-pill" data-dias-atraso>0 dias</span></td>
+                </tr>
+                <tr data-vencimento="2026-01-25" data-valor="740.00">
+                    <td>Carlos Eduardo Lima</td>
+                    <td>Bloco A</td>
+                    <td>203</td>
+                    <td class="negative-value">R$ 740,00</td>
+                    <td><span class="delay-pill" data-dias-atraso>0 dias</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="content-footer">
+            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </div>
+
+    </main>
+
+    <script src="../../public/js/script.js"></script>
+</body>
+
+</html>

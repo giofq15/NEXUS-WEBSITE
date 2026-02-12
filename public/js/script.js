@@ -67,3 +67,61 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 })();
+
+(function () {
+    const inadimplenciaTable = document.querySelector('[data-inadimplencia-table]');
+
+    if (!inadimplenciaTable) {
+        return;
+    }
+
+    const tbody = inadimplenciaTable.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr[data-vencimento]'));
+    const totalField = document.querySelector('[data-total-inadimplencia]');
+    const quantityField = document.querySelector('[data-qtd-inadimplentes]');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let totalOverdue = 0;
+    let overdueResidents = 0;
+
+    rows.forEach((row) => {
+        const dueDateValue = row.dataset.vencimento;
+        const dueDate = new Date(`${dueDateValue}T00:00:00`);
+        const diffInDays = Math.floor((today - dueDate) / (1000 * 60 * 60 * 24));
+
+        if (!Number.isFinite(diffInDays) || diffInDays <= 30) {
+            row.remove();
+            return;
+        }
+
+        const delayCell = row.querySelector('[data-dias-atraso]');
+        if (delayCell) {
+            delayCell.textContent = `${diffInDays} dias`;
+        }
+
+        const amount = Number.parseFloat(row.dataset.valor || '0');
+        if (Number.isFinite(amount)) {
+            totalOverdue += amount;
+        }
+
+        overdueResidents += 1;
+    });
+
+    if (totalField) {
+        totalField.textContent = totalOverdue.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+    }
+
+    if (quantityField) {
+        quantityField.textContent = String(overdueResidents);
+    }
+
+    if (!tbody.querySelector('tr')) {
+        const emptyRow = document.createElement('tr');
+        emptyRow.innerHTML = '<td colspan="5">Não há moradores com atraso superior a 30 dias no momento.</td>';
+        tbody.appendChild(emptyRow);
+    }
+})();
