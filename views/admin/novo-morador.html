@@ -40,7 +40,7 @@
 
         <div class="form-container">
             <h2>Cadastro de Novo Morador</h2>
-            <form action="#" method="POST">
+            <form id="morador-form">
 
                 <fieldset class="form-section">
                     <legend><i class="fas fa-user"></i> Dados Pessoais</legend>
@@ -83,9 +83,9 @@
                         <div class="form-group">
                             <label for="acesso">Status de Acesso</label>
                             <select id="acesso">
-                                <option>Ativo</option>
-                                <option>Pendente</option>
-                                <option>Bloqueado</option>
+                                <option value="ATIVO">Ativo</option>
+                                <option value="PENDENTE">Pendente</option>
+                                <option value="BLOQUEADO">Bloqueado</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -96,7 +96,7 @@
                 </fieldset>
 
                 <div class="button-group">
-                    <button type="submit" class="submit-button">
+                    <button type="submit" class="submit-button" id="submit-btn">
                         <i class="fas fa-save"></i> Cadastrar Morador
                     </button>
                     <button type="reset" class="reset-button">
@@ -111,6 +111,85 @@
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    <script>
+        const token = localStorage.getItem('nexus_token');
+        if (!token) window.location.href = '../public/login.html?role=admin';
+
+        const form = document.getElementById('morador-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const params = new URLSearchParams(window.location.search);
+        const editId = params.get('id');
+
+        // If editing, load existing data
+        if (editId) {
+            document.querySelector('h2').textContent = 'Editar Morador';
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Alterações';
+
+            fetch(`/api/moradores/${editId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(res => res.json())
+            .then(m => {
+                document.getElementById('nome').value = m.nome;
+                document.getElementById('cpf').value = m.cpf;
+                if (m.nascimento) document.getElementById('nascimento').value = m.nascimento.split('T')[0];
+                document.getElementById('telefone').value = m.telefone;
+                document.getElementById('bloco').value = m.bloco;
+                document.getElementById('unidade').value = m.unidade;
+                document.getElementById('acesso').value = m.status;
+                document.getElementById('email').value = m.user.email;
+            });
+        }
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const body = {
+                nome: document.getElementById('nome').value,
+                cpf: document.getElementById('cpf').value,
+                nascimento: document.getElementById('nascimento').value || null,
+                telefone: document.getElementById('telefone').value,
+                bloco: document.getElementById('bloco').value,
+                unidade: document.getElementById('unidade').value,
+                status: document.getElementById('acesso').value,
+                email: document.getElementById('email').value,
+            };
+
+            const url = editId ? `/api/moradores/${editId}` : '/api/moradores';
+            const method = editId ? 'PUT' : 'POST';
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Salvando...';
+
+            try {
+                const res = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(body),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.error || data.errors?.map(e => e.msg).join(', ') || 'Erro ao salvar');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-save"></i> ' + (editId ? 'Salvar Alterações' : 'Cadastrar Morador');
+                    return;
+                }
+
+                alert(editId ? 'Morador atualizado com sucesso!' : 'Morador cadastrado com sucesso!');
+                window.location.href = 'moradores.html';
+            } catch {
+                alert('Erro de conexão com o servidor');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-save"></i> ' + (editId ? 'Salvar Alterações' : 'Cadastrar Morador');
+            }
+        });
+    </script>
 </body>
 
 </html>

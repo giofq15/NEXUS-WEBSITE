@@ -31,30 +31,29 @@
 
         <section class="content">
             <div class="header-with-action">
-                <h1>Detalhes do Morador: Ana Silva</h1>
+                <h1 id="morador-title">Detalhes do Morador</h1>
                 <a href="../admin/moradores.html" class="secondary-button back-button">← Voltar para Moradores</a>
             </div>
 
             <div class="profile-layout">
                 <div class="profile-card info-card">
                     <h2>Informações de Contato</h2>
-                    <p><strong>Status:</strong> <span class="status-active">Ativo</span></p>
-                    <p><strong>Unidade:</strong> 101 - Bloco A</p>
-                    <p><strong>E-mail:</strong> ana.silva@exemplo.com</p>
-                    <p><strong>Telefone:</strong> (11) 98765-4321</p>
-                    <p><strong>Data de Cadastro:</strong> 15/01/2024</p>
-                    <button class="primary-button full-width-btn edit-button">Editar Dados</button>
+                    <p><strong>Status:</strong> <span id="morador-status" class="status-active"></span></p>
+                    <p><strong>Unidade:</strong> <span id="morador-unidade"></span></p>
+                    <p><strong>E-mail:</strong> <span id="morador-email"></span></p>
+                    <p><strong>Telefone:</strong> <span id="morador-telefone"></span></p>
+                    <p><strong>Data de Cadastro:</strong> <span id="morador-data"></span></p>
+                    <a id="edit-link" href="#" class="primary-button full-width-btn edit-button">Editar Dados</a>
                 </div>
 
                 <div class="profile-details-column">
 
                     <div class="profile-card access-card">
                         <h2>Controle de Acesso (Veículos)</h2>
-                        <div class="data-list">
-                            <p><strong>Placa 1:</strong> ABC-1234 <span class="tag tag-car">Carro</span></p>
-                            <p><strong>Placa 2:</strong> XYZ-9876 <span class="tag tag-moto">Moto</span></p>
+                        <div class="data-list" id="veiculos-list">
+                            <p>Carregando...</p>
                         </div>
-                        <button class="action-btn full-width-btn add-placa-btn">Adicionar Placa</button>
+                        <button class="action-btn full-width-btn add-placa-btn" id="add-placa-btn">Adicionar Placa</button>
                     </div>
 
                     <div class="profile-card logs-card">
@@ -73,6 +72,85 @@
     <footer>
         <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        const token = localStorage.getItem('nexus_token');
+        if (!token) window.location.href = '../public/login.html?role=admin';
+
+        const params = new URLSearchParams(window.location.search);
+        const moradorId = params.get('id');
+
+        if (!moradorId) window.location.href = '../admin/moradores.html';
+
+        async function loadMorador() {
+            try {
+                const res = await fetch(`/api/moradores/${moradorId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) { window.location.href = '../admin/moradores.html'; return; }
+                const m = await res.json();
+
+                document.getElementById('morador-title').textContent = `Detalhes do Morador: ${m.nome}`;
+                document.getElementById('morador-status').textContent = m.status.charAt(0) + m.status.slice(1).toLowerCase();
+                document.getElementById('morador-unidade').textContent = `${m.unidade} - Bloco ${m.bloco}`;
+                document.getElementById('morador-email').textContent = m.user.email;
+                document.getElementById('morador-telefone').textContent = m.telefone;
+                document.getElementById('morador-data').textContent = new Date(m.createdAt).toLocaleDateString('pt-BR');
+                document.getElementById('edit-link').href = `../admin/novo-morador.html?id=${m.id}`;
+
+                renderVeiculos(m.veiculos);
+            } catch {
+                alert('Erro ao carregar dados do morador');
+            }
+        }
+
+        function renderVeiculos(veiculos) {
+            const list = document.getElementById('veiculos-list');
+            if (!veiculos.length) {
+                list.innerHTML = '<p>Nenhum veículo cadastrado</p>';
+                return;
+            }
+            list.innerHTML = veiculos.map((v, i) => {
+                const tagClass = v.tipo === 'CARRO' ? 'tag-car' : 'tag-moto';
+                const label = v.tipo === 'CARRO' ? 'Carro' : 'Moto';
+                return `<p>
+                    <strong>Placa ${i + 1}:</strong> ${v.placa} <span class="tag ${tagClass}">${label}</span>
+                    <a href="#" class="action-link" onclick="removeVeiculo(${v.id}); return false;">Remover</a>
+                </p>`;
+            }).join('');
+        }
+
+        document.getElementById('add-placa-btn').addEventListener('click', async function () {
+            const placa = prompt('Digite a placa do veículo (ex: ABC-1234):');
+            if (!placa) return;
+            const tipo = prompt('Tipo: CARRO ou MOTO?')?.toUpperCase();
+            if (tipo !== 'CARRO' && tipo !== 'MOTO') { alert('Tipo inválido'); return; }
+
+            try {
+                const res = await fetch(`/api/moradores/${moradorId}/veiculos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ placa, tipo }),
+                });
+                const data = await res.json();
+                if (!res.ok) { alert(data.error || 'Erro ao adicionar veículo'); return; }
+                loadMorador();
+            } catch { alert('Erro de conexão'); }
+        });
+
+        async function removeVeiculo(veiculoId) {
+            if (!confirm('Remover este veículo?')) return;
+            try {
+                await fetch(`/api/moradores/${moradorId}/veiculos/${veiculoId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+                loadMorador();
+            } catch { alert('Erro ao remover veículo'); }
+        }
+
+        loadMorador();
+    </script>
 </body>
 
 </html>
