@@ -278,6 +278,35 @@ header {
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
+.cta-button {
+    background: #f97316;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #ea580c;
+    transform: scale(1.05);
+}
+
+.home-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.home-brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
 /* Default CTA styling (improved) */
 .cta-button {
     appearance: none;
@@ -737,17 +766,4 @@ header {
         width: 32px;
         height: 32px;
     }
-}
-/*
-    Parte 20: Estilos de Inadimplência (Admin)
-*/
-
-.delay-pill {
-    display: inline-block;
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    background-color: rgba(231, 76, 60, 0.12);
-    color: #c0392b;
-    font-weight: 700;
-    font-size: 0.85rem;
 }
