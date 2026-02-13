@@ -134,6 +134,12 @@
     font-size: 1rem;
 }
 
+.search-meta {
+    margin-top: 0.45rem;
+    font-size: 0.86rem;
+    color: #6c7a89;
+}
+
 /* Botão Novo/Exportar */
 .new-button {
     background-color: #e67e22;
@@ -196,6 +202,11 @@
 .action-link:hover {
     color: #e67e22;
     text-decoration: underline;
+}
+
+.action-divider {
+    color: #9aa5b1;
+    margin: 0 4px;
 }
 
 /* Rodapé das páginas internas */
@@ -352,6 +363,21 @@
     background-color: #7f8c8d;
 }
 
+.form-feedback {
+    margin-top: 1rem;
+    min-height: 1.25rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.form-feedback.is-success {
+    color: #1f8a4c;
+}
+
+.form-feedback.is-error {
+    color: #c0392b;
+}
+
 /* Responsividade básica para o formulário */
 @media (max-width: 600px) {
     .form-grid {
@@ -501,6 +527,139 @@
     justify-content: flex-end;
     gap: 0.75rem;
     flex-wrap: wrap;
+}
+
+.primary-button {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.primary-button:hover {
+    background-color: #1f2d3b;
+}
+
+.comunicados-feedback {
+    grid-column: 1 / -1;
+    min-height: 1.5rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.comunicados-feedback.is-success {
+    color: #1f8a4c;
+}
+
+.comunicados-feedback.is-error {
+    color: #c0392b;
+}
+
+.comunicados-preview {
+    grid-column: 1 / -1;
+    border: 1px solid #dde5ec;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #f8fbfd;
+}
+
+.comunicados-preview h3 {
+    margin: 0 0 0.8rem 0;
+}
+
+.comunicados-preview-card header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+    color: #2c3e50;
+}
+
+.comunicados-preview-card p {
+    margin: 0;
+    color: #4b5b6b;
+}
+
+.avisos-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.aviso-card {
+    border-left: 5px solid #95a5a6;
+}
+
+.aviso-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    align-items: baseline;
+}
+
+.aviso-card-title {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.aviso-card-date {
+    font-size: 0.82rem;
+    color: #6a7684;
+}
+
+.aviso-card-body {
+    margin: 0 0 1rem 0;
+    color: #364554;
+}
+
+.aviso-card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.aviso-prioridade {
+    gap: 0.45rem;
+}
+
+.aviso-prioridade-informativo {
+    background: #e9f2fb;
+    color: #2b6cb0;
+}
+
+.aviso-prioridade-importante {
+    background: #fff3dc;
+    color: #b7791f;
+}
+
+.aviso-prioridade-urgente {
+    background: #fde8e8;
+    color: #c0392b;
+}
+
+.aviso-card-informativo {
+    border-left-color: #3b82f6;
+}
+
+.aviso-card-importante {
+    border-left-color: #f59e0b;
+}
+
+.aviso-card-urgente {
+    border-left-color: #e74c3c;
+}
+
+.avisos-empty-state {
+    text-align: center;
+    color: #5b6876;
 }
 
 /* --- Página Detalhes de Ocorrência --- */

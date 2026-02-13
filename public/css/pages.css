@@ -467,6 +467,11 @@ header {
     font-weight: bold;
 }
 
+.data-table .status-bloqueado {
+    color: #c0392b;
+    font-weight: bold;
+}
+
 .data-table .status-alta {
     color: #e74c3c;
     font-weight: bold;
