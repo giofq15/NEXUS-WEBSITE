@@ -32,8 +32,7 @@
         </nav>
     </aside>
 
-    <main class="main-content">
-        
+    <main class="main-content" data-moradores-page>
         <div class="dashboard-header">
             <h1>Controle de Moradores</h1>
             <p>Visão geral de todas as unidades ativas e pendentes.</p>
@@ -41,12 +40,13 @@
 
         <div class="controls-container">
             <div class="search-group">
-                <input type="search" class="search-input" placeholder="Buscar por unidade, nome, bloco...">
+                <input type="search" class="search-input" placeholder="Buscar por unidade, nome, bloco..." data-moradores-search>
+                <p class="search-meta" data-moradores-search-meta>Digite para buscar moradores.</p>
             </div>
             <a href="novo-morador.html" class="new-button">+ Novo Morador</a>
         </div>
 
-        <table class="data-table">
+        <table class="data-table" data-moradores-table>
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -55,63 +55,27 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Ana Silva</td>
-                    <td>101 - Bloco A</td>
-                    <td class="status-ativo">Ativo</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-                <tr>
-                    <td>Carlos Pereira</td>
-                    <td>205 - Bloco B</td>
-                    <td class="status-ativo">Ativo</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-                <tr>
-                    <td>Mariana Costa</td>
-                    <td>302 - Bloco A</td>
-                    <td class="status-pendente">Pendente</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-                <tr>
-                    <td>João Fernandes</td>
-                    <td>102 - Bloco A</td>
-                    <td class="status-ativo">Ativo</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-                <tr>
-                    <td>Beatriz Mendes</td>
-                    <td>401 - Bloco C</td>
-                    <td class="status-pendente">Pendente</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-                <tr>
-                    <td>Felipe Castro</td>
-                    <td>201 - Bloco B</td>
-                    <td class="status-ativo">Ativo</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-                <tr>
-                    <td>Gabriela Lima</td>
-                    <td>305 - Bloco C</td>
-                    <td class="status-ativo">Ativo</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-                <tr>
-                    <td>Ricardo Alves</td>
-                    <td>501 - Bloco A</td>
-                    <td class="status-pendente">Pendente</td>
-                    <td><a href="../ocorrencias/detalhes-morador.html" class="action-link">Ver</a> | <a href="#" class="action-link">Editar</a></td>
-                </tr>
-            </tbody>
+            <tbody></tbody>
         </table>
-        
+
+        <template data-moradores-row-template>
+            <tr>
+                <td data-col-nome></td>
+                <td data-col-unidade></td>
+                <td data-col-status></td>
+                <td>
+                    <a href="#" class="action-link" data-action="view">Ver</a>
+                    <span class="action-divider">|</span>
+                    <a href="#" class="action-link" data-action="edit">Editar</a>
+                </td>
+            </tr>
+        </template>
+
         <div class="content-footer">
             <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </div>
     </main>
-    
+
     <script src="../../public/js/script.js"></script>
 </body>
 </html>
