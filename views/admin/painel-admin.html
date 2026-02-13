@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="admin-body">
 
     <aside class="sidebar">
@@ -23,6 +25,7 @@
             <ul>
                 <li class="active"><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
+                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Moradores Inadimplentes</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="../morador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
@@ -40,18 +43,21 @@
         <div class="dashboard-grid">
             <div class="main-column">
                 <h2>Monitoramento de Consumo (IoT)</h2>
-                
+
                 <div class="widget">
                     <h3>Consumo Mensal de Água (m³)</h3>
                     <div class="graph-placeholder">Gráfico Simulado: Histórico de Consumo de Água</div>
                 </div>
 
                 <h2>Últimas Ocorrências</h2>
-                <div class="widget">
-                    <h3>Manutenção de Elevador - Torre B</h3>
-                    <p>Status: <span style="color: red; font-weight: bold;">Pendente</span></p>
-                    <p style="font-size: 0.9rem; color: #777;">Aberta há 2 dias.</p>
-                    <a href="../ocorrencias/detalhes-ocorrencia.html">Ver Detalhes</a>
+                <div class="widget occurrence-preview-card">
+                    <div class="occurrence-preview-header">
+                        <h3>Manutenção de Elevador - Torre B</h3>
+                        <span class="status-pill status-pendente">Pendente</span>
+                    </div>
+                    <p class="occurrence-preview-meta"><i class="far fa-clock"></i> Aberta há 2 dias • Unidade 204</p>
+                    <p>Relato de travamento intermitente da porta do elevador no horário de pico.</p>
+                    <a href="../ocorrencias/detalhes-ocorrencia.html" class="action-link">Ver Detalhes</a>
                 </div>
             </div>
 
@@ -63,13 +69,13 @@
                     <p class="data">5</p>
                     <a href="../ocorrencias/ocorrencias.html">Ver todas as Ocorrências</a>
                 </div>
-                
+
                 <div class="widget">
                     <h3>Economia de Água (Mês)</h3>
                     <p class="percentage">+12%</p>
                     <a href="../morador/monitoramento-iot.html">Detalhes do Monitoramento</a>
                 </div>
-                
+
                 <div class="widget">
                     <h3>Novos Moradores (Semana)</h3>
                     <p class="data">3</p>
@@ -77,6 +83,54 @@
                 </div>
             </div>
         </div>
+
+        <section class="widget comunicados-editor" aria-labelledby="portal-comunicados-titulo" data-comunicados-admin>
+            <div class="comunicados-editor-header">
+                <div>
+                    <h2 id="portal-comunicados-titulo">Portal de Comunicados dos Moradores</h2>
+                    <p>Edite e publique avisos que aparecerão para todos os moradores.</p>
+                </div>
+                <span class="status-pill status-ativo">Rascunho Ativo</span>
+            </div>
+
+            <form class="comunicados-form" action="#" method="post" data-comunicados-form>
+                <div class="form-group">
+                    <label for="comunicado-titulo">Título do Comunicado</label>
+                    <input id="comunicado-titulo" type="text" value="Manutenção da caixa d'água - Bloco B" data-comunicado-titulo>
+                </div>
+
+                <div class="form-group">
+                    <label for="comunicado-prioridade">Prioridade</label>
+                    <select id="comunicado-prioridade" data-comunicado-prioridade>
+                        <option value="informativo">Informativo</option>
+                        <option value="importante" selected>Importante</option>
+                        <option value="urgente">Urgente</option>
+                    </select>
+                </div>
+
+                <div class="form-group form-group-full">
+                    <label for="comunicado-texto">Conteúdo</label>
+                    <textarea id="comunicado-texto" rows="5" data-comunicado-texto>Informamos que amanhã, das 09h às 12h, haverá manutenção preventiva da caixa d'água no Bloco B. O abastecimento poderá oscilar nesse período.</textarea>
+                </div>
+
+                <div class="button-group comunicados-actions">
+                    <button type="button" class="reset-button" data-comunicados-action="preview"><i class="fas fa-eye"></i> Pré-visualizar</button>
+                    <button type="button" class="primary-button" data-comunicados-action="draft"><i class="fas fa-save"></i> Salvar Rascunho</button>
+                    <button type="submit" class="submit-button" data-comunicados-action="publish"><i class="fas fa-paper-plane"></i> Publicar para Moradores</button>
+                </div>
+                <p class="comunicados-feedback" data-comunicados-feedback aria-live="polite"></p>
+                <section class="comunicados-preview" data-comunicados-preview hidden>
+                    <h3>Pré-visualização</h3>
+                    <article class="comunicados-preview-card">
+                        <header>
+                            <strong data-preview-titulo></strong>
+                            <span data-preview-meta></span>
+                        </header>
+                        <p data-preview-texto></p>
+                    </article>
+                </section>
+            </form>
+        </section>
     </main>
 
     <script src="../../public/js/script.js"></script>
@@ -93,4 +147,5 @@
         });
     </script>
 </body>
+
 </html>

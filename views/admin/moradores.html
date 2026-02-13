@@ -23,6 +23,7 @@
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
+                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Moradores Inadimplentes</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="../morador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
@@ -31,8 +32,7 @@
         </nav>
     </aside>
 
-    <main class="main-content">
-        
+    <main class="main-content" data-moradores-page>
         <div class="dashboard-header">
             <h1>Controle de Moradores</h1>
             <p>Visão geral de todas as unidades ativas e pendentes.</p>
@@ -40,12 +40,13 @@
 
         <div class="controls-container">
             <div class="search-group">
-                <input type="search" class="search-input" placeholder="Buscar por unidade, nome, bloco...">
+                <input type="search" class="search-input" placeholder="Buscar por unidade, nome, bloco..." data-moradores-search>
+                <p class="search-meta" data-moradores-search-meta>Digite para buscar moradores.</p>
             </div>
             <a href="novo-morador.html" class="new-button">+ Novo Morador</a>
         </div>
 
-        <table class="data-table">
+        <table class="data-table" data-moradores-table>
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -58,12 +59,25 @@
                 <tr><td colspan="4" style="text-align:center">Carregando...</td></tr>
             </tbody>
         </table>
-        
+
+        <template data-moradores-row-template>
+            <tr>
+                <td data-col-nome></td>
+                <td data-col-unidade></td>
+                <td data-col-status></td>
+                <td>
+                    <a href="#" class="action-link" data-action="view">Ver</a>
+                    <span class="action-divider">|</span>
+                    <a href="#" class="action-link" data-action="edit">Editar</a>
+                </td>
+            </tr>
+        </template>
+
         <div class="content-footer">
             <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </div>
     </main>
-    
+
     <script src="../../public/js/script.js"></script>
     <script>
         const token = localStorage.getItem('nexus_token');
