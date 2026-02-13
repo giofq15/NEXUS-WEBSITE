@@ -134,6 +134,18 @@
     </main>
 
     <script src="../../public/js/script.js"></script>
+    <script>
+        if (!localStorage.getItem('nexus_token')) {
+            window.location.href = '../public/login.html?role=admin';
+        }
+        // Logout handler
+        document.querySelector('a[href="../public/index.html"]').addEventListener('click', function (e) {
+            e.preventDefault();
+            localStorage.removeItem('nexus_token');
+            localStorage.removeItem('nexus_user');
+            window.location.href = '../public/index.html';
+        });
+    </script>
 </body>
 
 </html>

@@ -55,7 +55,9 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody id="moradores-tbody">
+                <tr><td colspan="4" style="text-align:center">Carregando...</td></tr>
+            </tbody>
         </table>
 
         <template data-moradores-row-template>
@@ -77,5 +79,58 @@
     </main>
 
     <script src="../../public/js/script.js"></script>
+    <script>
+        const token = localStorage.getItem('nexus_token');
+        if (!token) window.location.href = '../public/login.html?role=admin';
+
+        const tbody = document.getElementById('moradores-tbody');
+        const searchInput = document.querySelector('.search-input');
+
+        async function loadMoradores(search = '') {
+            const url = search ? `/api/moradores?search=${encodeURIComponent(search)}` : '/api/moradores';
+            try {
+                const res = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.status === 401) {
+                    localStorage.removeItem('nexus_token');
+                    window.location.href = '../public/login.html?role=admin';
+                    return;
+                }
+                const moradores = await res.json();
+                renderMoradores(moradores);
+            } catch {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Erro ao carregar moradores</td></tr>';
+            }
+        }
+
+        function renderMoradores(moradores) {
+            if (!moradores.length) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nenhum morador encontrado</td></tr>';
+                return;
+            }
+            tbody.innerHTML = moradores.map(m => {
+                const statusClass = `status-${m.status.toLowerCase()}`;
+                const statusLabel = m.status.charAt(0) + m.status.slice(1).toLowerCase();
+                return `<tr>
+                    <td>${m.nome}</td>
+                    <td>${m.unidade} - Bloco ${m.bloco}</td>
+                    <td class="${statusClass}">${statusLabel}</td>
+                    <td>
+                        <a href="../ocorrencias/detalhes-morador.html?id=${m.id}" class="action-link">Ver</a> |
+                        <a href="novo-morador.html?id=${m.id}" class="action-link">Editar</a>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        let searchTimeout;
+        searchInput.addEventListener('input', function () {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => loadMoradores(this.value), 300);
+        });
+
+        loadMoradores();
+    </script>
 </body>
 </html>
