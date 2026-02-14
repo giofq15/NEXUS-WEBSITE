@@ -47,7 +47,7 @@ async function login(req, res) {
 
 async function requestCadastro(req, res) {
   try {
-    const { nome, cpf, nascimento, telefone, bloco, unidade, email, password } = req.body;
+    const { nome, cpf, nascimento, telefone, bloco, unidade, tipoMoradia, email, password } = req.body;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
@@ -69,6 +69,7 @@ async function requestCadastro(req, res) {
         telefone,
         bloco,
         unidade,
+        tipoMoradia,
         status: 'PENDENTE',
         user: {
           create: {
@@ -88,6 +89,7 @@ async function requestCadastro(req, res) {
         nome: morador.nome,
         email: morador.user.email,
         status: morador.status,
+        tipoMoradia: morador.tipoMoradia,
       },
     });
   } catch (error) {

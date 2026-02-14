@@ -61,7 +61,8 @@
             font-weight: 600;
         }
 
-        input {
+        input,
+        select {
             height: 42px;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
@@ -150,8 +151,17 @@
                     </div>
 
                     <div class="field">
-                        <label for="unidade">Unidade</label>
+                        <label for="unidade">Apartamento</label>
                         <input id="unidade" required />
+                    </div>
+
+
+                    <div class="field">
+                        <label for="tipoMoradia">Tipo de moradia</label>
+                        <select id="tipoMoradia" required>
+                            <option value="PROPRIETARIO">Dono do imóvel</option>
+                            <option value="ALUGUEL">Aluguel</option>
+                        </select>
                     </div>
 
                     <div class="field full">
@@ -199,6 +209,7 @@
                 nascimento: document.getElementById('nascimento').value || null,
                 bloco: document.getElementById('bloco').value.trim(),
                 unidade: document.getElementById('unidade').value.trim(),
+                tipoMoradia: document.getElementById('tipoMoradia').value,
                 email: document.getElementById('email').value.trim(),
                 password: document.getElementById('password').value,
             };

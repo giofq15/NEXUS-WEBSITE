@@ -1,0 +1,4 @@
+CREATE TYPE "TipoMoradia" AS ENUM ('PROPRIETARIO', 'ALUGUEL');
+
+ALTER TABLE "moradores"
+ADD COLUMN "tipo_moradia" "TipoMoradia" NOT NULL DEFAULT 'PROPRIETARIO';
