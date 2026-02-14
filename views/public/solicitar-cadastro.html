@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solicitar Cadastro - NEXUS</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: #f3f6fb;
+            color: #1b1f24;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 680px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        p.subtitle {
+            margin: 0 0 20px;
+            color: #64748b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input {
+            height: 42px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 0 12px;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        a.btn {
+            height: 42px;
+            border: none;
+            border-radius: 10px;
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            background: #0f172a;
+            color: #fff;
+        }
+
+        a.btn {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .message {
+            margin-top: 14px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .success { color: #166534; }
+        .error { color: #b91c1c; }
+
+        @media (max-width: 700px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <section class="card">
+            <h1>Solicite seu cadastro</h1>
+            <p class="subtitle">Preencha os dados para criar seu acesso como morador.</p>
+
+            <form id="request-form">
+                <div class="grid">
+                    <div class="field full">
+                        <label for="nome">Nome completo</label>
+                        <input id="nome" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="cpf">CPF</label>
+                        <input id="cpf" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="telefone">Telefone</label>
+                        <input id="telefone" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="nascimento">Data de nascimento</label>
+                        <input id="nascimento" type="date" />
+                    </div>
+
+                    <div class="field">
+                        <label for="bloco">Bloco</label>
+                        <input id="bloco" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="unidade">Unidade</label>
+                        <input id="unidade" required />
+                    </div>
+
+                    <div class="field full">
+                        <label for="email">E-mail</label>
+                        <input id="email" type="email" required />
+                    </div>
+
+                    <div class="field full">
+                        <label for="password">Senha (mínimo 6 caracteres)</label>
+                        <input id="password" type="password" minlength="6" required />
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" id="submit-btn">Enviar solicitação</button>
+                    <a class="btn" href="login.html">Voltar ao login</a>
+                </div>
+                <div id="message" class="message" aria-live="polite"></div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById('request-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const message = document.getElementById('message');
+
+        function setMessage(text, type) {
+            message.textContent = text;
+            message.className = 'message ' + type;
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!form.checkValidity()) return;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            setMessage('', '');
+
+            const payload = {
+                nome: document.getElementById('nome').value.trim(),
+                cpf: document.getElementById('cpf').value.trim(),
+                telefone: document.getElementById('telefone').value.trim(),
+                nascimento: document.getElementById('nascimento').value || null,
+                bloco: document.getElementById('bloco').value.trim(),
+                unidade: document.getElementById('unidade').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value,
+            };
+
+            try {
+                const response = await fetch('/api/auth/request-cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    setMessage(data.error || 'Não foi possível enviar a solicitação.', 'error');
+                    return;
+                }
+
+                setMessage(data.message || 'Solicitação enviada com sucesso!', 'success');
+                form.reset();
+            } catch (error) {
+                setMessage('Erro de conexão com o servidor.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar solicitação';
+            }
+        });
+    </script>
+</body>
+
+</html>
