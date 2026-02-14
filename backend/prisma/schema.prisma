@@ -29,6 +29,7 @@ model Morador {
   telefone   String
   bloco      String
   unidade    String
+  tipoMoradia TipoMoradia  @default(PROPRIETARIO) @map("tipo_moradia")
   status     StatusMorador @default(PENDENTE)
   veiculos   Veiculo[]
   createdAt  DateTime      @default(now()) @map("created_at")
@@ -62,4 +63,10 @@ enum StatusMorador {
 enum TipoVeiculo {
   CARRO
   MOTO
+}
+
+
+enum TipoMoradia {
+  PROPRIETARIO
+  ALUGUEL
 }

@@ -58,7 +58,7 @@ async function getById(req, res) {
 // POST /api/moradores
 async function create(req, res) {
   try {
-    const { nome, cpf, nascimento, telefone, bloco, unidade, status, email } = req.body;
+    const { nome, cpf, nascimento, telefone, bloco, unidade, tipoMoradia, status, email } = req.body;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
@@ -80,6 +80,7 @@ async function create(req, res) {
         telefone,
         bloco,
         unidade,
+        tipoMoradia: tipoMoradia || 'PROPRIETARIO',
         status: status || 'PENDENTE',
         user: {
           create: {
@@ -103,7 +104,7 @@ async function create(req, res) {
 async function update(req, res) {
   try {
     const { id } = req.params;
-    const { nome, cpf, nascimento, telefone, bloco, unidade, status, email } = req.body;
+    const { nome, cpf, nascimento, telefone, bloco, unidade, tipoMoradia, status, email } = req.body;
 
     const morador = await prisma.morador.findUnique({
       where: { id: Number(id) },
@@ -123,6 +124,7 @@ async function update(req, res) {
         telefone,
         bloco,
         unidade,
+        tipoMoradia,
         status,
         user: email ? { update: { email } } : undefined,
       },
