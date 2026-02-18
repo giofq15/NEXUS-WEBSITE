@@ -31,6 +31,7 @@ model Morador {
   unidade    String
   status     StatusMorador @default(PENDENTE)
   veiculos   Veiculo[]
+  ocorrencias Ocorrencia[]
   createdAt  DateTime      @default(now()) @map("created_at")
   updatedAt  DateTime      @updatedAt @map("updated_at")
 
@@ -62,4 +63,20 @@ enum StatusMorador {
 enum TipoVeiculo {
   CARRO
   MOTO
+}
+
+model Ocorrencia {
+  id         Int      @id @default(autoincrement())
+  moradorId  Int?     @map("morador_id")
+  morador    Morador? @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  tipo       String
+  local      String
+  descricao  String
+  prioridade String   @default("MEDIA")
+  status     String   @default("EM_ANALISE")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([moradorId])
+  @@map("ocorrencias")
 }

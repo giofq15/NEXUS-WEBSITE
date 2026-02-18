@@ -858,3 +858,316 @@
 })();
 
 
+
+(function () {
+    const STORAGE_KEY = "nexus_ocorrencias_v1";
+
+    function readJson(key, fallbackValue) {
+        try {
+            const raw = window.localStorage.getItem(key);
+            if (!raw) {
+                return fallbackValue;
+            }
+            const parsed = JSON.parse(raw);
+            return parsed || fallbackValue;
+        } catch (error) {
+            return fallbackValue;
+        }
+    }
+
+    function writeJson(key, value) {
+        try {
+            window.localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function normalizeStatus(value) {
+        const clean = String(value || "").toLowerCase();
+        if (clean.includes("resol")) {
+            return "RESOLVIDA";
+        }
+        if (clean.includes("andamento")) {
+            return "EM_ANDAMENTO";
+        }
+        return "EM_ANALISE";
+    }
+
+    function statusLabel(status) {
+        if (status === "RESOLVIDA") {
+            return "Resolvida";
+        }
+        if (status === "EM_ANDAMENTO") {
+            return "Em Andamento";
+        }
+        return "Em Análise";
+    }
+
+    function statusClass(status) {
+        if (status === "RESOLVIDA") {
+            return "status-resolvida";
+        }
+        if (status === "EM_ANDAMENTO") {
+            return "status-andamento";
+        }
+        return "status-pendente";
+    }
+
+    function inferPriority(tipo) {
+        const t = String(tipo || "").toLowerCase();
+        if (t.includes("segurança") || t.includes("estrutural") || t.includes("elevador")) {
+            return "Alta";
+        }
+        if (t.includes("ruído") || t.includes("ruido") || t.includes("financeiro")) {
+            return "Média";
+        }
+        return "Baixa";
+    }
+
+    function priorityClass(priority) {
+        const p = String(priority || "").toLowerCase();
+        if (p.includes("alta")) {
+            return "status-alta";
+        }
+        if (p.includes("média") || p.includes("media")) {
+            return "status-media";
+        }
+        return "status-baixa";
+    }
+
+    function formatDate(dateValue) {
+        const date = new Date(dateValue);
+        if (Number.isNaN(date.getTime())) {
+            return String(dateValue || "");
+        }
+        return date.toLocaleDateString("pt-BR");
+    }
+
+    function parseId(text) {
+        const value = parseInt(String(text || "").replace("#", ""), 10);
+        return Number.isFinite(value) ? value : null;
+    }
+
+    function parseMoradorRows(body) {
+        return Array.from(body.querySelectorAll("tr")).map(function (row) {
+            const cells = row.querySelectorAll("td");
+            if (cells.length < 5) {
+                return null;
+            }
+            const id = parseId(cells[0].textContent);
+            if (!id) {
+                return null;
+            }
+            const tipo = cells[1].textContent.trim();
+            const local = cells[2].textContent.trim();
+            const dataAbertura = cells[3].textContent.trim();
+            const status = normalizeStatus(cells[4].textContent);
+
+            return {
+                id: id,
+                tipo: tipo,
+                local: local,
+                unidade: "Unidade não informada",
+                prioridade: inferPriority(tipo),
+                status: status,
+                dataAbertura: dataAbertura,
+                descricao: tipo + " - " + local
+            };
+        }).filter(Boolean);
+    }
+
+    function parseAdminRows(body) {
+        return Array.from(body.querySelectorAll("tr")).map(function (row) {
+            const cells = row.querySelectorAll("td");
+            if (cells.length < 6) {
+                return null;
+            }
+            const id = parseId(cells[0].textContent);
+            if (!id) {
+                return null;
+            }
+            const assunto = cells[1].textContent.trim();
+            const unidade = cells[2].textContent.trim();
+            const prioridade = cells[3].textContent.trim() || "Média";
+            const status = normalizeStatus(cells[4].textContent);
+            const dataAbertura = cells[5].textContent.trim();
+
+            return {
+                id: id,
+                tipo: assunto,
+                local: assunto,
+                unidade: unidade,
+                prioridade: prioridade,
+                status: status,
+                dataAbertura: dataAbertura,
+                descricao: assunto
+            };
+        }).filter(Boolean);
+    }
+
+    function ensureSeed(moradorBody, adminBody) {
+        const current = readJson(STORAGE_KEY, []);
+        if (Array.isArray(current) && current.length > 0) {
+            return current;
+        }
+
+        let seeded = [];
+        if (moradorBody) {
+            seeded = parseMoradorRows(moradorBody);
+        } else if (adminBody) {
+            seeded = parseAdminRows(adminBody);
+        }
+
+        if (!seeded.length) {
+            seeded = [
+                {
+                    id: 45,
+                    tipo: "Estrutural / Manutenção",
+                    local: "Elevador do Bloco B",
+                    unidade: "405 - Bloco B",
+                    prioridade: "Alta",
+                    status: "EM_ANALISE",
+                    dataAbertura: "18/10/2025",
+                    descricao: "Vazamento no elevador"
+                }
+            ];
+        }
+
+        writeJson(STORAGE_KEY, seeded);
+        return seeded;
+    }
+
+    function getOcorrencias() {
+        const data = readJson(STORAGE_KEY, []);
+        if (!Array.isArray(data)) {
+            return [];
+        }
+        return data.filter(function (item) {
+            return item && typeof item === "object";
+        });
+    }
+
+    function saveOcorrencias(list) {
+        writeJson(STORAGE_KEY, list);
+    }
+
+    function renderMoradorTable(body) {
+        const list = getOcorrencias().sort(function (a, b) {
+            return (b.id || 0) - (a.id || 0);
+        });
+
+        body.innerHTML = list.map(function (item) {
+            return `
+                <tr>
+                    <td>#${String(item.id).padStart(4, "0")}</td>
+                    <td>${item.tipo || "Ocorrência"}</td>
+                    <td>${item.local || "Não informado"}</td>
+                    <td>${item.dataAbertura || "-"}</td>
+                    <td class="${statusClass(item.status)}">${statusLabel(item.status)}</td>
+                    <td>
+                        <a href="detalhes-ocorrencia-morador.html" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
+                        <a href="detalhes-ocorrencia-morador.html?acao=responder" class="action-link" style="color: #e67e22;"><i class="fas fa-reply"></i> Responder</a>
+                    </td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    function renderAdminTable(body, searchValue) {
+        const query = String(searchValue || "").toLowerCase();
+        const list = getOcorrencias()
+            .sort(function (a, b) {
+                return (b.id || 0) - (a.id || 0);
+            })
+            .filter(function (item) {
+                if (!query) return true;
+                const haystack = [item.descricao, item.tipo, item.local, item.unidade]
+                    .join(" ")
+                    .toLowerCase();
+                return haystack.includes(query);
+            });
+
+        body.innerHTML = list.map(function (item) {
+            const assunto = item.descricao || item.tipo || "Ocorrência";
+            const prioridade = item.prioridade || inferPriority(item.tipo);
+            return `
+                <tr>
+                    <td>#${String(item.id).padStart(4, "0")}</td>
+                    <td>${assunto}</td>
+                    <td>${item.unidade || "Unidade não informada"}</td>
+                    <td class="${priorityClass(prioridade)}">${prioridade}</td>
+                    <td class="${statusClass(item.status)}">${statusLabel(item.status)}</td>
+                    <td>${item.dataAbertura || "-"}</td>
+                    <td><a href="detalhes-ocorrencia.html" class="action-link">Ver Detalhes</a></td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    function initMoradorOcorrencias() {
+        const form = document.querySelector("[data-ocorrencias-form]");
+        const body = document.querySelector("[data-ocorrencias-morador-body]");
+        if (!form || !body) {
+            return;
+        }
+
+        ensureSeed(body, null);
+        renderMoradorTable(body);
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const tipo = document.getElementById("tipo").value || "Ocorrência";
+            const local = document.getElementById("local").value || "Não informado";
+            const descricao = document.getElementById("descricao").value || tipo;
+
+            const current = getOcorrencias();
+            const maxId = current.reduce(function (acc, item) {
+                return Math.max(acc, Number(item.id) || 0);
+            }, 0);
+
+            current.push({
+                id: maxId + 1,
+                tipo: tipo,
+                local: local,
+                unidade: "405 - Bloco B",
+                prioridade: inferPriority(tipo),
+                status: "EM_ANALISE",
+                dataAbertura: formatDate(new Date().toISOString()),
+                descricao: descricao
+            });
+
+            saveOcorrencias(current);
+            renderMoradorTable(body);
+            form.reset();
+            alert(`Ocorrência #${String(maxId + 1).padStart(4, "0")} criada com sucesso.`);
+        });
+    }
+
+    function initAdminOcorrencias() {
+        const body = document.querySelector("[data-ocorrencias-admin-body]");
+        if (!body) {
+            return;
+        }
+
+        const searchInput = document.querySelector("[data-ocorrencias-admin-search]");
+        ensureSeed(null, body);
+        renderAdminTable(body, "");
+
+        if (searchInput) {
+            searchInput.addEventListener("input", function () {
+                renderAdminTable(body, searchInput.value);
+            });
+        }
+
+        window.addEventListener("storage", function (event) {
+            if (event.key === STORAGE_KEY) {
+                renderAdminTable(body, searchInput ? searchInput.value : "");
+            }
+        });
+    }
+
+    initMoradorOcorrencias();
+    initAdminOcorrencias();
+})();
