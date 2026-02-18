@@ -42,7 +42,7 @@
 
         <div class="form-container">
             <h2><i class="fas fa-plus-circle"></i> Abrir Nova Ocorrência</h2>
-            <form action="#" method="POST">
+            <form action="ocorrencias-morador.html" method="POST" id="ocorrencia-form" data-ocorrencias-form>
                 <fieldset class="form-section">
                     <legend>Detalhes do Problema</legend>
                     <div class="form-grid">
@@ -85,7 +85,7 @@
 
         <div class="widget">
             <h2><i class="fas fa-clipboard-list"></i> Minhas Ocorrências Ativas</h2>
-            <table class="data-table">
+            <table class="data-table" id="ocorrencias-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -96,7 +96,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="ocorrencias-body" data-ocorrencias-morador-body>
                     <tr>
                         <td>#0045</td>
                         <td>Estrutural</td>
@@ -104,8 +104,8 @@
                         <td>18/10/2025</td>
                         <td class="status-andamento">Em Análise</td>
                         <td>
-                            <a href="#" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
-                            <a href="#" class="action-link" style="color: #e67e22;"><i class="fas fa-reply"></i> Responder</a>
+                            <a href="detalhes-ocorrencia-morador.html" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
+                            <a href="detalhes-ocorrencia-morador.html?acao=responder" class="action-link" style="color: #e67e22;"><i class="fas fa-reply"></i> Responder</a>
                         </td>
                     </tr>
                     <tr>
@@ -115,8 +115,8 @@
                         <td>15/10/2025</td>
                         <td class="status-resolvida">Resolvida</td>
                         <td>
-                            <a href="#" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
-                            <a href="#" class="action-link" style="color: #3498db;"><i class="fas fa-redo"></i> Reabrir</a>
+                            <a href="detalhes-ocorrencia-morador.html" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
+                            <a href="detalhes-ocorrencia-morador.html?acao=reabrir" class="action-link" style="color: #3498db;"><i class="fas fa-redo"></i> Reabrir</a>
                         </td>
                     </tr>
                     <tr>
@@ -126,7 +126,7 @@
                         <td>01/09/2025</td>
                         <td class="status-baixa">Concluída</td>
                         <td>
-                            <a href="#" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
+                            <a href="detalhes-ocorrencia-morador.html" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
                         </td>
                     </tr>
                 </tbody>
@@ -138,6 +138,10 @@
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    
+
+    <script src="../../public/js/script.js"></script>
 </body>
 
 </html>

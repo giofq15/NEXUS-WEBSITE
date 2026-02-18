@@ -63,7 +63,7 @@
             <button class="tab-button active" id="btn-pendentes">Boletos Pendentes</button>
             <button class="tab-button" id="btn-historico">Histórico de Pagamentos</button>
             
-            <button class="new-button"><i class="fas fa-file-pdf"></i> Exportar 2ª Via</button>
+            <a href="financeiro-morador.html?exportar=2via" class="new-button" style="display: inline-flex; align-items: center; justify-content: center;"><i class="fas fa-file-pdf"></i> Exportar 2ª Via</a>
         </div>
         
         <div id="content-pendentes" class="widget tab-content">
@@ -85,7 +85,7 @@
                         <td class="negative-value">850,00</td>
                         <td class="status-pendente">Aberto</td>
                         <td>
-                            <a href="#" class="action-link action-pay"><i class="fas fa-barcode"></i> Gerar Boleto</a>
+                            <a href="financeiro-morador.html?acao=gerar-boleto&ref=2025-11" class="action-link action-pay"><i class="fas fa-barcode"></i> Gerar Boleto</a>
                         </td>
                     </tr>
                     <tr>
@@ -94,7 +94,7 @@
                         <td class="negative-value">795,00</td>
                         <td class="status-alta">Atrasado</td>
                         <td>
-                            <a href="#" class="action-link action-pay"><i class="fas fa-exclamation-circle"></i> Pagar c/ Multa</a>
+                            <a href="financeiro-morador.html?acao=pagar-multa&ref=2025-10" class="action-link action-pay"><i class="fas fa-exclamation-circle"></i> Pagar c/ Multa</a>
                         </td>
                     </tr>
                 </tbody>
@@ -120,7 +120,7 @@
                         <td class="positive-value">800,00</td>
                         <td class="status-resolvida">Pago</td>
                         <td>
-                            <a href="#" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
+                            <a href="financeiro-morador.html?acao=segunda-via-recibo&ref=2025-09" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
                         </td>
                     </tr>
                     <tr>
@@ -129,7 +129,7 @@
                         <td class="positive-value">780,00</td>
                         <td class="status-resolvida">Pago</td>
                         <td>
-                            <a href="#" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
+                            <a href="financeiro-morador.html?acao=segunda-via-recibo&ref=2025-08" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
                         </td>
                     </tr>
                 </tbody>
@@ -144,6 +144,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const btns = document.querySelectorAll('.tab-button');
+            const exportLink = document.querySelector('a[href*="exportar=2via"]');
+            const financeActions = document.querySelectorAll('a[href*="acao="]');
             const contents = document.querySelectorAll('.tab-content');
 
             btns.forEach(btn => {
@@ -159,6 +161,38 @@
                     document.getElementById(targetId).classList.remove('hidden');
                 });
             });
+
+
+            if (exportLink) {
+                exportLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    alert('2ª via exportada com sucesso (simulação).');
+                });
+            }
+
+            financeActions.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const action = new URL(link.href).searchParams.get('acao');
+                    const label = {
+                        'gerar-boleto': 'Boleto gerado com sucesso.',
+                        'pagar-multa': 'Pagamento com multa processado com sucesso.',
+                        'segunda-via-recibo': '2ª via do recibo disponível para download.'
+                    }[action] || 'Ação executada com sucesso.';
+                    alert(label);
+
+                    if (action === 'gerar-boleto' || action === 'pagar-multa') {
+                        const row = link.closest('tr');
+                        if (!row) return;
+                        const statusCell = row.children[3];
+                        const actionCell = row.children[4];
+                        statusCell.className = 'status-resolvida';
+                        statusCell.textContent = 'Pago';
+                        actionCell.innerHTML = '<span style="color:#2e7d32;"><i class="fas fa-check-circle"></i> Quitado</span>';
+                    }
+                });
+            });
+
         });
     </script>
 </body>

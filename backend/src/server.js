@@ -6,6 +6,7 @@ const path = require('path');
 
 const authRoutes = require('./routes/auth.routes');
 const moradoresRoutes = require('./routes/moradores.routes');
+const ocorrenciasRoutes = require('./routes/ocorrencias.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.use(express.json());
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/moradores', moradoresRoutes);
+app.use('/api/ocorrencias', ocorrenciasRoutes);
 
 // Serve frontend static files
 app.use('/public', express.static(path.join(__dirname, '../../public')));

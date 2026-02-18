@@ -42,7 +42,7 @@
 
             <div class="form-container">
                 <h2><i class="fas fa-calendar-plus"></i> Fazer Nova Reserva</h2>
-                <form action="#" method="POST">
+                <form action="reservas.html" method="POST" id="reserva-form">
                     <fieldset class="form-section">
                         <legend>Detalhes do Agendamento</legend>
                         <div class="form-grid">
@@ -90,7 +90,7 @@
 
             <div class="widget">
                 <h2><i class="fas fa-list-alt"></i> Minhas Próximas Reservas</h2>
-                <table class="data-table">
+                <table class="data-table" id="reservas-table">
                     <thead>
                         <tr>
                             <th>Área</th>
@@ -101,26 +101,26 @@
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="reservas-body">
+                        <tr data-reserva-id="1">
                             <td>Churrasqueira 1</td>
                             <td>25/11/2025</td>
                             <td>Tarde</td>
                             <td>20</td>
                             <td class="status-ativo">Confirmada</td>
                             <td>
-                                <a href="#" class="action-link"><i class="fas fa-edit"></i> Editar</a>
-                                <a href="#" class="action-link" style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Cancelar</a>
+                                <a href="reservas.html?acao=editar&id=1" class="action-link" data-reserva-action="editar"><i class="fas fa-edit"></i> Editar</a>
+                                <a href="reservas.html?acao=cancelar&id=1" class="action-link" data-reserva-action="cancelar" style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Cancelar</a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr data-reserva-id="2">
                             <td>Salão de Festas Principal</td>
                             <td>10/01/2026</td>
                             <td>Dia Inteiro</td>
                             <td>80</td>
                             <td class="status-pendente">Aguardando Pagamento</td>
                             <td>
-                                <a href="#" class="action-link action-pay" style="color: #e67e22;"><i class="fas fa-money-check-alt"></i> Pagar Taxa</a>
+                                <a href="../financeiro/financeiro-morador.html" class="action-link action-pay" style="color: #e67e22;"><i class="fas fa-money-check-alt"></i> Pagar Taxa</a>
                             </td>
                         </tr>
                     </tbody>
@@ -132,6 +132,104 @@
                 <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
             </footer>
         </div>
-    </body>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('reserva-form');
+                const reservasBody = document.getElementById('reservas-body');
+                if (!form || !reservasBody) return;
+
+                let nextId = Array.from(reservasBody.querySelectorAll('tr[data-reserva-id]')).length + 1;
+                let editingRow = null;
+
+                function formatDate(isoDate) {
+                    const [year, month, day] = String(isoDate).split('-');
+                    if (!year || !month || !day) return isoDate;
+                    return `${day}/${month}/${year}`;
+                }
+
+                function setFormFromRow(row) {
+                    const cells = row.querySelectorAll('td');
+                    document.getElementById('area').value = cells[0].textContent.trim();
+                    const [d, m, y] = cells[1].textContent.trim().split('/');
+                    document.getElementById('data').value = `${y}-${m}-${d}`;
+                    document.getElementById('periodo').value = cells[2].textContent.trim();
+                    document.getElementById('convidados').value = cells[3].textContent.trim();
+                    editingRow = row;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                function renderActions(id) {
+                    return `
+                        <a href="reservas.html?acao=editar&id=${id}" class="action-link" data-reserva-action="editar"><i class="fas fa-edit"></i> Editar</a>
+                        <a href="reservas.html?acao=cancelar&id=${id}" class="action-link" data-reserva-action="cancelar" style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Cancelar</a>
+                    `;
+                }
+
+                reservasBody.addEventListener('click', function (event) {
+                    const actionLink = event.target.closest('[data-reserva-action]');
+                    if (!actionLink) return;
+                    event.preventDefault();
+
+                    const row = actionLink.closest('tr');
+                    if (!row) return;
+
+                    if (actionLink.dataset.reservaAction === 'editar') {
+                        setFormFromRow(row);
+                        return;
+                    }
+
+                    if (actionLink.dataset.reservaAction === 'cancelar') {
+                        if (!confirm('Deseja realmente cancelar essa reserva?')) return;
+                        const statusCell = row.children[4];
+                        const actionCell = row.children[5];
+                        statusCell.className = 'status-baixa';
+                        statusCell.textContent = 'Cancelada';
+                        actionCell.innerHTML = '<span style="color:#777;">Sem ações disponíveis</span>';
+                        if (editingRow === row) {
+                            editingRow = null;
+                            form.reset();
+                        }
+                    }
+                });
+
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const area = document.getElementById('area').value;
+                    const data = document.getElementById('data').value;
+                    const periodo = document.getElementById('periodo').value;
+                    const convidados = document.getElementById('convidados').value || '0';
+
+                    if (editingRow) {
+                        const cells = editingRow.querySelectorAll('td');
+                        cells[0].textContent = area;
+                        cells[1].textContent = formatDate(data);
+                        cells[2].textContent = periodo;
+                        cells[3].textContent = convidados;
+                        alert('Reserva atualizada com sucesso.');
+                        editingRow = null;
+                        form.reset();
+                        return;
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.dataset.reservaId = String(nextId);
+                    tr.innerHTML = `
+                        <td>${area}</td>
+                        <td>${formatDate(data)}</td>
+                        <td>${periodo}</td>
+                        <td>${convidados}</td>
+                        <td class="status-ativo">Confirmada</td>
+                        <td>${renderActions(nextId)}</td>
+                    `;
+                    reservasBody.prepend(tr);
+                    nextId += 1;
+                    form.reset();
+                    alert('Reserva criada com sucesso.');
+                });
+            });
+        </script>
+
+</body>
 
     </html>

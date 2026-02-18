@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Ocorrência - Morador - NEXUS</title>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="nexus-brand" aria-label="Nexus Morador">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
+                <div class="nexus-brand-text">
+                    <strong>NEXUS</strong>
+                    <span>MORADOR</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../morador/painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="../morador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                <li><a href="../financeiro/financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li class="active"><a href="ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li><a href="../financeiro/consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
+                <li><a href="../morador/avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <main class="main-content occurrence-page">
+        <div class="dashboard-header occurrence-header">
+            <div>
+                <h1>Ocorrência #0045: Vazamento no Elevador do Bloco B</h1>
+                <p>Acompanhe as atualizações e converse com a administração.</p>
+            </div>
+            <a href="ocorrencias-morador.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para minhas ocorrências</a>
+        </div>
+
+        <div class="occurrence-layout">
+            <div class="occurrence-details-column">
+                <article class="widget details-card">
+                    <h2>Descrição da Ocorrência</h2>
+                    <p>Relato enviado em 18/10/2025 sobre vazamento no elevador do Bloco B, com água acumulada na entrada do 3º andar.</p>
+
+                    <div class="details-grid">
+                        <div><strong>Categoria:</strong> Estrutural / Manutenção</div>
+                        <div><strong>Local:</strong> Elevador do Bloco B</div>
+                        <div><strong>Data de abertura:</strong> 18/10/2025</div>
+                        <div><strong>Prioridade:</strong> Média</div>
+                    </div>
+                </article>
+
+                <article class="widget timeline-card">
+                    <h2>Atualizações</h2>
+                    <ul class="timeline">
+                        <li class="timeline-item timeline-active">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <strong>22/10/2025 (09:10)</strong>
+                                <p>Equipe de manutenção acionada para troca de vedação e revisão da caixa d'água.</p>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <strong>19/10/2025 (11:25)</strong>
+                                <p>Ocorrência classificada como "Em análise" pela administração.</p>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <strong>18/10/2025 (14:03)</strong>
+                                <p>Chamado aberto com sucesso e protocolo enviado para seu e-mail.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+
+            <aside class="occurrence-actions-column">
+                <div class="widget status-box">
+                    <h2>Status atual</h2>
+                    <p class="current-status priority-medium">EM ANÁLISE</p>
+
+                    <div class="status-summary">
+                        <p><strong>Protocolo:</strong> #0045</p>
+                        <p><strong>Última atualização:</strong> 22/10/2025 09:10</p>
+                        <p><strong>Responsável:</strong> Equipe de manutenção</p>
+                    </div>
+
+                    <hr>
+
+                    <h3 class="action-title">Ações</h3>
+                    <a href="detalhes-ocorrencia-morador.html?acao=responder" class="primary-button full-width-btn">Enviar atualização</a>
+                    <a href="ocorrencias-morador.html?acao=reabrir&id=45" class="action-btn edit full-width-btn">Reabrir ocorrência</a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </main>
+</body>
+
+</html>
