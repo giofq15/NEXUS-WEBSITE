@@ -1,38 +1,153 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato Nexus</title>
+    <title>Contato | Nexus</title>
     <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <header>
-        <h1>Fale com a Equipe Nexus</h1>
-        <p>Preencha o formulário e entraremos em contato.</p>
+<body class="contact-page">
+    <section class="contact-hero">
+        <div class="contact-hero-overlay"></div>
 
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="funcionalidades.html">Funcionalidades</a>
-            <a href="contato.html">Contato</a>
-        </nav>
-    </header>
+        <header class="contact-header">
+            <a href="index.html" class="logo home-brand" aria-label="Nexus">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="home-brand-mark">
+                <span>NEXUS</span>
+            </a>
 
-    <section id="contact-form">
-        <form>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+            <nav class="contact-nav" aria-label="Navegacao principal">
+                <a href="index.html">Inicio</a>
+                <a href="funcionalidades.html">Funcionalidades</a>
+                <a href="contato.html" class="is-active">Contato</a>
+            </nav>
+        </header>
 
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
+        <div class="contact-hero-content">
+            <span class="contact-eyebrow">Fale conosco</span>
+            <h1>Transforme o atendimento comercial do Nexus em uma pagina mais forte e convincente.</h1>
+            <p>Centralize duvidas, pedidos de demonstracao e primeiros contatos em uma experiencia visual mais profissional, clara e confiavel.</p>
 
-            <button type="submit">Enviar</button>
-        </form>
+            <div class="contact-hero-metrics">
+                <div class="contact-metric">
+                    <strong>1 pagina</strong>
+                    <span>para comercial e suporte</span>
+                </div>
+                <div class="contact-metric">
+                    <strong>Resposta rapida</strong>
+                    <span>para leads e condominios</span>
+                </div>
+                <div class="contact-metric">
+                    <strong>Visual premium</strong>
+                    <span>alinhado com a home</span>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer>
+    <main class="contact-shell">
+        <section class="contact-info-panel">
+            <div class="contact-intro-card">
+                <span class="info-badge">Atendimento Nexus</span>
+                <h2>Escolha o tipo de contato ideal para sua necessidade.</h2>
+                <p>Se voce quer conhecer o sistema, agendar uma apresentacao ou tirar duvidas sobre implantacao, esta pagina agora deixa isso mais evidente e organizado.</p>
+            </div>
+
+            <div class="contact-option-grid">
+                <article class="contact-option-card">
+                    <div class="contact-option-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Fale Conosco</h3>
+                    <p>Use para atendimento geral, duvidas comerciais e orientacoes iniciais.</p>
+                </article>
+
+                <article class="contact-option-card">
+                    <div class="contact-option-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>Peca uma Demonstracao</h3>
+                    <p>Ideal para sindicos, administradoras e equipes que querem ver o Nexus em funcionamento.</p>
+                </article>
+
+                <article class="contact-option-card">
+                    <div class="contact-option-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Projeto para Condominios</h3>
+                    <p>Estruture o primeiro contato com dados do condominio e objetivo da implantacao.</p>
+                </article>
+            </div>
+
+            <div class="contact-highlight-card">
+                <div>
+                    <span class="highlight-label">Destaque</span>
+                    <h3>Uma interface melhor aumenta a percepcao de valor do produto.</h3>
+                </div>
+                <p>O novo layout separa informacao, contexto comercial e formulario em blocos mais escaneaveis, com contraste e hierarquia visual melhores.</p>
+            </div>
+        </section>
+
+        <section class="contact-form-panel">
+            <div class="contact-form-card">
+                <div class="contact-form-header">
+                    <span class="info-badge">Formulario</span>
+                    <h2>Solicite contato da equipe Nexus</h2>
+                    <p>Preencha os dados abaixo para falar com nossa equipe ou pedir uma demonstracao.</p>
+                </div>
+
+                <form class="contact-form">
+                    <div class="contact-form-grid">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="voce@empresa.com.br" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="assunto">Assunto</label>
+                            <select id="assunto" name="assunto" required>
+                                <option value="">Selecione</option>
+                                <option value="contato">Fale Conosco</option>
+                                <option value="demo">Peca uma Demonstracao</option>
+                                <option value="implantacao">Implantacao para Condominio</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="condominio">Condominio ou empresa</label>
+                            <input type="text" id="condominio" name="condominio" placeholder="Nome do condominio, administradora ou empresa">
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte brevemente o que voce precisa." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-actions">
+                        <button type="submit" class="primary-button-lg">Enviar solicitacao</button>
+                        <a href="index.html" class="contact-secondary-link">Voltar para a pagina inicial</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
         <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
     </footer>
 
