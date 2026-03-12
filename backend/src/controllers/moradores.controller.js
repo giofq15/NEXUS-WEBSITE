@@ -70,7 +70,7 @@ async function create(req, res) {
       return res.status(409).json({ error: 'CPF já cadastrado' });
     }
 
-    const hashedPassword = await bcrypt.hash('morador123', 10);
+    const hashedPassword = await bcrypt.hash('colaborador123', 10);
 
     const morador = await prisma.morador.create({
       data: {
@@ -85,7 +85,7 @@ async function create(req, res) {
           create: {
             email,
             password: hashedPassword,
-            role: 'MORADOR',
+            role: 'COLABORADOR',
           },
         },
       },

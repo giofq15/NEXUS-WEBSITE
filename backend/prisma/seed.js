@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   const hashedAdmin = await bcrypt.hash('admin123', 10);
-  const hashedMorador = await bcrypt.hash('morador123', 10);
+  const hashedColaborador = await bcrypt.hash('colaborador123', 10);
 
   // Admin user
   await prisma.user.upsert({
@@ -18,7 +18,7 @@ async function main() {
     },
   });
 
-  // Moradores do frontend
+  // Colaboradores do frontend
   const moradores = [
     { nome: 'Ana Silva', cpf: '111.111.111-11', telefone: '(11) 91111-1111', bloco: 'A', unidade: '101', status: 'ATIVO' },
     { nome: 'Carlos Pereira', cpf: '222.222.222-22', telefone: '(11) 92222-2222', bloco: 'B', unidade: '205', status: 'ATIVO' },
@@ -39,8 +39,8 @@ async function main() {
       update: {},
       create: {
         email,
-        password: hashedMorador,
-        role: 'MORADOR',
+        password: hashedColaborador,
+        role: 'COLABORADOR',
         morador: {
           create: {
             nome: m.nome,
