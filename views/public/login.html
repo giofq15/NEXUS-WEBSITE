@@ -288,8 +288,8 @@
                 heading.textContent = 'Acesso do Administrador';
                 destino = '../admin/painel-admin.html';
             } else {
-                heading.textContent = 'Acesso do Morador';
-                destino = '../morador/painel-morador.html';
+                heading.textContent = 'Acesso do Colaborador';
+                destino = '../colaborador/painel-colaborador.html';
             }
 
             // Login via API
@@ -325,7 +325,7 @@
                     if (data.user.role === 'ADMIN') {
                         window.location.href = '../admin/painel-admin.html';
                     } else {
-                        window.location.href = '../morador/painel-morador.html';
+                        window.location.href = '../colaborador/painel-colaborador.html';
                     }
                 } catch (err) {
                     alert('Erro de conexão com o servidor');

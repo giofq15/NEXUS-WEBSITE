@@ -32,7 +32,7 @@ async function list(req, res) {
 
     if (req.user.role !== 'ADMIN') {
       if (!req.user.moradorId) {
-        return res.status(403).json({ error: 'Usuário morador inválido' });
+        return res.status(403).json({ error: 'Usuário colaborador inválido' });
       }
       where.moradorId = req.user.moradorId;
     }
@@ -93,7 +93,7 @@ async function create(req, res) {
       }
     } else {
       if (!req.user.moradorId) {
-        return res.status(403).json({ error: 'Usuário morador inválido' });
+        return res.status(403).json({ error: 'Usuário colaborador inválido' });
       }
       targetMoradorId = req.user.moradorId;
     }
