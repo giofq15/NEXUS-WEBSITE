@@ -22,9 +22,9 @@
     <main>
         <aside class="sidebar">
             <a href="../admin/painel-admin.html">Dashboard</a>
-            <a href="../admin/moradores.html">Moradores</a>
-            <a href="../admin/moradores-inadimplentes.html">Moradores Inadimplentes</a>
-            <a href="../ocorrencias/ocorrencias.html">Ocorrências</a>
+            <a href="../admin/moradores.html">Colaboradores</a>
+            <a href="../admin/moradores-inadimplentes.html">Colaboradores Inadimplentes</a>
+            <a href="../ocorrencias/ocorrencias.html">Ocorrencias</a>
             <a href="../financeiro/financeiro.html">Financeiro</a>
             <a href="../colaborador/monitoramento-iot.html">Monitoramento IoT</a>
             <a href="../public/index.html">Sair</a>
@@ -32,25 +32,24 @@
 
         <section class="content">
             <div class="header-with-action">
-                <h1 id="morador-title">Detalhes do Colaborador</h1>
+                <h1 id="colaborador-title">Detalhes do Colaborador</h1>
                 <a href="../admin/moradores.html" class="secondary-button back-button">← Voltar para Colaboradores</a>
             </div>
 
             <div class="profile-layout">
                 <div class="profile-card info-card">
-                    <h2>Informações de Contato</h2>
-                    <p><strong>Status:</strong> <span id="morador-status" class="status-active"></span></p>
-                    <p><strong>Unidade:</strong> <span id="morador-unidade"></span></p>
-                    <p><strong>E-mail:</strong> <span id="morador-email"></span></p>
-                    <p><strong>Telefone:</strong> <span id="morador-telefone"></span></p>
-                    <p><strong>Data de Cadastro:</strong> <span id="morador-data"></span></p>
+                    <h2>Informacoes de Contato</h2>
+                    <p><strong>Status:</strong> <span id="colaborador-status" class="status-active"></span></p>
+                    <p><strong>Unidade:</strong> <span id="colaborador-unidade"></span></p>
+                    <p><strong>E-mail:</strong> <span id="colaborador-email"></span></p>
+                    <p><strong>Telefone:</strong> <span id="colaborador-telefone"></span></p>
+                    <p><strong>Data de Cadastro:</strong> <span id="colaborador-data"></span></p>
                     <a id="edit-link" href="#" class="primary-button full-width-btn edit-button">Editar Dados</a>
                 </div>
 
                 <div class="profile-details-column">
-
                     <div class="profile-card access-card">
-                        <h2>Controle de Acesso (Veículos)</h2>
+                        <h2>Controle de Acesso (Veiculos)</h2>
                         <div class="data-list" id="veiculos-list">
                             <p>Carregando...</p>
                         </div>
@@ -58,11 +57,11 @@
                     </div>
 
                     <div class="profile-card logs-card">
-                        <h2>Logs e Histórico</h2>
+                        <h2>Logs e Historico</h2>
                         <div class="data-list">
-                            <p><strong>Ocorrências em Aberto:</strong> 1</p>
-                            <p><strong>Economia Média (Água):</strong> 15% acima da média</p>
-                            <a href="#" class="view-log-link">Ver Histórico de Ocorrências</a>
+                            <p><strong>Ocorrencias em Aberto:</strong> 1</p>
+                            <p><strong>Economia Media (Agua):</strong> 15% acima da media</p>
+                            <a href="#" class="view-log-link">Ver Historico de Ocorrencias</a>
                         </div>
                     </div>
                 </div>
@@ -79,78 +78,97 @@
         if (!token) window.location.href = '../public/login.html?role=admin';
 
         const params = new URLSearchParams(window.location.search);
-        const moradorId = params.get('id');
+        const colaboradorId = params.get('id');
 
-        if (!moradorId) window.location.href = '../admin/moradores.html';
+        if (!colaboradorId) window.location.href = '../admin/moradores.html';
 
-        async function loadMorador() {
+        async function loadColaborador() {
             try {
-                const res = await fetch(`/api/moradores/${moradorId}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                const res = await fetch(`/api/colaboradores/${colaboradorId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
                 });
-                if (!res.ok) { window.location.href = '../admin/moradores.html'; return; }
-                const m = await res.json();
+                if (!res.ok) {
+                    window.location.href = '../admin/moradores.html';
+                    return;
+                }
 
-                document.getElementById('morador-title').textContent = `Detalhes do Morador: ${m.nome}`;
-                document.getElementById('morador-status').textContent = m.status.charAt(0) + m.status.slice(1).toLowerCase();
-                document.getElementById('morador-unidade').textContent = `${m.unidade} - Bloco ${m.bloco}`;
-                document.getElementById('morador-email').textContent = m.user.email;
-                document.getElementById('morador-telefone').textContent = m.telefone;
-                document.getElementById('morador-data').textContent = new Date(m.createdAt).toLocaleDateString('pt-BR');
-                document.getElementById('edit-link').href = `../admin/novo-morador.html?id=${m.id}`;
+                const colaborador = await res.json();
 
-                renderVeiculos(m.veiculos);
+                document.getElementById('colaborador-title').textContent = `Detalhes do Colaborador: ${colaborador.nome}`;
+                document.getElementById('colaborador-status').textContent = colaborador.status.charAt(0) + colaborador.status.slice(1).toLowerCase();
+                document.getElementById('colaborador-unidade').textContent = `${colaborador.unidade} - Bloco ${colaborador.bloco}`;
+                document.getElementById('colaborador-email').textContent = colaborador.user.email;
+                document.getElementById('colaborador-telefone').textContent = colaborador.telefone;
+                document.getElementById('colaborador-data').textContent = new Date(colaborador.createdAt).toLocaleDateString('pt-BR');
+                document.getElementById('edit-link').href = `../admin/novo-morador.html?id=${colaborador.id}`;
+
+                renderVeiculos(colaborador.veiculos);
             } catch {
-                alert('Erro ao carregar dados do morador');
+                alert('Erro ao carregar dados do colaborador');
             }
         }
 
         function renderVeiculos(veiculos) {
             const list = document.getElementById('veiculos-list');
             if (!veiculos.length) {
-                list.innerHTML = '<p>Nenhum veículo cadastrado</p>';
+                list.innerHTML = '<p>Nenhum veiculo cadastrado</p>';
                 return;
             }
-            list.innerHTML = veiculos.map((v, i) => {
-                const tagClass = v.tipo === 'CARRO' ? 'tag-car' : 'tag-moto';
-                const label = v.tipo === 'CARRO' ? 'Carro' : 'Moto';
+
+            list.innerHTML = veiculos.map(function (veiculo, index) {
+                const tagClass = veiculo.tipo === 'CARRO' ? 'tag-car' : 'tag-moto';
+                const label = veiculo.tipo === 'CARRO' ? 'Carro' : 'Moto';
                 return `<p>
-                    <strong>Placa ${i + 1}:</strong> ${v.placa} <span class="tag ${tagClass}">${label}</span>
-                    <a href="#" class="action-link" onclick="removeVeiculo(${v.id}); return false;">Remover</a>
+                    <strong>Placa ${index + 1}:</strong> ${veiculo.placa} <span class="tag ${tagClass}">${label}</span>
+                    <a href="#" class="action-link" onclick="removeVeiculo(${veiculo.id}); return false;">Remover</a>
                 </p>`;
             }).join('');
         }
 
         document.getElementById('add-placa-btn').addEventListener('click', async function () {
-            const placa = prompt('Digite a placa do veículo (ex: ABC-1234):');
+            const placa = prompt('Digite a placa do veiculo (ex: ABC-1234):');
             if (!placa) return;
+
             const tipo = prompt('Tipo: CARRO ou MOTO?')?.toUpperCase();
-            if (tipo !== 'CARRO' && tipo !== 'MOTO') { alert('Tipo inválido'); return; }
+            if (tipo !== 'CARRO' && tipo !== 'MOTO') {
+                alert('Tipo invalido');
+                return;
+            }
 
             try {
-                const res = await fetch(`/api/moradores/${moradorId}/veiculos`, {
+                const res = await fetch(`/api/colaboradores/${colaboradorId}/veiculos`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
                     body: JSON.stringify({ placa, tipo }),
                 });
                 const data = await res.json();
-                if (!res.ok) { alert(data.error || 'Erro ao adicionar veículo'); return; }
-                loadMorador();
-            } catch { alert('Erro de conexão'); }
+                if (!res.ok) {
+                    alert(data.error || 'Erro ao adicionar veiculo');
+                    return;
+                }
+                loadColaborador();
+            } catch {
+                alert('Erro de conexao');
+            }
         });
 
         async function removeVeiculo(veiculoId) {
-            if (!confirm('Remover este veículo?')) return;
+            if (!confirm('Remover este veiculo?')) return;
             try {
-                await fetch(`/api/moradores/${moradorId}/veiculos/${veiculoId}`, {
+                await fetch(`/api/colaboradores/${colaboradorId}/veiculos/${veiculoId}`, {
                     method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${token}` },
                 });
-                loadMorador();
-            } catch { alert('Erro ao remover veículo'); }
+                loadColaborador();
+            } catch {
+                alert('Erro ao remover veiculo');
+            }
         }
 
-        loadMorador();
+        loadColaborador();
     </script>
 </body>
 

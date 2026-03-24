@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Moradores - NEXUS</title>
+    <title>Gerenciamento de Colaboradores - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="admin-body">
 
+<body class="admin-body">
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="nexus-brand" aria-label="Nexus Admin">
@@ -22,9 +23,9 @@
         <nav>
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Moradores Inadimplentes</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
+                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Colaboradores Inadimplentes</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
                 <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
@@ -34,16 +35,16 @@
 
     <main class="main-content" data-moradores-page>
         <div class="dashboard-header">
-            <h1>Controle de Moradores</h1>
-            <p>Visão geral de todas as unidades ativas e pendentes.</p>
+            <h1>Controle de Colaboradores</h1>
+            <p>Visao geral de todos os colaboradores ativos e pendentes.</p>
         </div>
 
         <div class="controls-container">
             <div class="search-group">
                 <input type="search" class="search-input" placeholder="Buscar por unidade, nome, bloco..." data-moradores-search>
-                <p class="search-meta" data-moradores-search-meta>Digite para buscar moradores.</p>
+                <p class="search-meta" data-moradores-search-meta>Digite para buscar colaboradores.</p>
             </div>
-            <a href="novo-morador.html" class="new-button">+ Novo Morador</a>
+            <a href="novo-morador.html" class="new-button">+ Novo Colaborador</a>
         </div>
 
         <table class="data-table" data-moradores-table>
@@ -52,7 +53,7 @@
                     <th>Nome</th>
                     <th>Unidade</th>
                     <th>Status</th>
-                    <th>Ações</th>
+                    <th>Acoes</th>
                 </tr>
             </thead>
             <tbody id="moradores-tbody">
@@ -60,21 +61,8 @@
             </tbody>
         </table>
 
-        <template data-moradores-row-template>
-            <tr>
-                <td data-col-nome></td>
-                <td data-col-unidade></td>
-                <td data-col-status></td>
-                <td>
-                    <a href="#" class="action-link" data-action="view">Ver</a>
-                    <span class="action-divider">|</span>
-                    <a href="#" class="action-link" data-action="edit">Editar</a>
-                </td>
-            </tr>
-        </template>
-
         <div class="content-footer">
-            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </div>
     </main>
 
@@ -86,39 +74,41 @@
         const tbody = document.getElementById('moradores-tbody');
         const searchInput = document.querySelector('.search-input');
 
-        async function loadMoradores(search = '') {
-            const url = search ? `/api/moradores?search=${encodeURIComponent(search)}` : '/api/moradores';
+        async function loadColaboradores(search = '') {
+            const url = search ? `/api/colaboradores?search=${encodeURIComponent(search)}` : '/api/colaboradores';
             try {
                 const res = await fetch(url, {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${token}` }
                 });
                 if (res.status === 401) {
                     localStorage.removeItem('nexus_token');
                     window.location.href = '../public/login.html?role=admin';
                     return;
                 }
-                const moradores = await res.json();
-                renderMoradores(moradores);
+
+                const colaboradores = await res.json();
+                renderColaboradores(colaboradores);
             } catch {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Erro ao carregar moradores</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Erro ao carregar colaboradores</td></tr>';
             }
         }
 
-        function renderMoradores(moradores) {
-            if (!moradores.length) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nenhum morador encontrado</td></tr>';
+        function renderColaboradores(colaboradores) {
+            if (!colaboradores.length) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nenhum colaborador encontrado</td></tr>';
                 return;
             }
-            tbody.innerHTML = moradores.map(m => {
-                const statusClass = `status-${m.status.toLowerCase()}`;
-                const statusLabel = m.status.charAt(0) + m.status.slice(1).toLowerCase();
+
+            tbody.innerHTML = colaboradores.map(function (colaborador) {
+                const statusClass = `status-${colaborador.status.toLowerCase()}`;
+                const statusLabel = colaborador.status.charAt(0) + colaborador.status.slice(1).toLowerCase();
                 return `<tr>
-                    <td>${m.nome}</td>
-                    <td>${m.unidade} - Bloco ${m.bloco}</td>
+                    <td>${colaborador.nome}</td>
+                    <td>${colaborador.unidade} - Bloco ${colaborador.bloco}</td>
                     <td class="${statusClass}">${statusLabel}</td>
                     <td>
-                        <a href="../ocorrencias/detalhes-morador.html?id=${m.id}" class="action-link">Ver</a> |
-                        <a href="novo-morador.html?id=${m.id}" class="action-link">Editar</a>
+                        <a href="../ocorrencias/detalhes-morador.html?id=${colaborador.id}" class="action-link">Ver</a> |
+                        <a href="novo-morador.html?id=${colaborador.id}" class="action-link">Editar</a>
                     </td>
                 </tr>`;
             }).join('');
@@ -127,10 +117,11 @@
         let searchTimeout;
         searchInput.addEventListener('input', function () {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => loadMoradores(this.value), 300);
+            searchTimeout = setTimeout(() => loadColaboradores(this.value), 300);
         });
 
-        loadMoradores();
+        loadColaboradores();
     </script>
 </body>
+
 </html>

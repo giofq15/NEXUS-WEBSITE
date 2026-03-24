@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 
 const authRoutes = require('./routes/auth.routes');
-const moradoresRoutes = require('./routes/moradores.routes');
+const colaboradoresRoutes = require('./routes/colaboradores.routes');
 const ocorrenciasRoutes = require('./routes/ocorrencias.routes');
 
 const app = express();
@@ -17,12 +17,18 @@ app.use(express.json());
 
 // API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/moradores', moradoresRoutes);
+app.use('/api/colaboradores', colaboradoresRoutes);
+app.use('/api/moradores', colaboradoresRoutes);
 app.use('/api/ocorrencias', ocorrenciasRoutes);
 
 // Serve frontend static files
 app.use('/public', express.static(path.join(__dirname, '../../public')));
-app.use('/views', express.static(path.join(__dirname, '../../views')))
+app.use('/views', express.static(path.join(__dirname, '../../views')));
+app.use('/admin', express.static(path.join(__dirname, '../../views/admin')));
+app.use('/colaborador', express.static(path.join(__dirname, '../../views/colaborador')));
+app.use('/financeiro', express.static(path.join(__dirname, '../../views/financeiro')));
+app.use('/ocorrencias', express.static(path.join(__dirname, '../../views/ocorrencias')));
+app.use('/morador', express.static(path.join(__dirname, '../../views/morador')));
 app.use(express.static(path.join(__dirname, '../../views/public')));
 // Root → landing page
 app.get('/', (req, res) => {

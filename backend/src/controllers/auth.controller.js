@@ -10,23 +10,27 @@ async function login(req, res) {
 
     const user = await prisma.user.findUnique({
       where: { email },
-      include: { morador: true },
+      include: { colaborador: true },
     });
 
     if (!user) {
-      return res.status(401).json({ error: 'E-mail ou senha inválidos' });
+      return res.status(401).json({ error: 'E-mail ou senha invalidos' });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.status(401).json({ error: 'E-mail ou senha inválidos' });
+      return res.status(401).json({ error: 'E-mail ou senha invalidos' });
     }
+
+    const colaboradorId = user.colaborador?.id || null;
 
     const token = generateToken({
       id: user.id,
       email: user.email,
       role: user.role,
-      moradorId: user.morador?.id || null,
+      accessLevel: user.accessLevel,
+      colaboradorId,
+      moradorId: colaboradorId,
     });
 
     res.json({
@@ -35,7 +39,9 @@ async function login(req, res) {
         id: user.id,
         email: user.email,
         role: user.role,
-        nome: user.morador?.nome || 'Administrador',
+        accessLevel: user.accessLevel,
+        nome: user.colaborador?.nome || 'Administrador',
+        colaboradorId,
       },
     });
   } catch (error) {

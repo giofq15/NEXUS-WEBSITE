@@ -14,12 +14,13 @@ router.get('/:id', ocorrencias.getById);
 router.post(
   '/',
   [
-    body('tipo').notEmpty().withMessage('Tipo é obrigatório'),
-    body('local').notEmpty().withMessage('Local é obrigatório'),
-    body('descricao').notEmpty().withMessage('Descrição é obrigatória'),
-    body('prioridade').optional().isIn(['ALTA', 'MEDIA', 'BAIXA']).withMessage('Prioridade inválida'),
-    body('status').optional().isIn(['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA']).withMessage('Status inválido'),
-    body('moradorId').optional().isInt({ min: 1 }).withMessage('moradorId inválido'),
+    body('tipo').notEmpty().withMessage('Tipo e obrigatorio'),
+    body('local').notEmpty().withMessage('Local e obrigatorio'),
+    body('descricao').notEmpty().withMessage('Descricao e obrigatoria'),
+    body('prioridade').optional().isIn(['ALTA', 'MEDIA', 'BAIXA']).withMessage('Prioridade invalida'),
+    body('status').optional().isIn(['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA']).withMessage('Status invalido'),
+    body('colaboradorId').optional().isInt({ min: 1 }).withMessage('colaboradorId invalido'),
+    body('moradorId').optional().isInt({ min: 1 }).withMessage('moradorId invalido'),
   ],
   validate,
   ocorrencias.create
@@ -28,7 +29,7 @@ router.post(
 router.patch(
   '/:id/status',
   authorizeAdmin,
-  [body('status').isIn(['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA']).withMessage('Status inválido')],
+  [body('status').isIn(['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA']).withMessage('Status invalido')],
   validate,
   ocorrencias.updateStatus
 );
