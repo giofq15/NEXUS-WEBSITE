@@ -120,7 +120,7 @@
 
     if (!tbody.querySelector("tr")) {
         const emptyRow = document.createElement("tr");
-        emptyRow.innerHTML = '<td colspan="5">Nao ha moradores com atraso superior a 30 dias no momento.</td>';
+        emptyRow.innerHTML = '<td colspan="5">Nao ha colaboradores com atraso superior a 30 dias no momento.</td>';
         tbody.appendChild(emptyRow);
     }
 })();
@@ -400,7 +400,7 @@
 
             clearDraft();
             renderPreview(values);
-            showFeedback("Comunicado publicado para os moradores.", "success");
+            showFeedback("Comunicado publicado para os colaboradores.", "success");
         });
     }
 
@@ -786,26 +786,26 @@
             setReadOnly(true);
             submitBtn.hidden = true;
             resetBtn.hidden = true;
-            title.textContent = "Morador nÃ£o encontrado";
-            setFeedback("NÃ£o foi possÃ­vel localizar o morador solicitado.", true);
+            title.textContent = "Colaborador nao encontrado";
+            setFeedback("Nao foi possivel localizar o colaborador solicitado.", true);
             return;
         }
 
         if (mode === "view") {
             fillForm(target);
             setReadOnly(true);
-            title.textContent = "Visualizar Morador";
+            title.textContent = "Visualizar Colaborador";
             submitBtn.hidden = true;
             resetBtn.hidden = true;
             editLink.hidden = false;
             editLink.href = "novo-morador.html?mode=edit&id=" + encodeURIComponent(target.id);
         } else if (mode === "edit") {
             fillForm(target);
-            title.textContent = "Editar Morador";
+            title.textContent = "Editar Colaborador";
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Salvar AlteraÃ§Ãµes';
             setFeedback("Edite os campos e salve as alteraÃ§Ãµes.", false);
         } else {
-            title.textContent = "Cadastro de Novo Morador";
+            title.textContent = "Cadastro de Novo Colaborador";
         }
         bindInputMasks();
         form.addEventListener("submit", function (event) {
@@ -828,7 +828,7 @@
             }
 
             if (!validateDuplicateUnit(payload)) {
-                setFeedback("JÃ¡ existe um morador cadastrado nesta unidade/bloco.", true);
+                setFeedback("Ja existe um colaborador cadastrado nesta unidade/bloco.", true);
                 return;
             }
 
@@ -836,7 +836,7 @@
             if (mode === "edit" && target) {
                 const index = list.findIndex(function (item) { return item.id === target.id; });
                 if (index === -1) {
-                    setFeedback("Morador nÃ£o encontrado para ediÃ§Ã£o.", true);
+                    setFeedback("Colaborador nao encontrado para edicao.", true);
                     return;
                 }
                 list[index] = Object.assign({}, target, payload, { id: target.id });

@@ -8,43 +8,44 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  role      Role     @default(COLABORADOR)
-  morador   Morador?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  password     String
+  role         Role          @default(COLABORADOR)
+  accessLevel  AccessLevel   @default(COLABORADOR) @map("access_level")
+  colaborador  Colaborador?
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
 
   @@map("users")
 }
 
-model Morador {
-  id         Int           @id @default(autoincrement())
-  userId     Int           @unique @map("user_id")
-  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  nome       String
-  cpf        String        @unique
-  nascimento DateTime?
-  telefone   String
-  bloco      String
-  unidade    String
-  status     StatusMorador @default(PENDENTE)
-  veiculos   Veiculo[]
+model Colaborador {
+  id          Int                 @id @default(autoincrement())
+  userId      Int                 @unique @map("user_id")
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nome        String
+  cpf         String              @unique
+  nascimento  DateTime?
+  telefone    String
+  bloco       String
+  unidade     String
+  status      StatusColaborador   @default(PENDENTE)
+  veiculos    Veiculo[]
   ocorrencias Ocorrencia[]
-  createdAt  DateTime      @default(now()) @map("created_at")
-  updatedAt  DateTime      @updatedAt @map("updated_at")
+  createdAt   DateTime            @default(now()) @map("created_at")
+  updatedAt   DateTime            @updatedAt @map("updated_at")
 
-  @@map("moradores")
+  @@map("colaboradores")
 }
 
 model Veiculo {
-  id        Int         @id @default(autoincrement())
-  moradorId Int         @map("morador_id")
-  morador   Morador     @relation(fields: [moradorId], references: [id], onDelete: Cascade)
-  placa     String      @unique
-  tipo      TipoVeiculo
-  createdAt DateTime    @default(now()) @map("created_at")
+  id             Int          @id @default(autoincrement())
+  colaboradorId  Int          @map("colaborador_id")
+  colaborador    Colaborador  @relation(fields: [colaboradorId], references: [id], onDelete: Cascade)
+  placa          String       @unique
+  tipo           TipoVeiculo
+  createdAt      DateTime     @default(now()) @map("created_at")
 
   @@map("veiculos")
 }
@@ -54,7 +55,13 @@ enum Role {
   COLABORADOR
 }
 
-enum StatusMorador {
+enum AccessLevel {
+  ROOT
+  ADMIN
+  COLABORADOR
+}
+
+enum StatusColaborador {
   ATIVO
   PENDENTE
   BLOQUEADO
@@ -66,17 +73,17 @@ enum TipoVeiculo {
 }
 
 model Ocorrencia {
-  id         Int      @id @default(autoincrement())
-  moradorId  Int?     @map("morador_id")
-  morador    Morador? @relation(fields: [moradorId], references: [id], onDelete: SetNull)
-  tipo       String
-  local      String
-  descricao  String
-  prioridade String   @default("MEDIA")
-  status     String   @default("EM_ANALISE")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id             Int           @id @default(autoincrement())
+  colaboradorId  Int?          @map("colaborador_id")
+  colaborador    Colaborador?  @relation(fields: [colaboradorId], references: [id], onDelete: SetNull)
+  tipo           String
+  local          String
+  descricao      String
+  prioridade     String        @default("MEDIA")
+  status         String        @default("EM_ANALISE")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
 
-  @@index([moradorId])
+  @@index([colaboradorId])
   @@map("ocorrencias")
 }

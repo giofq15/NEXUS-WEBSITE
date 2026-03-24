@@ -4,90 +4,80 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nexus - Gestão Condominial Inteligente</title>
+    <title>Nexus - Gestao Condominial Inteligente</title>
     <link rel="stylesheet" href="../../public/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 
 <body>
-
     <section class="hero">
         <div class="overlay"></div>
 
-        <!-- HEADER: substitua pela versão abaixo -->
         <header>
             <div class="logo home-brand" aria-label="Nexus">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="home-brand-mark">
                 <span>NEXUS</span>
             </div>
             <div class="dropdown">
-                <!-- botão principal -->
                 <button id="dropdown-btn" class="cta-button" aria-haspopup="true" aria-expanded="false">
                     Acessar o Sistema
                 </button>
 
-                <!-- conteúdo do dropdown (visualmente controlado pelo CSS / classe .show) -->
                 <div class="dropdown-content" role="menu" aria-hidden="true">
                     <div class="dropdown-panel">
-                        <a href="login.html" role="menuitem">Acesso Morador</a>
+                        <a href="login.html" role="menuitem">Acesso Colaborador</a>
                         <a href="login.html?role=admin" role="menuitem">Acesso Administrador</a>
                     </div>
                 </div>
             </div>
         </header>
-        <!-- fim do header -->
 
         <div class="hero-content">
-            <h1>A Solução Inteligente para uma<br />Gestão Condominial Sustentável.</h1>
-            <p>Administração, síndico e monitoramento IoT em um só lugar.</p>
-            <p>Focado em eficiência e economia de recursos.</p>
+            <h1>A Solucao Inteligente para uma<br />Gestao Condominial Sustentavel.</h1>
+            <p>Administracao, sindico e monitoramento IoT em um so lugar.</p>
+            <p>Focado em eficiencia e economia de recursos.</p>
         </div>
     </section>
 
     <section class="features">
-        <h2>Conheça Mais sobre o Sistema Nexus</h2>
+        <h2>Conheca Mais sobre o Sistema Nexus</h2>
         <div class="card-container">
             <div class="card">
                 <i class="fas fa-broadcast-tower"></i>
                 <h3>Monitoramento IoT em Tempo Real</h3>
-                <p>Controle o consumo de água e energia por unidade. Identifique vazamentos e desperdícios
+                <p>Controle o consumo de agua e energia por unidade. Identifique vazamentos e desperdicios
                     imediatamente, promovendo a sustentabilidade.</p>
             </div>
             <div class="card">
                 <i class="fas fa-users-cog"></i>
-                <h3>Gestão Completa de Moradores</h3>
-                <p>Cadastros, veículos, acessos e comunicação simplificada. Tenha total controle e segurança das
-                    informações do seu condomínio.</p>
+                <h3>Gestao Completa de Colaboradores</h3>
+                <p>Cadastros, veiculos, acessos e comunicacao simplificada. Tenha total controle e seguranca das
+                    informacoes do seu condominio.</p>
             </div>
             <div class="card">
                 <i class="fas fa-tools"></i>
-                <h3>Ocorrências e Manutenção</h3>
-                <p>Abra, acompanhe e resolva chamados com agilidade. Mantenha um histórico de manutenção completo e
+                <h3>Ocorrencias e Manutencao</h3>
+                <p>Abra, acompanhe e resolva chamados com agilidade. Mantenha um historico de manutencao completo e
                     transparente para todos.</p>
             </div>
         </div>
-        <a href="contato.html" class="primary-button-lg">Fale Conosco e Peça uma Demonstração</a>
+        <a href="contato.html" class="primary-button-lg">Fale Conosco e Peca uma Demonstracao</a>
     </section>
 
     <footer class="main-footer">
-        <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- SCRIPT: dropdown toggle + fechar ao clicar fora + Esc -->
     <script>
         (function () {
-            // encontra botão(s) e delega via evento
             document.addEventListener('click', function (e) {
-                // clique no botão do dropdown: abre/fecha o dropdown correspondente
                 const btn = e.target.closest('#dropdown-btn, .cta-button[data-target="dropdown"]');
                 if (btn) {
                     const dropdown = btn.closest('.dropdown');
                     if (!dropdown) return;
-                    // toggle .show no wrapper
-                    const isShown = dropdown.classList.toggle('show');
 
-                    // atualiza atributos ARIA e a visibilidade do painel
+                    const isShown = dropdown.classList.toggle('show');
                     const panel = dropdown.querySelector('.dropdown-content');
                     if (panel) {
                         panel.style.visibility = isShown ? 'visible' : 'hidden';
@@ -95,51 +85,46 @@
                         panel.setAttribute('aria-hidden', (!isShown).toString());
                     }
                     btn.setAttribute('aria-expanded', isShown ? 'true' : 'false');
-
-                    // evita que o clique no botão dispare o listener global que fecha tudo
                     e.stopPropagation();
                     return;
                 }
 
-                // clique FORA: fecha todos os dropdowns abertos
-                document.querySelectorAll('.dropdown.show').forEach(dd => {
+                document.querySelectorAll('.dropdown.show').forEach(function (dd) {
                     if (!dd.contains(e.target)) {
                         dd.classList.remove('show');
-                        const p = dd.querySelector('.dropdown-content');
-                        if (p) {
-                            p.style.visibility = 'hidden';
-                            p.style.opacity = '0';
-                            p.setAttribute('aria-hidden', 'true');
+                        const panel = dd.querySelector('.dropdown-content');
+                        if (panel) {
+                            panel.style.visibility = 'hidden';
+                            panel.style.opacity = '0';
+                            panel.setAttribute('aria-hidden', 'true');
                         }
-                        const b = dd.querySelector('#dropdown-btn');
-                        if (b) b.setAttribute('aria-expanded', 'false');
+                        const trigger = dd.querySelector('#dropdown-btn');
+                        if (trigger) trigger.setAttribute('aria-expanded', 'false');
                     }
                 });
             });
 
-            // Fechar com a tecla Esc
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' || e.key === 'Esc') {
-                    document.querySelectorAll('.dropdown.show').forEach(dd => {
+                    document.querySelectorAll('.dropdown.show').forEach(function (dd) {
                         dd.classList.remove('show');
-                        const p = dd.querySelector('.dropdown-content');
-                        if (p) {
-                            p.style.visibility = 'hidden';
-                            p.style.opacity = '0';
-                            p.setAttribute('aria-hidden', 'true');
+                        const panel = dd.querySelector('.dropdown-content');
+                        if (panel) {
+                            panel.style.visibility = 'hidden';
+                            panel.style.opacity = '0';
+                            panel.setAttribute('aria-hidden', 'true');
                         }
-                        const b = dd.querySelector('#dropdown-btn');
-                        if (b) b.setAttribute('aria-expanded', 'false');
+                        const trigger = dd.querySelector('#dropdown-btn');
+                        if (trigger) trigger.setAttribute('aria-expanded', 'false');
                     });
                 }
             });
 
-            // Inicializa estado (garante que painéis começam ocultos)
             document.addEventListener('DOMContentLoaded', function () {
-                document.querySelectorAll('.dropdown .dropdown-content').forEach(p => {
-                    p.style.visibility = 'hidden';
-                    p.style.opacity = '0';
-                    p.setAttribute('aria-hidden', 'true');
+                document.querySelectorAll('.dropdown .dropdown-content').forEach(function (panel) {
+                    panel.style.visibility = 'hidden';
+                    panel.style.opacity = '0';
+                    panel.setAttribute('aria-hidden', 'true');
                 });
             });
         })();

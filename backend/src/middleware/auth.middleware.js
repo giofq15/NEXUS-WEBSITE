@@ -3,7 +3,7 @@ const { verifyToken } = require('../utils/jwt');
 function authenticate(req, res, next) {
   const header = req.headers.authorization;
   if (!header || !header.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Token não fornecido' });
+    return res.status(401).json({ error: 'Token nao fornecido' });
   }
 
   try {
@@ -12,15 +12,30 @@ function authenticate(req, res, next) {
     req.user = decoded;
     next();
   } catch {
-    return res.status(401).json({ error: 'Token inválido ou expirado' });
+    return res.status(401).json({ error: 'Token invalido ou expirado' });
   }
 }
 
+function isAdminLevel(user) {
+  return user.accessLevel === 'ADMIN' || user.accessLevel === 'ROOT' || user.role === 'ADMIN';
+}
+
+function isRootLevel(user) {
+  return user.accessLevel === 'ROOT';
+}
+
 function authorizeAdmin(req, res, next) {
-  if (req.user.role !== 'ADMIN') {
+  if (!isAdminLevel(req.user)) {
     return res.status(403).json({ error: 'Acesso restrito a administradores' });
   }
   next();
 }
 
-module.exports = { authenticate, authorizeAdmin };
+function authorizeRoot(req, res, next) {
+  if (!isRootLevel(req.user)) {
+    return res.status(403).json({ error: 'Acesso restrito ao usuario root' });
+  }
+  next();
+}
+
+module.exports = { authenticate, authorizeAdmin, authorizeRoot, isAdminLevel, isRootLevel };

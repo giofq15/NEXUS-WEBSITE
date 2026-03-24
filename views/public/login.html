@@ -322,7 +322,7 @@
                     localStorage.setItem('nexus_token', data.token);
                     localStorage.setItem('nexus_user', JSON.stringify(data.user));
 
-                    if (data.user.role === 'ADMIN') {
+                    if (data.user.accessLevel === 'ROOT' || data.user.accessLevel === 'ADMIN' || data.user.role === 'ADMIN') {
                         window.location.href = '../admin/painel-admin.html';
                     } else {
                         window.location.href = '../colaborador/painel-colaborador.html';

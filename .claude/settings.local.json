@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/Pedro/NEXUS-WEBSITE -type f -name *.js -path */views/*)",
+      "Bash(git checkout:*)",
+      "Bash(npx prisma:*)",
+      "Bash(gh pr:*)",
+      "Bash(where gh:*)",
+      "Bash(winget list:*)"
+    ]
+  }
+}
