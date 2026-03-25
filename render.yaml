@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: nexus-website
+    runtime: node
+    plan: free
+    region: virginia
+    rootDir: .
+    buildCommand: cd backend && npm ci && npm run prisma:generate && npm run prisma:migrate
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
