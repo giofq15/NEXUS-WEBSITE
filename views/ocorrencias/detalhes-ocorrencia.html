@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Ocorrência - NEXUS</title>
+    <title>Detalhes da Ocorrencia - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -23,11 +23,13 @@
         <nav>
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li class="active"><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
+                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
+                <li class="active"><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
                 <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
@@ -35,48 +37,48 @@
     <main class="main-content occurrence-page">
         <div class="dashboard-header occurrence-header">
             <div>
-                <h1>Ocorrência #0015: Vazamento no Teto da Garagem</h1>
-                <p>Detalhes completos, histórico e ações de atendimento.</p>
+                <h1>Ocorrencia #0015: Vazamento no Teto da Garagem</h1>
+                <p>Detalhes completos, historico e acoes de atendimento.</p>
             </div>
-            <a href="ocorrencias.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para Ocorrências</a>
+            <a href="ocorrencias.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para Ocorrencias</a>
         </div>
 
         <div class="occurrence-layout">
             <div class="occurrence-details-column">
                 <article class="widget details-card">
-                    <h2>Descrição Completa</h2>
-                    <p>Morador reportou um vazamento significativo vindo do teto da garagem, localizado próximo à vaga 35. O problema aparenta ser de origem hidráulica do apartamento acima (Unidade 305).</p>
+                    <h2>Descricao Completa</h2>
+                    <p>A equipe de manutencao reportou um vazamento significativo vindo do teto da garagem, proximo a vaga 35. O problema aparenta ser de origem hidraulica da tubulacao que atende a Unidade 305.</p>
 
                     <div class="details-grid">
-                        <div><strong>Tipo de Problema:</strong> Hidráulico</div>
-                        <div><strong>Unidade Afetada:</strong> Garagem (Vaga 35)</div>
-                        <div><strong>Morador:</strong> Ana Silva (Unidade 305)</div>
+                        <div><strong>Tipo de Problema:</strong> Hidraulico</div>
+                        <div><strong>Area Afetada:</strong> Garagem (Vaga 35)</div>
+                        <div><strong>Responsavel de Referencia:</strong> Ana Silva (Unidade 305)</div>
                         <div><strong>Telefone:</strong> (11) 98765-4321</div>
                     </div>
                 </article>
 
                 <article class="widget timeline-card">
-                    <h2>Linha do Tempo e Histórico</h2>
+                    <h2>Linha do Tempo e Historico</h2>
                     <ul class="timeline">
                         <li class="timeline-item timeline-active">
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <strong>25/10/2025 (14:30)</strong>
-                                <p>Ocorrência aberta como Alta Prioridade. Notificação automática enviada à Ana Silva.</p>
+                                <p>Ocorrencia aberta como Alta Prioridade. Notificacao automatica enviada para a equipe de manutencao e para a unidade relacionada.</p>
                             </div>
                         </li>
                         <li class="timeline-item">
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <strong>25/10/2025 (15:00)</strong>
-                                <p>Síndico atribuiu a ocorrência ao Encanador Jorge.</p>
+                                <p>Sindico atribuiu a ocorrencia ao Encanador Jorge.</p>
                             </div>
                         </li>
                         <li class="timeline-item">
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <strong>26/10/2025 (09:00)</strong>
-                                <p>Agendamento de visita técnica para inspeção inicial. Status alterado para Em Andamento.</p>
+                                <p>Agendamento de visita tecnica para inspecao inicial. Status alterado para Em Andamento.</p>
                             </div>
                         </li>
                     </ul>
@@ -85,13 +87,13 @@
 
             <aside class="occurrence-actions-column">
                 <div class="widget status-box">
-                    <h2>Status e Ações Rápidas</h2>
+                    <h2>Status e Acoes Rapidas</h2>
                     <p class="current-status priority-high">PENDENTE</p>
 
                     <div class="status-summary">
                         <p><strong>Prioridade:</strong> <span class="priority-high">Alta</span></p>
                         <p><strong>Abertura:</strong> 25/10/2025</p>
-                        <p><strong>Atribuído a:</strong> Encanador Jorge</p>
+                        <p><strong>Atribuido a:</strong> Encanador Jorge</p>
                     </div>
 
                     <hr>
@@ -100,15 +102,15 @@
                     <select class="action-select">
                         <option>Pendente</option>
                         <option>Em Andamento</option>
-                        <option>Aguardando Peça</option>
+                        <option>Aguardando Peca</option>
                         <option>Resolvida</option>
                     </select>
 
-                    <button class="primary-button full-width-btn action-update-btn">Salvar Alteração</button>
+                    <button class="primary-button full-width-btn action-update-btn">Salvar Alteracao</button>
 
-                    <h3 class="action-title">Mais Ações</h3>
-                    <button class="action-btn view full-width-btn">Enviar E-mail ao Morador</button>
-                    <button class="action-btn edit full-width-btn">Adicionar Novo Comentário</button>
+                    <h3 class="action-title">Mais Acoes</h3>
+                    <button class="action-btn view full-width-btn">Enviar E-mail para a Equipe</button>
+                    <button class="action-btn edit full-width-btn">Adicionar Novo Comentario</button>
                 </div>
             </aside>
         </div>

@@ -24,19 +24,20 @@
             <ul>
                 <li class="active"><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Colaboradores Inadimplentes</a></li>
+                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
                 <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="main-content">
         <div class="dashboard-header">
-            <h1>Dashboard de Gestao do Condominio</h1>
-            <p>Visao geral e status do Projeto Nexus.</p>
+            <h1>Central Operacional do Condominio</h1>
+            <p>Acompanhe equipes, ocorrencias, reservas e indicadores do condominio em um unico painel.</p>
         </div>
 
         <div class="dashboard-grid">
@@ -76,7 +77,7 @@
                 </div>
 
                 <div class="widget">
-                    <h3>Novos Colaboradores (Semana)</h3>
+                    <h3>Colaboradores Ativos no Turno</h3>
                     <p class="data">3</p>
                     <a href="moradores.html">Ver Colaboradores</a>
                 </div>
@@ -86,8 +87,8 @@
         <section class="widget comunicados-editor" aria-labelledby="portal-comunicados-titulo" data-comunicados-admin>
             <div class="comunicados-editor-header">
                 <div>
-                    <h2 id="portal-comunicados-titulo">Portal de Comunicados dos Colaboradores</h2>
-                    <p>Edite e publique avisos que aparecerao para todos os colaboradores.</p>
+                    <h2 id="portal-comunicados-titulo">Central de Comunicados Operacionais</h2>
+                    <p>Edite e publique avisos para equipes, portaria e operacao interna do condominio.</p>
                 </div>
                 <span class="status-pill status-ativo">Rascunho Ativo</span>
             </div>
@@ -115,7 +116,7 @@
                 <div class="button-group comunicados-actions">
                     <button type="button" class="reset-button" data-comunicados-action="preview"><i class="fas fa-eye"></i> Pre-visualizar</button>
                     <button type="button" class="primary-button" data-comunicados-action="draft"><i class="fas fa-save"></i> Salvar Rascunho</button>
-                    <button type="submit" class="submit-button" data-comunicados-action="publish"><i class="fas fa-paper-plane"></i> Publicar para Colaboradores</button>
+                    <button type="submit" class="submit-button" data-comunicados-action="publish"><i class="fas fa-paper-plane"></i> Publicar Comunicado</button>
                 </div>
                 <p class="comunicados-feedback" data-comunicados-feedback aria-live="polite"></p>
                 <section class="comunicados-preview" data-comunicados-preview hidden>
@@ -135,14 +136,14 @@
     <script src="../../public/js/script.js"></script>
     <script>
         if (!localStorage.getItem('nexus_token')) {
-            window.location.href = '../public/login.html?role=admin';
+            window.location.href = '/login.html?role=admin';
         }
 
-        document.querySelector('a[href="../public/index.html"]').addEventListener('click', function (e) {
+        document.querySelector('a[href="/"]').addEventListener('click', function (e) {
             e.preventDefault();
             localStorage.removeItem('nexus_token');
             localStorage.removeItem('nexus_user');
-            window.location.href = '../public/index.html';
+            window.location.href = '/';
         });
     </script>
 </body>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -23,74 +23,76 @@
         </div>
         <nav>
             <ul>
-                <li><a href="../admin/painel-admin.html">Dashboard</a></li>
-                <li><a href="../admin/moradores.html">Colaboradores</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html">Ocorrências</a></li>
-                <li><a href="../financeiro/financeiro.html">Financeiro</a></li>
-                <li class="active"><a href="monitoramento-iot.html">Monitoramento IoT</a></li>
-                <li><a href="../public/index.html">Sair</a></li>
+                <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
+                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
+                <li class="active"><a href="monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </div>
 
     <div class="main-content">
         <div class="dashboard-header">
-            <h1>Monitoramento de Consumo e Sustentabilidade (IoT)</h1>
-            <p>Análise detalhada do consumo de recursos do condomínio.</p>
+            <h1>Monitoramento de Consumo e Sustentabilidade</h1>
+            <p>Analise os indicadores de agua, energia e eficiencia operacional do condominio.</p>
         </div>
 
         <div class="controls-container">
             <div class="search-group">
-                <label for="periodo" style="font-weight: bold; margin-right: 10px;">Período:</label>
+                <label for="periodo" style="font-weight: bold; margin-right: 10px;">Periodo:</label>
                 <select id="periodo" class="search-input">
-                    <option>Últimos 30 dias</option>
-                    <option>Mês Atual (Outubro)</option>
+                    <option>Ultimos 30 dias</option>
+                    <option>Mes Atual (Outubro)</option>
                     <option>Trimestre</option>
                     <option>Personalizado</option>
                 </select>
             </div>
-            <button class="new-button"><i class="fas fa-file-export"></i> Exportar Relatório (PDF)</button>
+            <button class="new-button"><i class="fas fa-file-export"></i> Exportar Relatorio (PDF)</button>
         </div>
 
         <div class="metrics-grid">
             <div class="metric-card widget water-metric">
                 <i class="fas fa-tint"></i>
-                <h3>Consumo Total de Água (Mês)</h3>
-                <p class="metric-value">520 m³</p>
-                <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
+                <h3>Consumo Total de Agua (Mes)</h3>
+                <p class="metric-value">520 m3</p>
+                <span class="metric-change negative">↓ 3% vs mes anterior</span>
             </div>
             <div class="metric-card widget energy-metric">
                 <i class="fas fa-bolt"></i>
-                <h3>Consumo Total de Energia (Mês)</h3>
+                <h3>Consumo Total de Energia (Mes)</h3>
                 <p class="metric-value">15.800 kWh</p>
-                <span class="metric-change positive">↑ 8% vs Mês Anterior</span>
+                <span class="metric-change positive">↑ 8% vs mes anterior</span>
             </div>
             <div class="metric-card widget economy-metric">
                 <i class="fas fa-leaf"></i>
-                <h3>Projeção de Economia (Anual)</h3>
+                <h3>Projecao de Economia (Anual)</h3>
                 <p class="metric-value">R$ 15.200</p>
-                <span class="metric-change positive">Melhor que a média histórica</span>
+                <span class="metric-change positive">Melhor que a media historica</span>
             </div>
         </div>
 
         <div class="widget">
             <div class="charts-section">
-                <h2>Gráfico de Tendência (Água e Energia)</h2>
+                <h2>Grafico de Tendencia (Agua e Energia)</h2>
 
                 <div class="chart-full-width">
-                    <h3>Consumo Diário Consolidado (30 dias)</h3>
-                    <div class="graph-placeholder line-chart-placeholder">Gráfico Simulado: Consumo Diário Agregado (Água vs Energia)</div>
+                    <h3>Consumo Diario Consolidado (30 dias)</h3>
+                    <div class="graph-placeholder line-chart-placeholder">Grafico simulado: consumo diario agregado (agua vs energia)</div>
                 </div>
 
                 <div class="chart-full-width" style="margin-top: 2rem;">
-                    <h3>Consumo por Bloco / Unidade (Mês)</h3>
-                    <div class="graph-placeholder bar-chart-placeholder">Gráfico Simulado: Ranking de Consumo por Unidade</div>
+                    <h3>Consumo por Bloco / Unidade (Mes)</h3>
+                    <div class="graph-placeholder bar-chart-placeholder">Grafico simulado: ranking de consumo por unidade</div>
                 </div>
             </div>
         </div>
 
         <footer class="content-footer">
-            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
 </body>

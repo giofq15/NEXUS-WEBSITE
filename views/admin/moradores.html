@@ -24,19 +24,20 @@
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Colaboradores Inadimplentes</a></li>
+                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
                 <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="main-content" data-moradores-page>
         <div class="dashboard-header">
-            <h1>Controle de Colaboradores</h1>
-            <p>Visao geral de todos os colaboradores ativos e pendentes.</p>
+            <h1>Gestao de Colaboradores</h1>
+            <p>Monitore a equipe cadastrada, o status de acesso e a vinculacao por unidade e bloco.</p>
         </div>
 
         <div class="controls-container">
@@ -69,7 +70,7 @@
     <script src="../../public/js/script.js"></script>
     <script>
         const token = localStorage.getItem('nexus_token');
-        if (!token) window.location.href = '../public/login.html?role=admin';
+        if (!token) window.location.href = '/login.html?role=admin';
 
         const tbody = document.getElementById('moradores-tbody');
         const searchInput = document.querySelector('.search-input');
@@ -82,7 +83,7 @@
                 });
                 if (res.status === 401) {
                     localStorage.removeItem('nexus_token');
-                    window.location.href = '../public/login.html?role=admin';
+                    window.location.href = '/login.html?role=admin';
                     return;
                 }
 

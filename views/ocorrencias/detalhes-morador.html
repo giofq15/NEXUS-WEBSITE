@@ -1,86 +1,182 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Colaborador - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
-<body>
-    <header>
-        <div class="logo logo-with-mark" aria-label="Nexus Admin">
-            <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
-            <div class="nexus-brand-text">
-                <strong>NEXUS</strong>
-                <span>ADMIN</span>
+<body class="admin-body">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="nexus-brand" aria-label="Nexus Admin">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
+                <div class="nexus-brand-text">
+                    <strong>NEXUS</strong>
+                    <span>ADMIN</span>
+                </div>
             </div>
         </div>
-    </header>
+        <nav>
+            <ul>
+                <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="active"><a href="../admin/moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
+                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
+                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
 
-    <main>
-        <aside class="sidebar">
-            <a href="../admin/painel-admin.html">Dashboard</a>
-            <a href="../admin/moradores.html">Colaboradores</a>
-            <a href="../admin/moradores-inadimplentes.html">Colaboradores Inadimplentes</a>
-            <a href="../ocorrencias/ocorrencias.html">Ocorrencias</a>
-            <a href="../financeiro/financeiro.html">Financeiro</a>
-            <a href="../colaborador/monitoramento-iot.html">Monitoramento IoT</a>
-            <a href="../public/index.html">Sair</a>
-        </aside>
-
-        <section class="content">
-            <div class="header-with-action">
+    <main class="main-content colaborador-profile-page">
+        <div class="dashboard-header colaborador-profile-header">
+            <div>
+                <span class="colaborador-profile-eyebrow"><i class="fas fa-id-badge"></i> Perfil do colaborador</span>
                 <h1 id="colaborador-title">Detalhes do Colaborador</h1>
-                <a href="../admin/moradores.html" class="secondary-button back-button">← Voltar para Colaboradores</a>
+                <p>Consulte dados cadastrais, status de acesso, alocacao operacional e veiculos vinculados.</p>
             </div>
+            <a href="../admin/moradores.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para Colaboradores</a>
+        </div>
 
-            <div class="profile-layout">
-                <div class="profile-card info-card">
-                    <h2>Informacoes de Contato</h2>
-                    <p><strong>Status:</strong> <span id="colaborador-status" class="status-active"></span></p>
-                    <p><strong>Unidade:</strong> <span id="colaborador-unidade"></span></p>
-                    <p><strong>E-mail:</strong> <span id="colaborador-email"></span></p>
-                    <p><strong>Telefone:</strong> <span id="colaborador-telefone"></span></p>
-                    <p><strong>Data de Cadastro:</strong> <span id="colaborador-data"></span></p>
-                    <a id="edit-link" href="#" class="primary-button full-width-btn edit-button">Editar Dados</a>
+        <section class="colaborador-hero widget">
+            <div class="colaborador-hero-main">
+                <div class="colaborador-avatar">
+                    <i class="fas fa-user"></i>
                 </div>
-
-                <div class="profile-details-column">
-                    <div class="profile-card access-card">
-                        <h2>Controle de Acesso (Veiculos)</h2>
-                        <div class="data-list" id="veiculos-list">
-                            <p>Carregando...</p>
-                        </div>
-                        <button class="action-btn full-width-btn add-placa-btn" id="add-placa-btn">Adicionar Placa</button>
-                    </div>
-
-                    <div class="profile-card logs-card">
-                        <h2>Logs e Historico</h2>
-                        <div class="data-list">
-                            <p><strong>Ocorrencias em Aberto:</strong> 1</p>
-                            <p><strong>Economia Media (Agua):</strong> 15% acima da media</p>
-                            <a href="#" class="view-log-link">Ver Historico de Ocorrencias</a>
-                        </div>
-                    </div>
+                <div class="colaborador-hero-copy">
+                    <p class="colaborador-hero-label">Colaborador selecionado</p>
+                    <h2 id="colaborador-hero-name">Carregando...</h2>
+                    <p id="colaborador-unidade-hero">Unidade e bloco em analise</p>
                 </div>
+            </div>
+            <div class="colaborador-hero-status">
+                <span class="status-pill" id="colaborador-status-pill">Status</span>
+                <span class="colaborador-hero-date">Cadastro em <strong id="colaborador-data-hero">--/--/----</strong></span>
             </div>
         </section>
-    </main>
 
-    <footer>
-        <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
-    </footer>
+        <div class="colaborador-profile-layout">
+            <section class="colaborador-profile-main">
+                <article class="widget colaborador-info-card">
+                    <div class="section-heading">
+                        <div>
+                            <h2>Informacoes de Contato</h2>
+                            <p>Dados principais para identificacao e comunicacao.</p>
+                        </div>
+                        <a id="edit-link" href="#" class="primary-button"><i class="fas fa-pen"></i> Editar Dados</a>
+                    </div>
+
+                    <div class="colaborador-info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Status de acesso</span>
+                            <strong id="colaborador-status">--</strong>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Unidade</span>
+                            <strong id="colaborador-unidade">--</strong>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">E-mail</span>
+                            <strong id="colaborador-email">--</strong>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Telefone</span>
+                            <strong id="colaborador-telefone">--</strong>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Data de cadastro</span>
+                            <strong id="colaborador-data">--</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="widget colaborador-access-card">
+                    <div class="section-heading">
+                        <div>
+                            <h2>Controle de Acesso</h2>
+                            <p>Veiculos autorizados para entrada no condominio.</p>
+                        </div>
+                        <button class="new-button" id="add-placa-btn" type="button"><i class="fas fa-plus"></i> Adicionar Placa</button>
+                    </div>
+
+                    <div class="veiculos-list" id="veiculos-list">
+                        <p class="veiculos-empty-state">Carregando...</p>
+                    </div>
+                </article>
+            </section>
+
+            <aside class="colaborador-profile-sidebar">
+                <article class="widget colaborador-summary-card">
+                    <h2>Resumo Rápido</h2>
+                    <div class="colaborador-summary-list">
+                        <div>
+                            <span>Situacao atual</span>
+                            <strong id="colaborador-summary-status">--</strong>
+                        </div>
+                        <div>
+                            <span>Contato principal</span>
+                            <strong id="colaborador-summary-email">--</strong>
+                        </div>
+                        <div>
+                            <span>Telefone</span>
+                            <strong id="colaborador-summary-telefone">--</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="widget logs-card">
+                    <h2>Logs e Historico</h2>
+                    <div class="colaborador-log-list">
+                        <div class="colaborador-log-item">
+                            <span class="colaborador-log-icon"><i class="fas fa-bell"></i></span>
+                            <div>
+                                <strong>Ocorrencias em aberto</strong>
+                                <p>1 registro pendente para acompanhamento.</p>
+                            </div>
+                        </div>
+                        <div class="colaborador-log-item">
+                            <span class="colaborador-log-icon"><i class="fas fa-tint"></i></span>
+                            <div>
+                                <strong>Economia media de agua</strong>
+                                <p>15% acima da media do bloco.</p>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link">Ver Historico de Ocorrencias</a>
+                    </div>
+                </article>
+            </aside>
+        </div>
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </main>
 
     <script>
         const token = localStorage.getItem('nexus_token');
-        if (!token) window.location.href = '../public/login.html?role=admin';
+        if (!token) window.location.href = '/login.html?role=admin';
 
         const params = new URLSearchParams(window.location.search);
         const colaboradorId = params.get('id');
 
         if (!colaboradorId) window.location.href = '../admin/moradores.html';
+
+        function formatStatus(status) {
+            return status.charAt(0) + status.slice(1).toLowerCase();
+        }
+
+        function getStatusClass(status) {
+            const normalizedStatus = status.toLowerCase();
+            if (normalizedStatus === 'ativo') return 'status-ativo';
+            if (normalizedStatus === 'pendente') return 'status-pendente';
+            return 'status-bloqueado';
+        }
 
         async function loadColaborador() {
             try {
@@ -93,14 +189,28 @@
                 }
 
                 const colaborador = await res.json();
+                const statusLabel = formatStatus(colaborador.status);
+                const statusClass = getStatusClass(colaborador.status);
+                const cadastroFormatado = new Date(colaborador.createdAt).toLocaleDateString('pt-BR');
+                const unidadeLabel = `${colaborador.unidade} - Bloco ${colaborador.bloco}`;
 
                 document.getElementById('colaborador-title').textContent = `Detalhes do Colaborador: ${colaborador.nome}`;
-                document.getElementById('colaborador-status').textContent = colaborador.status.charAt(0) + colaborador.status.slice(1).toLowerCase();
-                document.getElementById('colaborador-unidade').textContent = `${colaborador.unidade} - Bloco ${colaborador.bloco}`;
+                document.getElementById('colaborador-hero-name').textContent = colaborador.nome;
+                document.getElementById('colaborador-unidade-hero').textContent = unidadeLabel;
+                document.getElementById('colaborador-status').textContent = statusLabel;
+                document.getElementById('colaborador-unidade').textContent = unidadeLabel;
                 document.getElementById('colaborador-email').textContent = colaborador.user.email;
                 document.getElementById('colaborador-telefone').textContent = colaborador.telefone;
-                document.getElementById('colaborador-data').textContent = new Date(colaborador.createdAt).toLocaleDateString('pt-BR');
+                document.getElementById('colaborador-data').textContent = cadastroFormatado;
+                document.getElementById('colaborador-data-hero').textContent = cadastroFormatado;
+                document.getElementById('colaborador-summary-status').textContent = statusLabel;
+                document.getElementById('colaborador-summary-email').textContent = colaborador.user.email;
+                document.getElementById('colaborador-summary-telefone').textContent = colaborador.telefone;
                 document.getElementById('edit-link').href = `../admin/novo-morador.html?id=${colaborador.id}`;
+
+                const statusPill = document.getElementById('colaborador-status-pill');
+                statusPill.textContent = statusLabel;
+                statusPill.className = `status-pill ${statusClass}`;
 
                 renderVeiculos(colaborador.veiculos);
             } catch {
@@ -111,17 +221,26 @@
         function renderVeiculos(veiculos) {
             const list = document.getElementById('veiculos-list');
             if (!veiculos.length) {
-                list.innerHTML = '<p>Nenhum veiculo cadastrado</p>';
+                list.innerHTML = '<p class="veiculos-empty-state">Nenhum veiculo cadastrado no momento.</p>';
                 return;
             }
 
             list.innerHTML = veiculos.map(function (veiculo, index) {
                 const tagClass = veiculo.tipo === 'CARRO' ? 'tag-car' : 'tag-moto';
                 const label = veiculo.tipo === 'CARRO' ? 'Carro' : 'Moto';
-                return `<p>
-                    <strong>Placa ${index + 1}:</strong> ${veiculo.placa} <span class="tag ${tagClass}">${label}</span>
-                    <a href="#" class="action-link" onclick="removeVeiculo(${veiculo.id}); return false;">Remover</a>
-                </p>`;
+                return `<article class="veiculo-card">
+                    <div class="veiculo-card-main">
+                        <span class="veiculo-icon"><i class="fas ${veiculo.tipo === 'CARRO' ? 'fa-car-side' : 'fa-motorcycle'}"></i></span>
+                        <div>
+                            <p class="veiculo-title">Placa ${index + 1}</p>
+                            <strong>${veiculo.placa}</strong>
+                        </div>
+                    </div>
+                    <div class="veiculo-card-actions">
+                        <span class="tag ${tagClass}">${label}</span>
+                        <a href="#" class="action-link" onclick="removeVeiculo(${veiculo.id}); return false;">Remover</a>
+                    </div>
+                </article>`;
             }).join('');
         }
 

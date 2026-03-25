@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colaboradores Inadimplentes - NEXUS</title>
+    <title>Unidades em Atraso - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -24,25 +24,26 @@
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li class="active"><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Colaboradores Inadimplentes</a></li>
+                <li class="active"><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
                 <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="main-content">
         <div class="dashboard-header">
-            <h1>Colaboradores Inadimplentes</h1>
-            <p>Unidades com taxa de condominio em atraso ha mais de 30 dias.</p>
+            <h1>Unidades em Atraso</h1>
+            <p>Acompanhe as unidades com pendencias financeiras para apoio ao setor administrativo.</p>
         </div>
 
         <div class="financial-summary">
             <div class="widget">
                 <i class="fas fa-user-slash icon-negative"></i>
-                <h3>Total de Colaboradores Inadimplentes</h3>
+                <h3>Total de Unidades em Atraso</h3>
                 <p class="stat-number negative" data-qtd-inadimplentes>0</p>
             </div>
             <div class="widget">
@@ -55,7 +56,7 @@
         <table class="data-table" data-inadimplencia-table>
             <thead>
                 <tr>
-                    <th>Colaborador</th>
+                    <th>Responsavel</th>
                     <th>Bloco</th>
                     <th>Apartamento</th>
                     <th>Total em Aberto</th>

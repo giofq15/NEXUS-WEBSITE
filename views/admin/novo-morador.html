@@ -24,11 +24,12 @@
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Colaboradores Inadimplentes</a></li>
+                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-exclamation-triangle"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-dollar-sign"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
                 <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-chart-line"></i> Monitoramento IoT</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </div>
@@ -67,7 +68,7 @@
                     <legend><i class="fas fa-home"></i> Unidade e Acesso</legend>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="bloco">Bloco / Torre</label>
+                            <label for="bloco">Bloco / Setor</label>
                             <select id="bloco" required data-field="bloco">
                                 <option value="">Selecione...</option>
                                 <option>A</option>
@@ -76,8 +77,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="unidade">Numero da Unidade</label>
-                            <input type="text" id="unidade" required placeholder="Ex: 101, 202" data-field="unidade">
+                            <label for="unidade">Unidade ou Base de Atuacao</label>
+                            <input type="text" id="unidade" required placeholder="Ex: Portaria, Torre A, 101" data-field="unidade">
                         </div>
                         <div class="form-group">
                             <label for="acesso">Status de Acesso</label>
@@ -101,9 +102,6 @@
                     <button type="reset" class="reset-button" data-morador-reset>
                         <i class="fas fa-eraser"></i> Limpar Campos
                     </button>
-                    <a href="#" class="primary-button" data-morador-edit-link hidden>
-                        <i class="fas fa-pen"></i> Editar Colaborador
-                    </a>
                 </div>
             </form>
         </div>
@@ -115,7 +113,7 @@
 
     <script>
         const token = localStorage.getItem('nexus_token');
-        if (!token) window.location.href = '../public/login.html?role=admin';
+        if (!token) window.location.href = '/login.html?role=admin';
 
         const form = document.getElementById('morador-form');
         const submitBtn = document.getElementById('submit-btn');
