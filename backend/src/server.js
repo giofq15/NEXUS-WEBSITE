@@ -30,6 +30,16 @@ app.use('/financeiro', express.static(path.join(__dirname, '../../views/financei
 app.use('/ocorrencias', express.static(path.join(__dirname, '../../views/ocorrencias')));
 app.use('/morador', express.static(path.join(__dirname, '../../views/morador')));
 app.use(express.static(path.join(__dirname, '../../views/public')));
+
+app.get('/public/login.html', (req, res) => {
+  const queryIndex = req.originalUrl.indexOf('?');
+  const query = queryIndex >= 0 ? req.originalUrl.slice(queryIndex) : '';
+  res.redirect(`/login.html${query}`);
+});
+
+app.get('/public/index.html', (req, res) => {
+  res.redirect('/');
+});
 // Root → landing page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../views/public/index.html'));

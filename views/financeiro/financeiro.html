@@ -25,12 +25,12 @@
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Colaboradores Inadimplentes</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
-                <li class="active"><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a>
-                </li>
+                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li class="active"><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
                 <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
@@ -38,8 +38,8 @@
     <main class="main-content">
 
         <div class="dashboard-header">
-            <h1>Gestão Financeira</h1>
-            <p>Controle de receitas e despesas do condomínio.</p>
+            <h1>Gestao Financeira</h1>
+            <p>Controle receitas, despesas, inadimplencia e custos operacionais do condominio.</p>
         </div>
 
         <div class="financial-summary">
@@ -55,7 +55,7 @@
             </div>
             <div class="widget">
                 <i class="fas fa-exclamation-triangle icon-negative"></i>
-                <h3>Inadimplência (Total)</h3>
+                <h3>Inadimplencia (Total)</h3>
                 <p class="stat-number negative">R$ 4.120,00</p>
             </div>
         </div>
@@ -63,37 +63,37 @@
         <div class="tabs-container">
             <button class="tab-button active" onclick="showTab(event, 'contas-pagar')">Contas a Pagar</button>
             <button class="tab-button" onclick="showTab(event, 'contas-receber')">Contas a Receber</button>
-            <button type="button" class="new-button tabs-right-button">+ Novo Lançamento</button>
+            <button type="button" class="new-button tabs-right-button">+ Novo Lancamento</button>
         </div>
 
         <div id="contas-pagar" class="tab-content active">
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Descrição</th>
+                        <th>Descricao</th>
                         <th>Vencimento</th>
                         <th>Valor</th>
                         <th>Status</th>
-                        <th>Ações</th>
+                        <th>Acoes</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Conta de Energia Elétrica</td>
+                        <td>Conta de Energia Eletrica</td>
                         <td>10/11/2025</td>
                         <td class="negative-value">R$ 6.500,00</td>
                         <td class="status-pendente">A Pagar</td>
                         <td><a href="#" class="action-link action-pay">Pagar</a></td>
                     </tr>
                     <tr>
-                        <td>Salário do Zelador (Out)</td>
+                        <td>Salario do Zelador (Out)</td>
                         <td>05/11/2025</td>
                         <td class="negative-value">R$ 2.800,00</td>
                         <td class="status-pendente">A Pagar</td>
                         <td><a href="#" class="action-link action-pay">Pagar</a></td>
                     </tr>
                     <tr>
-                        <td>Manutenção do Elevador</td>
+                        <td>Manutencao do Elevador</td>
                         <td>15/10/2025</td>
                         <td class="negative-value">R$ 1.200,00</td>
                         <td class="status-ativo">Paga</td>
@@ -107,16 +107,16 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Descrição</th>
+                        <th>Descricao</th>
                         <th>Vencimento</th>
                         <th>Valor</th>
                         <th>Status</th>
-                        <th>Ações</th>
+                        <th>Acoes</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Taxa Condominial Unid 201</td>
+                        <td>Taxa Operacional Unidade 201</td>
                         <td>05/11/2025</td>
                         <td class="positive-value">R$ 750,00</td>
                         <td class="status-pendente">A Receber</td>
@@ -134,25 +134,20 @@
         </div>
 
         <div class="content-footer">
-            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </div>
     </main>
 
     <script>
         function showTab(event, tabId) {
-            // Esconde todas as abas
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
             });
-            // Remove o estado ativo de todos os botões
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
 
-            // Mostra a aba selecionada
             document.getElementById(tabId).classList.remove('hidden');
-
-            // Ativa o botão correspondente
             event.currentTarget.classList.add('active');
         }
     </script>
