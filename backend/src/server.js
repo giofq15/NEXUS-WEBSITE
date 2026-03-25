@@ -10,10 +10,18 @@ const ocorrenciasRoutes = require('./routes/ocorrencias.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
+const publicBaseUrl = process.env.PUBLIC_BASE_URL || `http://localhost:${PORT}`;
+
+app.set('trust proxy', 1);
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
 
 // API routes
 app.use('/api/auth', authRoutes);
@@ -45,6 +53,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../views/public/index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor NEXUS rodando em http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Servidor NEXUS rodando em ${publicBaseUrl}`);
 });
