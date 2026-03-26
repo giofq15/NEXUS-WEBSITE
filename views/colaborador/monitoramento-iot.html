@@ -4,19 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoramento IoT - NEXUS</title>
+    <title>Infraestrutura e Automacoes - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body class="admin-body">
-
     <div class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Nexus Admin">
+            <div class="nexus-brand" aria-label="Portal administrativo">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
+                    <strong data-condominio-nome>NEXUS</strong>
                     <span>ADMIN</span>
                 </div>
             </div>
@@ -29,7 +28,8 @@
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
-                <li class="active"><a href="monitoramento-iot.html"><i class="fas fa-lightbulb"></i> Monitoramento IoT</a></li>
+                <li class="active"><a href="monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -37,64 +37,165 @@
 
     <div class="main-content">
         <div class="dashboard-header">
-            <h1>Monitoramento de Consumo e Sustentabilidade</h1>
-            <p>Analise os indicadores de agua, energia e eficiencia operacional do condominio.</p>
+            <h1>Infraestrutura, Automacoes e Rotinas</h1>
+            <p>Uma central operacional mais coerente para acompanhar ambientes, automacoes prediais e pendencias tecnicas sem depender de graficos simulados.</p>
         </div>
 
-        <div class="controls-container">
-            <div class="search-group">
-                <label for="periodo" style="font-weight: bold; margin-right: 10px;">Periodo:</label>
-                <select id="periodo" class="search-input">
-                    <option>Ultimos 30 dias</option>
-                    <option>Mes Atual (Outubro)</option>
-                    <option>Trimestre</option>
-                    <option>Personalizado</option>
-                </select>
-            </div>
-            <button class="new-button"><i class="fas fa-file-export"></i> Exportar Relatorio (PDF)</button>
-        </div>
+        <section class="admin-kpi-grid admin-kpi-grid-compact">
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon"><i class="fas fa-lightbulb"></i></div>
+                <div>
+                    <span>Cenas automaticas</span>
+                    <strong>12</strong>
+                    <p>Rotinas ativas de iluminacao e acesso</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-water"><i class="fas fa-satellite-dish"></i></div>
+                <div>
+                    <span>Pontos integrados</span>
+                    <strong>28</strong>
+                    <p>Sensores, rele e controladores em campo</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-team"><i class="fas fa-triangle-exclamation"></i></div>
+                <div>
+                    <span>Alertas tecnicos</span>
+                    <strong>03</strong>
+                    <p>Itens aguardando verificacao da equipe</p>
+                </div>
+            </article>
+        </section>
 
-        <div class="metrics-grid">
-            <div class="metric-card widget water-metric">
-                <i class="fas fa-tint"></i>
-                <h3>Consumo Total de Agua (Mes)</h3>
-                <p class="metric-value">520 m3</p>
-                <span class="metric-change negative">↓ 3% vs mes anterior</span>
-            </div>
-            <div class="metric-card widget energy-metric">
-                <i class="fas fa-bolt"></i>
-                <h3>Consumo Total de Energia (Mes)</h3>
-                <p class="metric-value">15.800 kWh</p>
-                <span class="metric-change positive">↑ 8% vs mes anterior</span>
-            </div>
-            <div class="metric-card widget economy-metric">
-                <i class="fas fa-leaf"></i>
-                <h3>Projecao de Economia (Anual)</h3>
-                <p class="metric-value">R$ 15.200</p>
-                <span class="metric-change positive">Melhor que a media historica</span>
-            </div>
-        </div>
-
-        <div class="widget">
-            <div class="charts-section">
-                <h2>Grafico de Tendencia (Agua e Energia)</h2>
-
-                <div class="chart-full-width">
-                    <h3>Consumo Diario Consolidado (30 dias)</h3>
-                    <div class="graph-placeholder line-chart-placeholder">Grafico simulado: consumo diario agregado (agua vs energia)</div>
+        <section class="infra-shell">
+            <article class="widget infra-card">
+                <div class="section-heading">
+                    <div>
+                        <h2>Status dos ambientes</h2>
+                        <p>Visao rapida do estado operacional das areas principais.</p>
+                    </div>
                 </div>
 
-                <div class="chart-full-width" style="margin-top: 2rem;">
-                    <h3>Consumo por Bloco / Unidade (Mes)</h3>
-                    <div class="graph-placeholder bar-chart-placeholder">Grafico simulado: ranking de consumo por unidade</div>
+                <div class="infra-status-grid">
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Portaria</span>
+                        <strong>Operando</strong>
+                        <p>Controle de acesso e interfone em funcionamento.</p>
+                        <span class="status-pill status-ativo">Online</span>
+                    </article>
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Garagem</span>
+                        <strong>Atencao preventiva</strong>
+                        <p>Sinalizacao de manutencao no portao secundario.</p>
+                        <span class="status-pill status-pendente">Revisar</span>
+                    </article>
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Salao de festas</span>
+                        <strong>Pronto para uso</strong>
+                        <p>Iluminacao cenica e climatizacao liberadas.</p>
+                        <span class="status-pill status-ativo">Disponivel</span>
+                    </article>
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Casa de maquinas</span>
+                        <strong>Inspecao pendente</strong>
+                        <p>Equipe deve validar quadro auxiliar ate 18h.</p>
+                        <span class="status-pill status-pendente">Pendente</span>
+                    </article>
                 </div>
-            </div>
-        </div>
+            </article>
+
+            <article class="widget infra-card">
+                <div class="section-heading">
+                    <div>
+                        <h2>Automacoes configuradas</h2>
+                        <p>Rotinas prontas para demonstrar a inteligencia operacional do condominio.</p>
+                    </div>
+                </div>
+
+                <div class="infra-automation-list">
+                    <article class="infra-automation-item">
+                        <div>
+                            <strong>Modo noturno da portaria</strong>
+                            <p>Aciona iluminacao perimetral, reduz areas internas e prioriza pontos de acesso.</p>
+                        </div>
+                        <span class="status-pill status-ativo">Ativa</span>
+                    </article>
+                    <article class="infra-automation-item">
+                        <div>
+                            <strong>Bloqueio de area em manutencao</strong>
+                            <p>Desativa cena de uso comum quando ha ocorrencia tecnica aberta.</p>
+                        </div>
+                        <span class="status-pill status-ativo">Ativa</span>
+                    </article>
+                    <article class="infra-automation-item">
+                        <div>
+                            <strong>Checklist de abertura</strong>
+                            <p>Confirma portaria, elevador social, hall e acessos antes do inicio do turno.</p>
+                        </div>
+                        <span class="status-pill status-pendente">Manual</span>
+                    </article>
+                </div>
+            </article>
+        </section>
+
+        <section class="infra-shell infra-shell-secondary">
+            <article class="widget infra-card">
+                <div class="section-heading">
+                    <div>
+                        <h2>Alertas recentes</h2>
+                        <p>Eventos operacionais que merecem tratamento ou acompanhamento.</p>
+                    </div>
+                </div>
+
+                <div class="infra-alert-list">
+                    <article class="infra-alert-item is-warning">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <strong>Oscilacao no quadro da garagem</strong>
+                            <p>Ocorrencia aberta ha 45 minutos. Equipe de manutencao ja notificada.</p>
+                        </div>
+                    </article>
+                    <article class="infra-alert-item">
+                        <i class="fas fa-door-open"></i>
+                        <div>
+                            <strong>Acesso tecnico liberado</strong>
+                            <p>Entrada temporaria cadastrada para fornecedor da climatizacao.</p>
+                        </div>
+                    </article>
+                    <article class="infra-alert-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Rotina de fechamento concluida</strong>
+                            <p>Areas comuns verificadas e cena noturna acionada com sucesso.</p>
+                        </div>
+                    </article>
+                </div>
+            </article>
+
+            <article class="widget infra-card">
+                <div class="section-heading">
+                    <div>
+                        <h2>Checklist tecnico do dia</h2>
+                        <p>Itens recomendados para apresentacao operacional e ronda interna.</p>
+                    </div>
+                </div>
+
+                <ul class="infra-checklist">
+                    <li><i class="fas fa-check"></i> Validar portao social e portao de servico</li>
+                    <li><i class="fas fa-check"></i> Confirmar funcionamento de bombas e iluminacao da garagem</li>
+                    <li><i class="fas fa-check"></i> Testar interfone e acesso da portaria</li>
+                    <li><i class="fas fa-check"></i> Registrar pendencias em ocorrencias administrativas</li>
+                </ul>
+            </article>
+        </section>
 
         <footer class="content-footer">
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    <script src="../../public/js/script.js"></script>
 </body>
 
 </html>

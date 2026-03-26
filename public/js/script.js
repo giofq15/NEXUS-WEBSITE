@@ -1168,6 +1168,280 @@
         });
     }
 
-    initMoradorOcorrencias();
-    initAdminOcorrencias();
+initMoradorOcorrencias();
+initAdminOcorrencias();
+})();
+
+(function () {
+    const STORAGE_KEY = "nexus_condominio_config_v1";
+    const DEFAULT_CONFIG = {
+        nome: "NEXUS",
+        razaoSocial: "Nexus Gestao Condominial Ltda.",
+        cnpj: "00.000.000/0001-00",
+        endereco: "Endereco do condominio nao informado",
+        telefonePredio: "(11) 4000-0000",
+        quantidadeColaboradores: "12",
+        sindico: "Responsavel nao informado"
+    };
+
+    function readConfig() {
+        try {
+            const raw = window.localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+                return { ...DEFAULT_CONFIG };
+            }
+            const parsed = JSON.parse(raw);
+            return { ...DEFAULT_CONFIG, ...(parsed || {}) };
+        } catch (error) {
+            return { ...DEFAULT_CONFIG };
+        }
+    }
+
+    function writeConfig(nextConfig) {
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextConfig));
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function applyText(selector, value) {
+        document.querySelectorAll(selector).forEach(function (node) {
+            node.textContent = value;
+        });
+    }
+
+    function applyCondominioConfig() {
+        const config = readConfig();
+        applyText("[data-condominio-nome]", config.nome);
+        applyText("[data-condominio-razao-social]", config.razaoSocial);
+        applyText("[data-condominio-cnpj]", config.cnpj);
+        applyText("[data-condominio-endereco]", config.endereco);
+        applyText("[data-condominio-telefone]", config.telefonePredio);
+        applyText("[data-condominio-colaboradores]", config.quantidadeColaboradores);
+        applyText("[data-condominio-sindico]", config.sindico);
+
+        if (document.title) {
+            document.title = document.title.replace(/NEXUS|Nexus/g, config.nome);
+        }
+    }
+
+    function initConfigShortcut() {
+        const form = document.querySelector("[data-condominio-form]");
+        if (!form) {
+            return;
+        }
+
+        const input = form.querySelector("[data-condominio-input]");
+        const feedback = form.querySelector("[data-condominio-feedback]");
+        if (!input || !feedback) {
+            return;
+        }
+
+        const current = readConfig();
+        input.value = current.nome === DEFAULT_CONFIG.nome ? "" : current.nome;
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const nextName = String(input.value || "").trim() || DEFAULT_CONFIG.nome;
+            const nextConfig = { ...readConfig(), nome: nextName };
+            writeConfig(nextConfig);
+            applyCondominioConfig();
+            input.value = nextName === DEFAULT_CONFIG.nome ? "" : nextName;
+            feedback.textContent = nextName === DEFAULT_CONFIG.nome
+                ? "Nome padrao restaurado."
+                : "Nome do condominio atualizado.";
+            feedback.className = "admin-brand-feedback is-success";
+        });
+    }
+
+    function initConfigPage() {
+        const form = document.querySelector("[data-configuracoes-form]");
+        if (!form) {
+            return;
+        }
+
+        const feedback = document.querySelector("[data-configuracoes-feedback]");
+        const fields = {
+            nome: form.querySelector('[name="nome"]'),
+            razaoSocial: form.querySelector('[name="razaoSocial"]'),
+            cnpj: form.querySelector('[name="cnpj"]'),
+            endereco: form.querySelector('[name="endereco"]'),
+            telefonePredio: form.querySelector('[name="telefonePredio"]'),
+            quantidadeColaboradores: form.querySelector('[name="quantidadeColaboradores"]'),
+            sindico: form.querySelector('[name="sindico"]')
+        };
+
+        const current = readConfig();
+        Object.keys(fields).forEach(function (key) {
+            if (fields[key]) {
+                fields[key].value = current[key] || "";
+            }
+        });
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const nextConfig = { ...DEFAULT_CONFIG };
+            Object.keys(fields).forEach(function (key) {
+                nextConfig[key] = String(fields[key]?.value || "").trim() || DEFAULT_CONFIG[key];
+            });
+
+            if (!writeConfig(nextConfig)) {
+                if (feedback) {
+                    feedback.textContent = "Nao foi possivel salvar as configuracoes.";
+                    feedback.className = "admin-inline-feedback is-error";
+                }
+                return;
+            }
+
+            applyCondominioConfig();
+            if (feedback) {
+                feedback.textContent = "Configuracoes do condominio salvas com sucesso.";
+                feedback.className = "admin-inline-feedback is-success";
+            }
+        });
+    }
+
+    function buildLineChartSvg(seriesList, labels) {
+        const width = 760;
+        const height = 260;
+        const paddingLeft = 58;
+        const paddingRight = 58;
+        const paddingTop = 24;
+        const paddingBottom = 36;
+        const chartHeight = height - paddingTop - paddingBottom;
+        const stepX = (width - paddingLeft - paddingRight) / Math.max(labels.length - 1, 1);
+        const maxValues = seriesList.map(function (series) {
+            return Math.max.apply(null, series) || 100;
+        });
+
+        function buildPoints(series, maxValue) {
+            return series.map(function (value, index) {
+                const x = paddingLeft + index * stepX;
+                const y = height - paddingBottom - ((value / maxValue) * chartHeight);
+                return `${x},${y}`;
+            }).join(" ");
+        }
+
+        const grid = [0.25, 0.5, 0.75].map(function (ratio) {
+            const y = height - paddingBottom - (chartHeight * ratio);
+            return `<line x1="${paddingLeft}" y1="${y}" x2="${width - paddingRight}" y2="${y}" stroke="#dbe4ec" stroke-dasharray="4 6" />`;
+        }).join("");
+
+        const xLabels = labels.map(function (label, index) {
+            return `<text x="${paddingLeft + index * stepX}" y="${height - 10}" text-anchor="middle" font-size="12" fill="#64748b">${label}</text>`;
+        }).join("");
+
+        const leftAxis = [maxValues[0], Math.round(maxValues[0] * 0.66), Math.round(maxValues[0] * 0.33), 0]
+            .map(function (value, index) {
+                const ratio = index / 3;
+                const y = paddingTop + chartHeight * ratio;
+                return `<text x="12" y="${y + 4}" font-size="12" fill="#0284c7">${value}</text>`;
+            }).join("");
+
+        const rightAxis = [maxValues[1].toFixed(1), (maxValues[1] * 0.66).toFixed(1), (maxValues[1] * 0.33).toFixed(1), "0.0"]
+            .map(function (value, index) {
+                const ratio = index / 3;
+                const y = paddingTop + chartHeight * ratio;
+                return `<text x="${width - 46}" y="${y + 4}" font-size="12" fill="#ea580c">${value}</text>`;
+            }).join("");
+
+        return `
+            <svg viewBox="0 0 ${width} ${height}" class="iot-chart-svg" role="img" aria-label="Grafico de linha de consumo">
+                ${grid}
+                <line x1="${paddingLeft}" y1="${paddingTop}" x2="${paddingLeft}" y2="${height - paddingBottom}" stroke="#bfdbfe" />
+                <line x1="${width - paddingRight}" y1="${paddingTop}" x2="${width - paddingRight}" y2="${height - paddingBottom}" stroke="#fed7aa" />
+                <line x1="${paddingLeft}" y1="${height - paddingBottom}" x2="${width - paddingRight}" y2="${height - paddingBottom}" stroke="#cbd5e1" />
+                ${leftAxis}
+                ${rightAxis}
+                <polyline fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="${buildPoints(seriesList[0], maxValues[0])}" />
+                <polyline fill="none" stroke="#ea580c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="${buildPoints(seriesList[1], maxValues[1])}" />
+                ${xLabels}
+            </svg>
+        `;
+    }
+
+    function buildBarChartSvg(values, labels) {
+        const width = 760;
+        const height = 260;
+        const padding = 36;
+        const maxValue = Math.max.apply(null, values) || 100;
+        const step = (width - padding * 2) / values.length;
+        const barWidth = Math.max(step - 18, 24);
+
+        const bars = values.map(function (value, index) {
+            const x = padding + index * step + (step - barWidth) / 2;
+            const barHeight = (value / maxValue) * (height - padding * 2);
+            const y = height - padding - barHeight;
+            const color = index % 2 === 0 ? "#0f766e" : "#fb923c";
+            return `
+                <rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" rx="10" fill="${color}" />
+                <text x="${x + barWidth / 2}" y="${y - 8}" text-anchor="middle" font-size="12" fill="#475569">${value}</text>
+                <text x="${x + barWidth / 2}" y="${height - 10}" text-anchor="middle" font-size="12" fill="#64748b">${labels[index]}</text>
+            `;
+        }).join("");
+
+        return `
+            <svg viewBox="0 0 ${width} ${height}" class="iot-chart-svg" role="img" aria-label="Grafico de barras por bloco">
+                <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="#cbd5e1" />
+                ${bars}
+            </svg>
+        `;
+    }
+
+    function initIotCharts() {
+        const lineContainer = document.querySelector("[data-iot-line-chart]");
+        const barContainer = document.querySelector("[data-iot-bar-chart]");
+        if (!lineContainer && !barContainer) {
+            return;
+        }
+
+        if (lineContainer) {
+            lineContainer.innerHTML = `
+                ${buildLineChartSvg(
+                    [
+                        [420, 410, 436, 428, 450, 438, 452],
+                        [12.1, 13.4, 14.2, 13.6, 15.1, 14.7, 15.8]
+                    ],
+                    ["Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7"]
+                )}
+                <div class="iot-chart-legend">
+                    <span><i class="fas fa-circle" style="color:#0284c7"></i> Agua</span>
+                    <span><i class="fas fa-circle" style="color:#ea580c"></i> Energia</span>
+                </div>
+            `;
+        }
+
+        if (barContainer) {
+            barContainer.innerHTML = `
+                ${buildBarChartSvg([98, 124, 88, 136, 112], ["Bl A", "Bl B", "Bl C", "Bl D", "Cob"])}
+                <div class="iot-chart-legend">
+                    <span>Indice de consumo relativo por bloco</span>
+                </div>
+            `;
+        }
+    }
+
+    function initDialogs() {
+        document.querySelectorAll("dialog.admin-dialog").forEach(function (dialog) {
+            dialog.addEventListener("click", function (event) {
+                const bounds = dialog.getBoundingClientRect();
+                const clickedBackdrop = event.clientX < bounds.left
+                    || event.clientX > bounds.right
+                    || event.clientY < bounds.top
+                    || event.clientY > bounds.bottom;
+
+                if (clickedBackdrop) {
+                    dialog.close();
+                }
+            });
+        });
+    }
+
+    applyCondominioConfig();
+    initConfigShortcut();
+    initConfigPage();
+    initIotCharts();
+    initDialogs();
 })();

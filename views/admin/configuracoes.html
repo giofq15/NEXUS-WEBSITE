@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuracoes do Condominio - NEXUS</title>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="nexus-brand" aria-label="Portal do Condominio">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo do portal" class="nexus-brand-mark">
+                <div class="nexus-brand-text">
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <span>ADMIN</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
+                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
+                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
+                <li class="active"><a href="configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>Configuracoes do Condominio</h1>
+            <p>Centralize os dados institucionais, operacionais e de contato do condominio para refletir o portal em todas as telas.</p>
+        </div>
+
+        <section class="admin-kpi-grid admin-kpi-grid-compact">
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon"><i class="fas fa-building"></i></div>
+                <div>
+                    <span>Nome exibido</span>
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <p>Marca usada no portal administrativo</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-team"><i class="fas fa-users"></i></div>
+                <div>
+                    <span>Equipe prevista</span>
+                    <strong data-condominio-colaboradores>12</strong>
+                    <p>Capacidade operacional cadastrada</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-calendar"><i class="fas fa-phone-alt"></i></div>
+                <div>
+                    <span>Telefone do predio</span>
+                    <strong data-condominio-telefone>(11) 4000-0000</strong>
+                    <p>Canal de contato para disparo e retorno</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="widget admin-ops-panel">
+            <div class="section-heading">
+                <div>
+                    <h2>Dados cadastrais e operacionais</h2>
+                    <p>Essas configuracoes passam a valer nas principais telas do admin e em visoes institucionais do portal.</p>
+                </div>
+            </div>
+
+            <form class="admin-config-form" data-configuracoes-form>
+                <div class="admin-config-grid">
+                    <div class="form-group">
+                        <label for="config-nome">Nome do condominio</label>
+                        <input id="config-nome" name="nome" type="text" maxlength="40" placeholder="Ex.: Residencial Alameda">
+                    </div>
+                    <div class="form-group">
+                        <label for="config-razao-social">Razao social</label>
+                        <input id="config-razao-social" name="razaoSocial" type="text" placeholder="Ex.: Residencial Alameda SPE Ltda.">
+                    </div>
+                    <div class="form-group">
+                        <label for="config-cnpj">CNPJ</label>
+                        <input id="config-cnpj" name="cnpj" type="text" placeholder="00.000.000/0001-00">
+                    </div>
+                    <div class="form-group">
+                        <label for="config-telefone">Telefone do predio</label>
+                        <input id="config-telefone" name="telefonePredio" type="text" placeholder="(11) 4000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label for="config-colaboradores">Quantidade de colaboradores</label>
+                        <input id="config-colaboradores" name="quantidadeColaboradores" type="number" min="0" placeholder="12">
+                    </div>
+                    <div class="form-group">
+                        <label for="config-sindico">Sindico / responsavel principal</label>
+                        <input id="config-sindico" name="sindico" type="text" placeholder="Nome do sindico ou gestora">
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="config-endereco">Endereco completo do condominio</label>
+                        <input id="config-endereco" name="endereco" type="text" placeholder="Rua, numero, bairro, cidade e CEP">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="submit-button"><i class="fas fa-save"></i> Salvar configuracoes</button>
+                    <button type="reset" class="reset-button"><i class="fas fa-eraser"></i> Limpar formulario</button>
+                </div>
+                <p class="admin-inline-feedback" data-configuracoes-feedback aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="widget admin-ops-panel">
+            <div class="section-heading">
+                <div>
+                    <h2>Resumo institucional</h2>
+                    <p>Visualizacao do que deve aparecer no portal e em comunicados administrativos.</p>
+                </div>
+            </div>
+
+            <div class="admin-config-summary">
+                <article class="admin-config-summary-card">
+                    <span>Condominio</span>
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <p data-condominio-razao-social>Nexus Gestao Condominial Ltda.</p>
+                </article>
+                <article class="admin-config-summary-card">
+                    <span>CNPJ</span>
+                    <strong data-condominio-cnpj>00.000.000/0001-00</strong>
+                    <p>Base fiscal e institucional do empreendimento</p>
+                </article>
+                <article class="admin-config-summary-card">
+                    <span>Endereco</span>
+                    <strong data-condominio-endereco>Endereco do condominio nao informado</strong>
+                    <p>Referencia publica de localizacao do predio</p>
+                </article>
+                <article class="admin-config-summary-card">
+                    <span>Responsavel</span>
+                    <strong data-condominio-sindico>Responsavel nao informado</strong>
+                    <p>Contato principal da administracao</p>
+                </article>
+            </div>
+        </section>
+
+        <div class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </div>
+    </main>
+
+    <script src="../../public/js/script.js"></script>
+</body>
+
+</html>
