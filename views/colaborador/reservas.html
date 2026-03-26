@@ -10,13 +10,12 @@
 </head>
 
 <body class="admin-body">
-
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="nexus-brand" aria-label="Nexus Admin">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
+                    <strong data-condominio-nome>NEXUS</strong>
                     <span>ADMIN</span>
                 </div>
             </div>
@@ -29,7 +28,8 @@
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li class="active"><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
-                <li><a href="monitoramento-iot.html"><i class="fas fa-chart-line"></i> Monitoramento IoT</a></li>
+                <li><a href="monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -37,110 +37,185 @@
 
     <div class="main-content">
         <div class="dashboard-header">
-            <h1>Agendamentos e Reservas</h1>
-            <p>Acompanhe a agenda de espacos comuns e organize as reservas operacionais do condominio.</p>
+            <h1>Agendamentos, Reservas e Disponibilidade</h1>
+            <p>Gerencie a agenda dos espacos e acompanhe quais apartamentos estao livres para locacao ou ocupacao.</p>
         </div>
 
-        <div class="form-container">
-            <h2><i class="fas fa-calendar-plus"></i> Registrar Novo Agendamento</h2>
-            <form action="reservas.html" method="POST" id="reserva-form">
-                <fieldset class="form-section">
-                    <legend>Detalhes da Reserva</legend>
-                    <div class="form-grid">
+        <div class="tabs-container">
+            <button class="tab-button active" type="button" data-admin-tab="reservas">Agenda de Reservas</button>
+            <button class="tab-button" type="button" data-admin-tab="apartamentos">Apartamentos Disponiveis</button>
+        </div>
 
-                        <div class="form-group">
-                            <label for="area">Area Desejada</label>
-                            <select id="area" required>
-                                <option value="">Selecione a area...</option>
-                                <option>Salao de Festas Principal</option>
-                                <option>Churrasqueira 1</option>
-                                <option>Espaco Gourmet</option>
-                                <option>Sala de Reunioes</option>
-                            </select>
+        <section class="tab-content" data-admin-panel="reservas">
+            <div class="form-container">
+                <h2><i class="fas fa-calendar-plus"></i> Registrar Novo Agendamento</h2>
+                <form action="reservas.html" method="POST" id="reserva-form">
+                    <fieldset class="form-section">
+                        <legend>Detalhes da Reserva</legend>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="area">Area Desejada</label>
+                                <select id="area" required>
+                                    <option value="">Selecione a area...</option>
+                                    <option>Salao de Festas Principal</option>
+                                    <option>Churrasqueira 1</option>
+                                    <option>Espaco Gourmet</option>
+                                    <option>Sala de Reunioes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="data">Data da Reserva</label>
+                                <input type="date" id="data" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="periodo">Periodo (Horario)</label>
+                                <select id="periodo" required>
+                                    <option value="">Selecione o periodo...</option>
+                                    <option>Manha (08h - 13h)</option>
+                                    <option>Tarde (14h - 22h)</option>
+                                    <option>Dia Inteiro (08h - 22h)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="convidados">Capacidade Prevista</label>
+                                <input type="number" id="convidados" min="1" placeholder="Ex: 50">
+                            </div>
                         </div>
+                    </fieldset>
 
-                        <div class="form-group">
-                            <label for="data">Data da Reserva</label>
-                            <input type="date" id="data" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="periodo">Periodo (Horario)</label>
-                            <select id="periodo" required>
-                                <option value="">Selecione o periodo...</option>
-                                <option>Manha (08h - 13h)</option>
-                                <option>Tarde (14h - 22h)</option>
-                                <option>Dia Inteiro (08h - 22h)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="convidados">Capacidade Prevista</label>
-                            <input type="number" id="convidados" min="1" placeholder="Ex: 50">
-                        </div>
-
+                    <div class="button-group">
+                        <button type="submit" class="submit-button"><i class="fas fa-check-circle"></i> Registrar Reserva</button>
+                        <button type="reset" class="reset-button"><i class="fas fa-eraser"></i> Limpar</button>
                     </div>
-                </fieldset>
+                </form>
+            </div>
 
-                <div class="button-group">
-                    <button type="submit" class="submit-button"><i class="fas fa-check-circle"></i> Registrar Reserva</button>
-                    <button type="reset" class="reset-button"><i class="fas fa-eraser"></i> Limpar</button>
+            <div class="widget admin-ops-panel">
+                <h2><i class="fas fa-list-alt"></i> Proximas Reservas do Condominio</h2>
+                <table class="data-table" id="reservas-table">
+                    <thead>
+                        <tr>
+                            <th>Area</th>
+                            <th>Data</th>
+                            <th>Periodo</th>
+                            <th>Capacidade</th>
+                            <th>Status</th>
+                            <th>Acoes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservas-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="tab-content hidden" data-admin-panel="apartamentos">
+            <div class="widget admin-ops-panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>Gestao de apartamentos disponiveis</h2>
+                        <p>Cadastre novas unidades, edite observacoes e acompanhe o contato e a intencao comercial do cliente.</p>
+                    </div>
                 </div>
-            </form>
-        </div>
 
-        <div class="widget">
-            <h2><i class="fas fa-list-alt"></i> Proximas Reservas do Condominio</h2>
-            <table class="data-table" id="reservas-table">
-                <thead>
-                    <tr>
-                        <th>Area</th>
-                        <th>Data</th>
-                        <th>Periodo</th>
-                        <th>Capacidade</th>
-                        <th>Status</th>
-                        <th>Acoes</th>
-                    </tr>
-                </thead>
-                <tbody id="reservas-body">
-                    <tr data-reserva-id="1">
-                        <td>Churrasqueira 1</td>
-                        <td>25/11/2025</td>
-                        <td>Tarde</td>
-                        <td>20</td>
-                        <td class="status-ativo">Confirmada</td>
-                        <td>
-                            <a href="reservas.html?acao=editar&id=1" class="action-link" data-reserva-action="editar"><i class="fas fa-edit"></i> Editar</a>
-                            <a href="reservas.html?acao=cancelar&id=1" class="action-link" data-reserva-action="cancelar" style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Cancelar</a>
-                        </td>
-                    </tr>
-                    <tr data-reserva-id="2">
-                        <td>Salao de Festas Principal</td>
-                        <td>10/01/2026</td>
-                        <td>Dia Inteiro</td>
-                        <td>80</td>
-                        <td class="status-pendente">Aguardando Pagamento</td>
-                        <td>
-                            <a href="../financeiro/financeiro.html" class="action-link action-pay" style="color: #e67e22;"><i class="fas fa-money-check-alt"></i> Ver Cobranca</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <form class="admin-inline-form" id="apartamento-form">
+                    <input type="text" id="apartamento-bloco" placeholder="Bloco" maxlength="10" required>
+                    <input type="text" id="apartamento-numero" placeholder="Apartamento" maxlength="10" required>
+                    <input type="text" id="apartamento-perfil" placeholder="Perfil da unidade" required>
+                    <input type="text" id="apartamento-contato" placeholder="Contato do cliente" required>
+                    <select id="apartamento-status" class="action-select" required>
+                        <option value="disponivel">Disponivel</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="manutencao">Manutencao</option>
+                    </select>
+                    <select id="apartamento-intencao" class="action-select" required>
+                        <option value="alugar">Deseja alugar</option>
+                        <option value="vender">Deseja vender</option>
+                    </select>
+                    <button type="submit" class="primary-button" id="apartamento-submit-button"><i class="fas fa-plus-circle"></i> Salvar apartamento</button>
+                    <textarea id="apartamento-observacoes" class="admin-inline-textarea" placeholder="Observacoes da unidade, corretor, chaves, visitas, condicoes e afins."></textarea>
+                </form>
+                <p class="admin-inline-feedback" id="apartamento-feedback" aria-live="polite"></p>
+
+                <div class="controls-container">
+                    <div class="search-group">
+                        <input type="search" class="search-input" id="apartamentos-search" placeholder="Buscar por bloco, apartamento, contato ou perfil...">
+                    </div>
+                    <select class="action-select admin-filter-select" id="apartamentos-status-filter">
+                        <option value="">Todos</option>
+                        <option value="disponivel">Disponivel</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="manutencao">Manutencao</option>
+                    </select>
+                </div>
+
+                <div class="apartamentos-grid" id="apartamentos-grid"></div>
+            </div>
+        </section>
 
         <footer class="content-footer">
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
 
+    <dialog class="admin-dialog" id="apartamento-dialog">
+        <div class="admin-dialog-content">
+            <div class="admin-dialog-header">
+                <div>
+                    <h2>Detalhes do apartamento</h2>
+                    <p>Visualize observacoes, contato e objetivo comercial da unidade.</p>
+                </div>
+                <button type="button" class="dialog-close-button" data-dialog-close="apartamento-dialog"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="admin-dialog-body" id="apartamento-dialog-body"></div>
+        </div>
+    </dialog>
+
+    <script src="../../public/js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const reservasStorageKey = 'nexus_reservas_admin_v2';
+            const apartamentosStorageKey = 'nexus_apartamentos_disponiveis_v2';
+            const reservasSeed = [
+                { id: 1, area: 'Churrasqueira 1', data: '25/11/2025', periodo: 'Tarde', convidados: '20', status: 'Confirmada' },
+                { id: 2, area: 'Salao de Festas Principal', data: '10/01/2026', periodo: 'Dia Inteiro', convidados: '80', status: 'Solicitada' }
+            ];
+            const apartamentosSeed = [
+                { id: 'apt-1', bloco: 'A', apartamento: '102', perfil: '2 quartos', status: 'disponivel', contato: 'Marina Alves - (11) 98888-1212', intencao: 'alugar', observacoes: 'Unidade com pintura nova e vaga coberta.' },
+                { id: 'apt-2', bloco: 'B', apartamento: '305', perfil: '3 quartos', status: 'reservado', contato: 'Carlos Mendonca - (11) 97777-3030', intencao: 'vender', observacoes: 'Cliente aguardando proposta formal.' },
+                { id: 'apt-3', bloco: 'C', apartamento: '401', perfil: 'Cobertura', status: 'manutencao', contato: 'Equipe interna', intencao: 'alugar', observacoes: 'Liberacao prevista apos reparo do forro.' },
+                { id: 'apt-4', bloco: 'A', apartamento: '203', perfil: 'Studio', status: 'disponivel', contato: 'Bianca Souza - (11) 96666-8899', intencao: 'vender', observacoes: 'Visitas permitidas no periodo da tarde.' }
+            ];
+
             const form = document.getElementById('reserva-form');
             const reservasBody = document.getElementById('reservas-body');
-            if (!form || !reservasBody) return;
+            const apartamentosGrid = document.getElementById('apartamentos-grid');
+            const apartamentosSearch = document.getElementById('apartamentos-search');
+            const apartamentosStatusFilter = document.getElementById('apartamentos-status-filter');
+            const apartamentoForm = document.getElementById('apartamento-form');
+            const apartamentoFeedback = document.getElementById('apartamento-feedback');
+            const apartamentoDialog = document.getElementById('apartamento-dialog');
+            const apartamentoDialogBody = document.getElementById('apartamento-dialog-body');
+            const apartamentoSubmitButton = document.getElementById('apartamento-submit-button');
+            let editingId = null;
+            let editingApartamentoId = null;
 
-            let nextId = Array.from(reservasBody.querySelectorAll('tr[data-reserva-id]')).length + 1;
-            let editingRow = null;
+            function readData(key, seed) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) {
+                        localStorage.setItem(key, JSON.stringify(seed));
+                        return seed.slice();
+                    }
+                    const parsed = JSON.parse(raw);
+                    return Array.isArray(parsed) ? parsed : seed.slice();
+                } catch {
+                    return seed.slice();
+                }
+            }
+
+            function saveData(key, data) {
+                localStorage.setItem(key, JSON.stringify(data));
+            }
 
             function formatDate(isoDate) {
                 const [year, month, day] = String(isoDate).split('-');
@@ -148,88 +223,230 @@
                 return `${day}/${month}/${year}`;
             }
 
-            function setFormFromRow(row) {
-                const cells = row.querySelectorAll('td');
-                document.getElementById('area').value = cells[0].textContent.trim();
-                const [d, m, y] = cells[1].textContent.trim().split('/');
-                document.getElementById('data').value = `${y}-${m}-${d}`;
-                document.getElementById('periodo').value = cells[2].textContent.trim();
-                document.getElementById('convidados').value = cells[3].textContent.trim();
-                editingRow = row;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
-            function renderActions(id) {
+            function renderReservaActions(id, status) {
+                if (status === 'Cancelada') {
+                    return '<span style="color:#777;">Sem acoes disponiveis</span>';
+                }
                 return `
                     <a href="reservas.html?acao=editar&id=${id}" class="action-link" data-reserva-action="editar"><i class="fas fa-edit"></i> Editar</a>
                     <a href="reservas.html?acao=cancelar&id=${id}" class="action-link" data-reserva-action="cancelar" style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Cancelar</a>
                 `;
             }
 
+            function statusClass(status) {
+                if (status === 'Confirmada') return 'status-ativo';
+                if (status === 'Solicitada') return 'status-media';
+                return 'status-baixa';
+            }
+
+            function renderReservas() {
+                const reservas = readData(reservasStorageKey, reservasSeed);
+                reservasBody.innerHTML = reservas.map((item) => `
+                    <tr data-reserva-id="${item.id}">
+                        <td>${item.area}</td>
+                        <td>${item.data}</td>
+                        <td>${item.periodo}</td>
+                        <td>${item.convidados}</td>
+                        <td class="${statusClass(item.status)}">${item.status}</td>
+                        <td>${renderReservaActions(item.id, item.status)}</td>
+                    </tr>
+                `).join('');
+            }
+
+            function resetApartamentoForm() {
+                apartamentoForm.reset();
+                editingApartamentoId = null;
+                apartamentoSubmitButton.innerHTML = '<i class="fas fa-plus-circle"></i> Salvar apartamento';
+                apartamentoFeedback.textContent = '';
+                apartamentoFeedback.className = 'admin-inline-feedback';
+            }
+
+            function openApartamentoDialog(item) {
+                apartamentoDialogBody.innerHTML = `
+                    <div class="dialog-detail-grid">
+                        <div><span>Bloco</span><strong>${item.bloco}</strong></div>
+                        <div><span>Apartamento</span><strong>${item.apartamento}</strong></div>
+                        <div><span>Perfil</span><strong>${item.perfil}</strong></div>
+                        <div><span>Status</span><strong>${item.status}</strong></div>
+                        <div><span>Contato</span><strong>${item.contato}</strong></div>
+                        <div><span>Intencao</span><strong>${item.intencao === 'vender' ? 'Deseja vender' : 'Deseja alugar'}</strong></div>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Observacoes</span>
+                        <p>${item.observacoes || 'Nenhuma observacao cadastrada.'}</p>
+                    </div>
+                `;
+                apartamentoDialog.showModal();
+            }
+
+            function fillApartamentoForm(item) {
+                document.getElementById('apartamento-bloco').value = item.bloco;
+                document.getElementById('apartamento-numero').value = item.apartamento;
+                document.getElementById('apartamento-perfil').value = item.perfil;
+                document.getElementById('apartamento-contato').value = item.contato;
+                document.getElementById('apartamento-status').value = item.status;
+                document.getElementById('apartamento-intencao').value = item.intencao;
+                document.getElementById('apartamento-observacoes').value = item.observacoes || '';
+                editingApartamentoId = item.id;
+                apartamentoSubmitButton.innerHTML = '<i class="fas fa-save"></i> Atualizar apartamento';
+                apartamentoFeedback.textContent = 'Modo edicao habilitado para a unidade selecionada.';
+                apartamentoFeedback.className = 'admin-inline-feedback is-success';
+            }
+
+            function renderApartamentos() {
+                const query = String(apartamentosSearch.value || '').toLowerCase();
+                const filter = apartamentosStatusFilter.value;
+                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed).filter((item) => {
+                    const matchQuery = [item.bloco, item.apartamento, item.perfil, item.status, item.contato, item.intencao, item.observacoes].join(' ').toLowerCase().includes(query);
+                    const matchStatus = !filter || item.status === filter;
+                    return matchQuery && matchStatus;
+                });
+
+                if (!apartamentos.length) {
+                    apartamentosGrid.innerHTML = '<p class="veiculos-empty-state">Nenhum apartamento encontrado para os filtros atuais.</p>';
+                    return;
+                }
+
+                apartamentosGrid.innerHTML = apartamentos.map((item) => `
+                    <article class="apartamento-card">
+                        <span class="apartamento-card-kicker">Bloco ${item.bloco}</span>
+                        <h3>Apartamento ${item.apartamento}</h3>
+                        <p>${item.perfil}</p>
+                        <p><strong>${item.intencao === 'vender' ? 'Venda' : 'Locacao'}</strong> • ${item.contato}</p>
+                        <strong class="apartamento-status apartamento-status-${item.status}">${item.status}</strong>
+                        <div class="apartamento-card-actions">
+                            <button type="button" class="table-action-button" data-apartamento-action="view" data-id="${item.id}">Ver</button>
+                            <button type="button" class="table-action-button is-success" data-apartamento-action="edit" data-id="${item.id}">Editar</button>
+                        </div>
+                    </article>
+                `).join('');
+            }
+
             reservasBody.addEventListener('click', function (event) {
                 const actionLink = event.target.closest('[data-reserva-action]');
                 if (!actionLink) return;
                 event.preventDefault();
-
                 const row = actionLink.closest('tr');
                 if (!row) return;
+                const reservas = readData(reservasStorageKey, reservasSeed);
+                const id = Number(row.dataset.reservaId);
+                const target = reservas.find((item) => item.id === id);
+                if (!target) return;
 
                 if (actionLink.dataset.reservaAction === 'editar') {
-                    setFormFromRow(row);
+                    const [d, m, y] = target.data.split('/');
+                    document.getElementById('area').value = target.area;
+                    document.getElementById('data').value = `${y}-${m}-${d}`;
+                    document.getElementById('periodo').value = target.periodo;
+                    document.getElementById('convidados').value = target.convidados;
+                    editingId = id;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     return;
                 }
 
                 if (actionLink.dataset.reservaAction === 'cancelar') {
-                    if (!confirm('Deseja realmente cancelar essa reserva?')) return;
-                    const statusCell = row.children[4];
-                    const actionCell = row.children[5];
-                    statusCell.className = 'status-baixa';
-                    statusCell.textContent = 'Cancelada';
-                    actionCell.innerHTML = '<span style="color:#777;">Sem acoes disponiveis</span>';
-                    if (editingRow === row) {
-                        editingRow = null;
+                    target.status = 'Cancelada';
+                    saveData(reservasStorageKey, reservas);
+                    if (editingId === id) {
+                        editingId = null;
                         form.reset();
                     }
+                    renderReservas();
                 }
+            });
+
+            apartamentosGrid.addEventListener('click', function (event) {
+                const button = event.target.closest('[data-apartamento-action]');
+                if (!button) return;
+                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed);
+                const item = apartamentos.find((entry) => entry.id === button.dataset.id);
+                if (!item) return;
+
+                if (button.dataset.apartamentoAction === 'view') {
+                    openApartamentoDialog(item);
+                    return;
+                }
+
+                fillApartamentoForm(item);
             });
 
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
-                const area = document.getElementById('area').value;
-                const data = document.getElementById('data').value;
-                const periodo = document.getElementById('periodo').value;
-                const convidados = document.getElementById('convidados').value || '0';
+                const reservas = readData(reservasStorageKey, reservasSeed);
+                const payload = {
+                    area: document.getElementById('area').value,
+                    data: formatDate(document.getElementById('data').value),
+                    periodo: document.getElementById('periodo').value,
+                    convidados: document.getElementById('convidados').value || '0',
+                    status: 'Confirmada'
+                };
 
-                if (editingRow) {
-                    const cells = editingRow.querySelectorAll('td');
-                    cells[0].textContent = area;
-                    cells[1].textContent = formatDate(data);
-                    cells[2].textContent = periodo;
-                    cells[3].textContent = convidados;
-                    alert('Reserva atualizada com sucesso.');
-                    editingRow = null;
-                    form.reset();
-                    return;
+                if (editingId) {
+                    const target = reservas.find((item) => item.id === editingId);
+                    if (target) Object.assign(target, payload);
+                    editingId = null;
+                } else {
+                    payload.id = reservas.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0) + 1;
+                    reservas.unshift(payload);
                 }
 
-                const tr = document.createElement('tr');
-                tr.dataset.reservaId = String(nextId);
-                tr.innerHTML = `
-                    <td>${area}</td>
-                    <td>${formatDate(data)}</td>
-                    <td>${periodo}</td>
-                    <td>${convidados}</td>
-                    <td class="status-ativo">Confirmada</td>
-                    <td>${renderActions(nextId)}</td>
-                `;
-                reservasBody.prepend(tr);
-                nextId += 1;
+                saveData(reservasStorageKey, reservas);
                 form.reset();
-                alert('Reserva criada com sucesso.');
+                renderReservas();
             });
+
+            apartamentoForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed);
+                const payload = {
+                    bloco: document.getElementById('apartamento-bloco').value.trim(),
+                    apartamento: document.getElementById('apartamento-numero').value.trim(),
+                    perfil: document.getElementById('apartamento-perfil').value.trim(),
+                    contato: document.getElementById('apartamento-contato').value.trim(),
+                    status: document.getElementById('apartamento-status').value,
+                    intencao: document.getElementById('apartamento-intencao').value,
+                    observacoes: document.getElementById('apartamento-observacoes').value.trim()
+                };
+
+                if (editingApartamentoId) {
+                    const target = apartamentos.find((item) => item.id === editingApartamentoId);
+                    if (target) Object.assign(target, payload);
+                    apartamentoFeedback.textContent = 'Apartamento atualizado com sucesso.';
+                } else {
+                    payload.id = `apt-${Date.now()}`;
+                    apartamentos.unshift(payload);
+                    apartamentoFeedback.textContent = 'Apartamento cadastrado com sucesso.';
+                }
+
+                apartamentoFeedback.className = 'admin-inline-feedback is-success';
+                saveData(apartamentosStorageKey, apartamentos);
+                resetApartamentoForm();
+                renderApartamentos();
+            });
+
+            document.querySelectorAll('[data-admin-tab]').forEach((button) => {
+                button.addEventListener('click', function () {
+                    document.querySelectorAll('[data-admin-tab]').forEach((item) => item.classList.remove('active'));
+                    document.querySelectorAll('[data-admin-panel]').forEach((panel) => panel.classList.add('hidden'));
+                    button.classList.add('active');
+                    document.querySelector(`[data-admin-panel="${button.dataset.adminTab}"]`).classList.remove('hidden');
+                });
+            });
+
+            document.querySelectorAll('[data-dialog-close]').forEach((button) => {
+                button.addEventListener('click', function () {
+                    const dialog = document.getElementById(button.dataset.dialogClose);
+                    if (dialog) dialog.close();
+                });
+            });
+
+            apartamentosSearch.addEventListener('input', renderApartamentos);
+            apartamentosStatusFilter.addEventListener('change', renderApartamentos);
+
+            renderReservas();
+            renderApartamentos();
         });
     </script>
-
 </body>
 
 </html>

@@ -15,7 +15,7 @@
             <div class="nexus-brand" aria-label="Nexus Admin">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
+                    <strong data-condominio-nome>NEXUS</strong>
                     <span>ADMIN</span>
                 </div>
             </div>
@@ -28,7 +28,8 @@
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-exclamation-triangle"></i> Ocorrencias</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-dollar-sign"></i> Financeiro</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
-                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-chart-line"></i> Monitoramento IoT</a></li>
+                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
+                <li><a href="configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -65,10 +66,10 @@
                 </fieldset>
 
                 <fieldset class="form-section">
-                    <legend><i class="fas fa-home"></i> Unidade e Acesso</legend>
+                    <legend><i class="fas fa-briefcase"></i> Funcao e Acesso</legend>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="bloco">Bloco / Setor</label>
+                            <label for="bloco">Bloco / Setor de Atuacao</label>
                             <select id="bloco" required data-field="bloco">
                                 <option value="">Selecione...</option>
                                 <option>A</option>
@@ -77,8 +78,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="unidade">Unidade ou Base de Atuacao</label>
-                            <input type="text" id="unidade" required placeholder="Ex: Portaria, Torre A, 101" data-field="unidade">
+                            <label for="unidade">Cargo ou Funcao</label>
+                            <input type="text" id="unidade" required placeholder="Ex: Porteiro, Zelador, Recepcao, Supervisao" data-field="unidade">
                         </div>
                         <div class="form-group">
                             <label for="acesso">Status de Acesso</label>
@@ -99,6 +100,9 @@
                     <button type="submit" class="submit-button" id="submit-btn">
                         <i class="fas fa-save"></i> Cadastrar Colaborador
                     </button>
+                    <button type="button" class="primary-button" id="inativar-btn" hidden>
+                        <i class="fas fa-user-slash"></i> Inativar Colaborador
+                    </button>
                     <button type="reset" class="reset-button" data-morador-reset>
                         <i class="fas fa-eraser"></i> Limpar Campos
                     </button>
@@ -111,18 +115,21 @@
         </footer>
     </div>
 
+    <script src="../../public/js/script.js"></script>
     <script>
         const token = localStorage.getItem('nexus_token');
         if (!token) window.location.href = '/login.html?role=admin';
 
         const form = document.getElementById('morador-form');
         const submitBtn = document.getElementById('submit-btn');
+        const inativarBtn = document.getElementById('inativar-btn');
         const params = new URLSearchParams(window.location.search);
         const editId = params.get('id');
 
         if (editId) {
             document.querySelector('h2').textContent = 'Editar Colaborador';
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Alteracoes';
+            inativarBtn.hidden = false;
 
             fetch(`/api/colaboradores/${editId}`, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -139,6 +146,38 @@
                     document.getElementById('email').value = colaborador.user.email;
                 });
         }
+
+        inativarBtn.addEventListener('click', async function () {
+            if (!editId) return;
+            if (!confirm('Deseja realmente inativar este colaborador?')) return;
+
+            const body = {
+                nome: document.getElementById('nome').value,
+                cpf: document.getElementById('cpf').value,
+                nascimento: document.getElementById('nascimento').value || null,
+                telefone: document.getElementById('telefone').value,
+                bloco: document.getElementById('bloco').value,
+                unidade: document.getElementById('unidade').value,
+                status: 'BLOQUEADO',
+                email: document.getElementById('email').value,
+            };
+
+            try {
+                const res = await fetch(`/api/colaboradores/${editId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(body),
+                });
+                if (!res.ok) throw new Error();
+                alert('Colaborador inativado com sucesso.');
+                window.location.href = 'moradores.html';
+            } catch {
+                alert('Nao foi possivel inativar o colaborador.');
+            }
+        });
 
         form.addEventListener('submit', async function (e) {
             e.preventDefault();

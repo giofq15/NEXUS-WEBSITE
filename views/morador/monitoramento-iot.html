@@ -1,98 +1,148 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoramento IoT - NEXUS</title>
+    <title>Infraestrutura do Condominio - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
-<body class="admin-body"> 
-
+<body class="admin-body">
     <div class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Nexus Admin">
+            <div class="nexus-brand" aria-label="Portal do morador">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
-                    <span>ADMIN</span>
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <span>MORADOR</span>
                 </div>
             </div>
-        </div> 
+        </div>
         <nav>
             <ul>
-                <li><a href="../admin/painel-admin.html">Dashboard</a></li>
-                <li><a href="../admin/moradores.html">Moradores</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html">Ocorrências</a></li>
-                <li><a href="../financeiro/financeiro.html">Financeiro</a></li>
-                <li class="active"><a href="monitoramento-iot.html">Monitoramento IoT</a></li> 
-                <li><a href="../public/index.html">Sair</a></li>
+                <li><a href="painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Areas</a></li>
+                <li><a href="../financeiro/financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li><a href="../ocorrencias/ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrencias</a></li>
+                <li class="active"><a href="monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </div>
 
     <div class="main-content">
         <div class="dashboard-header">
-            <h1>Monitoramento de Consumo e Sustentabilidade (IoT)</h1>
-            <p>Análise detalhada do consumo de recursos do condomínio.</p>
+            <h1>Infraestrutura e Servicos do Condominio</h1>
+            <p>Uma visao simples para o morador acompanhar disponibilidade de ambientes, manutencoes previstas e servicos operacionais.</p>
         </div>
 
-        <div class="controls-container">
-            <div class="search-group">
-                <label for="periodo" style="font-weight: bold; margin-right: 10px;">Período:</label>
-                <select id="periodo" class="search-input">
-                    <option>Últimos 30 dias</option>
-                    <option>Mês Atual (Outubro)</option>
-                    <option>Trimestre</option>
-                    <option>Personalizado</option>
-                </select>
-            </div>
-            <button class="new-button"><i class="fas fa-file-export"></i> Exportar Relatório (PDF)</button>
-        </div>
+        <section class="admin-kpi-grid admin-kpi-grid-compact">
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon"><i class="fas fa-door-open"></i></div>
+                <div>
+                    <span>Areas liberadas</span>
+                    <strong>6</strong>
+                    <p>Ambientes prontos para uso hoje</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-water"><i class="fas fa-screwdriver-wrench"></i></div>
+                <div>
+                    <span>Manutencoes previstas</span>
+                    <strong>2</strong>
+                    <p>Intervencoes programadas nesta semana</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-team"><i class="fas fa-bell"></i></div>
+                <div>
+                    <span>Avisos ativos</span>
+                    <strong>3</strong>
+                    <p>Comunicados importantes para moradores</p>
+                </div>
+            </article>
+        </section>
 
-        <div class="metrics-grid">
-            <div class="metric-card widget water-metric">
-                <i class="fas fa-tint"></i>
-                <h3>Consumo Total de Água (Mês)</h3>
-                <p class="metric-value">520 m³</p>
-                <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
-            </div>
-            <div class="metric-card widget energy-metric">
-                <i class="fas fa-bolt"></i>
-                <h3>Consumo Total de Energia (Mês)</h3>
-                <p class="metric-value">15.800 kWh</p>
-                <span class="metric-change positive">↑ 8% vs Mês Anterior</span>
-            </div>
-            <div class="metric-card widget economy-metric">
-                <i class="fas fa-leaf"></i>
-                <h3>Projeção de Economia (Anual)</h3>
-                <p class="metric-value">R$ 15.200</p>
-                <span class="metric-change positive">Melhor que a média histórica</span>
-            </div>
-        </div>
-
-        <div class="widget">
-            <div class="charts-section">
-                <h2>Gráfico de Tendência (Água e Energia)</h2>
-
-                <div class="chart-full-width">
-                    <h3>Consumo Diário Consolidado (30 dias)</h3>
-                    <div class="graph-placeholder line-chart-placeholder">Gráfico Simulado: Consumo Diário Agregado (Água vs Energia)</div>
+        <section class="infra-shell">
+            <article class="widget infra-card">
+                <div class="section-heading">
+                    <div>
+                        <h2>Disponibilidade dos espacos</h2>
+                        <p>Status atual dos ambientes de uso comum.</p>
+                    </div>
                 </div>
 
-                <div class="chart-full-width" style="margin-top: 2rem;">
-                    <h3>Consumo por Bloco / Unidade (Mês)</h3>
-                    <div class="graph-placeholder bar-chart-placeholder">Gráfico Simulado: Ranking de Consumo por Unidade</div>
+                <div class="infra-status-grid">
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Piscina</span>
+                        <strong>Liberada</strong>
+                        <p>Funcionamento normal ate as 21h.</p>
+                        <span class="status-pill status-ativo">Disponivel</span>
+                    </article>
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Salao de festas</span>
+                        <strong>Reservado hoje</strong>
+                        <p>Uso exclusivo ate 22h por agendamento interno.</p>
+                        <span class="status-pill status-pendente">Reservado</span>
+                    </article>
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Elevador social</span>
+                        <strong>Operando</strong>
+                        <p>Sem restricoes de uso no momento.</p>
+                        <span class="status-pill status-ativo">Normal</span>
+                    </article>
+                    <article class="infra-status-tile">
+                        <span class="infra-status-label">Academia</span>
+                        <strong>Intervencao rapida</strong>
+                        <p>Limpeza tecnica prevista entre 14h e 15h.</p>
+                        <span class="status-pill status-pendente">Aviso</span>
+                    </article>
                 </div>
-            </div>
-        </div>
-        
+            </article>
+
+            <article class="widget infra-card">
+                <div class="section-heading">
+                    <div>
+                        <h2>Manutencoes programadas</h2>
+                        <p>Agenda resumida de servicos que impactam a rotina do predio.</p>
+                    </div>
+                </div>
+
+                <div class="infra-automation-list">
+                    <article class="infra-automation-item">
+                        <div>
+                            <strong>Revisao da caixa d'agua</strong>
+                            <p>Quinta-feira, 09h as 12h. Pode haver oscilacao temporaria no abastecimento.</p>
+                        </div>
+                        <span class="status-pill status-pendente">Agendada</span>
+                    </article>
+                    <article class="infra-automation-item">
+                        <div>
+                            <strong>Inspecao do portao secundario</strong>
+                            <p>Sexta-feira, 10h. Acesso de servico podera operar em modo manual.</p>
+                        </div>
+                        <span class="status-pill status-pendente">Agendada</span>
+                    </article>
+                    <article class="infra-automation-item">
+                        <div>
+                            <strong>Checklist noturno das areas comuns</strong>
+                            <p>Rotina diaria executada pela equipe para fechamento e seguranca.</p>
+                        </div>
+                        <span class="status-pill status-ativo">Recorrente</span>
+                    </article>
+                </div>
+            </article>
+        </section>
+
         <footer class="content-footer">
-            <p>© 2025 Projeto Nexus. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    <script src="../../public/js/script.js"></script>
 </body>
 
 </html>
