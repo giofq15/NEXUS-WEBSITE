@@ -8,14 +8,16 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  password     String
-  role         Role          @default(COLABORADOR)
-  accessLevel  AccessLevel   @default(COLABORADOR) @map("access_level")
-  colaborador  Colaborador?
-  createdAt    DateTime      @default(now()) @map("created_at")
-  updatedAt    DateTime      @updatedAt @map("updated_at")
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  password       String
+  role           Role           @default(COLABORADOR)
+  accessLevel    AccessLevel    @default(COLABORADOR) @map("access_level")
+  colaborador    Colaborador?
+  morador        Morador?
+  refreshTokens  RefreshToken[]
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
 
   @@map("users")
 }
@@ -53,6 +55,7 @@ model Veiculo {
 enum Role {
   ADMIN
   COLABORADOR
+  MORADOR
 }
 
 enum AccessLevel {
@@ -70,6 +73,110 @@ enum StatusColaborador {
 enum TipoVeiculo {
   CARRO
   MOTO
+}
+
+model Morador {
+  id          Int                 @id @default(autoincrement())
+  userId      Int                 @unique @map("user_id")
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nome        String
+  cpf         String              @unique
+  telefone    String
+  bloco       String
+  unidade     String
+  reservas    Reserva[]
+  taxas       Taxa[]
+  ocorrencias OcorrenciaMorador[]
+  createdAt   DateTime            @default(now()) @map("created_at")
+  updatedAt   DateTime            @updatedAt @map("updated_at")
+
+  @@map("moradores")
+}
+
+model AreaLazer {
+  id         Int       @id @default(autoincrement())
+  nome       String
+  descricao  String?
+  capacidade Int
+  reservas   Reserva[]
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  @@map("areas_lazer")
+}
+
+model Reserva {
+  id         Int            @id @default(autoincrement())
+  moradorId  Int            @map("morador_id")
+  morador    Morador        @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  areaId     Int            @map("area_id")
+  area       AreaLazer      @relation(fields: [areaId], references: [id])
+  data       DateTime
+  periodo    PeriodoReserva
+  convidados Int            @default(0)
+  status     StatusReserva  @default(PENDENTE)
+  createdAt  DateTime       @default(now()) @map("created_at")
+  updatedAt  DateTime       @updatedAt @map("updated_at")
+
+  @@map("reservas")
+}
+
+model Taxa {
+  id         Int        @id @default(autoincrement())
+  moradorId  Int        @map("morador_id")
+  morador    Morador    @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  mes        Int
+  ano        Int
+  valor      Decimal    @db.Decimal(10, 2)
+  vencimento DateTime
+  status     StatusTaxa @default(PENDENTE)
+  paidAt     DateTime?  @map("paid_at")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+
+  @@map("taxas")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("refresh_tokens")
+}
+
+model OcorrenciaMorador {
+  id        Int      @id @default(autoincrement())
+  moradorId Int      @map("morador_id")
+  morador   Morador  @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  tipo      String
+  local     String
+  descricao String
+  status    String   @default("EM_ANALISE")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ocorrencias_morador")
+}
+
+enum PeriodoReserva {
+  MANHA
+  TARDE
+  DIA_INTEIRO
+}
+
+enum StatusReserva {
+  PENDENTE
+  CONFIRMADA
+  CANCELADA
+}
+
+enum StatusTaxa {
+  PAGA
+  PENDENTE
+  ATRASADA
 }
 
 model Ocorrencia {

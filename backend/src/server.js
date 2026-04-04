@@ -7,6 +7,12 @@ const path = require('path');
 const authRoutes = require('./routes/auth.routes');
 const colaboradoresRoutes = require('./routes/colaboradores.routes');
 const ocorrenciasRoutes = require('./routes/ocorrencias.routes');
+const moradoresRoutes = require('./routes/moradores.routes');
+const areasLazerRoutes = require('./routes/areasLazer.routes');
+const reservasRoutes = require('./routes/reservas.routes');
+const taxasRoutes = require('./routes/taxas.routes');
+const notificacoesRoutes = require('./routes/notificacoes.routes');
+const { notificarUsuario, broadcast } = require('./controllers/notificacoes.controller');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +20,10 @@ const HOST = process.env.HOST || '0.0.0.0';
 const publicBaseUrl = process.env.PUBLIC_BASE_URL || `http://localhost:${PORT}`;
 
 app.set('trust proxy', 1);
+
+// SSE helpers available to all controllers via req.app.locals
+app.locals.notificarUsuario = notificarUsuario;
+app.locals.broadcast = broadcast;
 
 // Middleware
 app.use(cors());
@@ -26,8 +36,12 @@ app.get('/health', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/colaboradores', colaboradoresRoutes);
-app.use('/api/moradores', colaboradoresRoutes);
+app.use('/api/moradores', moradoresRoutes);
 app.use('/api/ocorrencias', ocorrenciasRoutes);
+app.use('/api/areas-lazer', areasLazerRoutes);
+app.use('/api/reservas', reservasRoutes);
+app.use('/api/taxas', taxasRoutes);
+app.use('/api/notificacoes', notificacoesRoutes);
 
 // Serve frontend static files
 app.use('/public', express.static(path.join(__dirname, '../../public')));
@@ -48,6 +62,7 @@ app.get('/public/login.html', (req, res) => {
 app.get('/public/index.html', (req, res) => {
   res.redirect('/');
 });
+
 // Root → landing page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../views/public/index.html'));
