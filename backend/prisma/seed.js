@@ -6,7 +6,9 @@ const prisma = new PrismaClient();
 async function main() {
   const hashedAdmin = await bcrypt.hash('admin123', 10);
   const hashedColaborador = await bcrypt.hash('colaborador123', 10);
+  const hashedMorador = await bcrypt.hash('morador123', 10);
 
+  // Admin
   await prisma.user.upsert({
     where: { email: 'admin@nexus.com' },
     update: {},
@@ -18,6 +20,7 @@ async function main() {
     },
   });
 
+  // Colaboradores
   const colaboradores = [
     { nome: 'Ana Silva', cpf: '111.111.111-11', telefone: '(11) 91111-1111', bloco: 'A', unidade: '101', status: 'ATIVO' },
     { nome: 'Carlos Pereira', cpf: '222.222.222-22', telefone: '(11) 92222-2222', bloco: 'B', unidade: '205', status: 'ATIVO' },
@@ -67,6 +70,110 @@ async function main() {
       update: {},
       create: { colaboradorId: ana.id, placa: 'XYZ-9876', tipo: 'MOTO' },
     });
+  }
+
+  // Morador de exemplo
+  const lucasUser = await prisma.user.upsert({
+    where: { email: 'lucas.oliveira@nexus.com' },
+    update: {},
+    create: {
+      email: 'lucas.oliveira@nexus.com',
+      password: hashedMorador,
+      role: 'MORADOR',
+      accessLevel: 'COLABORADOR',
+      morador: {
+        create: {
+          nome: 'Lucas Oliveira',
+          cpf: '999.999.999-99',
+          telefone: '(11) 99999-9999',
+          bloco: 'B',
+          unidade: '302',
+        },
+      },
+    },
+    include: { morador: true },
+  });
+
+  const lucas = lucasUser.morador || await prisma.morador.findFirst({ where: { cpf: '999.999.999-99' } });
+
+  // Áreas de lazer
+  const areasData = [
+    { nome: 'Salão de Festas', descricao: 'Salão climatizado com capacidade para 80 pessoas', capacidade: 80 },
+    { nome: 'Academia', descricao: 'Equipamentos modernos de musculação e cardio', capacidade: 20 },
+    { nome: 'Piscina', descricao: 'Piscina adulto e infantil', capacidade: 50 },
+    { nome: 'Quadra Poliesportiva', descricao: 'Quadra coberta para futebol, vôlei e basquete', capacidade: 30 },
+    { nome: 'Churrasqueira', descricao: 'Área gourmet com churrasqueira', capacidade: 40 },
+  ];
+
+  const areas = {};
+  for (const area of areasData) {
+    const existing = await prisma.areaLazer.findFirst({ where: { nome: area.nome } });
+    if (!existing) {
+      areas[area.nome] = await prisma.areaLazer.create({ data: area });
+    } else {
+      areas[area.nome] = existing;
+    }
+  }
+
+  // Taxas de condomínio para Lucas (últimos 6 meses)
+  if (lucas) {
+    const hoje = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+      const mes = d.getMonth() + 1;
+      const ano = d.getFullYear();
+      const vencimento = new Date(ano, mes - 1, 10); // vence todo dia 10
+
+      const existing = await prisma.taxa.findFirst({ where: { moradorId: lucas.id, mes, ano } });
+      if (!existing) {
+        let status = 'PAGA';
+        let paidAt = new Date(ano, mes - 1, 8); // pago dia 8
+
+        if (i === 0) { // mês atual: pendente
+          status = 'PENDENTE';
+          paidAt = null;
+        } else if (i === 1) { // mês passado: atrasado
+          status = 'ATRASADA';
+          paidAt = null;
+        }
+
+        await prisma.taxa.create({
+          data: {
+            moradorId: lucas.id,
+            mes,
+            ano,
+            valor: 450.00,
+            vencimento,
+            status,
+            ...(paidAt && { paidAt }),
+          },
+        });
+      }
+    }
+
+    // Reserva de exemplo para Lucas
+    const salao = areas['Salão de Festas'];
+    if (salao) {
+      const dataReserva = new Date();
+      dataReserva.setDate(dataReserva.getDate() + 7); // daqui a 7 dias
+      dataReserva.setHours(0, 0, 0, 0);
+
+      const existing = await prisma.reserva.findFirst({
+        where: { moradorId: lucas.id, areaId: salao.id, data: dataReserva },
+      });
+      if (!existing) {
+        await prisma.reserva.create({
+          data: {
+            moradorId: lucas.id,
+            areaId: salao.id,
+            data: dataReserva,
+            periodo: 'TARDE',
+            convidados: 20,
+            status: 'CONFIRMADA',
+          },
+        });
+      }
+    }
   }
 
   console.log('Seed concluido com sucesso!');
