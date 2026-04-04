@@ -157,16 +157,21 @@
     .sidebar {
         width: 100%;
         padding-top: 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
     }
 
     .sidebar nav ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        padding: 0.25rem 0;
     }
 
     .sidebar nav ul li a {
-        padding: 0.8rem 1rem;
+        padding: 0.65rem 0.85rem;
+        font-size: 0.85rem;
         border-left: none;
         border-bottom: 3px solid transparent;
     }
@@ -175,6 +180,10 @@
     .sidebar nav ul li.active a {
         border-left-color: transparent;
         border-bottom-color: #e67e22;
+    }
+
+    .sidebar nav ul li a i {
+        margin-right: 4px;
     }
 
     .nexus-brand-mark {
@@ -192,6 +201,14 @@
 
     .dashboard-grid {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
     .hero header {
@@ -214,5 +231,86 @@
     .login-container {
         margin: 20px;
         max-width: 90%;
+    }
+
+    /* Tabelas responsivas */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 0.65rem 0.75rem;
+        font-size: 0.875rem;
+        white-space: nowrap;
+    }
+
+    /* Cards de resumo financeiro */
+    .financial-summary {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .financial-summary .widget {
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.2rem !important;
+    }
+
+    /* Abas em tela pequena */
+    .tabs-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        border-bottom: none;
+    }
+
+    .tab-button {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 4px;
+        text-align: left;
+    }
+
+    .tab-button.active {
+        background: #2c3e50;
+        color: #fff;
+        border-color: #2c3e50;
+    }
+
+    .tabs-container .new-button {
+        margin-left: 0;
+        margin-top: 8px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .financial-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar nav ul li a span,
+    .sidebar nav ul li a {
+        font-size: 0.8rem;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.8rem;
     }
 }

@@ -281,15 +281,13 @@
             const password = document.getElementById('password');
             const togglePassword = document.getElementById('togglePassword');
 
-            let destino;
-
-            // Define título e redirecionamento
+            // Define título
             if (role === 'admin') {
                 heading.textContent = 'Acesso do Administrador';
-                destino = '../admin/painel-admin.html';
+            } else if (role === 'morador') {
+                heading.textContent = 'Acesso do Morador';
             } else {
-                heading.textContent = 'Acesso do Colaborador';
-                destino = '../colaborador/painel-colaborador.html';
+                heading.textContent = 'Acesso ao Sistema';
             }
 
             // Login via API
@@ -319,11 +317,20 @@
                         return;
                     }
 
+                    // Salva token, refreshToken e dados do usuário
                     localStorage.setItem('nexus_token', data.token);
+                    if (data.refreshToken) {
+                        localStorage.setItem('nexus_refresh_token', data.refreshToken);
+                    }
                     localStorage.setItem('nexus_user', JSON.stringify(data.user));
 
-                    if (data.user.accessLevel === 'ROOT' || data.user.accessLevel === 'ADMIN' || data.user.role === 'ADMIN') {
+                    // Redireciona por role
+                    const r = data.user.role;
+                    const lvl = data.user.accessLevel;
+                    if (lvl === 'ROOT' || lvl === 'ADMIN' || r === 'ADMIN') {
                         window.location.href = '../admin/painel-admin.html';
+                    } else if (r === 'MORADOR') {
+                        window.location.href = '../morador/painel-morador.html';
                     } else {
                         window.location.href = '../colaborador/painel-colaborador.html';
                     }

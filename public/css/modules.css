@@ -162,6 +162,14 @@
     background-color: #d35400;
 }
 
+/* Wrapper responsivo para tabelas */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    width: 100%;
+}
+
 /* Estilo da Tabela */
 .data-table {
     width: 100%;

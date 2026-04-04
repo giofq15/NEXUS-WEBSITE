@@ -29,76 +29,77 @@
                 <li><a href="../ocorrencias/ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
                 <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="#" data-logout><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </div>
 
     <div class="main-content">
         <div class="dashboard-header">
-            <h1>Bem-vindo, [Nome do Morador]!</h1>
-            <p>Unidade Bloco B / 405</p>
+            <h1>Bem-vindo, <span data-user-name>Morador</span>!</h1>
+            <p id="info-unidade">Carregando informações da unidade...</p>
         </div>
 
         <div class="dashboard-grid">
-            
+
             <div class="main-column">
-                
+
                 <h2>Informações da Unidade</h2>
                 <div class="metrics-grid">
-                    
-                    <div class="metric-card widget water-metric">
-                        <i class="fas fa-tint"></i>
-                        <h3>Consumo Água (Último Mês)</h3>
-                        <p class="metric-value">12.8 m³</p>
-                        <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
-                    </div>
-                    
+
                     <div class="metric-card widget financial-metric">
                         <i class="fas fa-file-invoice-dollar"></i>
-                        <h3>Próximo Boleto Vence em</h3>
-                        <p class="metric-value" style="color: #e67e22;">5 Dias</p>
-                        <span class="metric-change positive">Valor: R$ 850,00</span>
+                        <h3>Próximo Boleto</h3>
+                        <p class="metric-value" id="card-proximo-boleto" style="font-size:1.4rem;">—</p>
+                        <span class="metric-change" id="card-boleto-valor"></span>
                     </div>
 
                     <div class="metric-card widget alert-metric">
                         <i class="fas fa-calendar-alt"></i>
-                        <h3>Minhas Próximas Reservas</h3>
-                        <p class="metric-value">1</p>
-                        <span class="metric-change">Churrasqueira (15/11)</span>
+                        <h3>Próxima Reserva</h3>
+                        <p class="metric-value" id="card-proxima-reserva" style="font-size:1.4rem;">—</p>
+                        <span class="metric-change" id="card-reserva-area"></span>
                     </div>
-                </div>
-                
-                <h2>Avisos Importantes do Condomínio</h2>
-                <div class="widget">
-                    <h3>Substituição de Elevadores</h3>
-                    <p>Prezados moradores, informamos que a substituição do elevador do Bloco B está programada para iniciar em 01/12/2025. Pedimos a compreensão...</p>
-                    <a href="avisos.html" class="action-link">Ver todos os avisos</a>
+
+                    <div class="metric-card widget">
+                        <i class="fas fa-comment-dots"></i>
+                        <h3>Ocorrências Abertas</h3>
+                        <p class="metric-value" id="card-ocorrencias">—</p>
+                        <span class="metric-change">Em andamento / Análise</span>
+                    </div>
+
                 </div>
 
-                <h2>Seu Consumo nos Últimos 6 Meses</h2>
-                <div class="widget">
-                    <div class="graph-placeholder line-chart-placeholder">
-                        Gráfico Simulado: Consumo de Água e Energia por Mês
-                    </div>
+                <h2>Ocorrências Recentes</h2>
+                <div class="widget" id="widget-ocorrencias">
+                    <p style="color:#777;text-align:center;"><i class="fas fa-spinner fa-spin"></i> Carregando...</p>
                 </div>
 
             </div>
 
             <div class="side-column">
-                
+
                 <h2>Ações Rápidas</h2>
                 <div class="widget">
-                    <a href="reservas.html" class="new-button" style="display: block; width: 100%; margin-bottom: 10px; text-align: center; color: #ffffff; text-decoration: none;"><i class="fas fa-calendar-plus"></i> Fazer Nova Reserva</a>
-                    <a href="../ocorrencias/ocorrencias-morador.html" class="new-button" style="display: block; width: 100%; background-color: #3498db; margin-bottom: 10px; text-align: center; color: #ffffff; text-decoration: none;"><i class="fas fa-ticket-alt"></i> Abrir Nova Ocorrência</a>
-                    <a href="../financeiro/financeiro-morador.html" class="new-button" style="display: block; width: 100%; background-color: #27ae60; text-align: center; color: #ffffff; text-decoration: none;"><i class="fas fa-money-check-alt"></i> Pagar Boleto Atual</a>
+                    <a href="reservas.html" class="new-button" style="display:block;width:100%;margin-bottom:10px;text-align:center;color:#fff;text-decoration:none;">
+                        <i class="fas fa-calendar-plus"></i> Fazer Nova Reserva
+                    </a>
+                    <a href="../ocorrencias/ocorrencias-morador.html" class="new-button" style="display:block;width:100%;background-color:#3498db;margin-bottom:10px;text-align:center;color:#fff;text-decoration:none;">
+                        <i class="fas fa-ticket-alt"></i> Abrir Nova Ocorrência
+                    </a>
+                    <a href="../financeiro/financeiro-morador.html" class="new-button" style="display:block;width:100%;background-color:#27ae60;text-align:center;color:#fff;text-decoration:none;">
+                        <i class="fas fa-money-check-alt"></i> Ver Boletos
+                    </a>
                 </div>
-                
-                <h2>Minhas Ocorrências Recentes</h2>
-                <div class="widget">
-                    <p style="font-size: 0.9rem; color: #777;"><strong>Ocorrência 1:</strong> Vazamento no Banheiro - <span class="status-andamento">Em Andamento</span></p>
-                    <p style="font-size: 0.9rem; color: #777;"><strong>Ocorrência 2:</strong> Barulho Excessivo (21/10) - <span class="status-resolvida">Resolvida</span></p>
-                    <a href="../ocorrencias/ocorrencias-morador.html" class="action-link">Ver todas</a>
+
+                <h2>Minha Próxima Reserva</h2>
+                <div class="widget" id="widget-proxima-reserva">
+                    <p style="color:#777;text-align:center;"><i class="fas fa-spinner fa-spin"></i> Carregando...</p>
+                </div>
+
+                <h2>Situação Financeira</h2>
+                <div class="widget" id="widget-financeiro">
+                    <p style="color:#777;text-align:center;"><i class="fas fa-spinner fa-spin"></i> Carregando...</p>
                 </div>
 
             </div>
@@ -108,6 +109,146 @@
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
-</body>
 
+    <script src="../../public/js/auth.js"></script>
+    <script>
+        if (!NexusAuth.requireAuth()) throw new Error('Não autenticado');
+
+        NexusAuth.bindLogout('[data-logout]');
+        NexusAuth.injectUserName('[data-user-name]');
+
+        const PERIODOS = { MANHA: 'Manhã', TARDE: 'Tarde', DIA_INTEIRO: 'Dia Inteiro' };
+        const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+        function formatDate(iso) {
+            if (!iso) return '—';
+            const d = new Date(iso + 'T12:00:00');
+            return d.toLocaleDateString('pt-BR');
+        }
+
+        function formatValor(v) {
+            return `R$ ${Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+        }
+
+        async function carregarDados() {
+            const user = NexusAuth.getUser();
+
+            // Perfil do morador (bloco/unidade)
+            if (user?.moradorId) {
+                const resPerfil = await NexusAuth.apiFetch('/api/moradores/me');
+                if (resPerfil && resPerfil.ok) {
+                    const perfil = await resPerfil.json();
+                    document.getElementById('info-unidade').textContent =
+                        `Bloco ${perfil.bloco} / Unidade ${perfil.unidade}`;
+                }
+            }
+
+            // Taxas
+            const resTaxas = await NexusAuth.apiFetch('/api/taxas');
+            if (resTaxas && resTaxas.ok) {
+                const taxas = await resTaxas.json();
+                const pendentes = taxas.filter(t => t.status === 'PENDENTE' || t.status === 'ATRASADA');
+
+                if (pendentes.length > 0) {
+                    const prox = pendentes.reduce((min, t) =>
+                        new Date(t.vencimento) < new Date(min.vencimento) ? t : min);
+                    const venc = new Date(prox.vencimento);
+                    const diasRestantes = Math.ceil((venc - new Date()) / 86400000);
+
+                    document.getElementById('card-proximo-boleto').textContent =
+                        diasRestantes >= 0 ? `${diasRestantes} dia(s)` : 'Atrasado';
+                    document.getElementById('card-proximo-boleto').style.color =
+                        prox.status === 'ATRASADA' ? '#e74c3c' : '#e67e22';
+                    document.getElementById('card-boleto-valor').textContent = formatValor(prox.valor);
+
+                    // Widget financeiro
+                    document.getElementById('widget-financeiro').innerHTML = `
+                        <p style="font-size:0.9rem;color:#555;margin-bottom:0.5rem;">
+                            <strong>Pendências:</strong> ${pendentes.length} parcela(s)
+                        </p>
+                        <p style="font-size:0.9rem;color:#555;margin-bottom:0.75rem;">
+                            <strong>Total devido:</strong>
+                            <span style="color:#e74c3c;font-weight:bold;">
+                                ${formatValor(pendentes.reduce((s,t) => s + Number(t.valor), 0))}
+                            </span>
+                        </p>
+                        <a href="../financeiro/financeiro-morador.html" class="action-link">Ver todos os boletos</a>
+                    `;
+                } else {
+                    document.getElementById('card-proximo-boleto').textContent = 'Em dia';
+                    document.getElementById('card-proximo-boleto').style.color = '#27ae60';
+                    document.getElementById('widget-financeiro').innerHTML =
+                        '<p style="color:#27ae60;"><i class="fas fa-check-circle"></i> Nenhuma pendência financeira!</p>';
+                }
+            }
+
+            // Reservas
+            const resReservas = await NexusAuth.apiFetch('/api/reservas');
+            if (resReservas && resReservas.ok) {
+                const reservas = await resReservas.json();
+                const futuras = reservas.filter(r =>
+                    r.status !== 'CANCELADA' && new Date(r.data) >= new Date());
+
+                if (futuras.length > 0) {
+                    const prox = futuras[0];
+                    document.getElementById('card-proxima-reserva').textContent = formatDate(prox.data);
+                    document.getElementById('card-reserva-area').textContent =
+                        `${prox.areaLazer?.nome || '—'} — ${PERIODOS[prox.periodo] || prox.periodo}`;
+
+                    document.getElementById('widget-proxima-reserva').innerHTML = `
+                        <p style="font-weight:bold;margin-bottom:0.3rem;">${prox.areaLazer?.nome || '—'}</p>
+                        <p style="font-size:0.9rem;color:#555;margin-bottom:0.3rem;">
+                            <i class="fas fa-calendar"></i> ${formatDate(prox.data)} — ${PERIODOS[prox.periodo]}
+                        </p>
+                        <p style="font-size:0.9rem;color:#555;margin-bottom:0.75rem;">
+                            <i class="fas fa-users"></i> ${prox.convidados} convidados
+                        </p>
+                        <span class="${prox.status === 'CONFIRMADA' ? 'status-ativo' : 'status-media'}">
+                            ${prox.status}
+                        </span>
+                        <br><br>
+                        <a href="reservas.html" class="action-link">Ver todas as reservas</a>
+                    `;
+                } else {
+                    document.getElementById('card-proxima-reserva').textContent = 'Nenhuma';
+                    document.getElementById('widget-proxima-reserva').innerHTML =
+                        '<p style="color:#777;">Você não tem reservas futuras.</p>' +
+                        '<a href="reservas.html" class="new-button" style="display:inline-block;margin-top:0.5rem;">' +
+                        '<i class="fas fa-calendar-plus"></i> Fazer Reserva</a>';
+                }
+            }
+
+            // Ocorrências
+            const resOcorr = await NexusAuth.apiFetch('/api/ocorrencias');
+            if (resOcorr && resOcorr.ok) {
+                const ocorrencias = await resOcorr.json();
+                const abertas = ocorrencias.filter(o => o.status !== 'RESOLVIDA');
+                document.getElementById('card-ocorrencias').textContent = abertas.length;
+
+                const recentes = ocorrencias.slice(0, 3);
+                const STATUS_CLASS = { EM_ANALISE: 'status-pendente', EM_ANDAMENTO: 'status-andamento', RESOLVIDA: 'status-resolvida' };
+                const STATUS_LABEL = { EM_ANALISE: 'Em análise', EM_ANDAMENTO: 'Em andamento', RESOLVIDA: 'Resolvida' };
+
+                if (recentes.length === 0) {
+                    document.getElementById('widget-ocorrencias').innerHTML =
+                        '<p style="color:#777;">Nenhuma ocorrência registrada.</p>';
+                } else {
+                    document.getElementById('widget-ocorrencias').innerHTML =
+                        recentes.map(o => `
+                            <p style="font-size:0.9rem;color:#555;margin-bottom:0.5rem;">
+                                <strong>${o.tipo}</strong> — ${o.local}
+                                <span class="${STATUS_CLASS[o.status] || ''}" style="margin-left:8px;font-size:0.8rem;padding:2px 8px;border-radius:4px;">
+                                    ${STATUS_LABEL[o.status] || o.status}
+                                </span>
+                            </p>
+                        `).join('') +
+                        '<a href="../ocorrencias/ocorrencias-morador.html" class="action-link">Ver todas</a>';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarDados);
+    </script>
+
+</body>
 </html>

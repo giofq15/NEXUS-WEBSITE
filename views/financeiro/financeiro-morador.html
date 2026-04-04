@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financeiro Morador - NEXUS</title>
+    <title>Financeiro - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -13,23 +13,23 @@
 
     <div class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Nexus Colaborador">
+            <div class="nexus-brand" aria-label="Nexus Morador">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
                     <strong>NEXUS</strong>
-                    <span>COLABORADOR</span>
+                    <span>MORADOR</span>
                 </div>
             </div>
         </div>
         <nav>
             <ul>
-                <li><a href="../colaborador/painel-colaborador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
-                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
+                <li><a href="../morador/painel-morador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
+                <li><a href="../morador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
                 <li class="active"><a href="financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
-                <li><a href="../ocorrencias/ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li><a href="../ocorrencias/ocorrencias-morador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
                 <li><a href="consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
-                <li><a href="../colaborador/avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="../morador/avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
+                <li><a href="#" data-logout><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </div>
@@ -37,7 +37,7 @@
     <div class="main-content">
         <div class="dashboard-header">
             <h1>Minhas Faturas e Boletos</h1>
-            <p>Acompanhe o status financeiro da sua unidade (Bloco B / 405).</p>
+            <p id="subtitulo-unidade">Acompanhe o status financeiro da sua unidade.</p>
         </div>
 
         <h2>Resumo Mensal</h2>
@@ -45,154 +45,198 @@
             <div class="widget">
                 <i class="fas fa-receipt icon-alert"></i>
                 <h3>Próximo Vencimento</h3>
-                <p class="stat-number alert">25/11/2025</p>
+                <p class="stat-number alert" id="resumo-proximo-vencimento">—</p>
             </div>
             <div class="widget">
-                <i class="fas fa-money-bill-wave stat-number negative"></i>
+                <i class="fas fa-money-bill-wave"></i>
                 <h3>Débito Total Pendente</h3>
-                <p class="stat-number negative">R$ 850,00</p>
+                <p class="stat-number negative" id="resumo-debito-total">—</p>
             </div>
             <div class="widget">
                 <i class="fas fa-check-circle icon-positive"></i>
                 <h3>Último Pagamento</h3>
-                <p class="stat-number positive">05/10/2025</p>
+                <p class="stat-number positive" id="resumo-ultimo-pagamento">—</p>
             </div>
         </div>
-        
+
         <div class="tabs-container">
             <button class="tab-button active" id="btn-pendentes">Boletos Pendentes</button>
             <button class="tab-button" id="btn-historico">Histórico de Pagamentos</button>
-            
-            <a href="financeiro-morador.html?exportar=2via" class="new-button" style="display: inline-flex; align-items: center; justify-content: center;"><i class="fas fa-file-pdf"></i> Exportar 2ª Via</a>
-        </div>
-        
-        <div id="content-pendentes" class="widget tab-content">
-            <h2>Boletos Pendentes de Pagamento</h2>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Mês / Referência</th>
-                        <th>Vencimento</th>
-                        <th>Valor (R$)</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Novembro/2025 (Atual)</td>
-                        <td>25/11/2025</td>
-                        <td class="negative-value">850,00</td>
-                        <td class="status-pendente">Aberto</td>
-                        <td>
-                            <a href="financeiro-morador.html?acao=gerar-boleto&ref=2025-11" class="action-link action-pay"><i class="fas fa-barcode"></i> Gerar Boleto</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Outubro/2025</td>
-                        <td>05/10/2025</td>
-                        <td class="negative-value">795,00</td>
-                        <td class="status-alta">Atrasado</td>
-                        <td>
-                            <a href="financeiro-morador.html?acao=pagar-multa&ref=2025-10" class="action-link action-pay"><i class="fas fa-exclamation-circle"></i> Pagar c/ Multa</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
 
+        <!-- Pendentes -->
+        <div id="content-pendentes" class="widget tab-content">
+            <h2>Boletos Pendentes / Em Atraso</h2>
+            <div id="loading-pendentes" style="text-align:center;padding:2rem;color:#777;">
+                <i class="fas fa-spinner fa-spin"></i> Carregando...
+            </div>
+            <div class="table-responsive" id="tabela-pendentes-wrap" style="display:none;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mês / Referência</th>
+                            <th>Vencimento</th>
+                            <th>Valor (R$)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-pendentes"></tbody>
+                </table>
+            </div>
+            <p id="msg-sem-pendentes" style="display:none;text-align:center;color:#27ae60;padding:1rem;">
+                <i class="fas fa-check-circle"></i> Nenhuma pendência! Tudo em dia.
+            </p>
+        </div>
+
+        <!-- Histórico -->
         <div id="content-historico" class="widget tab-content hidden">
-            <h2>Histórico de Pagamentos (Últimos 12 Meses)</h2>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Mês / Referência</th>
-                        <th>Pagamento em</th>
-                        <th>Valor Pago (R$)</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Setembro/2025</td>
-                        <td>03/09/2025</td>
-                        <td class="positive-value">800,00</td>
-                        <td class="status-resolvida">Pago</td>
-                        <td>
-                            <a href="financeiro-morador.html?acao=segunda-via-recibo&ref=2025-09" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Agosto/2025</td>
-                        <td>20/08/2025</td>
-                        <td class="positive-value">780,00</td>
-                        <td class="status-resolvida">Pago</td>
-                        <td>
-                            <a href="financeiro-morador.html?acao=segunda-via-recibo&ref=2025-08" class="action-link"><i class="fas fa-file-invoice"></i> 2ª Via Recibo</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2>Histórico de Pagamentos</h2>
+            <div id="loading-historico" style="text-align:center;padding:2rem;color:#777;">
+                <i class="fas fa-spinner fa-spin"></i> Carregando...
+            </div>
+            <div class="table-responsive" id="tabela-historico-wrap" style="display:none;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mês / Referência</th>
+                            <th>Pago em</th>
+                            <th>Valor (R$)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-historico"></tbody>
+                </table>
+            </div>
+            <p id="msg-sem-historico" style="display:none;text-align:center;color:#777;padding:1rem;">
+                Nenhum pagamento registrado ainda.
+            </p>
         </div>
 
         <footer class="content-footer">
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </div>
-    
+
+    <script src="../../public/js/auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // Guard de autenticação
+        if (!NexusAuth.requireAuth()) {
+            throw new Error('Não autenticado');
+        }
+
+        NexusAuth.bindLogout('[data-logout]');
+
+        const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                       'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+        function formatDate(iso) {
+            if (!iso) return '—';
+            const d = new Date(iso);
+            return d.toLocaleDateString('pt-BR');
+        }
+
+        function formatValor(v) {
+            return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function statusClass(s) {
+            const map = { PAGA: 'status-resolvida', PENDENTE: 'status-pendente', ATRASADA: 'status-alta' };
+            return map[s] || '';
+        }
+
+        function statusLabel(s) {
+            const map = { PAGA: 'Pago', PENDENTE: 'Pendente', ATRASADA: 'Atrasado' };
+            return map[s] || s;
+        }
+
+        async function carregarTaxas() {
+            const res = await NexusAuth.apiFetch('/api/taxas');
+            if (!res || !res.ok) return;
+            const taxas = await res.json();
+
+            // Resumo
+            const pendentes = taxas.filter(t => t.status === 'PENDENTE' || t.status === 'ATRASADA');
+            const pagas = taxas.filter(t => t.status === 'PAGA');
+
+            const debitoTotal = pendentes.reduce((sum, t) => sum + Number(t.valor), 0);
+            document.getElementById('resumo-debito-total').textContent =
+                pendentes.length > 0 ? `R$ ${formatValor(debitoTotal)}` : 'R$ 0,00';
+
+            if (pendentes.length > 0) {
+                const proxVenc = pendentes.reduce((min, t) =>
+                    new Date(t.vencimento) < new Date(min.vencimento) ? t : min);
+                document.getElementById('resumo-proximo-vencimento').textContent = formatDate(proxVenc.vencimento);
+            } else {
+                document.getElementById('resumo-proximo-vencimento').textContent = 'Em dia';
+            }
+
+            if (pagas.length > 0) {
+                const ultimoPago = pagas.reduce((max, t) =>
+                    new Date(t.pagoEm || t.vencimento) > new Date(max.pagoEm || max.vencimento) ? t : max);
+                document.getElementById('resumo-ultimo-pagamento').textContent = formatDate(ultimoPago.pagoEm || ultimoPago.vencimento);
+            } else {
+                document.getElementById('resumo-ultimo-pagamento').textContent = 'Nenhum';
+            }
+
+            // Subtítulo com unidade
+            const user = NexusAuth.getUser();
+            if (user?.nome) {
+                document.getElementById('subtitulo-unidade').textContent = `Olá, ${user.nome}. Aqui estão suas cobranças.`;
+            }
+
+            // Tabela pendentes
+            const tbodyPendentes = document.getElementById('tbody-pendentes');
+            document.getElementById('loading-pendentes').style.display = 'none';
+
+            if (pendentes.length === 0) {
+                document.getElementById('msg-sem-pendentes').style.display = 'block';
+            } else {
+                document.getElementById('tabela-pendentes-wrap').style.display = 'block';
+                tbodyPendentes.innerHTML = pendentes.map(t => `
+                    <tr>
+                        <td>${MESES[t.mes - 1]}/${t.ano}</td>
+                        <td>${formatDate(t.vencimento)}</td>
+                        <td class="negative-value">${formatValor(t.valor)}</td>
+                        <td class="${statusClass(t.status)}">${statusLabel(t.status)}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Tabela histórico
+            const tbodyHistorico = document.getElementById('tbody-historico');
+            document.getElementById('loading-historico').style.display = 'none';
+
+            if (pagas.length === 0) {
+                document.getElementById('msg-sem-historico').style.display = 'block';
+            } else {
+                document.getElementById('tabela-historico-wrap').style.display = 'block';
+                tbodyHistorico.innerHTML = pagas.map(t => `
+                    <tr>
+                        <td>${MESES[t.mes - 1]}/${t.ano}</td>
+                        <td>${formatDate(t.pagoEm)}</td>
+                        <td class="positive-value">${formatValor(t.valor)}</td>
+                        <td class="${statusClass(t.status)}">${statusLabel(t.status)}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Abas
+        document.addEventListener('DOMContentLoaded', () => {
             const btns = document.querySelectorAll('.tab-button');
-            const exportLink = document.querySelector('a[href*="exportar=2via"]');
-            const financeActions = document.querySelectorAll('a[href*="acao="]');
             const contents = document.querySelectorAll('.tab-content');
 
             btns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const targetId = 'content-' + btn.id.split('-')[1];
-
-                    // Remove ativo de todos os botões e esconde todos os conteúdos
                     btns.forEach(b => b.classList.remove('active'));
                     contents.forEach(c => c.classList.add('hidden'));
-
-                    // Ativa o botão clicado e mostra o conteúdo correspondente
                     btn.classList.add('active');
                     document.getElementById(targetId).classList.remove('hidden');
                 });
             });
 
-
-            if (exportLink) {
-                exportLink.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    alert('2ª via exportada com sucesso (simulação).');
-                });
-            }
-
-            financeActions.forEach(function (link) {
-                link.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const action = new URL(link.href).searchParams.get('acao');
-                    const label = {
-                        'gerar-boleto': 'Boleto gerado com sucesso.',
-                        'pagar-multa': 'Pagamento com multa processado com sucesso.',
-                        'segunda-via-recibo': '2ª via do recibo disponível para download.'
-                    }[action] || 'Ação executada com sucesso.';
-                    alert(label);
-
-                    if (action === 'gerar-boleto' || action === 'pagar-multa') {
-                        const row = link.closest('tr');
-                        if (!row) return;
-                        const statusCell = row.children[3];
-                        const actionCell = row.children[4];
-                        statusCell.className = 'status-resolvida';
-                        statusCell.textContent = 'Pago';
-                        actionCell.innerHTML = '<span style="color:#2e7d32;"><i class="fas fa-check-circle"></i> Quitado</span>';
-                    }
-                });
-            });
-
+            carregarTaxas();
         });
     </script>
 </body>
