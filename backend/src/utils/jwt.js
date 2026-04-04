@@ -5,6 +5,10 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const ACCESS_TOKEN_EXPIRY = '1h';
 const REFRESH_TOKEN_BYTES = 64;
 
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET nao configurado. Defina essa variavel no arquivo backend/.env.');
+}
+
 function generateToken(payload) {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRY });
 }
