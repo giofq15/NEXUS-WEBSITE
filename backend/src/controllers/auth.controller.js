@@ -21,11 +21,15 @@ async function login(req, res) {
   try {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({
-      where: { email },
-      include: { colaborador: true, morador: true },
-    });
+    const [userResult, condominioResult] = await Promise.all([
+      prisma.user.findUnique({
+        where: { email },
+        include: { colaborador: true, morador: true },
+      }),
+      prisma.condominio.findUnique({ where: { id: 1 } }),
+    ]);
 
+    const user = userResult;
     if (!user) {
       return res.status(401).json({ error: 'E-mail ou senha invalidos' });
     }
@@ -47,6 +51,8 @@ async function login(req, res) {
       },
     });
 
+    const nomeCondominio = condominioResult?.nome || 'NEXUS';
+
     res.json({
       token: accessToken,
       refreshToken: rawRefresh,
@@ -58,6 +64,9 @@ async function login(req, res) {
         nome: user.colaborador?.nome || user.morador?.nome || 'Administrador',
         colaboradorId: payload.colaboradorId,
         moradorId: payload.moradorId,
+        bloco: user.morador?.bloco || user.colaborador?.bloco || null,
+        unidade: user.morador?.unidade || user.colaborador?.unidade || null,
+        nomeCondominio,
       },
     });
   } catch (error) {

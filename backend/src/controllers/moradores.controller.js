@@ -11,16 +11,19 @@ async function me(req, res) {
       return res.status(403).json({ error: 'Usuario nao e um morador' });
     }
 
-    const morador = await prisma.morador.findUnique({
-      where: { id: moradorId },
-      include: { user: { select: { email: true } } },
-    });
+    const [morador, condominio] = await Promise.all([
+      prisma.morador.findUnique({
+        where: { id: moradorId },
+        include: { user: { select: { email: true } } },
+      }),
+      prisma.condominio.findUnique({ where: { id: 1 } }),
+    ]);
 
     if (!morador) {
       return res.status(404).json({ error: 'Morador nao encontrado' });
     }
 
-    res.json(morador);
+    res.json({ ...morador, nomeCondominio: condominio?.nome || 'NEXUS' });
   } catch (error) {
     console.error('Erro ao buscar perfil do morador:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
