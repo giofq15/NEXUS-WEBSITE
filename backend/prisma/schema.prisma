@@ -152,6 +152,20 @@ model Taxa {
   @@map("taxas")
 }
 
+model Condominio {
+  id                      Int      @id @default(autoincrement())
+  nome                    String   @default("NEXUS")
+  razaoSocial             String?  @map("razao_social")
+  cnpj                    String?
+  endereco                String?
+  telefonePredio          String?  @map("telefone_predio")
+  quantidadeColaboradores Int?     @map("quantidade_colaboradores")
+  sindico                 String?
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  @@map("condominio")
+}
+
 model RefreshToken {
   id        Int      @id @default(autoincrement())
   userId    Int      @map("user_id")
