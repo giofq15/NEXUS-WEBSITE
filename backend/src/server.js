@@ -11,6 +11,7 @@ const ocorrenciasRoutes = require('./routes/ocorrencias.routes');
 const reservasRoutes = require('./routes/reservas.routes');
 const taxasRoutes = require('./routes/taxas.routes');
 const areasLazerRoutes = require('./routes/areasLazer.routes');
+const configuracoesRoutes = require('./routes/configuracoes.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -89,6 +90,7 @@ app.use('/api/ocorrencias', ocorrenciasRoutes);
 app.use('/api/reservas', reservasRoutes);
 app.use('/api/taxas', taxasRoutes);
 app.use('/api/areas-lazer', areasLazerRoutes);
+app.use('/api/configuracoes', configuracoesRoutes);
 
 // Servir arquivos estáticos do frontend
 app.use('/public', express.static(path.join(__dirname, '../../public')));
