@@ -6,6 +6,18 @@ const prisma = new PrismaClient();
 const PERIODOS_VALIDOS = ['MANHA', 'TARDE', 'DIA_INTEIRO'];
 const STATUS_VALIDOS = ['PENDENTE', 'CONFIRMADA', 'CANCELADA'];
 
+const PERIODO_HORARIOS = {
+  MANHA:       { horarioInicio: '08:00', horarioFim: '12:00' },
+  TARDE:       { horarioInicio: '13:00', horarioFim: '18:00' },
+  DIA_INTEIRO: { horarioInicio: '08:00', horarioFim: '18:00' },
+};
+
+function addHorarios(reserva) {
+  if (!reserva) return reserva;
+  const horarios = PERIODO_HORARIOS[reserva.periodo] || { horarioInicio: null, horarioFim: null };
+  return { ...reserva, ...horarios };
+}
+
 function normalizePeriodo(v) {
   const val = String(v || '').toUpperCase();
   return PERIODOS_VALIDOS.includes(val) ? val : null;
@@ -42,7 +54,7 @@ async function list(req, res) {
       orderBy: [{ data: 'asc' }, { periodo: 'asc' }],
     });
 
-    res.json(reservas);
+    res.json(reservas.map(addHorarios));
   } catch (error) {
     console.error('Erro ao listar reservas:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -69,7 +81,7 @@ async function getById(req, res) {
       return res.status(403).json({ error: 'Sem permissao para acessar esta reserva' });
     }
 
-    res.json(reserva);
+    res.json(addHorarios(reserva));
   } catch (error) {
     console.error('Erro ao buscar reserva:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -180,7 +192,7 @@ async function create(req, res) {
       },
     });
 
-    res.status(201).json(reserva);
+    res.status(201).json(addHorarios(reserva));
   } catch (error) {
     console.error('Erro ao criar reserva:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -210,7 +222,7 @@ async function cancelar(req, res) {
       include: { areaLazer: { select: { id: true, nome: true } } },
     });
 
-    res.json(updated);
+    res.json(addHorarios(updated));
   } catch (error) {
     console.error('Erro ao cancelar reserva:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -236,7 +248,7 @@ async function updateStatus(req, res) {
       },
     });
 
-    res.json(updated);
+    res.json(addHorarios(updated));
   } catch (error) {
     console.error('Erro ao atualizar status da reserva:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
