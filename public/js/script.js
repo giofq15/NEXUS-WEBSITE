@@ -279,6 +279,33 @@
         };
     }
 
+    function getMoradoresEmails() {
+        const moradores = readJson("nexus_moradores_v1", []);
+        if (!Array.isArray(moradores)) {
+            return [];
+        }
+
+        return moradores
+            .map(function (item) {
+                return String(item && item.email ? item.email : "").trim();
+            })
+            .filter(function (email, index, list) {
+                return email && list.indexOf(email) === index;
+            });
+    }
+
+    function abrirEnvioPorEmail(values) {
+        const emails = getMoradoresEmails();
+        if (!emails.length) {
+            return false;
+        }
+
+        const subject = encodeURIComponent(String(values.titulo || "").trim());
+        const body = encodeURIComponent(String(values.texto || "").trim());
+        window.location.href = "mailto:?bcc=" + encodeURIComponent(emails.join(",")) + "&subject=" + subject + "&body=" + body;
+        return true;
+    }
+
     function initAdminComunicados() {
         const adminRoot = document.querySelector("[data-comunicados-admin]");
         if (!adminRoot) {
@@ -400,7 +427,13 @@
 
             clearDraft();
             renderPreview(values);
-            showFeedback("Comunicado publicado para os colaboradores.", "success");
+            const iniciouEnvio = abrirEnvioPorEmail(values);
+            showFeedback(
+                iniciouEnvio
+                    ? "Comunicado publicado. O envio por e-mail foi preparado no aplicativo de e-mail padrao."
+                    : "Comunicado publicado com sucesso.",
+                "success"
+            );
         });
     }
 

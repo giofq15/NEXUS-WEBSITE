@@ -18,6 +18,10 @@
     color: #fff;
     padding-top: 0;
     flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .sidebar-header {
@@ -90,6 +94,7 @@
 
 .main-content {
     flex-grow: 1;
+    min-width: 0;
     padding: 2rem;
     background-color: #f4f7f9;
 }
@@ -157,12 +162,16 @@
     .sidebar {
         width: 100%;
         padding-top: 0;
+        position: static;
+        height: auto;
+        overflow-y: visible;
     }
 
     .sidebar nav ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 0.25rem;
     }
 
     .sidebar nav ul li a {

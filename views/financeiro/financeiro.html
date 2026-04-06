@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financeiro - NEXUS</title>
+    <title>Financeiro e Cobrança - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -23,13 +23,12 @@
         <nav>
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Equipe e Acessos</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li class="active"><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
-                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
-                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -37,63 +36,115 @@
 
     <main class="main-content">
         <div class="dashboard-header">
-            <h1>Gestao Financeira</h1>
-            <p>Controle pagamentos do condominio, recebimentos dos moradores e historicos de cada movimentacao.</p>
+            <h1>Gestão financeira e cobrança</h1>
+            <p>Controle contas do condomínio, acompanhe recebimentos e centralize a cobrança das unidades em atraso em um único lugar.</p>
         </div>
 
         <div class="financial-summary">
             <div class="widget">
                 <i class="fas fa-money-check-alt icon-positive"></i>
-                <h3>Saldo Atual</h3>
-                <p class="stat-number positive">R$ 55.450,00</p>
+                <h3>Saldo atual</h3>
+                <p class="stat-number positive" data-fin-saldo>R$ 0,00</p>
             </div>
             <div class="widget">
                 <i class="fas fa-calendar-alt icon-alert"></i>
-                <h3>Contas a Pagar (30 dias)</h3>
-                <p class="stat-number alert">R$ 12.800,00</p>
+                <h3>Contas a pagar</h3>
+                <p class="stat-number alert" data-fin-pagar>R$ 0,00</p>
             </div>
             <div class="widget">
                 <i class="fas fa-exclamation-triangle icon-negative"></i>
-                <h3>Inadimplencia (Total)</h3>
-                <p class="stat-number negative">R$ 4.120,00</p>
+                <h3>Unidades em atraso</h3>
+                <p class="stat-number negative" data-fin-atraso>R$ 0,00</p>
             </div>
         </div>
 
         <div class="tabs-container">
             <button class="tab-button active" type="button" data-financeiro-tab="contas-pagar">Contas a Pagar</button>
             <button class="tab-button" type="button" data-financeiro-tab="contas-receber">Contas a Receber</button>
-            <button type="button" class="new-button tabs-right-button">+ Novo Lancamento</button>
+            <button class="tab-button" type="button" data-financeiro-tab="inadimplencia">Unidades em Atraso</button>
         </div>
 
-        <div id="contas-pagar" class="tab-content active">
+        <section id="contas-pagar" class="tab-content">
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Descricao</th>
+                        <th>Descrição</th>
                         <th>Vencimento</th>
                         <th>Valor</th>
                         <th>Status</th>
-                        <th>Acoes</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="contas-pagar-body"></tbody>
             </table>
-        </div>
+        </section>
 
-        <div id="contas-receber" class="tab-content hidden">
+        <section id="contas-receber" class="tab-content hidden">
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Descricao</th>
+                        <th>Descrição</th>
                         <th>Vencimento</th>
                         <th>Valor</th>
                         <th>Status</th>
-                        <th>Acoes</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="contas-receber-body"></tbody>
             </table>
-        </div>
+        </section>
+
+        <section id="inadimplencia" class="tab-content hidden">
+            <section class="widget admin-ops-panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>Registrar nova unidade em atraso</h2>
+                        <p>Cadastre a cobrança em aberto para manter o histórico de negociação, cobrança e quitação no mesmo painel financeiro.</p>
+                    </div>
+                </div>
+
+                <form class="admin-inline-form" id="inadimplencia-form-financeiro">
+                    <input type="text" id="inadimplente-nome" placeholder="Responsável pela unidade" required>
+                    <input type="email" id="inadimplente-email" placeholder="E-mail do morador" required>
+                    <input type="text" id="inadimplente-bloco" placeholder="Bloco" maxlength="10" required>
+                    <input type="text" id="inadimplente-apartamento" placeholder="Apartamento" maxlength="10" required>
+                    <input type="number" id="inadimplente-valor" min="0" step="0.01" placeholder="Valor em aberto" required>
+                    <input type="date" id="inadimplente-vencimento" required>
+                    <button type="submit" class="primary-button"><i class="fas fa-plus-circle"></i> Registrar atraso</button>
+                </form>
+                <p class="admin-inline-feedback" id="inadimplencia-feedback-financeiro" aria-live="polite"></p>
+            </section>
+
+            <section class="widget admin-ops-panel">
+                <div class="controls-container">
+                    <div class="search-group">
+                        <input type="search" class="search-input" id="inadimplencia-search" placeholder="Buscar por nome, bloco, apartamento ou e-mail...">
+                    </div>
+                    <select class="action-select admin-filter-select" id="inadimplencia-status-filter">
+                        <option value="">Todos os status</option>
+                        <option value="em_aberto">Em aberto</option>
+                        <option value="negociacao">Em negociação</option>
+                        <option value="quitado">Quitado</option>
+                    </select>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Responsável</th>
+                            <th>Unidade</th>
+                            <th>Total em Aberto</th>
+                            <th>Dias em Atraso</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inadimplencia-body">
+                        <tr><td colspan="6" style="text-align:center">Carregando dados...</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
 
         <div class="content-footer">
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
@@ -105,7 +156,7 @@
             <div class="admin-dialog-header">
                 <div>
                     <h2 id="financeiro-dialog-title">Detalhes financeiros</h2>
-                    <p id="financeiro-dialog-subtitle">Acompanhe a movimentacao selecionada.</p>
+                    <p id="financeiro-dialog-subtitle">Acompanhe a movimentação selecionada.</p>
                 </div>
                 <button type="button" class="dialog-close-button" data-dialog-close="financeiro-dialog"><i class="fas fa-times"></i></button>
             </div>
@@ -119,18 +170,29 @@
         document.addEventListener('DOMContentLoaded', function () {
             const pagarStorageKey = 'nexus_financeiro_pagar_v1';
             const receberStorageKey = 'nexus_financeiro_receber_v1';
+            const inadimplenciaKey = 'nexus_inadimplencia_admin_v2';
             const pagarSeed = [
-                { id: 'pag-1', descricao: 'Conta de Energia Eletrica da area comum', detalhe: 'Fatura principal da concessionaria referente a iluminacao, elevadores e garagem.', vencimento: '10/11/2025', valor: 6500, status: 'A Pagar', fornecedor: 'Energia Paulista', metodoPagamento: '', pagoEm: '' },
-                { id: 'pag-2', descricao: 'Salario do Zelador (Outubro)', detalhe: 'Folha operacional do colaborador responsavel pela rotina de abertura e fechamento do predio.', vencimento: '05/11/2025', valor: 2800, status: 'A Pagar', fornecedor: 'Equipe interna', metodoPagamento: '', pagoEm: '' },
-                { id: 'pag-3', descricao: 'Manutencao preventiva do elevador', detalhe: 'Contrato mensal da empresa terceirizada com visita tecnica e reposicao basica.', vencimento: '15/10/2025', valor: 1200, status: 'Paga', fornecedor: 'Elevadores Sigma', metodoPagamento: 'Transferencia', pagoEm: '15/10/2025' }
+                { id: 'pag-1', descricao: 'Conta de energia elétrica da área comum', detalhe: 'Fatura principal da concessionária referente à iluminação, elevadores e garagem.', vencimento: '10/11/2025', valor: 6500, status: 'A Pagar', fornecedor: 'Energia Paulista', metodoPagamento: '', pagoEm: '' },
+                { id: 'pag-2', descricao: 'Folha da portaria', detalhe: 'Folha operacional da equipe interna do mês.', vencimento: '05/11/2025', valor: 2800, status: 'A Pagar', fornecedor: 'Equipe interna', metodoPagamento: '', pagoEm: '' },
+                { id: 'pag-3', descricao: 'Manutenção preventiva do elevador', detalhe: 'Contrato mensal da empresa terceirizada com visita técnica e reposição básica.', vencimento: '15/10/2025', valor: 1200, status: 'Paga', fornecedor: 'Elevadores Sigma', metodoPagamento: 'Transferência', pagoEm: '15/10/2025' }
             ];
             const receberSeed = [
-                { id: 'rec-1', descricao: 'Taxa operacional da unidade 201', detalhe: 'Rateio mensal de despesas ordinarias do condominio.', vencimento: '05/11/2025', valor: 750, status: 'A Receber', morador: 'Carlos Menezes', motivo: 'Condominio mensal', dataPagamento: '', formaPagamento: '' },
-                { id: 'rec-2', descricao: 'Fundo de reserva (Outubro)', detalhe: 'Receita consolidada de aportes extraordinarios para obras e manutencoes futuras.', vencimento: '30/10/2025', valor: 15000, status: 'Recebida', morador: 'Moradores do bloco B', motivo: 'Fundo de reserva', dataPagamento: '29/10/2025', formaPagamento: 'PIX coletivo' }
+                { id: 'rec-1', descricao: 'Taxa operacional da unidade 201', detalhe: 'Rateio mensal de despesas ordinárias do condomínio.', vencimento: '05/11/2025', valor: 750, status: 'A Receber', morador: 'Carlos Menezes', motivo: 'Condomínio mensal', dataPagamento: '', formaPagamento: '', email: 'carlos.menezes@email.com' },
+                { id: 'rec-2', descricao: 'Fundo de reserva (Outubro)', detalhe: 'Receita consolidada de aportes extraordinários para obras e manutenções futuras.', vencimento: '30/10/2025', valor: 15000, status: 'Recebida', morador: 'Moradores do bloco B', motivo: 'Fundo de reserva', dataPagamento: '29/10/2025', formaPagamento: 'PIX coletivo', email: '' }
+            ];
+            const inadimplenciaSeed = [
+                { id: 'ina-1', nome: 'Ana Luiza Martins', email: 'ana.luiza@email.com', bloco: 'A', apartamento: '101', valor: 1320, vencimento: '2025-01-10', status: 'em_aberto' },
+                { id: 'ina-2', nome: 'Paulo Henrique Souza', email: 'paulo.souza@email.com', bloco: 'B', apartamento: '205', valor: 2875.4, vencimento: '2024-12-05', status: 'negociacao' },
+                { id: 'ina-3', nome: 'Mariana Costa', email: 'mariana.costa@email.com', bloco: 'C', apartamento: '304', valor: 980, vencimento: '2025-02-14', status: 'em_aberto' }
             ];
 
             const pagarBody = document.getElementById('contas-pagar-body');
             const receberBody = document.getElementById('contas-receber-body');
+            const inadBody = document.getElementById('inadimplencia-body');
+            const inadForm = document.getElementById('inadimplencia-form-financeiro');
+            const inadFeedback = document.getElementById('inadimplencia-feedback-financeiro');
+            const inadSearch = document.getElementById('inadimplencia-search');
+            const inadFilter = document.getElementById('inadimplencia-status-filter');
             const dialog = document.getElementById('financeiro-dialog');
             const dialogTitle = document.getElementById('financeiro-dialog-title');
             const dialogSubtitle = document.getElementById('financeiro-dialog-subtitle');
@@ -159,12 +221,36 @@
                 return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             }
 
+            function diffInDays(vencimento) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const due = new Date(`${vencimento}T00:00:00`);
+                const diff = Math.floor((today - due) / (1000 * 60 * 60 * 24));
+                return Math.max(diff, 0);
+            }
+
             function openDialog(title, subtitle, bodyHtml, actionsHtml) {
                 dialogTitle.textContent = title;
                 dialogSubtitle.textContent = subtitle;
                 dialogBody.innerHTML = bodyHtml;
                 dialogActions.innerHTML = actionsHtml || '';
                 dialog.showModal();
+            }
+
+            function buildMailto(email, assunto, texto) {
+                return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(texto)}`;
+            }
+
+            function updateSummary() {
+                const pagar = readData(pagarStorageKey, pagarSeed);
+                const receber = readData(receberStorageKey, receberSeed);
+                const inad = readData(inadimplenciaKey, inadimplenciaSeed);
+
+                document.querySelector('[data-fin-pagar]').textContent = formatCurrency(pagar.filter((item) => item.status !== 'Paga').reduce((sum, item) => sum + Number(item.valor || 0), 0));
+                document.querySelector('[data-fin-atraso]').textContent = formatCurrency(inad.filter((item) => item.status !== 'quitado').reduce((sum, item) => sum + Number(item.valor || 0), 0));
+                const saldo = receber.filter((item) => item.status === 'Recebida').reduce((sum, item) => sum + Number(item.valor || 0), 0)
+                    - pagar.filter((item) => item.status === 'Paga').reduce((sum, item) => sum + Number(item.valor || 0), 0);
+                document.querySelector('[data-fin-saldo]').textContent = formatCurrency(saldo);
             }
 
             function renderFinanceiro() {
@@ -177,12 +263,9 @@
                         <td>${item.vencimento}</td>
                         <td class="negative-value">${formatCurrency(item.valor)}</td>
                         <td class="${item.status === 'Paga' ? 'status-ativo' : 'status-pendente'}">${item.status}</td>
-                        <td>
-                            ${item.status === 'Paga'
-                                ? `<a href="#" class="action-link" data-financeiro-view="pagar" data-id="${item.id}">Ver</a>`
-                                : `<a href="#" class="action-link action-pay" data-financeiro-pay="${item.id}">Pagar</a>`
-                            }
-                        </td>
+                        <td>${item.status === 'Paga'
+                            ? `<a href="#" class="action-link" data-financeiro-view="pagar" data-id="${item.id}">Ver</a>`
+                            : `<a href="#" class="action-link action-pay" data-financeiro-pay="${item.id}">Pagar</a>`}</td>
                     </tr>
                 `).join('');
 
@@ -195,19 +278,73 @@
                         <td>
                             ${item.status === 'Recebida'
                                 ? `<a href="#" class="action-link" data-financeiro-view="receber" data-id="${item.id}">Ver</a>`
-                                : `<a href="#" class="action-link action-collect" data-financeiro-charge="${item.id}">Cobrar</a>`
-                            }
+                                : `<a href="${buildMailto(item.email || '', `Cobranca referente a ${item.descricao}`, `Olá, ${item.morador}. Identificamos a pendência referente a ${item.descricao} no valor de ${formatCurrency(item.valor)} com vencimento em ${item.vencimento}. Favor regularizar ou responder esta mensagem para negociação.`)}" class="action-link action-collect">Cobrar</a>`}
                         </td>
                     </tr>
                 `).join('');
+
+                updateSummary();
+            }
+
+            function statusLabel(status) {
+                if (status === 'negociacao') return 'Em negociação';
+                if (status === 'quitado') return 'Quitado';
+                return 'Em aberto';
+            }
+
+            function statusClass(status) {
+                if (status === 'negociacao') return 'status-media';
+                if (status === 'quitado') return 'status-ativo';
+                return 'status-pendente';
+            }
+
+            function renderInadimplencia() {
+                const data = readData(inadimplenciaKey, inadimplenciaSeed);
+                const query = String(inadSearch.value || '').toLowerCase();
+                const filter = inadFilter.value;
+                const filtered = data.filter((item) => {
+                    const matchesQuery = [item.nome, item.email, item.bloco, item.apartamento].join(' ').toLowerCase().includes(query);
+                    const matchesStatus = !filter || item.status === filter;
+                    return matchesQuery && matchesStatus;
+                });
+
+                if (!filtered.length) {
+                    inadBody.innerHTML = '<tr><td colspan="6" style="text-align:center">Nenhuma unidade encontrada para os filtros atuais.</td></tr>';
+                    return;
+                }
+
+                inadBody.innerHTML = filtered.map((item) => `
+                    <tr>
+                        <td><strong>${item.nome}</strong><br><small>${item.email}</small></td>
+                        <td>Bloco ${item.bloco} - Apto ${item.apartamento}</td>
+                        <td class="negative-value">${formatCurrency(item.valor)}</td>
+                        <td><span class="delay-pill">${diffInDays(item.vencimento)} dias</span></td>
+                        <td class="${statusClass(item.status)}">${statusLabel(item.status)}</td>
+                        <td>
+                            <a href="${buildMailto(item.email, `Cobranca da unidade ${item.apartamento}`, `Olá, ${item.nome}. Consta em nosso sistema um valor em aberto de ${formatCurrency(item.valor)} referente à unidade ${item.apartamento}, bloco ${item.bloco}. Favor regularizar ou entrar em contato para negociação.`)}" class="action-link">Cobrar</a>
+                            <button type="button" class="table-action-button" data-inad-action="negociacao" data-id="${item.id}">Negociar</button>
+                            <button type="button" class="table-action-button is-success" data-inad-action="quitado" data-id="${item.id}">Quitar</button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                updateSummary();
+            }
+
+            function activateFinanceiroTab(tabName) {
+                const safeTab = ['contas-pagar', 'contas-receber', 'inadimplencia'].includes(tabName) ? tabName : 'contas-pagar';
+                document.querySelectorAll('[data-financeiro-tab]').forEach((item) => {
+                    item.classList.toggle('active', item.dataset.financeiroTab === safeTab);
+                });
+                document.querySelectorAll('.tab-content').forEach((panel) => {
+                    panel.classList.toggle('hidden', panel.id !== safeTab);
+                });
             }
 
             document.querySelectorAll('[data-financeiro-tab]').forEach((button) => {
                 button.addEventListener('click', function () {
-                    document.querySelectorAll('[data-financeiro-tab]').forEach((item) => item.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach((panel) => panel.classList.add('hidden'));
-                    button.classList.add('active');
-                    document.getElementById(button.dataset.financeiroTab).classList.remove('hidden');
+                    activateFinanceiroTab(button.dataset.financeiroTab);
+                    history.replaceState(null, '', `#${button.dataset.financeiroTab}`);
                 });
             });
 
@@ -224,7 +361,7 @@
                 if (payLink) {
                     item.status = 'Paga';
                     item.pagoEm = new Date().toLocaleDateString('pt-BR');
-                    item.metodoPagamento = 'Transferencia bancaria';
+                    item.metodoPagamento = 'Transferência bancária';
                     saveData(pagarStorageKey, pagar);
                     renderFinanceiro();
                     return;
@@ -233,74 +370,81 @@
                 openDialog(
                     'Detalhes da conta paga',
                     'Resumo do pagamento realizado.',
-                    `
-                        <div class="dialog-detail-grid">
-                            <div><span>Conta</span><strong>${item.descricao}</strong></div>
-                            <div><span>Fornecedor</span><strong>${item.fornecedor}</strong></div>
-                            <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
-                            <div><span>Pago em</span><strong>${item.pagoEm || '-'}</strong></div>
-                            <div><span>Forma de pagamento</span><strong>${item.metodoPagamento || '-'}</strong></div>
-                            <div><span>Status</span><strong>${item.status}</strong></div>
-                        </div>
-                        <div class="dialog-note-block">
-                            <span>Descricao</span>
-                            <p>${item.detalhe}</p>
-                        </div>
-                    `
+                    `<div class="dialog-detail-grid">
+                        <div><span>Conta</span><strong>${item.descricao}</strong></div>
+                        <div><span>Fornecedor</span><strong>${item.fornecedor}</strong></div>
+                        <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
+                        <div><span>Pago em</span><strong>${item.pagoEm || '-'}</strong></div>
+                        <div><span>Forma de pagamento</span><strong>${item.metodoPagamento || '-'}</strong></div>
+                        <div><span>Status</span><strong>${item.status}</strong></div>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Descrição</span>
+                        <p>${item.detalhe}</p>
+                    </div>`
                 );
             });
 
             receberBody.addEventListener('click', function (event) {
                 const viewLink = event.target.closest('[data-financeiro-view="receber"]');
-                const chargeLink = event.target.closest('[data-financeiro-charge]');
-                if (!viewLink && !chargeLink) return;
+                if (!viewLink) return;
                 event.preventDefault();
 
                 const receber = readData(receberStorageKey, receberSeed);
-                const item = receber.find((entry) => entry.id === (viewLink?.dataset.id || chargeLink?.dataset.financeiroCharge));
+                const item = receber.find((entry) => entry.id === viewLink.dataset.id);
                 if (!item) return;
 
-                if (viewLink) {
-                    openDialog(
-                        'Detalhes do recebimento',
-                        'Historico da receita registrada.',
-                        `
-                            <div class="dialog-detail-grid">
-                                <div><span>Quem pagou</span><strong>${item.morador}</strong></div>
-                                <div><span>Motivo</span><strong>${item.motivo}</strong></div>
-                                <div><span>Data</span><strong>${item.dataPagamento || '-'}</strong></div>
-                                <div><span>Forma</span><strong>${item.formaPagamento || '-'}</strong></div>
-                                <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
-                                <div><span>Status</span><strong>${item.status}</strong></div>
-                            </div>
-                            <div class="dialog-note-block">
-                                <span>Descricao</span>
-                                <p>${item.detalhe}</p>
-                            </div>
-                        `
-                    );
-                    return;
-                }
-
-                const whatsappMessage = encodeURIComponent(`Ola, ${item.morador}. Identificamos a pendencia referente a "${item.descricao}" no valor de ${formatCurrency(item.valor)}. Favor regularizar ou retornar para negociacao.`);
                 openDialog(
-                    'Cobrar morador',
-                    'Confirme para abrir o WhatsApp com a mensagem pronta.',
-                    `
-                        <div class="dialog-detail-grid">
-                            <div><span>Morador</span><strong>${item.morador}</strong></div>
-                            <div><span>Motivo</span><strong>${item.motivo}</strong></div>
-                            <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
-                            <div><span>Vencimento</span><strong>${item.vencimento}</strong></div>
-                        </div>
-                        <div class="dialog-note-block">
-                            <span>Mensagem</span>
-                            <p>O WhatsApp sera aberto para envio manual da cobranca.</p>
-                        </div>
-                    `,
-                    `<a class="primary-button" target="_blank" rel="noopener noreferrer" href="https://wa.me/?text=${whatsappMessage}"><i class="fab fa-whatsapp"></i> Confirmar no WhatsApp</a>`
+                    'Detalhes do recebimento',
+                    'Histórico da receita registrada.',
+                    `<div class="dialog-detail-grid">
+                        <div><span>Quem pagou</span><strong>${item.morador}</strong></div>
+                        <div><span>Motivo</span><strong>${item.motivo}</strong></div>
+                        <div><span>Data</span><strong>${item.dataPagamento || '-'}</strong></div>
+                        <div><span>Forma</span><strong>${item.formaPagamento || '-'}</strong></div>
+                        <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
+                        <div><span>Status</span><strong>${item.status}</strong></div>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Descrição</span>
+                        <p>${item.detalhe}</p>
+                    </div>`
                 );
             });
+
+            inadForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const data = readData(inadimplenciaKey, inadimplenciaSeed);
+                data.unshift({
+                    id: `ina-${Date.now()}`,
+                    nome: document.getElementById('inadimplente-nome').value.trim(),
+                    email: document.getElementById('inadimplente-email').value.trim(),
+                    bloco: document.getElementById('inadimplente-bloco').value.trim(),
+                    apartamento: document.getElementById('inadimplente-apartamento').value.trim(),
+                    valor: Number(document.getElementById('inadimplente-valor').value || 0),
+                    vencimento: document.getElementById('inadimplente-vencimento').value,
+                    status: 'em_aberto'
+                });
+                saveData(inadimplenciaKey, data);
+                inadForm.reset();
+                inadFeedback.textContent = 'Unidade registrada com sucesso no financeiro.';
+                inadFeedback.className = 'admin-inline-feedback is-success';
+                renderInadimplencia();
+            });
+
+            inadBody.addEventListener('click', function (event) {
+                const actionButton = event.target.closest('[data-inad-action]');
+                if (!actionButton) return;
+                const data = readData(inadimplenciaKey, inadimplenciaSeed);
+                const target = data.find((item) => item.id === actionButton.dataset.id);
+                if (!target) return;
+                target.status = actionButton.dataset.inadAction;
+                saveData(inadimplenciaKey, data);
+                renderInadimplencia();
+            });
+
+            inadSearch.addEventListener('input', renderInadimplencia);
+            inadFilter.addEventListener('change', renderInadimplencia);
 
             document.querySelectorAll('[data-dialog-close]').forEach((button) => {
                 button.addEventListener('click', function () {
@@ -309,7 +453,16 @@
                 });
             });
 
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
+
+            activateFinanceiroTab((window.location.hash || '').replace('#', ''));
             renderFinanceiro();
+            renderInadimplencia();
         });
     </script>
 </body>

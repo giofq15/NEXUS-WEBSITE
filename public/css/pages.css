@@ -1165,6 +1165,10 @@ header {
     margin-bottom: 1.75rem;
 }
 
+.admin-hero-syndic {
+    align-items: stretch;
+}
+
 .admin-hero-copy,
 .admin-brand-panel {
     border-radius: 28px;
@@ -1221,6 +1225,10 @@ header {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
+}
+
+.admin-hero-highlights-compact .admin-highlight-card strong {
+    font-size: 1.8rem;
 }
 
 .admin-highlight-card {
@@ -1361,11 +1369,54 @@ header {
     color: #9a5a18;
 }
 
+.admin-priority-panel {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.admin-priority-panel h3 {
+    margin: 0 0 0.9rem;
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+.admin-priority-list,
+.admin-agenda-list,
+.admin-mini-metrics {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-priority-list {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.admin-priority-list li {
+    display: flex;
+    gap: 0.75rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.admin-priority-list i {
+    color: #f97316;
+    font-size: 0.5rem;
+    margin-top: 0.55rem;
+}
+
 .admin-kpi-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
     margin-bottom: 1.75rem;
+}
+
+.admin-kpi-grid-simplified {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .admin-kpi-card {
@@ -1477,10 +1528,270 @@ header {
     text-decoration: none;
 }
 
+.admin-dashboard-grid {
+    align-items: start;
+}
+
+.admin-dashboard-grid-simplified {
+    grid-template-columns: minmax(0, 1.45fr) minmax(290px, 0.8fr);
+    gap: 1.5rem;
+}
+
+.admin-section-card {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.admin-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-section-header h3 {
+    margin: 0.35rem 0 0;
+    color: #0f172a;
+    font-size: 1.4rem;
+}
+
+.admin-section-kicker {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: #fff7ed;
+    color: #c96a15;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.admin-status-board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.admin-status-board-simplified .admin-status-item strong {
+    font-size: 1.25rem;
+    line-height: 1.25;
+}
+
+.admin-status-item {
+    padding: 1.2rem;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.admin-status-item span {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+}
+
+.admin-status-item strong {
+    display: block;
+    margin: 0.6rem 0 0.4rem;
+    font-size: 1.5rem;
+    color: #0f172a;
+}
+
+.admin-status-item p {
+    margin: 0;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.admin-status-item.is-critical {
+    background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%);
+    border-color: #fecdd3;
+}
+
+.admin-status-item.is-warning {
+    background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+    border-color: #fde68a;
+}
+
+.admin-status-item.is-ok {
+    background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%);
+    border-color: #bbf7d0;
+}
+
+.admin-occurrence-stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.admin-occurrence-secondary {
+    border-left-color: #334155;
+}
+
+.admin-focus-card {
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.06);
+}
+
+.admin-syndic-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.admin-syndic-item {
+    padding: 1.15rem 1.2rem;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+}
+
+.admin-syndic-item strong {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: #0f172a;
+    font-size: 1.05rem;
+}
+
+.admin-syndic-item p {
+    margin: 0 0 0.7rem;
+    color: #64748b;
+    line-height: 1.55;
+}
+
+.admin-syndic-item span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: #fff7ed;
+    color: #c96a15;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.admin-mini-metrics {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.admin-mini-metrics li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.admin-mini-metrics li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.admin-mini-metrics span {
+    color: #64748b;
+}
+
+.admin-mini-metrics strong {
+    color: #0f172a;
+    font-size: 1.1rem;
+}
+
+.admin-consumption-highlight {
+    display: inline-grid;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.admin-consumption-highlight strong {
+    font-size: 2.1rem;
+    line-height: 1;
+    color: #15803d;
+}
+
+.admin-consumption-highlight span {
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+.admin-team-summary strong {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #0f172a;
+    font-size: 1.2rem;
+}
+
+.admin-team-summary p,
+.admin-focus-card p {
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.admin-agenda-list {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.admin-agenda-list-expanded {
+    gap: 1rem;
+}
+
+.admin-agenda-list-expanded li {
+    padding: 1rem 1.05rem;
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.admin-agenda-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+}
+
+.admin-agenda-list strong {
+    display: inline-flex;
+    min-width: 54px;
+    padding: 0.3rem 0.5rem;
+    justify-content: center;
+    border-radius: 10px;
+    background: #fff7ed;
+    color: #c96a15;
+    font-size: 0.78rem;
+}
+
+.admin-agenda-list span {
+    color: #475569;
+    line-height: 1.45;
+}
+
 @media (max-width: 1200px) {
     .admin-hero,
     .admin-kpi-grid,
     .admin-hero-highlights {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-dashboard-grid-simplified {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-status-board {
         grid-template-columns: 1fr;
     }
 }
@@ -1494,6 +1805,10 @@ header {
     .admin-brand-panel,
     .admin-kpi-card {
         padding: 1.25rem;
+    }
+
+    .admin-section-header {
+        flex-direction: column;
     }
 }
 
@@ -1539,10 +1854,25 @@ header {
     justify-content: center;
 }
 
+.admin-inline-form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .admin-inline-textarea {
     grid-column: 1 / -1;
     min-height: 110px;
     resize: vertical;
+}
+
+.admin-inline-note {
+    display: block;
+    margin-top: 0.55rem;
+    color: #64748b;
+    font-size: 0.9rem;
 }
 
 .admin-inline-feedback {
@@ -1680,7 +2010,8 @@ header {
     }
 
     .admin-inline-form .primary-button,
-    .admin-inline-textarea {
+    .admin-inline-textarea,
+    .admin-inline-form-actions {
         grid-column: 1 / -1;
     }
 }
@@ -1700,6 +2031,11 @@ header {
 
     .admin-inline-form {
         grid-template-columns: 1fr;
+    }
+
+    .admin-inline-form-actions {
+        flex-direction: column;
+        align-items: stretch;
     }
 }
 

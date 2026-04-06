@@ -1,83 +1,68 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Ocorrência - Colaborador - NEXUS</title>
+    <title>Detalhes da Ocorrência - Portaria - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body class="admin-body">
-    <div class="sidebar">
+    <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Nexus Colaborador">
+            <div class="nexus-brand" aria-label="Portal da portaria">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
-                    <span>COLABORADOR</span>
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <span>PORTARIA</span>
                 </div>
             </div>
         </div>
         <nav>
             <ul>
-                <li><a href="../colaborador/painel-colaborador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
-                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
-                <li><a href="../financeiro/financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li><a href="../colaborador/painel-colaborador.html"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li class="active"><a href="ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
-                <li><a href="../financeiro/consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
-                <li><a href="../colaborador/avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="../colaborador/avisos.html"><i class="fas fa-bell"></i> Comunicados</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
-    </div>
+    </aside>
 
     <main class="main-content occurrence-page">
         <div class="dashboard-header occurrence-header">
             <div>
-                <h1>Ocorrência #0045: Vazamento no Elevador do Bloco B</h1>
-                <p>Acompanhe as atualizações e converse com a administração.</p>
+                <h1 data-oc-title>Ocorrência</h1>
+                <p>Acompanhe as atualizações registradas pela administração para este chamado.</p>
             </div>
-            <a href="ocorrencias-colaborador.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para minhas ocorrências</a>
+            <a href="ocorrencias-colaborador.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para ocorrências</a>
         </div>
 
         <div class="occurrence-layout">
             <div class="occurrence-details-column">
                 <article class="widget details-card">
-                    <h2>Descrição da Ocorrência</h2>
-                    <p>Relato enviado em 18/10/2025 sobre vazamento no elevador do Bloco B, com água acumulada na entrada do 3º andar.</p>
+                    <h2>Descrição da ocorrência</h2>
+                    <p data-oc-description>Carregando informações da ocorrência...</p>
 
                     <div class="details-grid">
-                        <div><strong>Categoria:</strong> Estrutural / Manutenção</div>
-                        <div><strong>Local:</strong> Elevador do Bloco B</div>
-                        <div><strong>Data de abertura:</strong> 18/10/2025</div>
-                        <div><strong>Prioridade:</strong> Média</div>
+                        <div><strong>Categoria:</strong> <span data-oc-type>-</span></div>
+                        <div><strong>Local:</strong> <span data-oc-location>-</span></div>
+                        <div><strong>Data de abertura:</strong> <span data-oc-created>-</span></div>
+                        <div><strong>Prioridade:</strong> <span data-oc-priority>-</span></div>
                     </div>
                 </article>
 
                 <article class="widget timeline-card">
                     <h2>Atualizações</h2>
-                    <ul class="timeline">
+                    <ul class="timeline" data-oc-timeline>
                         <li class="timeline-item timeline-active">
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
-                                <strong>22/10/2025 (09:10)</strong>
-                                <p>Equipe de manutenção acionada para troca de vedação e revisão da caixa d'água.</p>
-                            </div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <strong>19/10/2025 (11:25)</strong>
-                                <p>Ocorrência classificada como "Em análise" pela administração.</p>
-                            </div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <strong>18/10/2025 (14:03)</strong>
-                                <p>Chamado aberto com sucesso e protocolo enviado para seu e-mail.</p>
+                                <strong>Aguardando leitura</strong>
+                                <p>As atualizações desta ocorrência aparecerão aqui.</p>
                             </div>
                         </li>
                     </ul>
@@ -87,19 +72,13 @@
             <aside class="occurrence-actions-column">
                 <div class="widget status-box">
                     <h2>Status atual</h2>
-                    <p class="current-status priority-medium">EM ANÁLISE</p>
+                    <p class="current-status priority-medium" data-oc-status>CARREGANDO</p>
 
                     <div class="status-summary">
-                        <p><strong>Protocolo:</strong> #0045</p>
-                        <p><strong>Última atualização:</strong> 22/10/2025 09:10</p>
-                        <p><strong>Responsável:</strong> Equipe de manutenção</p>
+                        <p><strong>Protocolo:</strong> <span data-oc-code>-</span></p>
+                        <p><strong>Última atualização:</strong> <span data-oc-updated>-</span></p>
+                        <p><strong>Fluxo:</strong> Acompanhamento centralizado pela administração</p>
                     </div>
-
-                    <hr>
-
-                    <h3 class="action-title">Ações</h3>
-                    <a href="detalhes-ocorrencia-colaborador.html?acao=responder" class="primary-button full-width-btn">Enviar atualização</a>
-                    <a href="ocorrencias-colaborador.html?acao=reabrir&id=45" class="action-btn edit full-width-btn">Reabrir ocorrência</a>
                 </div>
             </aside>
         </div>
@@ -108,6 +87,89 @@
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </main>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html?role=colaborador';
+                return;
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const id = Number(params.get('id'));
+            if (!id) {
+                window.location.href = 'ocorrencias-colaborador.html';
+                return;
+            }
+
+            function formatDateTime(value) {
+                const date = new Date(value);
+                return Number.isNaN(date.getTime()) ? '-' : date.toLocaleString('pt-BR');
+            }
+
+            function statusLabel(value) {
+                if (value === 'RESOLVIDA') return 'RESOLVIDA';
+                if (value === 'EM_ANDAMENTO') return 'EM ANDAMENTO';
+                return 'EM ANÁLISE';
+            }
+
+            try {
+                const res = await fetch(`/api/ocorrencias/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (res.status === 401) {
+                    localStorage.removeItem('nexus_token');
+                    localStorage.removeItem('nexus_user');
+                    window.location.href = '/login.html?role=colaborador';
+                    return;
+                }
+
+                if (!res.ok) {
+                    window.location.href = 'ocorrencias-colaborador.html';
+                    return;
+                }
+
+                const item = await res.json();
+                document.querySelector('[data-oc-title]').textContent = `Ocorrência #${String(item.id).padStart(4, '0')}: ${item.tipo}`;
+                document.querySelector('[data-oc-description]').textContent = item.descricao;
+                document.querySelector('[data-oc-type]').textContent = item.tipo;
+                document.querySelector('[data-oc-location]').textContent = item.local;
+                document.querySelector('[data-oc-created]').textContent = formatDateTime(item.createdAt);
+                document.querySelector('[data-oc-priority]').textContent = item.prioridade;
+                document.querySelector('[data-oc-status]').textContent = statusLabel(item.status);
+                document.querySelector('[data-oc-code]').textContent = `#${String(item.id).padStart(4, '0')}`;
+                document.querySelector('[data-oc-updated]').textContent = formatDateTime(item.updatedAt);
+                document.querySelector('[data-oc-timeline]').innerHTML = `
+                    <li class="timeline-item timeline-active">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <strong>${formatDateTime(item.updatedAt)}</strong>
+                            <p>Status atual: ${statusLabel(item.status)}.</p>
+                        </div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <strong>${formatDateTime(item.createdAt)}</strong>
+                            <p>Ocorrência registrada na central da portaria.</p>
+                        </div>
+                    </li>
+                `;
+            } catch {
+                window.location.href = 'ocorrencias-colaborador.html';
+            }
+
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
+        });
+    </script>
 </body>
 
 </html>

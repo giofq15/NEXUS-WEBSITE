@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Ocorrencia - NEXUS</title>
+    <title>Detalhes da Ocorrência - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -15,7 +15,7 @@
             <div class="nexus-brand" aria-label="Nexus Admin">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
+                    <strong data-condominio-nome>NEXUS</strong>
                     <span>ADMIN</span>
                 </div>
             </div>
@@ -23,12 +23,12 @@
         <nav>
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
-                <li class="active"><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Equipe e Acessos</a></li>
+                <li class="active"><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
-                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -37,48 +37,34 @@
     <main class="main-content occurrence-page">
         <div class="dashboard-header occurrence-header">
             <div>
-                <h1>Ocorrencia #0015: Vazamento no Teto da Garagem</h1>
-                <p>Detalhes completos, historico e acoes de atendimento.</p>
+                <h1 data-oc-title>Ocorrência</h1>
+                <p>Detalhes consolidados do chamado e controle do andamento operacional.</p>
             </div>
-            <a href="ocorrencias.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para Ocorrencias</a>
+            <a href="ocorrencias.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para ocorrências</a>
         </div>
 
         <div class="occurrence-layout">
             <div class="occurrence-details-column">
                 <article class="widget details-card">
-                    <h2>Descricao Completa</h2>
-                    <p>A equipe de manutencao reportou um vazamento significativo vindo do teto da garagem, proximo a vaga 35. O problema aparenta ser de origem hidraulica da tubulacao que atende a Unidade 305.</p>
+                    <h2>Descrição completa</h2>
+                    <p data-oc-description>Carregando informações da ocorrência...</p>
 
                     <div class="details-grid">
-                        <div><strong>Tipo de Problema:</strong> Hidraulico</div>
-                        <div><strong>Area Afetada:</strong> Garagem (Vaga 35)</div>
-                        <div><strong>Responsavel de Referencia:</strong> Ana Silva (Unidade 305)</div>
-                        <div><strong>Telefone:</strong> (11) 98765-4321</div>
+                        <div><strong>Tipo:</strong> <span data-oc-type>-</span></div>
+                        <div><strong>Local:</strong> <span data-oc-location>-</span></div>
+                        <div><strong>Prioridade:</strong> <span data-oc-priority>-</span></div>
+                        <div><strong>Abertura:</strong> <span data-oc-created>-</span></div>
                     </div>
                 </article>
 
                 <article class="widget timeline-card">
-                    <h2>Linha do Tempo e Historico</h2>
-                    <ul class="timeline">
+                    <h2>Linha do tempo</h2>
+                    <ul class="timeline" data-oc-timeline>
                         <li class="timeline-item timeline-active">
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
-                                <strong>25/10/2025 (14:30)</strong>
-                                <p>Ocorrencia aberta como Alta Prioridade. Notificacao automatica enviada para a equipe de manutencao e para a unidade relacionada.</p>
-                            </div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <strong>25/10/2025 (15:00)</strong>
-                                <p>Sindico atribuiu a ocorrencia ao Encanador Jorge.</p>
-                            </div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <strong>26/10/2025 (09:00)</strong>
-                                <p>Agendamento de visita tecnica para inspecao inicial. Status alterado para Em Andamento.</p>
+                                <strong>Aguardando leitura</strong>
+                                <p>Os eventos desta ocorrência aparecerão aqui.</p>
                             </div>
                         </li>
                     </ul>
@@ -87,30 +73,26 @@
 
             <aside class="occurrence-actions-column">
                 <div class="widget status-box">
-                    <h2>Status e Acoes Rapidas</h2>
-                    <p class="current-status priority-high">PENDENTE</p>
+                    <h2>Status e controle rápido</h2>
+                    <p class="current-status priority-high" data-oc-status>PENDENTE</p>
 
                     <div class="status-summary">
-                        <p><strong>Prioridade:</strong> <span class="priority-high">Alta</span></p>
-                        <p><strong>Abertura:</strong> 25/10/2025</p>
-                        <p><strong>Atribuido a:</strong> Encanador Jorge</p>
+                        <p><strong>Protocolo:</strong> <span data-oc-code>-</span></p>
+                        <p><strong>Última atualização:</strong> <span data-oc-updated>-</span></p>
+                        <p><strong>Origem:</strong> Registro administrativo ou da portaria</p>
                     </div>
 
                     <hr>
 
-                    <h3 class="action-title">Atualizar Status</h3>
-                    <select class="action-select">
-                        <option>Pendente</option>
-                        <option>Em Andamento</option>
-                        <option>Aguardando Peca</option>
-                        <option>Resolvida</option>
+                    <h3 class="action-title">Atualizar status</h3>
+                    <select class="action-select" id="oc-status-select">
+                        <option value="EM_ANALISE">Em análise</option>
+                        <option value="EM_ANDAMENTO">Em andamento</option>
+                        <option value="RESOLVIDA">Resolvida</option>
                     </select>
 
-                    <button class="primary-button full-width-btn action-update-btn">Salvar Alteracao</button>
-
-                    <h3 class="action-title">Mais Acoes</h3>
-                    <button class="action-btn view full-width-btn">Enviar E-mail para a Equipe</button>
-                    <button class="action-btn edit full-width-btn">Adicionar Novo Comentario</button>
+                    <button class="primary-button full-width-btn action-update-btn" id="oc-status-save">Salvar alteração</button>
+                    <p class="admin-inline-feedback" id="oc-status-feedback" aria-live="polite"></p>
                 </div>
             </aside>
         </div>
@@ -119,6 +101,121 @@
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </main>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html?role=admin';
+                return;
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const id = Number(params.get('id'));
+            if (!id) {
+                window.location.href = 'ocorrencias.html';
+                return;
+            }
+
+            const feedback = document.getElementById('oc-status-feedback');
+            const select = document.getElementById('oc-status-select');
+
+            function formatDateTime(value) {
+                const date = new Date(value);
+                return Number.isNaN(date.getTime()) ? '-' : date.toLocaleString('pt-BR');
+            }
+
+            function statusLabel(value) {
+                if (value === 'RESOLVIDA') return 'RESOLVIDA';
+                if (value === 'EM_ANDAMENTO') return 'EM ANDAMENTO';
+                return 'EM ANÁLISE';
+            }
+
+            async function loadOcorrencia() {
+                const res = await fetch(`/api/ocorrencias/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (res.status === 401) {
+                    localStorage.removeItem('nexus_token');
+                    localStorage.removeItem('nexus_user');
+                    window.location.href = '/login.html?role=admin';
+                    return null;
+                }
+
+                if (!res.ok) {
+                    window.location.href = 'ocorrencias.html';
+                    return null;
+                }
+
+                const item = await res.json();
+                document.querySelector('[data-oc-title]').textContent = `Ocorrência #${String(item.id).padStart(4, '0')}: ${item.tipo}`;
+                document.querySelector('[data-oc-description]').textContent = item.descricao;
+                document.querySelector('[data-oc-type]').textContent = item.tipo;
+                document.querySelector('[data-oc-location]').textContent = item.local;
+                document.querySelector('[data-oc-priority]').textContent = item.prioridade;
+                document.querySelector('[data-oc-created]').textContent = formatDateTime(item.createdAt);
+                document.querySelector('[data-oc-status]').textContent = statusLabel(item.status);
+                document.querySelector('[data-oc-code]').textContent = `#${String(item.id).padStart(4, '0')}`;
+                document.querySelector('[data-oc-updated]').textContent = formatDateTime(item.updatedAt);
+                document.querySelector('[data-oc-timeline]').innerHTML = `
+                    <li class="timeline-item timeline-active">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <strong>${formatDateTime(item.updatedAt)}</strong>
+                            <p>Status atualizado para ${statusLabel(item.status)}.</p>
+                        </div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <strong>${formatDateTime(item.createdAt)}</strong>
+                            <p>Ocorrência registrada no sistema com prioridade ${item.prioridade}.</p>
+                        </div>
+                    </li>
+                `;
+                select.value = item.status;
+                return item;
+            }
+
+            await loadOcorrencia();
+
+            document.getElementById('oc-status-save').addEventListener('click', async function () {
+                feedback.textContent = '';
+                try {
+                    const res = await fetch(`/api/ocorrencias/${id}/status`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ status: select.value })
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Não foi possível atualizar o status.');
+                    }
+
+                    feedback.textContent = 'Status atualizado com sucesso.';
+                    feedback.className = 'admin-inline-feedback is-success';
+                    document.querySelector('[data-oc-status]').textContent = statusLabel(data.status);
+                    document.querySelector('[data-oc-updated]').textContent = formatDateTime(data.updatedAt);
+                } catch (error) {
+                    feedback.textContent = error.message || 'Erro ao atualizar status.';
+                    feedback.className = 'admin-inline-feedback is-error';
+                }
+            });
+
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
+        });
+    </script>
 </body>
 
 </html>

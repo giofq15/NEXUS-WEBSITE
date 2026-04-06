@@ -1,113 +1,390 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard do Colaborador - NEXUS</title>
+    <title>Portal da Portaria - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body class="admin-body">
-
-    <div class="sidebar">
+    <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Nexus Colaborador">
+            <div class="nexus-brand" aria-label="Portal da portaria">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
-                    <span>COLABORADOR</span>
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <span>PORTARIA</span>
                 </div>
             </div>
         </div>
         <nav>
             <ul>
-                <li class="active"><a href="painel-colaborador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
-                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
-                <li><a href="../financeiro/financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li class="active"><a href="painel-colaborador.html"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li><a href="../ocorrencias/ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
-                <li><a href="../financeiro/consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
-                <li><a href="avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Comunicados</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
-    </div>
+    </aside>
 
-    <div class="main-content">
+    <main class="main-content">
         <div class="dashboard-header">
-            <h1>Bem-vindo, [Nome do Colaborador]!</h1>
-            <p>Unidade Bloco B / 405</p>
+            <h1>Painel da portaria</h1>
+            <p>Acompanhe ocorrências abertas, comunicados em vigor e a agenda operacional do condomínio.</p>
         </div>
 
-        <div class="dashboard-grid">
+        <section class="admin-kpi-grid admin-kpi-grid-simplified" aria-label="Resumo operacional da portaria">
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon"><i class="fas fa-triangle-exclamation"></i></div>
+                <div>
+                    <span>Ocorrências abertas</span>
+                    <strong data-portaria-ocorrencias>0</strong>
+                    <p data-portaria-ocorrencias-texto>Aguardando carregamento.</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-calendar"><i class="fas fa-calendar-check"></i></div>
+                <div>
+                    <span>Reservas do período</span>
+                    <strong data-portaria-reservas>0</strong>
+                    <p>Agenda compartilhada com a administração.</p>
+                </div>
+            </article>
+            <article class="admin-kpi-card">
+                <div class="admin-kpi-icon is-team"><i class="fas fa-bullhorn"></i></div>
+                <div>
+                    <span>Comunicados ativos</span>
+                    <strong data-portaria-comunicados>0</strong>
+                    <p>Orientações visíveis para operação e atendimento.</p>
+                </div>
+            </article>
+        </section>
 
+        <div class="dashboard-grid admin-dashboard-grid admin-dashboard-grid-simplified">
             <div class="main-column">
-
-                <h2>Informações da Unidade</h2>
-                <div class="metrics-grid">
-
-                    <div class="metric-card widget water-metric">
-                        <i class="fas fa-tint"></i>
-                        <h3>Consumo Água (Último Mês)</h3>
-                        <p class="metric-value">12.8 m³</p>
-                        <span class="metric-change negative">↓ 3% vs Mês Anterior</span>
+                <section class="admin-section-card">
+                    <div class="admin-section-header">
+                        <div>
+                            <span class="admin-section-kicker">Ação imediata</span>
+                            <h3>Ocorrências para acompanhar</h3>
+                        </div>
+                        <a href="../ocorrencias/ocorrencias-colaborador.html" class="action-link">Abrir central</a>
                     </div>
 
-                    <div class="metric-card widget financial-metric">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                        <h3>Próximo Boleto Vence em</h3>
-                        <p class="metric-value" style="color: #e67e22;">5 Dias</p>
-                        <span class="metric-change positive">Valor: R$ 850,00</span>
+                    <div class="admin-syndic-list" data-portaria-ocorrencias-list>
+                        <article class="admin-syndic-item">
+                            <strong>Nenhuma ocorrência carregada</strong>
+                            <p>As ocorrências abertas pela portaria aparecerão aqui com o status atualizado.</p>
+                            <span>Aguardando dados</span>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="admin-section-card">
+                    <div class="admin-section-header">
+                        <div>
+                            <span class="admin-section-kicker">Passagem de turno</span>
+                            <h3>Registrar o que aconteceu no plantão</h3>
+                        </div>
                     </div>
 
-                    <div class="metric-card widget alert-metric">
-                        <i class="fas fa-calendar-alt"></i>
-                        <h3>Minhas Próximas Reservas</h3>
-                        <p class="metric-value">1</p>
-                        <span class="metric-change">Churrasqueira (15/11)</span>
+                    <form class="admin-inline-form" id="turno-form-portaria">
+                        <select id="turno-nome-portaria" class="action-select" required>
+                            <option value="Manha">Turno da manhã</option>
+                            <option value="Tarde">Turno da tarde</option>
+                            <option value="Noite">Turno da noite</option>
+                        </select>
+                        <input type="text" id="turno-resumo-portaria" placeholder="Resumo rapido do turno" required>
+                        <button type="submit" class="primary-button"><i class="fas fa-book"></i> Registrar turno</button>
+                        <textarea id="turno-pendencias-portaria" class="admin-inline-textarea" placeholder="Pendencias que o proximo turno precisa acompanhar"></textarea>
+                        <textarea id="turno-orientacoes-portaria" class="admin-inline-textarea" placeholder="Orientacoes para o proximo porteiro"></textarea>
+                    </form>
+                    <div class="button-group" style="margin-top: 0.75rem;">
+                        <button type="button" class="reset-button" id="turno-cancelar-edicao-portaria" hidden>Cancelar edicao</button>
                     </div>
-                </div>
+                    <p class="admin-inline-feedback" id="turno-feedback-portaria" aria-live="polite"></p>
 
-                <h2>Avisos Importantes do Condomínio</h2>
-                <div class="widget">
-                    <h3>Substituição de Elevadores</h3>
-                    <p>Prezados colaboradores, informamos que a substituição do elevador do Bloco B está programada para iniciar em 01/12/2025. Pedimos a compreensão...</p>
-                    <a href="avisos.html" class="action-link">Ver todos os avisos</a>
-                </div>
-
-                <h2>Seu Consumo nos Últimos 6 Meses</h2>
-                <div class="widget">
-                    <div class="graph-placeholder line-chart-placeholder">
-                        Gráfico Simulado: Consumo de Água e Energia por Mês
+                    <div class="admin-syndic-list" data-portaria-turnos-list>
+                        <article class="admin-syndic-item">
+                            <strong>Nenhum turno registrado</strong>
+                            <p>Os registros de passagem de turno aparecerão aqui para consulta rápida.</p>
+                            <span>Aguardando dados</span>
+                        </article>
                     </div>
-                </div>
-
+                </section>
             </div>
 
             <div class="side-column">
+                <section class="widget admin-focus-card">
+                    <h3>Atalhos úteis</h3>
+                    <div class="admin-quick-actions">
+                        <a href="../ocorrencias/ocorrencias-colaborador.html" class="action-link"><i class="fas fa-plus-circle"></i> Registrar ocorrência</a>
+                        <a href="reservas.html" class="action-link"><i class="fas fa-calendar-days"></i> Consultar reservas</a>
+                        <a href="avisos.html" class="action-link"><i class="fas fa-bullhorn"></i> Ver comunicados</a>
+                    </div>
+                </section>
 
-                <h2>Ações Rápidas</h2>
-                <div class="widget">
-                    <a href="reservas.html" class="new-button" style="display: block; width: 100%; margin-bottom: 10px; text-align: center; color: #ffffff; text-decoration: none;"><i class="fas fa-calendar-plus"></i> Fazer Nova Reserva</a>
-                    <a href="../ocorrencias/ocorrencias-colaborador.html" class="new-button" style="display: block; width: 100%; background-color: #3498db; margin-bottom: 10px; text-align: center; color: #ffffff; text-decoration: none;"><i class="fas fa-ticket-alt"></i> Abrir Nova Ocorrência</a>
-                    <a href="../financeiro/financeiro-morador.html" class="new-button" style="display: block; width: 100%; background-color: #27ae60; text-align: center; color: #ffffff; text-decoration: none;"><i class="fas fa-money-check-alt"></i> Pagar Boleto Atual</a>
-                </div>
-
-                <h2>Minhas Ocorrências Recentes</h2>
-                <div class="widget">
-                    <p style="font-size: 0.9rem; color: #777;"><strong>Ocorrência 1:</strong> Vazamento no Banheiro - <span class="status-andamento">Em Andamento</span></p>
-                    <p style="font-size: 0.9rem; color: #777;"><strong>Ocorrência 2:</strong> Barulho Excessivo (21/10) - <span class="status-resolvida">Resolvida</span></p>
-                    <a href="../ocorrencias/ocorrencias-colaborador.html" class="action-link">Ver todas</a>
-                </div>
-
+                <section class="widget admin-focus-card">
+                    <h3>Leitura rápida</h3>
+                    <ul class="admin-mini-metrics">
+                        <li>
+                            <span>Em análise</span>
+                            <strong data-portaria-analise>0</strong>
+                        </li>
+                        <li>
+                            <span>Em andamento</span>
+                            <strong data-portaria-andamento>0</strong>
+                        </li>
+                        <li>
+                            <span>Resolvidas</span>
+                            <strong data-portaria-resolvidas>0</strong>
+                        </li>
+                    </ul>
+                </section>
             </div>
         </div>
 
         <footer class="content-footer">
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
-    </div>
+    </main>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html?role=colaborador';
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem('nexus_user') || '{}');
+            if (user.accessLevel === 'ROOT' || user.accessLevel === 'ADMIN' || user.role === 'ADMIN') {
+                window.location.href = '../admin/painel-admin.html';
+                return;
+            }
+
+            const listRoot = document.querySelector('[data-portaria-ocorrencias-list]');
+            const totalField = document.querySelector('[data-portaria-ocorrencias]');
+            const textField = document.querySelector('[data-portaria-ocorrencias-texto]');
+            const analiseField = document.querySelector('[data-portaria-analise]');
+            const andamentoField = document.querySelector('[data-portaria-andamento]');
+            const resolvidasField = document.querySelector('[data-portaria-resolvidas]');
+            const comunicadosField = document.querySelector('[data-portaria-comunicados]');
+            const reservasField = document.querySelector('[data-portaria-reservas]');
+            const turnoForm = document.getElementById('turno-form-portaria');
+            const turnoFeedback = document.getElementById('turno-feedback-portaria');
+            const turnoList = document.querySelector('[data-portaria-turnos-list]');
+            const turnoCancel = document.getElementById('turno-cancelar-edicao-portaria');
+            let editingTurnoId = null;
+
+            function readJson(key, fallbackValue) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) return fallbackValue;
+                    const parsed = JSON.parse(raw);
+                    return parsed || fallbackValue;
+                } catch {
+                    return fallbackValue;
+                }
+            }
+
+            const comunicados = readJson('nexus_comunicados_v1', []).filter((item) => item.status === 'publicado');
+            const reservas = readJson('nexus_reservas_admin_v2', []);
+            comunicadosField.textContent = String(comunicados.length);
+            reservasField.textContent = String(reservas.length);
+
+            function renderTurnos(turnos) {
+                if (!turnos.length) {
+                    turnoList.innerHTML = `
+                        <article class="admin-syndic-item">
+                            <strong>Nenhum turno registrado</strong>
+                            <p>Os registros de passagem de turno aparecerão aqui para consulta rápida.</p>
+                            <span>Aguardando dados</span>
+                        </article>
+                    `;
+                    return;
+                }
+
+                turnoList.innerHTML = turnos.slice(0, 5).map((item) => `
+                    <article class="admin-syndic-item">
+                        <strong>${item.turno} • ${item.colaborador?.nome || 'Portaria'}</strong>
+                        <p>${item.resumo}</p>
+                        <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendencia registrada.'}</p>
+                        <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientacoes adicionais.'}</p>
+                        <span>${new Date(item.createdAt).toLocaleString('pt-BR')}</span>
+                        <div class="admin-quick-actions">
+                            <button type="button" class="table-action-button is-success" data-turno-edit="${item.id}">Editar</button>
+                            <button type="button" class="table-action-button" data-turno-delete="${item.id}">Excluir</button>
+                        </div>
+                    </article>
+                `).join('');
+            }
+
+            async function loadTurnos() {
+                try {
+                    const res = await fetch('/api/turnos', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    if (!res.ok) {
+                        throw new Error();
+                    }
+                    const turnos = await res.json();
+                    renderTurnos(turnos);
+                    return turnos;
+                } catch {
+                    turnoList.innerHTML = `
+                        <article class="admin-syndic-item">
+                            <strong>Erro ao carregar turnos</strong>
+                            <p>Nao foi possivel ler a passagem de turno neste momento.</p>
+                            <span>Erro</span>
+                        </article>
+                    `;
+                    return [];
+                }
+            }
+
+            function resetTurnoForm() {
+                editingTurnoId = null;
+                turnoForm.reset();
+                turnoForm.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-book"></i> Registrar turno';
+                turnoCancel.hidden = true;
+                turnoFeedback.textContent = '';
+                turnoFeedback.className = 'admin-inline-feedback';
+            }
+
+            try {
+                const res = await fetch('/api/ocorrencias', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (res.status === 401) {
+                    localStorage.removeItem('nexus_token');
+                    localStorage.removeItem('nexus_user');
+                    window.location.href = '/login.html?role=colaborador';
+                    return;
+                }
+
+                const ocorrencias = await res.json();
+                totalField.textContent = String(ocorrencias.length);
+                analiseField.textContent = String(ocorrencias.filter((item) => item.status === 'EM_ANALISE').length);
+                andamentoField.textContent = String(ocorrencias.filter((item) => item.status === 'EM_ANDAMENTO').length);
+                resolvidasField.textContent = String(ocorrencias.filter((item) => item.status === 'RESOLVIDA').length);
+
+                if (!ocorrencias.length) {
+                    textField.textContent = 'Nenhuma ocorrência vinculada à portaria no momento.';
+                    return;
+                }
+
+                const abertas = ocorrencias.filter((item) => item.status !== 'RESOLVIDA');
+                textField.textContent = abertas.length
+                    ? `${abertas.length} ocorrência(s) ainda exigem acompanhamento.`
+                    : 'Todas as ocorrências já foram concluídas.';
+
+                listRoot.innerHTML = ocorrencias.slice(0, 3).map((item) => `
+                    <article class="admin-syndic-item">
+                        <strong>${item.tipo}</strong>
+                        <p>${item.local} • ${item.descricao}</p>
+                        <span>${String(item.status || '').replaceAll('_', ' ')}</span>
+                        <a href="../ocorrencias/detalhes-ocorrencia-colaborador.html?id=${item.id}" class="action-link">Ver detalhes</a>
+                    </article>
+                `).join('');
+            } catch {
+                textField.textContent = 'Nao foi possivel carregar as ocorrências da portaria.';
+            }
+
+            let turnosCache = await loadTurnos();
+
+            turnoForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const payload = {
+                    turno: document.getElementById('turno-nome-portaria').value,
+                    resumo: document.getElementById('turno-resumo-portaria').value.trim(),
+                    pendencias: document.getElementById('turno-pendencias-portaria').value.trim(),
+                    orientacoes: document.getElementById('turno-orientacoes-portaria').value.trim()
+                };
+
+                try {
+                    const wasEditing = Boolean(editingTurnoId);
+                    const res = await fetch(editingTurnoId ? `/api/turnos/${editingTurnoId}` : '/api/turnos', {
+                        method: editingTurnoId ? 'PUT' : 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Nao foi possivel salvar a passagem de turno.');
+                    }
+                    resetTurnoForm();
+                    turnoFeedback.textContent = wasEditing ? 'Passagem de turno atualizada.' : 'Passagem de turno registrada.';
+                    turnoFeedback.className = 'admin-inline-feedback is-success';
+                    turnosCache = await loadTurnos();
+                } catch (error) {
+                    turnoFeedback.textContent = error.message || 'Erro ao salvar a passagem de turno.';
+                    turnoFeedback.className = 'admin-inline-feedback is-error';
+                }
+            });
+
+            turnoList.addEventListener('click', async function (event) {
+                const editButton = event.target.closest('[data-turno-edit]');
+                if (editButton) {
+                    const item = turnosCache.find((entry) => entry.id === Number(editButton.dataset.turnoEdit));
+                    if (!item) return;
+                    editingTurnoId = item.id;
+                    document.getElementById('turno-nome-portaria').value = item.turno;
+                    document.getElementById('turno-resumo-portaria').value = item.resumo;
+                    document.getElementById('turno-pendencias-portaria').value = item.pendencias || '';
+                    document.getElementById('turno-orientacoes-portaria').value = item.orientacoes || '';
+                    turnoForm.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Salvar turno';
+                    turnoCancel.hidden = false;
+                    turnoFeedback.textContent = `Editando o registro de turno #${item.id}.`;
+                    turnoFeedback.className = 'admin-inline-feedback is-success';
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    return;
+                }
+
+                const deleteButton = event.target.closest('[data-turno-delete]');
+                if (!deleteButton) return;
+                const id = Number(deleteButton.dataset.turnoDelete);
+                if (!confirm('Deseja excluir este registro de turno?')) return;
+
+                try {
+                    const res = await fetch(`/api/turnos/${id}`, {
+                        method: 'DELETE',
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Nao foi possivel excluir o registro de turno.');
+                    }
+                    if (editingTurnoId === id) {
+                        resetTurnoForm();
+                    }
+                    turnosCache = await loadTurnos();
+                } catch (error) {
+                    turnoFeedback.textContent = error.message || 'Erro ao excluir o registro de turno.';
+                    turnoFeedback.className = 'admin-inline-feedback is-error';
+                }
+            });
+
+            turnoCancel.addEventListener('click', resetTurnoForm);
+
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
+        });
+    </script>
 </body>
 
 </html>

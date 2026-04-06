@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantão e Agenda - NEXUS</title>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="nexus-brand" aria-label="Plantao e agenda">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
+                <div class="nexus-brand-text">
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <span>PLANTÃO</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul id="plantao-menu-admin" hidden>
+                <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li class="active"><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+            <ul id="plantao-menu-portaria" hidden>
+                <li><a href="painel-colaborador.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="../ocorrencias/ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li class="active"><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Comunicados</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>Plantão e agenda do dia</h1>
+            <p>Organize compromissos, mudanças, visitas, recados operacionais e tudo que precisa estar visível durante o plantão.</p>
+        </div>
+
+        <div class="tabs-container">
+            <button class="tab-button active" type="button" data-plantao-tab="agenda">Agenda do dia</button>
+            <button class="tab-button" type="button" data-plantao-tab="recados">Recados operacionais</button>
+        </div>
+
+        <section class="tab-content" id="agenda">
+            <section class="widget admin-ops-panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>Novo compromisso</h2>
+                        <p>Registre visitas, mudanças, serviços, entregas e qualquer compromisso importante do dia.</p>
+                    </div>
+                </div>
+                <form class="admin-inline-form" id="agenda-form">
+                    <input type="time" id="agenda-hora" required>
+                    <input type="text" id="agenda-titulo" placeholder="Título do compromisso" required>
+                    <select id="agenda-tipo" class="action-select" required>
+                        <option value="visita">Visita</option>
+                        <option value="mudanca">Mudança</option>
+                        <option value="servico">Serviço</option>
+                        <option value="entrega">Entrega</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                    <input type="text" id="agenda-local" placeholder="Local / unidade" required>
+                    <textarea id="agenda-observacoes" class="admin-inline-textarea" placeholder="Observações para o plantão"></textarea>
+                    <div class="admin-inline-form-actions">
+                        <button type="submit" class="primary-button" id="agenda-submit"><i class="fas fa-save"></i> Salvar compromisso</button>
+                        <button type="button" class="reset-button" id="agenda-cancelar" hidden>Cancelar edição</button>
+                    </div>
+                </form>
+                <p class="admin-inline-feedback" id="agenda-feedback" aria-live="polite"></p>
+            </section>
+
+            <section class="widget admin-ops-panel">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Compromisso</th>
+                            <th>Tipo</th>
+                            <th>Local</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="agenda-body"></tbody>
+                </table>
+            </section>
+        </section>
+
+        <section class="tab-content hidden" id="recados">
+            <section class="widget admin-ops-panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>Novo recado de plantão</h2>
+                        <p>Deixe orientações rápidas para a equipe seguinte e para acompanhamento da administração.</p>
+                    </div>
+                </div>
+                <form class="admin-inline-form" id="recado-form">
+                    <input type="text" id="recado-titulo" placeholder="Título do recado" required>
+                    <select id="recado-prioridade" class="action-select" required>
+                        <option value="baixa">Prioridade baixa</option>
+                        <option value="media" selected>Prioridade média</option>
+                        <option value="alta">Prioridade alta</option>
+                    </select>
+                    <textarea id="recado-texto" class="admin-inline-textarea" placeholder="Descreva o recado operacional" required></textarea>
+                    <div class="admin-inline-form-actions">
+                        <button type="submit" class="primary-button" id="recado-submit"><i class="fas fa-save"></i> Salvar recado</button>
+                        <button type="button" class="reset-button" id="recado-cancelar" hidden>Cancelar edição</button>
+                    </div>
+                </form>
+                <p class="admin-inline-feedback" id="recado-feedback" aria-live="polite"></p>
+            </section>
+
+            <section class="widget admin-ops-panel">
+                <div class="admin-syndic-list" id="recados-list"></div>
+            </section>
+        </section>
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem('nexus_user') || '{}');
+            const isAdmin = user.accessLevel === 'ROOT' || user.accessLevel === 'ADMIN' || user.role === 'ADMIN';
+            document.getElementById(isAdmin ? 'plantao-menu-admin' : 'plantao-menu-portaria').hidden = false;
+
+            const agendaKey = 'nexus_plantao_agenda_v1';
+            const recadosKey = 'nexus_plantao_recados_v1';
+            const agendaSeed = [
+                { id: 'ag-1', hora: '09:00', titulo: 'Mudança da unidade 402', tipo: 'mudanca', local: 'Bloco B / Apto 402', observacoes: 'Liberar elevador de serviço e confirmar prestador.' },
+                { id: 'ag-2', hora: '14:30', titulo: 'Visita técnica', tipo: 'servico', local: 'Casa de máquinas', observacoes: 'Equipe do elevador com acesso autorizado.' }
+            ];
+            const recadosSeed = [
+                { id: 'rc-1', titulo: 'Chuva forte prevista', prioridade: 'media', texto: 'Acompanhar garagem e áreas descobertas no turno da noite.' }
+            ];
+
+            const agendaForm = document.getElementById('agenda-form');
+            const agendaBody = document.getElementById('agenda-body');
+            const agendaFeedback = document.getElementById('agenda-feedback');
+            const agendaCancel = document.getElementById('agenda-cancelar');
+            const recadoForm = document.getElementById('recado-form');
+            const recadosList = document.getElementById('recados-list');
+            const recadoFeedback = document.getElementById('recado-feedback');
+            const recadoCancel = document.getElementById('recado-cancelar');
+            let editingAgendaId = null;
+            let editingRecadoId = null;
+
+            function readData(key, seed) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) {
+                        localStorage.setItem(key, JSON.stringify(seed));
+                        return seed.slice();
+                    }
+                    const parsed = JSON.parse(raw);
+                    return Array.isArray(parsed) ? parsed : seed.slice();
+                } catch {
+                    return seed.slice();
+                }
+            }
+
+            function saveData(key, data) {
+                localStorage.setItem(key, JSON.stringify(data));
+            }
+
+            function renderAgenda() {
+                const data = readData(agendaKey, agendaSeed).sort((a, b) => a.hora.localeCompare(b.hora));
+                agendaBody.innerHTML = data.map((item) => `
+                    <tr>
+                        <td>${item.hora}</td>
+                        <td><strong>${item.titulo}</strong><br><small>${item.observacoes || 'Sem observações.'}</small></td>
+                        <td>${item.tipo}</td>
+                        <td>${item.local}</td>
+                        <td>
+                            <button type="button" class="table-action-button is-success" data-agenda-edit="${item.id}">Editar</button>
+                            <button type="button" class="table-action-button" data-agenda-delete="${item.id}">Excluir</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            function renderRecados() {
+                const data = readData(recadosKey, recadosSeed);
+                recadosList.innerHTML = data.map((item) => `
+                    <article class="admin-syndic-item">
+                        <strong>${item.titulo}</strong>
+                        <p>${item.texto}</p>
+                        <span>Prioridade ${item.prioridade}</span>
+                        <div class="admin-quick-actions">
+                            <button type="button" class="table-action-button is-success" data-recado-edit="${item.id}">Editar</button>
+                            <button type="button" class="table-action-button" data-recado-delete="${item.id}">Excluir</button>
+                        </div>
+                    </article>
+                `).join('');
+            }
+
+            function resetAgendaForm() {
+                editingAgendaId = null;
+                agendaForm.reset();
+                agendaCancel.hidden = true;
+                document.getElementById('agenda-submit').innerHTML = '<i class="fas fa-save"></i> Salvar compromisso';
+                agendaFeedback.textContent = '';
+                agendaFeedback.className = 'admin-inline-feedback';
+            }
+
+            function resetRecadoForm() {
+                editingRecadoId = null;
+                recadoForm.reset();
+                recadoCancel.hidden = true;
+                document.getElementById('recado-submit').innerHTML = '<i class="fas fa-save"></i> Salvar recado';
+                recadoFeedback.textContent = '';
+                recadoFeedback.className = 'admin-inline-feedback';
+            }
+
+            agendaForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const data = readData(agendaKey, agendaSeed);
+                const payload = {
+                    id: editingAgendaId || `ag-${Date.now()}`,
+                    hora: document.getElementById('agenda-hora').value,
+                    titulo: document.getElementById('agenda-titulo').value.trim(),
+                    tipo: document.getElementById('agenda-tipo').value,
+                    local: document.getElementById('agenda-local').value.trim(),
+                    observacoes: document.getElementById('agenda-observacoes').value.trim()
+                };
+                const index = data.findIndex((item) => item.id === payload.id);
+                if (index >= 0) data[index] = payload; else data.push(payload);
+                saveData(agendaKey, data);
+                resetAgendaForm();
+                agendaFeedback.textContent = 'Compromisso salvo com sucesso.';
+                agendaFeedback.className = 'admin-inline-feedback is-success';
+                renderAgenda();
+            });
+
+            recadoForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const data = readData(recadosKey, recadosSeed);
+                const payload = {
+                    id: editingRecadoId || `rc-${Date.now()}`,
+                    titulo: document.getElementById('recado-titulo').value.trim(),
+                    prioridade: document.getElementById('recado-prioridade').value,
+                    texto: document.getElementById('recado-texto').value.trim()
+                };
+                const index = data.findIndex((item) => item.id === payload.id);
+                if (index >= 0) data[index] = payload; else data.unshift(payload);
+                saveData(recadosKey, data);
+                resetRecadoForm();
+                recadoFeedback.textContent = 'Recado salvo com sucesso.';
+                recadoFeedback.className = 'admin-inline-feedback is-success';
+                renderRecados();
+            });
+
+            agendaBody.addEventListener('click', function (event) {
+                const editButton = event.target.closest('[data-agenda-edit]');
+                if (editButton) {
+                    const item = readData(agendaKey, agendaSeed).find((entry) => entry.id === editButton.dataset.agendaEdit);
+                    if (!item) return;
+                    editingAgendaId = item.id;
+                    document.getElementById('agenda-hora').value = item.hora;
+                    document.getElementById('agenda-titulo').value = item.titulo;
+                    document.getElementById('agenda-tipo').value = item.tipo;
+                    document.getElementById('agenda-local').value = item.local;
+                    document.getElementById('agenda-observacoes').value = item.observacoes || '';
+                    agendaCancel.hidden = false;
+                    document.getElementById('agenda-submit').innerHTML = '<i class="fas fa-save"></i> Atualizar compromisso';
+                    return;
+                }
+                const deleteButton = event.target.closest('[data-agenda-delete]');
+                if (!deleteButton) return;
+                const data = readData(agendaKey, agendaSeed).filter((item) => item.id !== deleteButton.dataset.agendaDelete);
+                saveData(agendaKey, data);
+                renderAgenda();
+            });
+
+            recadosList.addEventListener('click', function (event) {
+                const editButton = event.target.closest('[data-recado-edit]');
+                if (editButton) {
+                    const item = readData(recadosKey, recadosSeed).find((entry) => entry.id === editButton.dataset.recadoEdit);
+                    if (!item) return;
+                    editingRecadoId = item.id;
+                    document.getElementById('recado-titulo').value = item.titulo;
+                    document.getElementById('recado-prioridade').value = item.prioridade;
+                    document.getElementById('recado-texto').value = item.texto;
+                    recadoCancel.hidden = false;
+                    document.getElementById('recado-submit').innerHTML = '<i class="fas fa-save"></i> Atualizar recado';
+                    return;
+                }
+                const deleteButton = event.target.closest('[data-recado-delete]');
+                if (!deleteButton) return;
+                const data = readData(recadosKey, recadosSeed).filter((item) => item.id !== deleteButton.dataset.recadoDelete);
+                saveData(recadosKey, data);
+                renderRecados();
+            });
+
+            agendaCancel.addEventListener('click', resetAgendaForm);
+            recadoCancel.addEventListener('click', resetRecadoForm);
+
+            document.querySelectorAll('[data-plantao-tab]').forEach((button) => {
+                button.addEventListener('click', function () {
+                    document.querySelectorAll('[data-plantao-tab]').forEach((item) => item.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach((panel) => panel.classList.add('hidden'));
+                    button.classList.add('active');
+                    document.getElementById(button.dataset.plantaoTab).classList.remove('hidden');
+                });
+            });
+
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
+
+            renderAgenda();
+            renderRecados();
+        });
+    </script>
+</body>
+
+</html>

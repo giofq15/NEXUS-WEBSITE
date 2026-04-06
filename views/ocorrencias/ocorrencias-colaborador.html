@@ -1,145 +1,294 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ocorrências - NEXUS</title>
+    <title>Ocorrências da Portaria - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body class="admin-body">
-
-    <div class="sidebar">
+    <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Nexus Colaborador">
+            <div class="nexus-brand" aria-label="Portal da portaria">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
-                    <strong>NEXUS</strong>
-                    <span>COLABORADOR</span>
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <span>PORTARIA</span>
                 </div>
             </div>
         </div>
         <nav>
             <ul>
-                <li><a href="../colaborador/painel-colaborador.html"><i class="fas fa-home"></i> Meu Dashboard</a></li>
-                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas de Áreas</a></li>
-                <li><a href="../financeiro/financeiro-morador.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro / Boletos</a></li>
+                <li><a href="../colaborador/painel-colaborador.html"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li class="active"><a href="ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
-                <li><a href="../financeiro/consumo-morador.html"><i class="fas fa-chart-bar"></i> Meu Consumo (IoT)</a></li>
-                <li><a href="../colaborador/avisos.html"><i class="fas fa-bell"></i> Avisos e Comunicados</a></li>
-                <li><a href="../public/index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="../colaborador/avisos.html"><i class="fas fa-bell"></i> Comunicados</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
-    </div>
+    </aside>
 
-    <div class="main-content">
+    <main class="main-content">
         <div class="dashboard-header">
-            <h1>Central de Ocorrências</h1>
-            <p>Reporte problemas e acompanhe o status das suas solicitações.</p>
+            <h1>Central de ocorrências da portaria</h1>
+            <p>Registre novos chamados e acompanhe o andamento de tudo que foi aberto a partir da operação.</p>
         </div>
 
-        <div class="form-container">
-            <h2><i class="fas fa-plus-circle"></i> Abrir Nova Ocorrência</h2>
-            <form action="ocorrencias-colaborador.html" method="POST" id="ocorrencia-form" data-ocorrencias-form>
-                <fieldset class="form-section">
-                    <legend>Detalhes do Problema</legend>
-                    <div class="form-grid">
+        <section class="widget admin-ops-panel">
+            <div class="section-heading">
+                <div>
+                    <h2>Registrar nova ocorrência</h2>
+                    <p>Preencha as informações essenciais para a administração acompanhar o atendimento.</p>
+                </div>
+            </div>
 
-                        <div class="form-group">
-                            <label for="tipo">Tipo de Ocorrência</label>
-                            <select id="tipo" required>
-                                <option value="">Selecione o Tipo...</option>
-                                <option>Estrutural / Manutenção (Áreas Comuns)</option>
-                                <option>Ruído / Comportamental (Vizinhança)</option>
-                                <option>Segurança / Portaria</option>
-                                <option>Problema em Minha Unidade (Vazamento, etc.)</option>
-                                <option>Financeiro / Administrativo</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="local">Local Afetado</label>
-                            <input type="text" id="local" placeholder="Ex: Elevador do Bloco B, Salão de Festas, Minha Unidade 405">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="descricao">Descrição Detalhada da Ocorrência</label>
-                        <textarea id="descricao" rows="10" witdh="40px" required placeholder="Descreva o problema com o máximo de detalhes. Ex: 'O elevador do Bloco B está parado no 3º andar desde as 14h, com cheiro de queimado.'"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="anexo"><i class="fas fa-paperclip"></i> Anexar Foto ou Documento (Opcional)</label>
-                        <input type="file" id="anexo" accept="image/*, .pdf">
-                    </div>
-                </fieldset>
-
-                <div class="button-group">
-                    <button type="submit" class="submit-button"><i class="fas fa-bullhorn"></i> Enviar Ocorrência</button>
-                    <button type="reset" class="reset-button"><i class="fas fa-eraser"></i> Limpar Formulário</button>
+            <form class="admin-inline-form" id="ocorrencia-form-portaria">
+                <input type="text" id="oc-tipo" placeholder="Tipo / assunto" required>
+                <input type="text" id="oc-local" placeholder="Local da ocorrência" required>
+                <select id="oc-prioridade" class="action-select" required>
+                    <option value="BAIXA">Prioridade baixa</option>
+                    <option value="MEDIA" selected>Prioridade média</option>
+                    <option value="ALTA">Prioridade alta</option>
+                </select>
+                <textarea id="oc-descricao" class="admin-inline-textarea" placeholder="Descrição detalhada da ocorrência" required></textarea>
+                <div class="admin-inline-form-actions">
+                    <button type="submit" class="primary-button"><i class="fas fa-plus-circle"></i> Registrar ocorrência</button>
+                    <button type="button" class="reset-button" id="ocorrencia-cancelar-edicao-portaria" hidden>Cancelar edição</button>
                 </div>
             </form>
-        </div>
+            <p class="admin-inline-feedback" id="ocorrencia-feedback-portaria" aria-live="polite"></p>
+        </section>
 
-        <div class="widget">
-            <h2><i class="fas fa-clipboard-list"></i> Minhas Ocorrências Ativas</h2>
-            <table class="data-table" id="ocorrencias-table">
+        <section class="widget admin-ops-panel">
+            <div class="controls-container">
+                <div class="search-group">
+                    <input type="search" class="search-input" placeholder="Buscar por assunto, local ou descrição..." id="ocorrencias-search-portaria">
+                </div>
+            </div>
+
+            <table class="data-table">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tipo</th>
+                        <th>Assunto</th>
                         <th>Local</th>
-                        <th>Data Abertura</th>
+                        <th>Prioridade</th>
                         <th>Status</th>
+                        <th>Abertura</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody id="ocorrencias-body" data-ocorrencias-colaborador-body>
-                    <tr>
-                        <td>#0045</td>
-                        <td>Estrutural</td>
-                        <td>Elevador do Bloco B</td>
-                        <td>18/10/2025</td>
-                        <td class="status-andamento">Em Análise</td>
-                        <td>
-                            <a href="detalhes-ocorrencia-colaborador.html" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
-                            <a href="detalhes-ocorrencia-colaborador.html?acao=responder" class="action-link" style="color: #e67e22;"><i class="fas fa-reply"></i> Responder</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#0044</td>
-                        <td>Ruído / Comportamental</td>
-                        <td>Unidade 305</td>
-                        <td>15/10/2025</td>
-                        <td class="status-resolvida">Resolvida</td>
-                        <td>
-                            <a href="detalhes-ocorrencia-colaborador.html" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
-                            <a href="detalhes-ocorrencia-colaborador.html?acao=reabrir" class="action-link" style="color: #3498db;"><i class="fas fa-redo"></i> Reabrir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#0043</td>
-                        <td>Problema em Unidade</td>
-                        <td>Minha Unidade 405 (Vazamento)</td>
-                        <td>01/09/2025</td>
-                        <td class="status-baixa">Concluída</td>
-                        <td>
-                            <a href="detalhes-ocorrencia-colaborador.html" class="action-link"><i class="fas fa-eye"></i> Detalhes</a>
-                        </td>
-                    </tr>
+                <tbody id="ocorrencias-body-portaria">
+                    <tr><td colspan="7" style="text-align:center">Carregando ocorrências...</td></tr>
                 </tbody>
             </table>
-        </div>
-
+        </section>
 
         <footer class="content-footer">
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
-    </div>
+    </main>
 
     <script src="../../public/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html?role=colaborador';
+                return;
+            }
+
+            const body = document.getElementById('ocorrencias-body-portaria');
+            const searchInput = document.getElementById('ocorrencias-search-portaria');
+            const feedback = document.getElementById('ocorrencia-feedback-portaria');
+            const form = document.getElementById('ocorrencia-form-portaria');
+            const cancelButton = document.getElementById('ocorrencia-cancelar-edicao-portaria');
+            let ocorrencias = [];
+            let editingId = null;
+
+            function priorityClass(value) {
+                if (value === 'ALTA') return 'status-alta';
+                if (value === 'BAIXA') return 'status-baixa';
+                return 'status-media';
+            }
+
+            function statusClass(value) {
+                if (value === 'RESOLVIDA') return 'status-resolvida';
+                if (value === 'EM_ANDAMENTO') return 'status-andamento';
+                return 'status-pendente';
+            }
+
+            function statusLabel(value) {
+                if (value === 'RESOLVIDA') return 'Resolvida';
+                if (value === 'EM_ANDAMENTO') return 'Em andamento';
+                return 'Em análise';
+            }
+
+            function formatDate(value) {
+                const date = new Date(value);
+                return Number.isNaN(date.getTime()) ? '-' : date.toLocaleDateString('pt-BR');
+            }
+
+            function render() {
+                const query = String(searchInput.value || '').toLowerCase();
+                const filtered = ocorrencias.filter((item) => {
+                    const texto = [item.tipo, item.local, item.descricao].join(' ').toLowerCase();
+                    return !query || texto.includes(query);
+                });
+
+                if (!filtered.length) {
+                    body.innerHTML = '<tr><td colspan="7" style="text-align:center">Nenhuma ocorrência encontrada.</td></tr>';
+                    return;
+                }
+
+                body.innerHTML = filtered.map((item) => `
+                    <tr>
+                        <td>#${String(item.id).padStart(4, '0')}</td>
+                        <td>${item.tipo}</td>
+                        <td>${item.local}</td>
+                        <td class="${priorityClass(item.prioridade)}">${item.prioridade}</td>
+                        <td class="${statusClass(item.status)}">${statusLabel(item.status)}</td>
+                        <td>${formatDate(item.createdAt)}</td>
+                        <td>
+                            <a href="detalhes-ocorrencia-colaborador.html?id=${item.id}" class="action-link">Detalhes</a>
+                            <button type="button" class="table-action-button is-success" data-edit-id="${item.id}">Editar</button>
+                            <button type="button" class="table-action-button" data-delete-id="${item.id}">Excluir</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            function resetFormState() {
+                editingId = null;
+                form.reset();
+                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-plus-circle"></i> Registrar ocorrência';
+                cancelButton.hidden = true;
+                feedback.textContent = '';
+                feedback.className = 'admin-inline-feedback';
+            }
+
+            function fillForm(item) {
+                editingId = item.id;
+                document.getElementById('oc-tipo').value = item.tipo;
+                document.getElementById('oc-local').value = item.local;
+                document.getElementById('oc-descricao').value = item.descricao;
+                document.getElementById('oc-prioridade').value = item.prioridade;
+                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Salvar ocorrência';
+                cancelButton.hidden = false;
+                feedback.textContent = `Editando a ocorrência #${String(item.id).padStart(4, '0')}.`;
+                feedback.className = 'admin-inline-feedback is-success';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            async function loadOcorrencias() {
+                try {
+                    const res = await fetch('/api/ocorrencias', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+
+                    if (res.status === 401) {
+                        localStorage.removeItem('nexus_token');
+                        localStorage.removeItem('nexus_user');
+                        window.location.href = '/login.html?role=colaborador';
+                        return;
+                    }
+
+                    ocorrencias = await res.json();
+                    render();
+                } catch {
+                    body.innerHTML = '<tr><td colspan="7" style="text-align:center">Erro ao carregar ocorrências.</td></tr>';
+                }
+            }
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                feedback.textContent = '';
+
+                const bodyPayload = {
+                    tipo: document.getElementById('oc-tipo').value.trim(),
+                    local: document.getElementById('oc-local').value.trim(),
+                    descricao: document.getElementById('oc-descricao').value.trim(),
+                    prioridade: document.getElementById('oc-prioridade').value,
+                    status: 'EM_ANALISE'
+                };
+
+                try {
+                    const wasEditing = Boolean(editingId);
+                    const res = await fetch(editingId ? `/api/ocorrencias/${editingId}` : '/api/ocorrencias', {
+                        method: editingId ? 'PUT' : 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify(bodyPayload)
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Erro ao registrar ocorrência.');
+                    }
+
+                    resetFormState();
+                    feedback.textContent = wasEditing
+                        ? `Ocorrência #${String(data.id).padStart(4, '0')} atualizada com sucesso.`
+                        : `Ocorrência #${String(data.id).padStart(4, '0')} registrada com sucesso.`;
+                    feedback.className = 'admin-inline-feedback is-success';
+                    await loadOcorrencias();
+                } catch (error) {
+                    feedback.textContent = error.message || 'Erro ao registrar ocorrência.';
+                    feedback.className = 'admin-inline-feedback is-error';
+                }
+            });
+
+            searchInput.addEventListener('input', render);
+
+            body.addEventListener('click', async function (event) {
+                const editButton = event.target.closest('[data-edit-id]');
+                if (editButton) {
+                    const item = ocorrencias.find((entry) => entry.id === Number(editButton.dataset.editId));
+                    if (item) fillForm(item);
+                    return;
+                }
+
+                const deleteButton = event.target.closest('[data-delete-id]');
+                if (!deleteButton) return;
+                const id = Number(deleteButton.dataset.deleteId);
+                if (!confirm('Deseja realmente excluir esta ocorrência?')) return;
+
+                try {
+                    const res = await fetch(`/api/ocorrencias/${id}`, {
+                        method: 'DELETE',
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Erro ao excluir ocorrência.');
+                    }
+                    if (editingId === id) {
+                        resetFormState();
+                    }
+                    await loadOcorrencias();
+                } catch (error) {
+                    alert(error.message || 'Erro ao excluir ocorrência.');
+                }
+            });
+
+            cancelButton.addEventListener('click', resetFormState);
+
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
+
+            loadOcorrencias();
+        });
+    </script>
 </body>
 
 </html>

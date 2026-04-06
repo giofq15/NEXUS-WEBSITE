@@ -35,14 +35,6 @@ async function list(req, res) {
       where.prioridade = normalizePriority(prioridade);
     }
 
-    if (!isAdminLevel(req.user)) {
-      const colaboradorId = getActorColaboradorId(req.user);
-      if (!colaboradorId) {
-        return res.status(403).json({ error: 'Usuario colaborador invalido' });
-      }
-      where.colaboradorId = colaboradorId;
-    }
-
     const ocorrencias = await prisma.ocorrencia.findMany({
       where,
       include: {
@@ -77,15 +69,28 @@ async function getById(req, res) {
       return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
     }
 
-    if (!isAdminLevel(req.user) && ocorrencia.colaboradorId !== getActorColaboradorId(req.user)) {
-      return res.status(403).json({ error: 'Sem permissao para acessar esta ocorrencia' });
-    }
-
     res.json(ocorrencia);
   } catch (error) {
     console.error('Erro ao buscar ocorrencia:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
+}
+
+function canManageOcorrencia(user, ocorrencia) {
+  if (isAdminLevel(user)) {
+    return true;
+  }
+
+  const actorId = getActorColaboradorId(user);
+  if (!actorId) {
+    return false;
+  }
+
+  if (!ocorrencia.colaboradorId) {
+    return true;
+  }
+
+  return ocorrencia.colaboradorId === actorId;
 }
 
 async function create(req, res) {
@@ -146,6 +151,10 @@ async function updateStatus(req, res) {
       return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
     }
 
+    if (!canManageOcorrencia(req.user, ocorrencia)) {
+      return res.status(403).json({ error: 'Sem permissao para atualizar esta ocorrencia' });
+    }
+
     const updated = await prisma.ocorrencia.update({
       where: { id },
       data: { status: normalizeStatus(status) },
@@ -163,4 +172,60 @@ async function updateStatus(req, res) {
   }
 }
 
-module.exports = { list, getById, create, updateStatus };
+async function update(req, res) {
+  try {
+    const id = Number(req.params.id);
+    const ocorrencia = await prisma.ocorrencia.findUnique({ where: { id } });
+    if (!ocorrencia) {
+      return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
+    }
+
+    if (!canManageOcorrencia(req.user, ocorrencia)) {
+      return res.status(403).json({ error: 'Sem permissao para editar esta ocorrencia' });
+    }
+
+    const { tipo, local, descricao, prioridade, status } = req.body;
+    const updated = await prisma.ocorrencia.update({
+      where: { id },
+      data: {
+        tipo,
+        local,
+        descricao,
+        prioridade: normalizePriority(prioridade),
+        status: normalizeStatus(status || ocorrencia.status),
+      },
+      include: {
+        colaborador: {
+          select: { id: true, nome: true, bloco: true, unidade: true },
+        },
+      },
+    });
+
+    res.json(updated);
+  } catch (error) {
+    console.error('Erro ao atualizar ocorrencia:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
+async function remove(req, res) {
+  try {
+    const id = Number(req.params.id);
+    const ocorrencia = await prisma.ocorrencia.findUnique({ where: { id } });
+    if (!ocorrencia) {
+      return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
+    }
+
+    if (!canManageOcorrencia(req.user, ocorrencia)) {
+      return res.status(403).json({ error: 'Sem permissao para excluir esta ocorrencia' });
+    }
+
+    await prisma.ocorrencia.delete({ where: { id } });
+    res.json({ message: 'Ocorrencia removida com sucesso' });
+  } catch (error) {
+    console.error('Erro ao remover ocorrencia:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
+module.exports = { list, getById, create, updateStatus, update, remove };

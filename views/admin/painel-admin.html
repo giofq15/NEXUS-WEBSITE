@@ -23,40 +23,39 @@
         <nav>
             <ul>
                 <li class="active"><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="moradores.html"><i class="fas fa-users"></i> Equipe e Acessos</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
-                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
-                <li><a href="configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="main-content">
-        <section class="admin-hero">
+        <section class="admin-hero admin-hero-syndic">
             <div class="admin-hero-copy">
-                <span class="admin-hero-eyebrow"><i class="fas fa-shield-alt"></i> Central administrativa</span>
-                <h1>Operacao integrada do <span data-condominio-nome>NEXUS</span></h1>
-                <p>Visual mais executivo para acompanhar equipes, comunicados, consumo e pendencias do condominio em um unico painel.</p>
+                <span class="admin-hero-eyebrow"><i class="fas fa-building-shield"></i> Painel do síndico</span>
+                <h1>O que precisa da sua atenção hoje</h1>
+                <p>Uma leitura rápida da operação do condomínio, priorizando ocorrências, comunicação e pontos que pedem decisão.</p>
 
-                <div class="admin-hero-highlights">
+                <div class="admin-hero-highlights admin-hero-highlights-compact">
                     <article class="admin-highlight-card">
-                        <span>Atendimentos em aberto</span>
-                        <strong>05</strong>
-                        <small>2 aguardando retorno da manutencao</small>
+                        <span>Pendências urgentes</span>
+                        <strong data-dashboard-urgentes>0</strong>
+                        <small data-dashboard-urgentes-texto>Carregando prioridades.</small>
                     </article>
                     <article class="admin-highlight-card">
-                        <span>Consumo monitorado</span>
-                        <strong>88 m3</strong>
-                        <small>-12% em relacao ao mes anterior</small>
+                        <span>Pagamentos em atraso</span>
+                        <strong>7</strong>
+                        <small>Unidades que precisam de acompanhamento nesta semana.</small>
                     </article>
                     <article class="admin-highlight-card">
                         <span>Comunicados ativos</span>
-                        <strong>03</strong>
-                        <small>1 aviso urgente publicado hoje</small>
+                        <strong data-dashboard-comunicados>0</strong>
+                        <small>Avisos em circulação para moradores e equipe.</small>
                     </article>
                 </div>
             </div>
@@ -64,135 +63,195 @@
             <section class="admin-brand-panel" aria-labelledby="branding-title">
                 <div class="admin-brand-panel-header">
                     <div>
-                        <span class="admin-panel-kicker">Configuracoes institucionais</span>
-                        <h2 id="branding-title">Dados centrais do condominio</h2>
+                        <span class="admin-panel-kicker">Visão institucional</span>
+                        <h2 id="branding-title">Resumo do condomínio</h2>
                     </div>
-                    <span class="status-pill status-ativo">Personalizavel</span>
+                    <span class="status-pill status-ativo">Operação estável</span>
                 </div>
 
-                <p>As configuracoes abaixo sao reaproveitadas nas telas administrativas. Edite tudo em <a href="configuracoes.html" class="action-link">Configuracoes</a>.</p>
-
                 <div class="admin-brand-preview">
-                    <span>Condominio ativo</span>
+                    <span>Condomínio ativo</span>
                     <strong data-condominio-nome>NEXUS</strong>
-                    <p data-condominio-endereco>Endereco do condominio nao informado</p>
-                    <p><strong>Razao social:</strong> <span data-condominio-razao-social>Nexus Gestao Condominial Ltda.</span></p>
-                    <p><strong>Telefone do predio:</strong> <span data-condominio-telefone>(11) 4000-0000</span></p>
-                    <p><strong>Equipe prevista:</strong> <span data-condominio-colaboradores>12</span> colaboradores</p>
+                    <p data-condominio-endereco>Endereço do condomínio não informado</p>
+                    <p><strong>Síndico responsável:</strong> <span data-condominio-sindico>Administração local</span></p>
+                    <p><strong>Telefone:</strong> <span data-condominio-telefone>(11) 4000-0000</span></p>
+                    <p><strong>Atendimentos previstos:</strong> <span data-condominio-colaboradores>12</span> registros operacionais no período</p>
+                </div>
+
+                <div class="admin-priority-panel">
+                    <h3>Próximas decisões</h3>
+                    <ul class="admin-priority-list">
+                        <li><i class="fas fa-circle"></i> Validar orçamento da manutenção do elevador.</li>
+                        <li><i class="fas fa-circle"></i> Revisar régua de cobrança das unidades inadimplentes.</li>
+                        <li><i class="fas fa-circle"></i> Aprovar aviso preventivo sobre manutenção hidráulica.</li>
+                    </ul>
+                    <a href="configuracoes.html" class="action-link">Atualizar dados do condomínio</a>
                 </div>
             </section>
         </section>
 
-        <section class="admin-kpi-grid" aria-label="Indicadores rapidos">
+        <section class="admin-kpi-grid admin-kpi-grid-simplified" aria-label="Indicadores principais">
             <article class="admin-kpi-card">
-                <div class="admin-kpi-icon"><i class="fas fa-bell"></i></div>
+                <div class="admin-kpi-icon"><i class="fas fa-triangle-exclamation"></i></div>
                 <div>
-                    <span>Ocorrencias pendentes</span>
-                    <strong>5</strong>
-                    <p>Prioridade alta em Torre B</p>
+                    <span>Ocorrências abertas</span>
+                    <strong data-dashboard-abertas>0</strong>
+                    <p data-dashboard-abertas-texto>Carregando painel operacional.</p>
                 </div>
             </article>
             <article class="admin-kpi-card">
-                <div class="admin-kpi-icon is-water"><i class="fas fa-tint"></i></div>
+                <div class="admin-kpi-icon is-calendar"><i class="fas fa-clipboard-check"></i></div>
                 <div>
-                    <span>Economia de agua</span>
-                    <strong>+12%</strong>
-                    <p>Meta mensal acima do esperado</p>
+                    <span>Tarefas do dia</span>
+                    <strong>4</strong>
+                    <p>Vistorias, aprovação de aviso e conferência financeira.</p>
                 </div>
             </article>
             <article class="admin-kpi-card">
                 <div class="admin-kpi-icon is-team"><i class="fas fa-users-cog"></i></div>
                 <div>
-                    <span>Equipe no turno</span>
-                    <strong>3</strong>
-                    <p>Portaria, limpeza e manutencao</p>
-                </div>
-            </article>
-            <article class="admin-kpi-card">
-                <div class="admin-kpi-icon is-calendar"><i class="fas fa-calendar-check"></i></div>
-                <div>
-                    <span>Reservas do dia</span>
-                    <strong>8</strong>
-                    <p>Quadra e salao com alta procura</p>
+                    <span>Frentes em andamento</span>
+                    <strong data-dashboard-andamento>0</strong>
+                    <p>Chamados e rotinas acompanhados pelo condomínio.</p>
                 </div>
             </article>
         </section>
 
-        <div class="dashboard-grid">
+        <div class="dashboard-grid admin-dashboard-grid admin-dashboard-grid-simplified">
             <div class="main-column">
-                <h2>Painel de infraestrutura e consumo</h2>
-
-                <div class="widget admin-chart-card">
-                    <h3>Historico operacional da estrutura</h3>
-                    <div class="graph-placeholder admin-graph-placeholder">
-                        <div class="admin-graph-bars" aria-hidden="true">
-                            <span style="--bar-size: 46%"></span>
-                            <span style="--bar-size: 62%"></span>
-                            <span style="--bar-size: 54%"></span>
-                            <span style="--bar-size: 76%"></span>
-                            <span style="--bar-size: 68%"></span>
-                            <span style="--bar-size: 58%"></span>
-                            <span style="--bar-size: 41%"></span>
+                <section class="admin-section-card">
+                    <div class="admin-section-header">
+                        <div>
+                            <span class="admin-section-kicker">Decisão rápida</span>
+                            <h3>Painel de prioridades do síndico</h3>
                         </div>
-                        <p>Visao ilustrativa de uso e estabilidade dos blocos ao longo da semana</p>
+                        <a href="../ocorrencias/ocorrencias.html" class="action-link">Ver ocorrências</a>
                     </div>
-                </div>
 
-                <h2>Ultimas Ocorrencias</h2>
-                <div class="widget occurrence-preview-card">
-                    <div class="occurrence-preview-header">
-                        <h3>Manutencao de Elevador - Torre B</h3>
-                        <span class="status-pill status-pendente">Pendente</span>
+                    <div class="admin-status-board admin-status-board-simplified">
+                        <article class="admin-status-item is-critical">
+                            <span>Resolver hoje</span>
+                            <strong>Elevador Torre B</strong>
+                            <p>Falha recorrente em horário de pico. Precisa de retorno da empresa de manutenção.</p>
+                        </article>
+                        <article class="admin-status-item is-warning">
+                            <span>Acompanhar</span>
+                            <strong>7 unidades em atraso</strong>
+                            <p>Há boletos vencidos próximos do fechamento do mês e cobrança em andamento.</p>
+                        </article>
+                        <article class="admin-status-item is-ok">
+                            <span>Em dia</span>
+                            <strong>Rotina operacional</strong>
+                            <p>Portaria, limpeza e atendimento terceirizado sem intercorrência crítica no turno.</p>
+                        </article>
                     </div>
-                    <p class="occurrence-preview-meta"><i class="far fa-clock"></i> Aberta ha 2 dias • Unidade 204</p>
-                    <p>Relato de travamento intermitente da porta do elevador no horario de pico.</p>
-                    <a href="../ocorrencias/detalhes-ocorrencia.html" class="action-link">Ver Detalhes</a>
-                </div>
+                </section>
+
+                <section class="admin-section-card">
+                    <div class="admin-section-header">
+                        <div>
+                            <span class="admin-section-kicker">Ocorrências recentes</span>
+                            <h3>Chamados que merecem aviso ou retorno</h3>
+                        </div>
+                        <a href="#portal-comunicados-titulo" class="action-link">Editar comunicado</a>
+                    </div>
+
+                    <div class="admin-syndic-list" data-dashboard-ocorrencias-list>
+                        <article class="admin-syndic-item">
+                            <strong>Nenhuma ocorrência carregada</strong>
+                            <p>As prioridades operacionais aparecerão aqui conforme as ocorrências forem registradas.</p>
+                            <span>Aguardando dados</span>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="admin-section-card">
+                    <div class="admin-section-header">
+                        <div>
+                            <span class="admin-section-kicker">Agenda</span>
+                            <h3>Compromissos principais do dia</h3>
+                        </div>
+                        <a href="../colaborador/plantao.html" class="action-link">Abrir plantão</a>
+                    </div>
+
+                    <ul class="admin-agenda-list admin-agenda-list-expanded" data-dashboard-agenda-list>
+                        <li><strong>09:00</strong><span>Vistoria técnica no elevador da Torre B.</span></li>
+                        <li><strong>11:30</strong><span>Conferência das unidades inadimplentes com apoio financeiro.</span></li>
+                        <li><strong>16:00</strong><span>Envio do comunicado operacional para moradores.</span></li>
+                    </ul>
+                </section>
+
+                <section class="admin-section-card">
+                    <div class="admin-section-header">
+                        <div>
+                            <span class="admin-section-kicker">Portaria</span>
+                            <h3>Passagem de turno recente</h3>
+                        </div>
+                    </div>
+
+                    <div class="admin-syndic-list" data-dashboard-turnos-list>
+                        <article class="admin-syndic-item">
+                            <strong>Nenhum turno registrado</strong>
+                            <p>Os registros da portaria aparecerão aqui para acompanhamento do síndico.</p>
+                            <span>Aguardando dados</span>
+                        </article>
+                    </div>
+                </section>
             </div>
 
             <div class="side-column">
-                <h2>Resumos Rapidos</h2>
+                <section class="widget admin-focus-card">
+                    <h3>Atalhos úteis</h3>
+                    <div class="admin-quick-actions">
+                        <a href="../financeiro/financeiro.html" class="action-link"><i class="fas fa-chart-line"></i> Revisar financeiro</a>
+                        <a href="../financeiro/financeiro.html#inadimplencia" class="action-link"><i class="fas fa-file-invoice-dollar"></i> Cobranças em atraso</a>
+                        <a href="../colaborador/reservas.html" class="action-link"><i class="fas fa-calendar-days"></i> Ver reservas</a>
+                    </div>
+                </section>
 
-                <div class="widget">
-                    <h3>Ocorrencias Pendentes</h3>
-                    <p class="data">5</p>
-                    <a href="../ocorrencias/ocorrencias.html">Ver todas as Ocorrencias</a>
-                </div>
+                <section class="widget admin-focus-card">
+                    <h3>Leitura rápida da operação</h3>
+                    <ul class="admin-mini-metrics">
+                        <li>
+                            <span>Ocorrências críticas</span>
+                            <strong data-dashboard-criticas>0</strong>
+                        </li>
+                        <li>
+                            <span>Chamados em andamento</span>
+                            <strong data-dashboard-em-andamento>0</strong>
+                        </li>
+                        <li>
+                            <span>Reservas do dia</span>
+                            <strong data-dashboard-reservas>0</strong>
+                        </li>
+                    </ul>
+                </section>
 
-                <div class="widget">
-                    <h3>Economia de Agua (Mes)</h3>
-                    <p class="percentage">+12%</p>
-                    <a href="../colaborador/monitoramento-iot.html">Central de Infraestrutura</a>
-                </div>
-
-                <div class="widget">
-                    <h3>Colaboradores Ativos no Turno</h3>
-                    <p class="data">3</p>
-                    <a href="moradores.html">Ver Colaboradores</a>
-                </div>
-
-                <div class="widget admin-quick-actions">
-                    <h3>Acoes Rapidas</h3>
-                    <a href="novo-colaborador.html" class="action-link"><i class="fas fa-user-plus"></i> Cadastrar colaborador</a>
-                    <a href="../ocorrencias/ocorrencias.html" class="action-link"><i class="fas fa-clipboard-list"></i> Gerenciar ocorrencias</a>
-                    <a href="../financeiro/financeiro.html" class="action-link"><i class="fas fa-chart-line"></i> Revisar financeiro</a>
-                </div>
+                <section class="widget admin-focus-card">
+                    <h3>Operação</h3>
+                    <div class="admin-consumption-highlight">
+                        <strong>Estável</strong>
+                        <span>sem alertas críticos</span>
+                    </div>
+                    <p>Resumo operacional mantido estável enquanto o condomínio acompanha ocorrências e agenda do dia.</p>
+                    <a href="../colaborador/reservas.html" class="action-link">Abrir agenda operacional</a>
+                </section>
             </div>
         </div>
 
         <section class="widget comunicados-editor" aria-labelledby="portal-comunicados-titulo" data-comunicados-admin>
             <div class="comunicados-editor-header">
                 <div>
-                    <h2 id="portal-comunicados-titulo">Central de Comunicados Operacionais</h2>
-                    <p>Edite e publique avisos para equipes, portaria e operacao interna do condominio.</p>
+                    <h2 id="portal-comunicados-titulo">Central de comunicados</h2>
+                    <p>Escreva avisos curtos e claros para moradores, com prioridade definida e pré-visualização antes do envio.</p>
                 </div>
-                <span class="status-pill status-ativo">Rascunho Ativo</span>
+                <span class="status-pill status-ativo">Rascunho ativo</span>
             </div>
 
             <form class="comunicados-form" action="#" method="post" data-comunicados-form>
                 <div class="form-group">
-                    <label for="comunicado-titulo">Titulo do Comunicado</label>
-                    <input id="comunicado-titulo" type="text" value="Manutencao da caixa d'agua - Bloco B" data-comunicado-titulo>
+                    <label for="comunicado-titulo">Título do comunicado</label>
+                    <input id="comunicado-titulo" type="text" value="Manutenção da caixa d'água - Bloco B" data-comunicado-titulo>
                 </div>
 
                 <div class="form-group">
@@ -205,18 +264,18 @@
                 </div>
 
                 <div class="form-group form-group-full">
-                    <label for="comunicado-texto">Conteudo</label>
-                    <textarea id="comunicado-texto" rows="5" data-comunicado-texto>Informamos que amanha, das 09h as 12h, havera manutencao preventiva da caixa d'agua no Bloco B. O abastecimento podera oscilar nesse periodo.</textarea>
+                    <label for="comunicado-texto">Conteúdo</label>
+                    <textarea id="comunicado-texto" rows="5" data-comunicado-texto>Informamos que amanhã, das 09h às 12h, haverá manutenção preventiva da caixa d'água no Bloco B. O abastecimento poderá oscilar nesse período.</textarea>
                 </div>
 
                 <div class="button-group comunicados-actions">
-                    <button type="button" class="reset-button" data-comunicados-action="preview"><i class="fas fa-eye"></i> Pre-visualizar</button>
-                    <button type="button" class="primary-button" data-comunicados-action="draft"><i class="fas fa-save"></i> Salvar Rascunho</button>
-                    <button type="submit" class="submit-button" data-comunicados-action="publish"><i class="fas fa-paper-plane"></i> Publicar Comunicado</button>
+                    <button type="button" class="reset-button" data-comunicados-action="preview"><i class="fas fa-eye"></i> Pré-visualizar</button>
+                    <button type="button" class="primary-button" data-comunicados-action="draft"><i class="fas fa-save"></i> Salvar rascunho</button>
+                    <button type="submit" class="submit-button" data-comunicados-action="publish"><i class="fas fa-paper-plane"></i> Publicar e enviar por e-mail</button>
                 </div>
                 <p class="comunicados-feedback" data-comunicados-feedback aria-live="polite"></p>
                 <section class="comunicados-preview" data-comunicados-preview hidden>
-                    <h3>Pre-visualizacao</h3>
+                    <h3>Pré-visualização</h3>
                     <article class="comunicados-preview-card">
                         <header>
                             <strong data-preview-titulo></strong>
@@ -231,15 +290,124 @@
 
     <script src="../../public/js/script.js"></script>
     <script>
-        if (!localStorage.getItem('nexus_token')) {
-            window.location.href = '/login.html?role=admin';
-        }
+        document.addEventListener('DOMContentLoaded', async function () {
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html?role=admin';
+                return;
+            }
 
-        document.querySelector('a[href="/"]').addEventListener('click', function (e) {
-            e.preventDefault();
-            localStorage.removeItem('nexus_token');
-            localStorage.removeItem('nexus_user');
-            window.location.href = '/';
+            function readJson(key, fallbackValue) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) return fallbackValue;
+                    const parsed = JSON.parse(raw);
+                    return parsed || fallbackValue;
+                } catch {
+                    return fallbackValue;
+                }
+            }
+
+            const comunicados = readJson('nexus_comunicados_v1', []).filter((item) => item.status === 'publicado');
+            const reservas = readJson('nexus_reservas_admin_v2', []);
+            const agenda = readJson('nexus_plantao_agenda_v1', []);
+            document.querySelector('[data-dashboard-comunicados]').textContent = String(comunicados.length);
+            document.querySelector('[data-dashboard-reservas]').textContent = String(reservas.length);
+
+            const agendaList = document.querySelector('[data-dashboard-agenda-list]');
+            if (agendaList) {
+                if (agenda.length) {
+                    agendaList.innerHTML = agenda
+                        .slice()
+                        .sort((a, b) => String(a.hora || '').localeCompare(String(b.hora || '')))
+                        .slice(0, 4)
+                        .map((item) => `
+                            <li>
+                                <strong>${item.hora || '--:--'}</strong>
+                                <span>${item.titulo}${item.local ? ` • ${item.local}` : ''}</span>
+                            </li>
+                        `).join('');
+                } else {
+                    agendaList.innerHTML = `
+                        <li>
+                            <strong>Sem agenda</strong>
+                            <span>Os compromissos do dia aparecerão aqui assim que forem cadastrados no plantão.</span>
+                        </li>
+                    `;
+                }
+            }
+
+            try {
+                const res = await fetch('/api/ocorrencias', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (res.status === 401) {
+                    localStorage.removeItem('nexus_token');
+                    localStorage.removeItem('nexus_user');
+                    window.location.href = '/login.html?role=admin';
+                    return;
+                }
+
+                const ocorrencias = await res.json();
+                const urgentes = ocorrencias.filter((item) => item.prioridade === 'ALTA' && item.status !== 'RESOLVIDA');
+                const abertas = ocorrencias.filter((item) => item.status !== 'RESOLVIDA');
+                const emAndamento = ocorrencias.filter((item) => item.status === 'EM_ANDAMENTO');
+
+                document.querySelector('[data-dashboard-urgentes]').textContent = String(urgentes.length);
+                document.querySelector('[data-dashboard-urgentes-texto]').textContent = urgentes.length
+                    ? 'Ocorrências de alta prioridade exigem retorno rápido.'
+                    : 'Nenhuma pendência crítica no momento.';
+                document.querySelector('[data-dashboard-abertas]').textContent = String(abertas.length);
+                document.querySelector('[data-dashboard-abertas-texto]').textContent = abertas.length
+                    ? `${abertas.length} chamado(s) ainda exigem acompanhamento.`
+                    : 'Não há chamados abertos neste momento.';
+                document.querySelector('[data-dashboard-andamento]').textContent = String(emAndamento.length);
+                document.querySelector('[data-dashboard-criticas]').textContent = String(urgentes.length);
+                document.querySelector('[data-dashboard-em-andamento]').textContent = String(emAndamento.length);
+
+                const listRoot = document.querySelector('[data-dashboard-ocorrencias-list]');
+                if (ocorrencias.length) {
+                    listRoot.innerHTML = ocorrencias.slice(0, 3).map((item) => `
+                        <article class="admin-syndic-item">
+                            <strong>${item.tipo}</strong>
+                            <p>${item.local} • ${item.descricao}</p>
+                            <span>${String(item.status || '').replaceAll('_', ' ')}</span>
+                            <a href="../ocorrencias/detalhes-ocorrencia.html?id=${item.id}" class="action-link">Ver detalhes</a>
+                        </article>
+                    `).join('');
+                }
+            } catch {
+                document.querySelector('[data-dashboard-abertas-texto]').textContent = 'Nao foi possivel carregar as ocorrências.';
+            }
+
+            try {
+                const res = await fetch('/api/turnos', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const turnos = await res.json();
+                    const listRoot = document.querySelector('[data-dashboard-turnos-list]');
+                    if (turnos.length) {
+                        listRoot.innerHTML = turnos.slice(0, 4).map((item) => `
+                            <article class="admin-syndic-item">
+                                <strong>${item.turno} • ${item.colaborador?.nome || 'Portaria'}</strong>
+                                <p>${item.resumo}</p>
+                                <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendencia registrada.'}</p>
+                                <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientacoes adicionais.'}</p>
+                                <span>${new Date(item.createdAt).toLocaleString('pt-BR')}</span>
+                            </article>
+                        `).join('');
+                    }
+                }
+            } catch {}
+
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
         });
     </script>
 </body>

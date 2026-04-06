@@ -33,6 +33,7 @@ model Colaborador {
   status      StatusColaborador   @default(PENDENTE)
   veiculos    Veiculo[]
   ocorrencias Ocorrencia[]
+  turnos      TurnoLog[]
   createdAt   DateTime            @default(now()) @map("created_at")
   updatedAt   DateTime            @updatedAt @map("updated_at")
 
@@ -86,4 +87,19 @@ model Ocorrencia {
 
   @@index([colaboradorId])
   @@map("ocorrencias")
+}
+
+model TurnoLog {
+  id             Int           @id @default(autoincrement())
+  colaboradorId  Int?          @map("colaborador_id")
+  colaborador    Colaborador?  @relation(fields: [colaboradorId], references: [id], onDelete: SetNull)
+  turno          String
+  resumo         String
+  pendencias     String?
+  orientacoes    String?
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  @@index([colaboradorId])
+  @@map("turno_logs")
 }

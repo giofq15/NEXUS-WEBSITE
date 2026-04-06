@@ -21,13 +21,12 @@
         <nav>
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="../admin/moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
-                <li class="active"><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Equipe e Acessos</a></li>
+                <li class="active"><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Agendamentos e Reservas</a></li>
-                <li><a href="../colaborador/monitoramento-iot.html"><i class="fas fa-building"></i> Infraestrutura</a></li>
-                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -35,23 +34,23 @@
 
     <main class="main-content">
         <div class="dashboard-header">
-            <h1>Gestao de Ocorrencias</h1>
+            <h1>Gestão de Ocorrências</h1>
             <p>Monitore chamados internos, priorize atendimentos e altere o status operacional sem sair da tela.</p>
         </div>
 
-        <section class="admin-kpi-grid admin-kpi-grid-compact" aria-label="Resumo de ocorrencias">
+        <section class="admin-kpi-grid admin-kpi-grid-compact" aria-label="Resumo de ocorrências">
             <article class="admin-kpi-card">
                 <div class="admin-kpi-icon"><i class="fas fa-list-check"></i></div>
                 <div>
                     <span>Total em fila</span>
                     <strong data-oc-total>0</strong>
-                    <p>Ocorrencias registradas no sistema</p>
+                    <p>Ocorrências registradas no sistema</p>
                 </div>
             </article>
             <article class="admin-kpi-card">
                 <div class="admin-kpi-icon is-calendar"><i class="fas fa-hourglass-half"></i></div>
                 <div>
-                    <span>Em analise</span>
+                    <span>Em análise</span>
                     <strong data-oc-analise>0</strong>
                     <p>Demandas aguardando triagem</p>
                 </div>
@@ -77,22 +76,24 @@
         <section class="widget admin-ops-panel">
             <div class="section-heading">
                 <div>
-                    <h2>Registrar nova ocorrencia</h2>
-                    <p>Abra um novo chamado administrativo sem depender da tela do colaborador.</p>
+                    <h2>Registrar nova ocorrência</h2>
+                    <p>Preencha apenas as informações úteis para acompanhamento do condomínio.</p>
                 </div>
             </div>
 
             <form class="admin-inline-form" id="ocorrencia-form-admin">
                 <input type="text" id="oc-tipo" placeholder="Tipo / assunto" required>
-                <input type="text" id="oc-local" placeholder="Local da ocorrencia" required>
+                <input type="text" id="oc-local" placeholder="Local da ocorrência" required>
                 <select id="oc-prioridade" class="action-select" required>
-                    <option value="MEDIA">Prioridade media</option>
-                    <option value="ALTA">Prioridade alta</option>
                     <option value="BAIXA">Prioridade baixa</option>
+                    <option value="MEDIA" selected>Prioridade média</option>
+                    <option value="ALTA">Prioridade alta</option>
                 </select>
-                <input type="number" id="oc-colaborador-id" min="1" placeholder="ID do colaborador (opcional)">
-                <button type="submit" class="primary-button"><i class="fas fa-plus-circle"></i> Registrar ocorrencia</button>
-                <textarea id="oc-descricao" class="admin-inline-textarea" placeholder="Descricao detalhada da ocorrencia" required></textarea>
+                <textarea id="oc-descricao" class="admin-inline-textarea" placeholder="Descrição detalhada da ocorrência" required></textarea>
+                <div class="admin-inline-form-actions">
+                    <button type="submit" class="primary-button"><i class="fas fa-plus-circle"></i> Registrar ocorrência</button>
+                    <button type="button" class="reset-button" id="ocorrencia-cancelar-edicao" hidden>Cancelar edição</button>
+                </div>
             </form>
             <p class="admin-inline-feedback" id="ocorrencia-feedback" aria-live="polite"></p>
         </section>
@@ -100,20 +101,20 @@
         <section class="widget admin-ops-panel">
             <div class="controls-container">
                 <div class="search-group">
-                    <input type="search" class="search-input" placeholder="Buscar por assunto, local ou colaborador..." id="ocorrencias-search">
+                    <input type="search" class="search-input" placeholder="Buscar por assunto, local ou descrição..." id="ocorrencias-search">
                 </div>
                 <div class="admin-filter-group">
                     <select class="action-select admin-filter-select" id="ocorrencias-status-filter">
                         <option value="">Todos os status</option>
-                        <option value="EM_ANALISE">Em analise</option>
+                        <option value="EM_ANALISE">Em análise</option>
                         <option value="EM_ANDAMENTO">Em andamento</option>
                         <option value="RESOLVIDA">Resolvida</option>
                     </select>
                     <select class="action-select admin-filter-select" id="ocorrencias-prioridade-filter">
                         <option value="">Todas as prioridades</option>
-                        <option value="ALTA">Alta</option>
-                        <option value="MEDIA">Media</option>
                         <option value="BAIXA">Baixa</option>
+                        <option value="MEDIA">Média</option>
+                        <option value="ALTA">Alta</option>
                     </select>
                 </div>
             </div>
@@ -131,7 +132,7 @@
                     </tr>
                 </thead>
                 <tbody id="ocorrencias-body-admin">
-                    <tr><td colspan="7" style="text-align:center">Carregando ocorrencias...</td></tr>
+                    <tr><td colspan="7" style="text-align:center">Carregando ocorrências...</td></tr>
                 </tbody>
             </table>
         </section>
@@ -155,6 +156,8 @@
             const statusFilter = document.getElementById('ocorrencias-status-filter');
             const priorityFilter = document.getElementById('ocorrencias-prioridade-filter');
             const feedback = document.getElementById('ocorrencia-feedback');
+            const form = document.getElementById('ocorrencia-form-admin');
+            const cancelButton = document.getElementById('ocorrencia-cancelar-edicao');
             const stats = {
                 total: document.querySelector('[data-oc-total]'),
                 analise: document.querySelector('[data-oc-analise]'),
@@ -163,6 +166,7 @@
             };
 
             let ocorrencias = [];
+            let editingId = null;
 
             function priorityClass(value) {
                 if (value === 'ALTA') return 'status-alta';
@@ -179,7 +183,7 @@
             function statusLabel(value) {
                 if (value === 'RESOLVIDA') return 'Resolvida';
                 if (value === 'EM_ANDAMENTO') return 'Em andamento';
-                return 'Em analise';
+                return 'Em análise';
             }
 
             function formatDate(value) {
@@ -198,23 +202,21 @@
                 const query = String(searchInput.value || '').toLowerCase();
                 const status = statusFilter.value;
                 const prioridade = priorityFilter.value;
-                const filtered = ocorrencias.filter((item) => {
-                    const texto = [
-                        item.tipo,
-                        item.descricao,
-                        item.local,
-                        item.colaborador?.nome || '',
-                        item.colaborador?.unidade || ''
-                    ].join(' ').toLowerCase();
-                    return (!query || texto.includes(query))
-                        && (!status || item.status === status)
-                        && (!prioridade || item.prioridade === prioridade);
+                    const filtered = ocorrencias.filter((item) => {
+                        const texto = [
+                            item.tipo,
+                            item.descricao,
+                            item.local
+                        ].join(' ').toLowerCase();
+                        return (!query || texto.includes(query))
+                            && (!status || item.status === status)
+                            && (!prioridade || item.prioridade === prioridade);
                 });
 
                 updateStats(ocorrencias);
 
                 if (!filtered.length) {
-                    body.innerHTML = '<tr><td colspan="7" style="text-align:center">Nenhuma ocorrencia encontrada para os filtros atuais.</td></tr>';
+                    body.innerHTML = '<tr><td colspan="7" style="text-align:center">Nenhuma ocorrência encontrada para os filtros atuais.</td></tr>';
                     return;
                 }
 
@@ -223,7 +225,7 @@
                         <td>#${String(item.id).padStart(4, '0')}</td>
                         <td>
                             <strong>${item.tipo}</strong><br>
-                            <small>${item.colaborador?.nome ? `Responsavel relacionado: ${item.colaborador.nome}` : 'Sem colaborador vinculado'}</small>
+                            <small>Acompanhamento centralizado pelo painel administrativo</small>
                         </td>
                         <td>${item.local}</td>
                         <td class="${priorityClass(item.prioridade)}">${item.prioridade}</td>
@@ -237,10 +239,34 @@
                                     <option value="RESOLVIDA" ${item.status === 'RESOLVIDA' ? 'selected' : ''}>Resolvida</option>
                                 </select>
                                 <a href="detalhes-ocorrencia.html?id=${item.id}" class="action-link">Detalhes</a>
+                                <button type="button" class="table-action-button is-success" data-edit-id="${item.id}">Editar</button>
+                                <button type="button" class="table-action-button" data-delete-id="${item.id}">Excluir</button>
                             </div>
                         </td>
                     </tr>
                 `).join('');
+            }
+
+            function resetFormState() {
+                editingId = null;
+                form.reset();
+                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-plus-circle"></i> Registrar ocorrencia';
+                cancelButton.hidden = true;
+                feedback.textContent = '';
+                feedback.className = 'admin-inline-feedback';
+            }
+
+            function fillForm(item) {
+                editingId = item.id;
+                document.getElementById('oc-tipo').value = item.tipo;
+                document.getElementById('oc-local').value = item.local;
+                document.getElementById('oc-descricao').value = item.descricao;
+                document.getElementById('oc-prioridade').value = item.prioridade;
+                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Salvar ocorrencia';
+                cancelButton.hidden = false;
+                feedback.textContent = `Editando a ocorrencia #${String(item.id).padStart(4, '0')}.`;
+                feedback.className = 'admin-inline-feedback is-success';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
             async function loadOcorrencias() {
@@ -282,23 +308,21 @@
                 }
             }
 
-            document.getElementById('ocorrencia-form-admin').addEventListener('submit', async function (event) {
+            form.addEventListener('submit', async function (event) {
                 event.preventDefault();
                 feedback.textContent = '';
                 const bodyPayload = {
                     tipo: document.getElementById('oc-tipo').value.trim(),
                     local: document.getElementById('oc-local').value.trim(),
                     descricao: document.getElementById('oc-descricao').value.trim(),
-                    prioridade: document.getElementById('oc-prioridade').value
+                    prioridade: document.getElementById('oc-prioridade').value,
+                    status: 'EM_ANALISE'
                 };
-                const colaboradorId = Number(document.getElementById('oc-colaborador-id').value || 0);
-                if (colaboradorId > 0) {
-                    bodyPayload.colaboradorId = colaboradorId;
-                }
 
                 try {
-                    const res = await fetch('/api/ocorrencias', {
-                        method: 'POST',
+                    const wasEditing = Boolean(editingId);
+                    const res = await fetch(editingId ? `/api/ocorrencias/${editingId}` : '/api/ocorrencias', {
+                        method: editingId ? 'PUT' : 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: `Bearer ${token}`
@@ -309,8 +333,10 @@
                     if (!res.ok) {
                         throw new Error(data.error || (data.errors || []).map((item) => item.msg).join(', ') || 'Erro ao registrar ocorrencia.');
                     }
-                    document.getElementById('ocorrencia-form-admin').reset();
-                    feedback.textContent = `Ocorrencia #${String(data.id).padStart(4, '0')} registrada com sucesso.`;
+                    resetFormState();
+                    feedback.textContent = wasEditing
+                        ? `Ocorrencia #${String(data.id).padStart(4, '0')} atualizada com sucesso.`
+                        : `Ocorrencia #${String(data.id).padStart(4, '0')} registrada com sucesso.`;
                     feedback.className = 'admin-inline-feedback is-success';
                     await loadOcorrencias();
                 } catch (error) {
@@ -324,6 +350,39 @@
                 if (!select) return;
                 updateStatus(Number(select.dataset.id), select.value);
             });
+
+            body.addEventListener('click', async function (event) {
+                const editButton = event.target.closest('[data-edit-id]');
+                if (editButton) {
+                    const item = ocorrencias.find((entry) => entry.id === Number(editButton.dataset.editId));
+                    if (item) fillForm(item);
+                    return;
+                }
+
+                const deleteButton = event.target.closest('[data-delete-id]');
+                if (!deleteButton) return;
+                const id = Number(deleteButton.dataset.deleteId);
+                if (!confirm('Deseja realmente excluir esta ocorrencia?')) return;
+
+                try {
+                    const res = await fetch(`/api/ocorrencias/${id}`, {
+                        method: 'DELETE',
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Nao foi possivel excluir a ocorrencia.');
+                    }
+                    if (editingId === id) {
+                        resetFormState();
+                    }
+                    await loadOcorrencias();
+                } catch (error) {
+                    alert(error.message || 'Erro ao excluir ocorrencia.');
+                }
+            });
+
+            cancelButton.addEventListener('click', resetFormState);
 
             [searchInput, statusFilter, priorityFilter].forEach((element) => {
                 element.addEventListener('input', render);

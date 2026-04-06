@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
 const { validate } = require('../middleware/validate.middleware');
-const { authenticate, authorizeAdmin } = require('../middleware/auth.middleware');
+const { authenticate } = require('../middleware/auth.middleware');
 const ocorrencias = require('../controllers/ocorrencias.controller');
 
 const router = Router();
@@ -26,9 +26,23 @@ router.post(
   ocorrencias.create
 );
 
+router.put(
+  '/:id',
+  [
+    body('tipo').notEmpty().withMessage('Tipo e obrigatorio'),
+    body('local').notEmpty().withMessage('Local e obrigatorio'),
+    body('descricao').notEmpty().withMessage('Descricao e obrigatoria'),
+    body('prioridade').optional().isIn(['ALTA', 'MEDIA', 'BAIXA']).withMessage('Prioridade invalida'),
+    body('status').optional().isIn(['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA']).withMessage('Status invalido'),
+  ],
+  validate,
+  ocorrencias.update
+);
+
+router.delete('/:id', ocorrencias.remove);
+
 router.patch(
   '/:id/status',
-  authorizeAdmin,
   [body('status').isIn(['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA']).withMessage('Status invalido')],
   validate,
   ocorrencias.updateStatus
