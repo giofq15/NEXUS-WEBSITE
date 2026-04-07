@@ -1206,7 +1206,6 @@ initAdminOcorrencias();
 })();
 
 (function () {
-    const STORAGE_KEY = "nexus_condominio_config_v1";
     const DEFAULT_CONFIG = {
         nome: "NEXUS",
         razaoSocial: "Nexus Gestao Condominial Ltda.",
@@ -1217,26 +1216,35 @@ initAdminOcorrencias();
         sindico: "Responsavel nao informado"
     };
 
-    function readConfig() {
+    function getAdminToken() {
+        return window.localStorage.getItem("nexus_token") || "";
+    }
+
+    async function fetchConfig() {
         try {
-            const raw = window.localStorage.getItem(STORAGE_KEY);
-            if (!raw) {
-                return { ...DEFAULT_CONFIG };
-            }
-            const parsed = JSON.parse(raw);
-            return { ...DEFAULT_CONFIG, ...(parsed || {}) };
-        } catch (error) {
+            const res = await fetch("/api/configuracoes");
+            if (!res.ok) return { ...DEFAULT_CONFIG };
+            const data = await res.json();
+            return { ...DEFAULT_CONFIG, ...data };
+        } catch {
             return { ...DEFAULT_CONFIG };
         }
     }
 
-    function writeConfig(nextConfig) {
-        try {
-            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextConfig));
-            return true;
-        } catch (error) {
-            return false;
+    async function saveConfig(nextConfig) {
+        const token = getAdminToken();
+        const res = await fetch("/api/configuracoes", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(nextConfig)
+        });
+        if (!res.ok) {
+            throw new Error("Erro ao salvar");
         }
+        return res.json();
     }
 
     function applyText(selector, value) {
@@ -1245,55 +1253,51 @@ initAdminOcorrencias();
         });
     }
 
-    function applyCondominioConfig() {
-        const config = readConfig();
-        applyText("[data-condominio-nome]", config.nome);
-        applyText("[data-condominio-razao-social]", config.razaoSocial);
-        applyText("[data-condominio-cnpj]", config.cnpj);
-        applyText("[data-condominio-endereco]", config.endereco);
-        applyText("[data-condominio-telefone]", config.telefonePredio);
-        applyText("[data-condominio-colaboradores]", config.quantidadeColaboradores);
-        applyText("[data-condominio-sindico]", config.sindico);
+    function applyCondominioConfig(config) {
+        applyText("[data-condominio-nome]", config.nome || DEFAULT_CONFIG.nome);
+        applyText("[data-condominio-razao-social]", config.razaoSocial || DEFAULT_CONFIG.razaoSocial);
+        applyText("[data-condominio-cnpj]", config.cnpj || DEFAULT_CONFIG.cnpj);
+        applyText("[data-condominio-endereco]", config.endereco || DEFAULT_CONFIG.endereco);
+        applyText("[data-condominio-telefone]", config.telefonePredio || DEFAULT_CONFIG.telefonePredio);
+        applyText("[data-condominio-colaboradores]", config.quantidadeColaboradores || DEFAULT_CONFIG.quantidadeColaboradores);
+        applyText("[data-condominio-sindico]", config.sindico || DEFAULT_CONFIG.sindico);
 
-        if (document.title) {
+        if (document.title && config.nome) {
             document.title = document.title.replace(/NEXUS|Nexus/g, config.nome);
         }
     }
 
     function initConfigShortcut() {
         const form = document.querySelector("[data-condominio-form]");
-        if (!form) {
-            return;
-        }
+        if (!form) return;
 
         const input = form.querySelector("[data-condominio-input]");
         const feedback = form.querySelector("[data-condominio-feedback]");
-        if (!input || !feedback) {
-            return;
-        }
+        if (!input || !feedback) return;
 
-        const current = readConfig();
-        input.value = current.nome === DEFAULT_CONFIG.nome ? "" : current.nome;
+        fetchConfig().then(function (current) {
+            input.value = current.nome === DEFAULT_CONFIG.nome ? "" : current.nome;
+        });
 
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", async function (event) {
             event.preventDefault();
             const nextName = String(input.value || "").trim() || DEFAULT_CONFIG.nome;
-            const nextConfig = { ...readConfig(), nome: nextName };
-            writeConfig(nextConfig);
-            applyCondominioConfig();
-            input.value = nextName === DEFAULT_CONFIG.nome ? "" : nextName;
-            feedback.textContent = nextName === DEFAULT_CONFIG.nome
-                ? "Nome padrao restaurado."
-                : "Nome do condominio atualizado.";
-            feedback.className = "admin-brand-feedback is-success";
+            try {
+                const saved = await saveConfig({ nome: nextName });
+                applyCondominioConfig(saved);
+                input.value = saved.nome === DEFAULT_CONFIG.nome ? "" : saved.nome;
+                feedback.textContent = "Nome do condominio atualizado.";
+                feedback.className = "admin-brand-feedback is-success";
+            } catch {
+                feedback.textContent = "Nao foi possivel salvar.";
+                feedback.className = "admin-brand-feedback is-error";
+            }
         });
     }
 
     function initConfigPage() {
         const form = document.querySelector("[data-configuracoes-form]");
-        if (!form) {
-            return;
-        }
+        if (!form) return;
 
         const feedback = document.querySelector("[data-configuracoes-feedback]");
         const fields = {
@@ -1306,32 +1310,33 @@ initAdminOcorrencias();
             sindico: form.querySelector('[name="sindico"]')
         };
 
-        const current = readConfig();
-        Object.keys(fields).forEach(function (key) {
-            if (fields[key]) {
-                fields[key].value = current[key] || "";
-            }
+        fetchConfig().then(function (current) {
+            Object.keys(fields).forEach(function (key) {
+                if (fields[key]) {
+                    fields[key].value = current[key] || "";
+                }
+            });
         });
 
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", async function (event) {
             event.preventDefault();
-            const nextConfig = { ...DEFAULT_CONFIG };
+            const nextConfig = {};
             Object.keys(fields).forEach(function (key) {
                 nextConfig[key] = String(fields[key]?.value || "").trim() || DEFAULT_CONFIG[key];
             });
 
-            if (!writeConfig(nextConfig)) {
+            try {
+                const saved = await saveConfig(nextConfig);
+                applyCondominioConfig(saved);
+                if (feedback) {
+                    feedback.textContent = "Configuracoes do condominio salvas com sucesso.";
+                    feedback.className = "admin-inline-feedback is-success";
+                }
+            } catch {
                 if (feedback) {
                     feedback.textContent = "Nao foi possivel salvar as configuracoes.";
                     feedback.className = "admin-inline-feedback is-error";
                 }
-                return;
-            }
-
-            applyCondominioConfig();
-            if (feedback) {
-                feedback.textContent = "Configuracoes do condominio salvas com sucesso.";
-                feedback.className = "admin-inline-feedback is-success";
             }
         });
     }
@@ -1472,7 +1477,7 @@ initAdminOcorrencias();
         });
     }
 
-    applyCondominioConfig();
+    fetchConfig().then(applyCondominioConfig);
     initConfigShortcut();
     initConfigPage();
     initIotCharts();

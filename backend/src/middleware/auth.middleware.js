@@ -24,6 +24,10 @@ function isRootLevel(user) {
   return user.accessLevel === 'ROOT';
 }
 
+function isMoradorLevel(user) {
+  return user.role === 'MORADOR' || user.accessLevel === 'MORADOR';
+}
+
 function authorizeAdmin(req, res, next) {
   if (!isAdminLevel(req.user)) {
     return res.status(403).json({ error: 'Acesso restrito a administradores' });
@@ -38,4 +42,19 @@ function authorizeRoot(req, res, next) {
   next();
 }
 
-module.exports = { authenticate, authorizeAdmin, authorizeRoot, isAdminLevel, isRootLevel };
+function authorizeMorador(req, res, next) {
+  if (!isMoradorLevel(req.user) && !isAdminLevel(req.user)) {
+    return res.status(403).json({ error: 'Acesso restrito a moradores' });
+  }
+  next();
+}
+
+module.exports = {
+  authenticate,
+  authorizeAdmin,
+  authorizeRoot,
+  authorizeMorador,
+  isAdminLevel,
+  isRootLevel,
+  isMoradorLevel,
+};

@@ -9,71 +9,18 @@ function getActorColaboradorId(user) {
 
 function normalizePriority(priority) {
   const value = String(priority || '').toUpperCase();
-  if (value === 'ALTA' || value === 'MEDIA' || value === 'BAIXA') {
-    return value;
-  }
+  if (value === 'ALTA' || value === 'MEDIA' || value === 'BAIXA') return value;
   return 'MEDIA';
 }
 
 function normalizeStatus(status) {
   const value = String(status || '').toUpperCase();
-  if (value === 'EM_ANALISE' || value === 'EM_ANDAMENTO' || value === 'RESOLVIDA') {
-    return value;
-  }
+  if (['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA'].includes(value)) return value;
   return 'EM_ANALISE';
 }
 
-async function list(req, res) {
-  try {
-    const { status, prioridade } = req.query;
-
-    const where = {};
-    if (status) {
-      where.status = normalizeStatus(status);
-    }
-    if (prioridade) {
-      where.prioridade = normalizePriority(prioridade);
-    }
-
-    const ocorrencias = await prisma.ocorrencia.findMany({
-      where,
-      include: {
-        colaborador: {
-          select: { id: true, nome: true, bloco: true, unidade: true },
-        },
-      },
-      orderBy: { createdAt: 'desc' },
-    });
-
-    res.json(ocorrencias);
-  } catch (error) {
-    console.error('Erro ao listar ocorrencias:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
-  }
-}
-
-async function getById(req, res) {
-  try {
-    const id = Number(req.params.id);
-
-    const ocorrencia = await prisma.ocorrencia.findUnique({
-      where: { id },
-      include: {
-        colaborador: {
-          select: { id: true, nome: true, bloco: true, unidade: true },
-        },
-      },
-    });
-
-    if (!ocorrencia) {
-      return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
-    }
-
-    res.json(ocorrencia);
-  } catch (error) {
-    console.error('Erro ao buscar ocorrencia:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
-  }
+function isMoradorUser(user) {
+  return !isAdminLevel(user) && !!user.moradorId;
 }
 
 function canManageOcorrencia(user, ocorrencia) {
@@ -93,22 +40,95 @@ function canManageOcorrencia(user, ocorrencia) {
   return ocorrencia.colaboradorId === actorId;
 }
 
+async function list(req, res) {
+  try {
+    const { status, prioridade } = req.query;
+    const where = {};
+    if (status) where.status = normalizeStatus(status);
+    if (prioridade) where.prioridade = normalizePriority(prioridade);
+
+    if (isMoradorUser(req.user)) {
+      where.moradorId = req.user.moradorId;
+      const ocorrencias = await prisma.ocorrenciaMorador.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+      });
+      return res.json(ocorrencias);
+    }
+
+    const ocorrencias = await prisma.ocorrencia.findMany({
+      where,
+      include: {
+        colaborador: { select: { id: true, nome: true, bloco: true, unidade: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    res.json(ocorrencias);
+  } catch (error) {
+    console.error('Erro ao listar ocorrencias:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
+async function getById(req, res) {
+  try {
+    const id = Number(req.params.id);
+
+    if (isMoradorUser(req.user)) {
+      const ocorrencia = await prisma.ocorrenciaMorador.findUnique({ where: { id } });
+      if (!ocorrencia) {
+        return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
+      }
+      if (ocorrencia.moradorId !== req.user.moradorId) {
+        return res.status(403).json({ error: 'Sem permissao para acessar esta ocorrencia' });
+      }
+      return res.json(ocorrencia);
+    }
+
+    const ocorrencia = await prisma.ocorrencia.findUnique({
+      where: { id },
+      include: {
+        colaborador: { select: { id: true, nome: true, bloco: true, unidade: true } },
+      },
+    });
+
+    if (!ocorrencia) {
+      return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
+    }
+
+    res.json(ocorrencia);
+  } catch (error) {
+    console.error('Erro ao buscar ocorrencia:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
 async function create(req, res) {
   try {
-    const { tipo, local, descricao, prioridade, status, colaboradorId, moradorId } = req.body;
+    const { tipo, local, descricao, prioridade, status, colaboradorId } = req.body;
+
+    if (isMoradorUser(req.user)) {
+      const ocorrencia = await prisma.ocorrenciaMorador.create({
+        data: {
+          moradorId: req.user.moradorId,
+          tipo,
+          local,
+          descricao,
+          prioridade: normalizePriority(prioridade),
+          status: normalizeStatus(status),
+        },
+      });
+      return res.status(201).json(ocorrencia);
+    }
 
     let targetColaboradorId = null;
     if (isAdminLevel(req.user)) {
-      const requestedId = colaboradorId != null ? colaboradorId : moradorId;
-      if (requestedId != null) {
-        targetColaboradorId = Number(requestedId);
-      }
+      if (colaboradorId != null) targetColaboradorId = Number(colaboradorId);
     } else {
-      const actorColaboradorId = getActorColaboradorId(req.user);
-      if (!actorColaboradorId) {
-        return res.status(403).json({ error: 'Usuario colaborador invalido' });
-      }
-      targetColaboradorId = actorColaboradorId;
+      const actorId = req.user.colaboradorId;
+      if (!actorId) return res.status(403).json({ error: 'Usuario colaborador invalido' });
+      targetColaboradorId = actorId;
     }
 
     if (targetColaboradorId) {
@@ -128,9 +148,7 @@ async function create(req, res) {
         status: normalizeStatus(status),
       },
       include: {
-        colaborador: {
-          select: { id: true, nome: true, bloco: true, unidade: true },
-        },
+        colaborador: { select: { id: true, nome: true, bloco: true, unidade: true } },
       },
     });
 
@@ -145,27 +163,37 @@ async function updateStatus(req, res) {
   try {
     const id = Number(req.params.id);
     const { status } = req.body;
+    const normalizedStatus = normalizeStatus(status);
 
-    const ocorrencia = await prisma.ocorrencia.findUnique({ where: { id } });
-    if (!ocorrencia) {
-      return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
-    }
+    let ocorrencia = await prisma.ocorrencia.findUnique({ where: { id } });
+    if (ocorrencia) {
+      if (!canManageOcorrencia(req.user, ocorrencia)) {
+        return res.status(403).json({ error: 'Sem permissao para atualizar esta ocorrencia' });
+      }
 
-    if (!canManageOcorrencia(req.user, ocorrencia)) {
-      return res.status(403).json({ error: 'Sem permissao para atualizar esta ocorrencia' });
-    }
-
-    const updated = await prisma.ocorrencia.update({
-      where: { id },
-      data: { status: normalizeStatus(status) },
-      include: {
-        colaborador: {
-          select: { id: true, nome: true, bloco: true, unidade: true },
+      const updated = await prisma.ocorrencia.update({
+        where: { id },
+        data: { status: normalizedStatus },
+        include: {
+          colaborador: { select: { id: true, nome: true, bloco: true, unidade: true } },
         },
-      },
-    });
+      });
+      return res.json(updated);
+    }
 
-    res.json(updated);
+    ocorrencia = await prisma.ocorrenciaMorador.findUnique({ where: { id } });
+    if (ocorrencia) {
+      if (ocorrencia.moradorId !== req.user.moradorId && !isAdminLevel(req.user)) {
+        return res.status(403).json({ error: 'Sem permissao para atualizar esta ocorrencia' });
+      }
+      const updated = await prisma.ocorrenciaMorador.update({
+        where: { id },
+        data: { status: normalizedStatus },
+      });
+      return res.json(updated);
+    }
+
+    return res.status(404).json({ error: 'Ocorrencia nao encontrada' });
   } catch (error) {
     console.error('Erro ao atualizar status da ocorrencia:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });

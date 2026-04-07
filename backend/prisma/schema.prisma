@@ -8,29 +8,31 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  password     String
-  role         Role          @default(COLABORADOR)
-  accessLevel  AccessLevel   @default(COLABORADOR) @map("access_level")
-  colaborador  Colaborador?
-  createdAt    DateTime      @default(now()) @map("created_at")
-  updatedAt    DateTime      @updatedAt @map("updated_at")
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  role          Role           @default(COLABORADOR)
+  accessLevel   AccessLevel    @default(COLABORADOR) @map("access_level")
+  colaborador   Colaborador?
+  morador       Morador?
+  refreshTokens RefreshToken[]
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
 
   @@map("users")
 }
 
 model Colaborador {
-  id          Int                 @id @default(autoincrement())
-  userId      Int                 @unique @map("user_id")
-  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          Int                @id @default(autoincrement())
+  userId      Int                @unique @map("user_id")
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   nome        String
-  cpf         String              @unique
+  cpf         String             @unique
   nascimento  DateTime?
   telefone    String
   bloco       String
   unidade     String
-  status      StatusColaborador   @default(PENDENTE)
+  status      StatusColaborador  @default(PENDENTE)
   veiculos    Veiculo[]
   ocorrencias Ocorrencia[]
   turnos      TurnoLog[]
@@ -40,26 +42,154 @@ model Colaborador {
   @@map("colaboradores")
 }
 
+model Morador {
+  id          Int                @id @default(autoincrement())
+  userId      Int                @unique @map("user_id")
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nome        String
+  cpf         String             @unique
+  nascimento  DateTime?
+  telefone    String
+  bloco       String
+  unidade     String
+  status      StatusColaborador  @default(PENDENTE)
+  reservas    Reserva[]
+  taxas       Taxa[]
+  ocorrencias OcorrenciaMorador[]
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime           @updatedAt @map("updated_at")
+
+  @@map("moradores")
+}
+
 model Veiculo {
-  id             Int          @id @default(autoincrement())
-  colaboradorId  Int          @map("colaborador_id")
-  colaborador    Colaborador  @relation(fields: [colaboradorId], references: [id], onDelete: Cascade)
-  placa          String       @unique
-  tipo           TipoVeiculo
-  createdAt      DateTime     @default(now()) @map("created_at")
+  id            Int         @id @default(autoincrement())
+  colaboradorId Int         @map("colaborador_id")
+  colaborador   Colaborador @relation(fields: [colaboradorId], references: [id], onDelete: Cascade)
+  placa         String      @unique
+  tipo          TipoVeiculo
+  createdAt     DateTime    @default(now()) @map("created_at")
 
   @@map("veiculos")
+}
+
+model Ocorrencia {
+  id            Int          @id @default(autoincrement())
+  colaboradorId Int?         @map("colaborador_id")
+  colaborador   Colaborador? @relation(fields: [colaboradorId], references: [id], onDelete: SetNull)
+  tipo          String
+  local         String
+  descricao     String
+  prioridade    String       @default("MEDIA")
+  status        String       @default("EM_ANALISE")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  @@index([colaboradorId])
+  @@map("ocorrencias")
+}
+
+model OcorrenciaMorador {
+  id         Int      @id @default(autoincrement())
+  moradorId  Int      @map("morador_id")
+  morador    Morador  @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  tipo       String
+  local      String
+  descricao  String
+  prioridade String   @default("MEDIA")
+  status     String   @default("EM_ANALISE")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([moradorId])
+  @@map("ocorrencias_morador")
+}
+
+model AreaLazer {
+  id         Int       @id @default(autoincrement())
+  nome       String
+  descricao  String?
+  capacidade Int       @default(50)
+  ativo      Boolean   @default(true)
+  reservas   Reserva[]
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  @@map("areas_lazer")
+}
+
+model Reserva {
+  id          Int            @id @default(autoincrement())
+  moradorId   Int            @map("morador_id")
+  morador     Morador        @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  areaLazerId Int            @map("area_lazer_id")
+  areaLazer   AreaLazer      @relation(fields: [areaLazerId], references: [id])
+  data        DateTime       @db.Date
+  periodo     PeriodoReserva
+  convidados  Int            @default(0)
+  status      StatusReserva  @default(PENDENTE)
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  @@index([moradorId])
+  @@index([areaLazerId, data])
+  @@map("reservas")
+}
+
+model Taxa {
+  id        Int        @id @default(autoincrement())
+  moradorId Int        @map("morador_id")
+  morador   Morador    @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  descricao String     @default("Taxa de Condominio")
+  mes       Int
+  ano       Int
+  valor     Decimal    @db.Decimal(10, 2)
+  vencimento DateTime
+  status    StatusTaxa @default(PENDENTE)
+  pagoEm   DateTime?  @map("pago_em")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  @@index([moradorId])
+  @@map("taxas")
+}
+
+model Condominio {
+  id                      Int      @id @default(autoincrement())
+  nome                    String   @default("NEXUS")
+  razaoSocial             String?  @map("razao_social")
+  cnpj                    String?
+  endereco                String?
+  telefonePredio          String?  @map("telefone_predio")
+  quantidadeColaboradores Int?     @map("quantidade_colaboradores")
+  sindico                 String?
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  @@map("condominio")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@map("refresh_tokens")
 }
 
 enum Role {
   ADMIN
   COLABORADOR
+  MORADOR
 }
 
 enum AccessLevel {
   ROOT
   ADMIN
   COLABORADOR
+  MORADOR
 }
 
 enum StatusColaborador {
@@ -73,20 +203,22 @@ enum TipoVeiculo {
   MOTO
 }
 
-model Ocorrencia {
-  id             Int           @id @default(autoincrement())
-  colaboradorId  Int?          @map("colaborador_id")
-  colaborador    Colaborador?  @relation(fields: [colaboradorId], references: [id], onDelete: SetNull)
-  tipo           String
-  local          String
-  descricao      String
-  prioridade     String        @default("MEDIA")
-  status         String        @default("EM_ANALISE")
-  createdAt      DateTime      @default(now()) @map("created_at")
-  updatedAt      DateTime      @updatedAt @map("updated_at")
+enum PeriodoReserva {
+  MANHA
+  TARDE
+  DIA_INTEIRO
+}
 
-  @@index([colaboradorId])
-  @@map("ocorrencias")
+enum StatusReserva {
+  PENDENTE
+  CONFIRMADA
+  CANCELADA
+}
+
+enum StatusTaxa {
+  PAGA
+  PENDENTE
+  ATRASADA
 }
 
 model TurnoLog {
