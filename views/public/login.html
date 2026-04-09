@@ -272,14 +272,19 @@
         </form>
     </div>
 
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', async function () {
             const params = new URLSearchParams(window.location.search);
             const role = params.get('role');
             const heading = document.getElementById('login-heading');
             const form = document.getElementById('login-form');
             const password = document.getElementById('password');
             const togglePassword = document.getElementById('togglePassword');
+            const googleBtn = document.querySelector('.google-btn');
+            const facebookBtn = document.querySelector('.facebook-btn');
+            let oauthConfig = { googleClientId: null, facebookAppId: null };
+            let googleTokenClient = null;
 
             let destino;
 
@@ -333,6 +338,117 @@
                     btn.textContent = 'Acessar';
                 }
             });
+
+            async function concluirLogin(data) {
+                localStorage.setItem('nexus_token', data.token);
+                localStorage.setItem('nexus_user', JSON.stringify(data.user));
+                localStorage.setItem('nexus_refresh_token', data.refreshToken || '');
+
+                if (data.user.accessLevel === 'ROOT' || data.user.accessLevel === 'ADMIN' || data.user.role === 'ADMIN') {
+                    window.location.href = '../admin/painel-admin.html';
+                } else {
+                    window.location.href = '../colaborador/painel-colaborador.html';
+                }
+            }
+
+            async function postOAuth(provider, payload) {
+                const res = await fetch(`/api/auth/oauth/${provider}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.error || `Falha no login com ${provider}`);
+                }
+                await concluirLogin(data);
+            }
+
+            try {
+                const cfgRes = await fetch('/api/auth/oauth/config');
+                if (cfgRes.ok) {
+                    oauthConfig = await cfgRes.json();
+                }
+            } catch {
+                // mantém botões, mas login social pode falhar se backend não estiver configurado
+            }
+
+            if (googleBtn) {
+                googleBtn.addEventListener('click', async function () {
+                    if (!oauthConfig.googleClientId) {
+                        alert('Login Google não configurado no servidor.');
+                        return;
+                    }
+
+                    if (!window.google?.accounts?.oauth2) {
+                        alert('SDK do Google não carregou. Tente novamente.');
+                        return;
+                    }
+
+                    if (!googleTokenClient) {
+                        googleTokenClient = window.google.accounts.oauth2.initTokenClient({
+                            client_id: oauthConfig.googleClientId,
+                            scope: 'openid email profile',
+                            callback: async (tokenResponse) => {
+                                try {
+                                    if (!tokenResponse?.access_token) {
+                                        alert('Falha ao obter token do Google.');
+                                        return;
+                                    }
+                                    await postOAuth('google', { accessToken: tokenResponse.access_token });
+                                } catch (err) {
+                                    alert(err.message || 'Erro ao fazer login com Google');
+                                }
+                            }
+                        });
+                    }
+
+                    googleTokenClient.requestAccessToken({ prompt: 'select_account' });
+                });
+            }
+
+            window.fbAsyncInit = function () {
+                if (!oauthConfig.facebookAppId) return;
+                window.FB.init({
+                    appId: oauthConfig.facebookAppId,
+                    cookie: false,
+                    xfbml: false,
+                    version: 'v20.0'
+                });
+            };
+
+            const fbSdkScript = document.createElement('script');
+            fbSdkScript.async = true;
+            fbSdkScript.defer = true;
+            fbSdkScript.crossOrigin = 'anonymous';
+            fbSdkScript.src = 'https://connect.facebook.net/pt_BR/sdk.js';
+            document.head.appendChild(fbSdkScript);
+
+            if (facebookBtn) {
+                facebookBtn.addEventListener('click', function () {
+                    if (!oauthConfig.facebookAppId) {
+                        alert('Login Facebook não configurado no servidor.');
+                        return;
+                    }
+                    if (!window.FB) {
+                        alert('SDK do Facebook não carregou. Tente novamente.');
+                        return;
+                    }
+
+                    window.FB.login(async function (response) {
+                        try {
+                            const accessToken = response?.authResponse?.accessToken;
+                            if (!accessToken) {
+                                alert('Login Facebook cancelado ou não autorizado.');
+                                return;
+                            }
+                            await postOAuth('facebook', { accessToken });
+                        } catch (err) {
+                            alert(err.message || 'Erro ao fazer login com Facebook');
+                        }
+                    }, { scope: 'email,public_profile' });
+                });
+            }
 
             // Mostrar/esconder senha sem trocar o ícone (pra não mover)
             togglePassword.addEventListener('click', function () {
