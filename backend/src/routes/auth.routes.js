@@ -1,7 +1,14 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
 const { validate } = require('../middleware/validate.middleware');
-const { login, refresh, logout } = require('../controllers/auth.controller');
+const {
+  login,
+  refresh,
+  logout,
+  loginWithGoogle,
+  loginWithFacebook,
+  oauthConfig,
+} = require('../controllers/auth.controller');
 
 const router = Router();
 
@@ -23,5 +30,27 @@ router.post(
 );
 
 router.post('/logout', logout);
+router.get('/oauth/config', oauthConfig);
+
+router.post(
+  '/oauth/google',
+  [
+    body().custom((value) => {
+      if (!value?.idToken && !value?.accessToken) {
+        throw new Error('idToken ou accessToken é obrigatório');
+      }
+      return true;
+    }),
+  ],
+  validate,
+  loginWithGoogle
+);
+
+router.post(
+  '/oauth/facebook',
+  [body('accessToken').notEmpty().withMessage('accessToken é obrigatório')],
+  validate,
+  loginWithFacebook
+);
 
 module.exports = router;
