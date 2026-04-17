@@ -21,7 +21,7 @@
         <nav>
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Equipe e Acessos</a></li>
+                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
                 <li class="active"><a href="ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
@@ -42,17 +42,9 @@
             <article class="admin-kpi-card">
                 <div class="admin-kpi-icon"><i class="fas fa-list-check"></i></div>
                 <div>
-                    <span>Total em fila</span>
-                    <strong data-oc-total>0</strong>
-                    <p>Ocorrências registradas no sistema</p>
-                </div>
-            </article>
-            <article class="admin-kpi-card">
-                <div class="admin-kpi-icon is-calendar"><i class="fas fa-hourglass-half"></i></div>
-                <div>
-                    <span>Em análise</span>
-                    <strong data-oc-analise>0</strong>
-                    <p>Demandas aguardando triagem</p>
+                    <span>Pendentes</span>
+                    <strong data-oc-pendente>0</strong>
+                    <p>Ocorrências aguardando início do atendimento</p>
                 </div>
             </article>
             <article class="admin-kpi-card">
@@ -104,12 +96,6 @@
                     <input type="search" class="search-input" placeholder="Buscar por assunto, local ou descrição..." id="ocorrencias-search">
                 </div>
                 <div class="admin-filter-group">
-                    <select class="action-select admin-filter-select" id="ocorrencias-status-filter">
-                        <option value="">Todos os status</option>
-                        <option value="EM_ANALISE">Em análise</option>
-                        <option value="EM_ANDAMENTO">Em andamento</option>
-                        <option value="RESOLVIDA">Resolvida</option>
-                    </select>
                     <select class="action-select admin-filter-select" id="ocorrencias-prioridade-filter">
                         <option value="">Todas as prioridades</option>
                         <option value="BAIXA">Baixa</option>
@@ -117,6 +103,12 @@
                         <option value="ALTA">Alta</option>
                     </select>
                 </div>
+            </div>
+
+            <div class="tabs-container" aria-label="Status das ocorrencias">
+                <button class="tab-button active" type="button" data-oc-status-tab="PENDENTE">Pendentes</button>
+                <button class="tab-button" type="button" data-oc-status-tab="EM_ANDAMENTO">Em andamento</button>
+                <button class="tab-button" type="button" data-oc-status-tab="RESOLVIDA">Resolvidas</button>
             </div>
 
             <table class="data-table">
@@ -153,20 +145,20 @@
 
             const body = document.getElementById('ocorrencias-body-admin');
             const searchInput = document.getElementById('ocorrencias-search');
-            const statusFilter = document.getElementById('ocorrencias-status-filter');
             const priorityFilter = document.getElementById('ocorrencias-prioridade-filter');
+            const statusTabs = document.querySelectorAll('[data-oc-status-tab]');
             const feedback = document.getElementById('ocorrencia-feedback');
             const form = document.getElementById('ocorrencia-form-admin');
             const cancelButton = document.getElementById('ocorrencia-cancelar-edicao');
             const stats = {
-                total: document.querySelector('[data-oc-total]'),
-                analise: document.querySelector('[data-oc-analise]'),
+                pendente: document.querySelector('[data-oc-pendente]'),
                 andamento: document.querySelector('[data-oc-andamento]'),
                 resolvida: document.querySelector('[data-oc-resolvida]')
             };
 
             let ocorrencias = [];
             let editingId = null;
+            let activeStatus = 'PENDENTE';
 
             function priorityClass(value) {
                 if (value === 'ALTA') return 'status-alta';
@@ -183,7 +175,11 @@
             function statusLabel(value) {
                 if (value === 'RESOLVIDA') return 'Resolvida';
                 if (value === 'EM_ANDAMENTO') return 'Em andamento';
-                return 'Em análise';
+                return 'Pendente';
+            }
+
+            function normalizedStatus(value) {
+                return value === 'EM_ANALISE' ? 'PENDENTE' : value;
             }
 
             function formatDate(value) {
@@ -192,15 +188,19 @@
             }
 
             function updateStats(list) {
-                stats.total.textContent = String(list.length);
-                stats.analise.textContent = String(list.filter((item) => item.status === 'EM_ANALISE').length);
+                stats.pendente.textContent = String(list.filter((item) => item.status === 'PENDENTE' || item.status === 'EM_ANALISE').length);
                 stats.andamento.textContent = String(list.filter((item) => item.status === 'EM_ANDAMENTO').length);
                 stats.resolvida.textContent = String(list.filter((item) => item.status === 'RESOLVIDA').length);
             }
 
+            function updateTabs() {
+                statusTabs.forEach((button) => {
+                    button.classList.toggle('active', button.dataset.ocStatusTab === activeStatus);
+                });
+            }
+
             function render() {
                 const query = String(searchInput.value || '').toLowerCase();
-                const status = statusFilter.value;
                 const prioridade = priorityFilter.value;
                     const filtered = ocorrencias.filter((item) => {
                         const texto = [
@@ -209,14 +209,15 @@
                             item.local
                         ].join(' ').toLowerCase();
                         return (!query || texto.includes(query))
-                            && (!status || item.status === status)
+                            && normalizedStatus(item.status) === activeStatus
                             && (!prioridade || item.prioridade === prioridade);
                 });
 
                 updateStats(ocorrencias);
+                updateTabs();
 
                 if (!filtered.length) {
-                    body.innerHTML = '<tr><td colspan="7" style="text-align:center">Nenhuma ocorrência encontrada para os filtros atuais.</td></tr>';
+                    body.innerHTML = `<tr><td colspan="7" style="text-align:center">Nenhuma ocorrencia ${statusLabel(activeStatus).toLowerCase()} encontrada.</td></tr>`;
                     return;
                 }
 
@@ -234,7 +235,7 @@
                         <td>
                             <div class="admin-table-controls">
                                 <select class="action-select admin-table-select" data-status-select data-id="${item.id}">
-                                    <option value="EM_ANALISE" ${item.status === 'EM_ANALISE' ? 'selected' : ''}>Em analise</option>
+                                    <option value="PENDENTE" ${item.status === 'PENDENTE' || item.status === 'EM_ANALISE' ? 'selected' : ''}>Pendente</option>
                                     <option value="EM_ANDAMENTO" ${item.status === 'EM_ANDAMENTO' ? 'selected' : ''}>Em andamento</option>
                                     <option value="RESOLVIDA" ${item.status === 'RESOLVIDA' ? 'selected' : ''}>Resolvida</option>
                                 </select>
@@ -302,6 +303,7 @@
                         throw new Error(data.error || 'Nao foi possivel atualizar o status.');
                     }
                     ocorrencias = ocorrencias.map((item) => item.id === id ? data : item);
+                    activeStatus = normalizedStatus(data.status);
                     render();
                 } catch (error) {
                     alert(error.message || 'Erro ao atualizar status.');
@@ -311,12 +313,13 @@
             form.addEventListener('submit', async function (event) {
                 event.preventDefault();
                 feedback.textContent = '';
+                const currentItem = editingId ? ocorrencias.find((item) => item.id === editingId) : null;
                 const bodyPayload = {
                     tipo: document.getElementById('oc-tipo').value.trim(),
                     local: document.getElementById('oc-local').value.trim(),
                     descricao: document.getElementById('oc-descricao').value.trim(),
                     prioridade: document.getElementById('oc-prioridade').value,
-                    status: 'EM_ANALISE'
+                    status: editingId ? normalizedStatus(currentItem?.status || activeStatus) : 'PENDENTE'
                 };
 
                 try {
@@ -338,6 +341,7 @@
                         ? `Ocorrencia #${String(data.id).padStart(4, '0')} atualizada com sucesso.`
                         : `Ocorrencia #${String(data.id).padStart(4, '0')} registrada com sucesso.`;
                     feedback.className = 'admin-inline-feedback is-success';
+                    activeStatus = normalizedStatus(data.status);
                     await loadOcorrencias();
                 } catch (error) {
                     feedback.textContent = error.message || 'Erro ao registrar ocorrencia.';
@@ -384,7 +388,14 @@
 
             cancelButton.addEventListener('click', resetFormState);
 
-            [searchInput, statusFilter, priorityFilter].forEach((element) => {
+            statusTabs.forEach((button) => {
+                button.addEventListener('click', function () {
+                    activeStatus = button.dataset.ocStatusTab;
+                    render();
+                });
+            });
+
+            [searchInput, priorityFilter].forEach((element) => {
                 element.addEventListener('input', render);
                 element.addEventListener('change', render);
             });

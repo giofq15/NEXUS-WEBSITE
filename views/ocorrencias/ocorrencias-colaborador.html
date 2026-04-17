@@ -125,7 +125,7 @@
             function statusLabel(value) {
                 if (value === 'RESOLVIDA') return 'Resolvida';
                 if (value === 'EM_ANDAMENTO') return 'Em andamento';
-                return 'Em análise';
+                return 'Pendente';
             }
 
             function formatDate(value) {
@@ -213,7 +213,7 @@
                     local: document.getElementById('oc-local').value.trim(),
                     descricao: document.getElementById('oc-descricao').value.trim(),
                     prioridade: document.getElementById('oc-prioridade').value,
-                    status: 'EM_ANALISE'
+                    status: 'PENDENTE'
                 };
 
                 try {

@@ -925,7 +925,7 @@
         if (clean.includes("andamento")) {
             return "EM_ANDAMENTO";
         }
-        return "EM_ANALISE";
+        return "PENDENTE";
     }
 
     function statusLabel(status) {
@@ -935,7 +935,7 @@
         if (status === "EM_ANDAMENTO") {
             return "Em Andamento";
         }
-        return "Em Análise";
+        return "Pendente";
     }
 
     function statusClass(status) {
@@ -1061,7 +1061,7 @@
                     local: "Elevador do Bloco B",
                     unidade: "405 - Bloco B",
                     prioridade: "Alta",
-                    status: "EM_ANALISE",
+                    status: "PENDENTE",
                     dataAbertura: "18/10/2025",
                     descricao: "Vazamento no elevador"
                 }
@@ -1166,7 +1166,7 @@
                 local: local,
                 unidade: "405 - Bloco B",
                 prioridade: inferPriority(tipo),
-                status: "EM_ANALISE",
+                status: "PENDENTE",
                 dataAbertura: formatDate(new Date().toISOString()),
                 descricao: descricao
             });

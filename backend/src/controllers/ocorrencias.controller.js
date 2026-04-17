@@ -15,8 +15,9 @@ function normalizePriority(priority) {
 
 function normalizeStatus(status) {
   const value = String(status || '').toUpperCase();
-  if (['EM_ANALISE', 'EM_ANDAMENTO', 'RESOLVIDA'].includes(value)) return value;
-  return 'EM_ANALISE';
+  if (value === 'EM_ANALISE') return 'PENDENTE';
+  if (['PENDENTE', 'EM_ANDAMENTO', 'RESOLVIDA'].includes(value)) return value;
+  return 'PENDENTE';
 }
 
 function isMoradorUser(user) {
@@ -44,7 +45,14 @@ async function list(req, res) {
   try {
     const { status, prioridade } = req.query;
     const where = {};
-    if (status) where.status = normalizeStatus(status);
+    if (status) {
+      const normalizedStatus = normalizeStatus(status);
+      if (normalizedStatus === 'PENDENTE') {
+        where.OR = [{ status: 'PENDENTE' }, { status: 'EM_ANALISE' }];
+      } else {
+        where.status = normalizedStatus;
+      }
+    }
     if (prioridade) where.prioridade = normalizePriority(prioridade);
 
     if (isMoradorUser(req.user)) {

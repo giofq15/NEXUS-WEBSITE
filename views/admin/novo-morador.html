@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo Acesso - NEXUS</title>
+    <title>Novo Morador - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -23,8 +23,7 @@
         <nav>
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Equipe e Acessos</a></li>
-                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
+                <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-exclamation-triangle"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-dollar-sign"></i> Financeiro</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
@@ -36,11 +35,11 @@
 
     <main class="main-content">
         <a href="moradores.html" class="back-button">
-            <i class="fas fa-arrow-left"></i> Voltar para Equipe e Acessos
+            <i class="fas fa-arrow-left"></i> Voltar para Moradores
         </a>
 
         <div class="form-container">
-            <h2 id="form-title">Cadastrar novo acesso</h2>
+            <h2 id="form-title">Cadastrar novo morador</h2>
             <form id="morador-form">
                 <fieldset class="form-section">
                     <legend><i class="fas fa-user"></i> Dados pessoais</legend>
@@ -51,7 +50,7 @@
                         </div>
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input type="text" id="cpf" placeholder="000.000.000-00" data-field="cpf" maxlength="14" inputmode="numeric">
+                            <input type="text" id="cpf" placeholder="000.000.000-00" data-field="cpf" maxlength="14" inputmode="numeric" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label for="nascimento">Data de nascimento</label>
@@ -59,16 +58,16 @@
                         </div>
                         <div class="form-group">
                             <label for="telefone">Telefone</label>
-                            <input type="tel" id="telefone" placeholder="(99) 99999-9999" required data-field="telefone" maxlength="15" inputmode="numeric">
+                            <input type="tel" id="telefone" placeholder="(11) 99999-9999" required data-field="telefone" maxlength="15" inputmode="numeric" pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}" autocomplete="off">
                         </div>
                     </div>
                 </fieldset>
 
                 <fieldset class="form-section">
-                    <legend><i class="fas fa-briefcase"></i> Função e acesso</legend>
+                    <legend><i class="fas fa-home"></i> Unidade</legend>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="bloco">Bloco / setor de atuação</label>
+                            <label for="bloco">Bloco</label>
                             <select id="bloco" required data-field="bloco">
                                 <option value="">Selecione...</option>
                                 <option>A</option>
@@ -77,30 +76,19 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="unidade">Função</label>
-                            <input type="text" id="unidade" required placeholder="Ex: Portaria, Zeladoria, Supervisão" data-field="unidade">
+                            <label for="unidade">Unidade</label>
+                            <input type="text" id="unidade" required placeholder="Ex: Apartamento 101" data-field="unidade">
                         </div>
                         <div class="form-group">
-                            <label for="acesso">Status de acesso</label>
-                            <select id="acesso">
-                                <option value="ATIVO">Ativo</option>
-                                <option value="PENDENTE">Pendente</option>
-                                <option value="BLOQUEADO">Bloqueado</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-mail de acesso</label>
-                            <input type="email" id="email" required placeholder="acesso@condominio.com" data-field="email">
+                            <label for="email">E-mail do morador</label>
+                            <input type="email" id="email" required placeholder="morador@email.com" data-field="email">
                         </div>
                     </div>
                 </fieldset>
 
                 <div class="button-group">
                     <button type="submit" class="submit-button" id="submit-btn">
-                        <i class="fas fa-save"></i> Cadastrar acesso
-                    </button>
-                    <button type="button" class="primary-button" id="inativar-btn" hidden>
-                        <i class="fas fa-user-slash"></i> Bloquear acesso
+                        <i class="fas fa-save"></i> Cadastrar morador
                     </button>
                     <button type="reset" class="reset-button">
                         <i class="fas fa-eraser"></i> Limpar campos
@@ -121,15 +109,44 @@
 
         const form = document.getElementById('morador-form');
         const submitBtn = document.getElementById('submit-btn');
-        const inativarBtn = document.getElementById('inativar-btn');
         const formTitle = document.getElementById('form-title');
+        const cpfInput = document.getElementById('cpf');
+        const telefoneInput = document.getElementById('telefone');
         const params = new URLSearchParams(window.location.search);
         const editId = params.get('id');
+        let currentStatus = 'ATIVO';
+
+        function onlyDigits(value) {
+            return String(value || '').replace(/\D/g, '');
+        }
+
+        function formatCpf(value) {
+            const digits = onlyDigits(value).slice(0, 11);
+            return digits
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        }
+
+        function formatTelefone(value) {
+            const digits = onlyDigits(value).slice(0, 11);
+            if (digits.length <= 2) return digits;
+            if (digits.length <= 6) return digits.replace(/(\d{2})(\d+)/, '($1) $2');
+            if (digits.length <= 10) return digits.replace(/(\d{2})(\d{4})(\d+)/, '($1) $2-$3');
+            return digits.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+        }
+
+        cpfInput.addEventListener('input', function () {
+            cpfInput.value = formatCpf(cpfInput.value);
+        });
+
+        telefoneInput.addEventListener('input', function () {
+            telefoneInput.value = formatTelefone(telefoneInput.value);
+        });
 
         if (editId) {
-            formTitle.textContent = 'Editar acesso';
+            formTitle.textContent = 'Editar morador';
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Salvar alterações';
-            inativarBtn.hidden = false;
 
             fetch(`/api/colaboradores/${editId}`, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -137,47 +154,15 @@
                 .then((res) => res.json())
                 .then((colaborador) => {
                     document.getElementById('nome').value = colaborador.nome;
-                    document.getElementById('cpf').value = colaborador.cpf;
+                    document.getElementById('cpf').value = formatCpf(colaborador.cpf);
                     if (colaborador.nascimento) document.getElementById('nascimento').value = colaborador.nascimento.split('T')[0];
-                    document.getElementById('telefone').value = colaborador.telefone;
+                    document.getElementById('telefone').value = formatTelefone(colaborador.telefone);
                     document.getElementById('bloco').value = colaborador.bloco;
                     document.getElementById('unidade').value = colaborador.unidade;
-                    document.getElementById('acesso').value = colaborador.status;
+                    currentStatus = colaborador.status || 'ATIVO';
                     document.getElementById('email').value = colaborador.user.email;
                 });
         }
-
-        inativarBtn.addEventListener('click', async function () {
-            if (!editId) return;
-            if (!confirm('Deseja realmente bloquear este acesso?')) return;
-
-            const body = {
-                nome: document.getElementById('nome').value,
-                cpf: document.getElementById('cpf').value,
-                nascimento: document.getElementById('nascimento').value || null,
-                telefone: document.getElementById('telefone').value,
-                bloco: document.getElementById('bloco').value,
-                unidade: document.getElementById('unidade').value,
-                status: 'BLOQUEADO',
-                email: document.getElementById('email').value
-            };
-
-            try {
-                const res = await fetch(`/api/colaboradores/${editId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    },
-                    body: JSON.stringify(body)
-                });
-                if (!res.ok) throw new Error();
-                alert('Acesso bloqueado com sucesso.');
-                window.location.href = 'moradores.html';
-            } catch {
-                alert('Nao foi possivel bloquear o acesso.');
-            }
-        });
 
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -189,7 +174,7 @@
                 telefone: document.getElementById('telefone').value,
                 bloco: document.getElementById('bloco').value,
                 unidade: document.getElementById('unidade').value,
-                status: document.getElementById('acesso').value,
+                status: editId ? currentStatus : 'ATIVO',
                 email: document.getElementById('email').value
             };
 
@@ -214,16 +199,16 @@
                 if (!res.ok) {
                     alert(data.error || data.errors?.map((item) => item.msg).join(', ') || 'Erro ao salvar');
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = `<i class="fas fa-save"></i> ${editId ? 'Salvar alterações' : 'Cadastrar acesso'}`;
+                    submitBtn.innerHTML = `<i class="fas fa-save"></i> ${editId ? 'Salvar alterações' : 'Cadastrar morador'}`;
                     return;
                 }
 
-                alert(editId ? 'Acesso atualizado com sucesso.' : 'Acesso cadastrado com sucesso.');
+                alert(editId ? 'Morador atualizado com sucesso.' : 'Morador cadastrado com sucesso.');
                 window.location.href = 'moradores.html';
             } catch {
                 alert('Erro de conexao com o servidor');
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fas fa-save"></i> ${editId ? 'Salvar alterações' : 'Cadastrar acesso'}`;
+                submitBtn.innerHTML = `<i class="fas fa-save"></i> ${editId ? 'Salvar alterações' : 'Cadastrar morador'}`;
             }
         });
 

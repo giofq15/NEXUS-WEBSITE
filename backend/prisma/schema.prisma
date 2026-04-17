@@ -81,7 +81,7 @@ model Ocorrencia {
   local         String
   descricao     String
   prioridade    String       @default("MEDIA")
-  status        String       @default("EM_ANALISE")
+  status        String       @default("PENDENTE")
   createdAt     DateTime     @default(now()) @map("created_at")
   updatedAt     DateTime     @updatedAt @map("updated_at")
 
@@ -97,7 +97,7 @@ model OcorrenciaMorador {
   local      String
   descricao  String
   prioridade String   @default("MEDIA")
-  status     String   @default("EM_ANALISE")
+  status     String   @default("PENDENTE")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 

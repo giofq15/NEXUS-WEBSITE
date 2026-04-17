@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equipe e Acessos - NEXUS</title>
+    <title>Moradores - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -23,8 +23,7 @@
         <nav>
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Equipe e Acessos</a></li>
-                <li><a href="moradores-inadimplentes.html"><i class="fas fa-user-clock"></i> Unidades em Atraso</a></li>
+                <li class="active"><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
                 <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
@@ -36,51 +35,35 @@
 
     <main class="main-content" data-moradores-page>
         <div class="dashboard-header">
-            <h1>Equipe e acessos</h1>
-            <p>Gerencie os usuários internos do sistema e os acessos operacionais da portaria e da administração.</p>
+            <h1>Moradores</h1>
+            <p>Gerencie os cadastros dos moradores e mantenha os dados das unidades sempre atualizados.</p>
         </div>
 
-        <section class="admin-kpi-grid admin-kpi-grid-compact" aria-label="Resumo da equipe">
+        <section class="admin-kpi-grid admin-kpi-grid-compact" aria-label="Resumo dos moradores">
             <article class="admin-kpi-card">
                 <div class="admin-kpi-icon is-team"><i class="fas fa-users-cog"></i></div>
                 <div>
                     <span>Cadastros ativos</span>
                     <strong id="total-colaboradores">0</strong>
-                    <p>Usuários internos e operacionais cadastrados.</p>
-                </div>
-            </article>
-            <article class="admin-kpi-card">
-                <div class="admin-kpi-icon"><i class="fas fa-user-shield"></i></div>
-                <div>
-                    <span>Acessos ativos</span>
-                    <strong id="total-ativos">0</strong>
-                    <p>Contas prontas para uso no dia a dia.</p>
-                </div>
-            </article>
-            <article class="admin-kpi-card">
-                <div class="admin-kpi-icon is-calendar"><i class="fas fa-briefcase"></i></div>
-                <div>
-                    <span>Função mais comum</span>
-                    <strong id="cargo-destaque">-</strong>
-                    <p>Perfil mais recorrente na base atual.</p>
+                    <p>Moradores ativos no condomínio.</p>
                 </div>
             </article>
         </section>
 
         <div class="controls-container">
             <div class="search-group">
-                <input type="search" class="search-input" placeholder="Buscar por nome, função, setor ou bloco..." data-moradores-search>
-                <p class="search-meta" data-moradores-search-meta>Digite para buscar acessos e cadastros operacionais.</p>
+                <input type="search" class="search-input" placeholder="Buscar por nome, unidade ou bloco..." data-moradores-search>
+                <p class="search-meta" data-moradores-search-meta>Digite para buscar moradores cadastrados.</p>
             </div>
-            <a href="novo-colaborador.html" class="new-button">+ Novo Acesso</a>
+            <a href="novo-morador.html" class="new-button">+ Novo Morador</a>
         </div>
 
         <table class="data-table" data-moradores-table>
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Função / Base</th>
-                    <th>Status</th>
+                    <th>Unidade / Bloco</th>
+                    <th>Situação</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -102,8 +85,7 @@
         const tbody = document.getElementById('moradores-tbody');
         const searchInput = document.querySelector('.search-input');
         const totalColaboradoresField = document.getElementById('total-colaboradores');
-        const totalAtivosField = document.getElementById('total-ativos');
-        const cargoDestaqueField = document.getElementById('cargo-destaque');
+        let currentSearch = '';
 
         async function loadColaboradores(search = '') {
             const url = search ? `/api/colaboradores?search=${encodeURIComponent(search)}` : '/api/colaboradores';
@@ -121,21 +103,24 @@
                 updateSummary(colaboradores);
                 renderColaboradores(colaboradores);
             } catch {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Erro ao carregar os acessos.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Erro ao carregar os moradores.</td></tr>';
             }
         }
 
         function updateSummary(colaboradores) {
-            totalColaboradoresField.textContent = String(colaboradores.length);
-            totalAtivosField.textContent = String(colaboradores.filter((item) => item.status === 'ATIVO').length);
+            totalColaboradoresField.textContent = String(colaboradores.filter((item) => item.status === 'ATIVO').length);
+        }
 
-            const ranking = colaboradores.reduce((acc, item) => {
-                const cargo = (item.unidade || 'Sem funcao definida').trim();
-                acc[cargo] = (acc[cargo] || 0) + 1;
-                return acc;
-            }, {});
-            const destaque = Object.entries(ranking).sort((a, b) => b[1] - a[1])[0];
-            cargoDestaqueField.textContent = destaque ? destaque[0] : '-';
+        function statusLabel(status) {
+            if (status === 'BLOQUEADO') return 'Inativo';
+            if (status === 'PENDENTE') return 'Pendente';
+            return 'Ativo';
+        }
+
+        function statusClass(status) {
+            if (status === 'BLOQUEADO') return 'status-bloqueado';
+            if (status === 'PENDENTE') return 'status-pendente';
+            return 'status-ativo';
         }
 
         function renderColaboradores(colaboradores) {
@@ -145,19 +130,56 @@
             }
 
             tbody.innerHTML = colaboradores.map(function (colaborador) {
-                const statusClass = `status-${colaborador.status.toLowerCase()}`;
-                const statusLabel = colaborador.status.charAt(0) + colaborador.status.slice(1).toLowerCase();
-                const cargo = colaborador.unidade || 'Função não informada';
+                const cargo = colaborador.unidade || 'Unidade não informada';
+                const isInactive = colaborador.status === 'BLOQUEADO';
+                const statusAction = isInactive ? 'reativar' : 'inativar';
                 return `<tr>
                     <td>${colaborador.nome}</td>
-                    <td>${cargo}<br><small>Base: Bloco ${colaborador.bloco}</small></td>
-                    <td class="${statusClass}">${statusLabel}</td>
+                    <td>${cargo}<br><small>Bloco ${colaborador.bloco}</small></td>
+                    <td class="${statusClass(colaborador.status)}">${statusLabel(colaborador.status)}</td>
                     <td>
                         <a href="#" class="action-link" data-colaborador-view="${colaborador.id}">Ver</a> |
-                        <a href="novo-colaborador.html?id=${colaborador.id}" class="action-link">Editar</a>
+                        <a href="novo-morador.html?id=${colaborador.id}" class="action-link">Editar</a> |
+                        <button type="button" class="table-action-button" data-morador-status-action="${statusAction}" data-id="${colaborador.id}">
+                            ${isInactive ? 'Reativar' : 'Inativar'}
+                        </button>
                     </td>
                 </tr>`;
             }).join('');
+        }
+
+        async function updateMoradorStatus(id, status) {
+            const actionText = status === 'BLOQUEADO' ? 'inativar' : 'reativar';
+            if (!confirm(`Deseja realmente ${actionText} este morador?`)) return;
+
+            try {
+                const detailRes = await fetch(`/api/colaboradores/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (!detailRes.ok) throw new Error();
+                const morador = await detailRes.json();
+                const res = await fetch(`/api/colaboradores/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        nome: morador.nome,
+                        cpf: morador.cpf,
+                        nascimento: morador.nascimento ? morador.nascimento.split('T')[0] : null,
+                        telefone: morador.telefone,
+                        bloco: morador.bloco,
+                        unidade: morador.unidade,
+                        status,
+                        email: morador.user.email
+                    })
+                });
+                if (!res.ok) throw new Error();
+                await loadColaboradores(currentSearch);
+            } catch {
+                alert(`Nao foi possivel ${actionText} este morador.`);
+            }
         }
 
         async function openColaboradorDialog(id) {
@@ -170,9 +192,9 @@
                 document.getElementById('colaborador-dialog-body').innerHTML = `
                     <div class="dialog-detail-grid">
                         <div><span>Nome</span><strong>${colaborador.nome}</strong></div>
-                        <div><span>Função</span><strong>${colaborador.unidade}</strong></div>
-                        <div><span>Base</span><strong>${colaborador.bloco}</strong></div>
-                        <div><span>Status</span><strong>${colaborador.status}</strong></div>
+                        <div><span>Unidade</span><strong>${colaborador.unidade}</strong></div>
+                        <div><span>Bloco</span><strong>${colaborador.bloco}</strong></div>
+                        <div><span>Situação</span><strong>${statusLabel(colaborador.status)}</strong></div>
                         <div><span>E-mail</span><strong>${colaborador.user.email}</strong></div>
                         <div><span>Telefone</span><strong>${colaborador.telefone}</strong></div>
                         <div><span>CPF</span><strong>${colaborador.cpf || '-'}</strong></div>
@@ -186,10 +208,18 @@
         let searchTimeout;
         searchInput.addEventListener('input', function () {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => loadColaboradores(this.value), 300);
+            currentSearch = this.value;
+            searchTimeout = setTimeout(() => loadColaboradores(currentSearch), 300);
         });
 
         tbody.addEventListener('click', function (event) {
+            const statusButton = event.target.closest('[data-morador-status-action]');
+            if (statusButton) {
+                const nextStatus = statusButton.dataset.moradorStatusAction === 'reativar' ? 'ATIVO' : 'BLOQUEADO';
+                updateMoradorStatus(statusButton.dataset.id, nextStatus);
+                return;
+            }
+
             const viewLink = event.target.closest('[data-colaborador-view]');
             if (!viewLink) return;
             event.preventDefault();
@@ -209,8 +239,8 @@
         <div class="admin-dialog-content">
             <div class="admin-dialog-header">
                 <div>
-                    <h2>Detalhes do acesso</h2>
-                    <p>Consulte os dados do cadastro sem sair da lista.</p>
+                    <h2>Detalhes do morador</h2>
+                    <p>Consulte os dados do morador sem sair da lista.</p>
                 </div>
                 <button type="button" class="dialog-close-button" data-dialog-close="colaborador-dialog"><i class="fas fa-times"></i></button>
             </div>
