@@ -89,7 +89,7 @@
         let currentSearch = '';
 
         async function loadColaboradores(search = '') {
-            const url = search ? `/api/colaboradores?search=${encodeURIComponent(search)}` : '/api/colaboradores';
+            const url = search ? `/api/moradores?search=${encodeURIComponent(search)}` : '/api/moradores';
             try {
                 const res = await fetch(url, {
                     headers: { Authorization: `Bearer ${token}` }
@@ -154,12 +154,12 @@
             if (!confirm(`Deseja realmente ${actionText} este morador?`)) return;
 
             try {
-                const detailRes = await fetch(`/api/colaboradores/${id}`, {
+                const detailRes = await fetch(`/api/moradores/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!detailRes.ok) throw new Error();
                 const morador = await detailRes.json();
-                const res = await fetch(`/api/colaboradores/${id}`, {
+                const res = await fetch(`/api/moradores/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -185,7 +185,7 @@
 
         async function openColaboradorDialog(id) {
             try {
-                const res = await fetch(`/api/colaboradores/${id}`, {
+                const res = await fetch(`/api/moradores/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!res.ok) return;

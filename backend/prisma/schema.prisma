@@ -136,18 +136,26 @@ model Reserva {
 }
 
 model Taxa {
-  id        Int        @id @default(autoincrement())
-  moradorId Int        @map("morador_id")
-  morador   Morador    @relation(fields: [moradorId], references: [id], onDelete: Cascade)
-  descricao String     @default("Taxa de Condominio")
-  mes       Int
-  ano       Int
-  valor     Decimal    @db.Decimal(10, 2)
-  vencimento DateTime
-  status    StatusTaxa @default(PENDENTE)
-  pagoEm   DateTime?  @map("pago_em")
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
+  id               Int        @id @default(autoincrement())
+  moradorId        Int        @map("morador_id")
+  morador          Morador    @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  descricao        String     @default("Taxa de Condominio")
+  mes              Int
+  ano              Int
+  valor            Decimal    @db.Decimal(10, 2)
+  vencimento       DateTime
+  status           StatusTaxa @default(PENDENTE)
+  pagoEm           DateTime?  @map("pago_em")
+  asaasCustomerId  String?    @map("asaas_customer_id")
+  asaasPaymentId   String?    @map("asaas_payment_id")
+  billingType      String?    @map("billing_type")
+  invoiceUrl       String?    @map("invoice_url")
+  bankSlipUrl      String?    @map("bank_slip_url")
+  pixPayload       String?    @map("pix_payload")
+  pixQrCodeImage   String?    @map("pix_qr_code_image")
+  cobrancaGeradaEm DateTime?  @map("cobranca_gerada_em")
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
 
   @@index([moradorId])
   @@map("taxas")

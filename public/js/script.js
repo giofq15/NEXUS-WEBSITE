@@ -1139,45 +1139,6 @@
         }).join("");
     }
 
-    function initMoradorOcorrencias() {
-        const form = document.querySelector("[data-ocorrencias-form]");
-        const body = document.querySelector("[data-ocorrencias-morador-body]");
-        if (!form || !body) {
-            return;
-        }
-
-        ensureSeed(body, null);
-        renderMoradorTable(body);
-
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const tipo = document.getElementById("tipo").value || "Ocorrência";
-            const local = document.getElementById("local").value || "Não informado";
-            const descricao = document.getElementById("descricao").value || tipo;
-
-            const current = getOcorrencias();
-            const maxId = current.reduce(function (acc, item) {
-                return Math.max(acc, Number(item.id) || 0);
-            }, 0);
-
-            current.push({
-                id: maxId + 1,
-                tipo: tipo,
-                local: local,
-                unidade: "405 - Bloco B",
-                prioridade: inferPriority(tipo),
-                status: "PENDENTE",
-                dataAbertura: formatDate(new Date().toISOString()),
-                descricao: descricao
-            });
-
-            saveOcorrencias(current);
-            renderMoradorTable(body);
-            form.reset();
-            alert(`Ocorrência #${String(maxId + 1).padStart(4, "0")} criada com sucesso.`);
-        });
-    }
-
     function initAdminOcorrencias() {
         const body = document.querySelector("[data-ocorrencias-admin-body]");
         if (!body) {
@@ -1201,7 +1162,6 @@
         });
     }
 
-initMoradorOcorrencias();
 initAdminOcorrencias();
 })();
 

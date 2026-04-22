@@ -14,6 +14,7 @@ const taxasRoutes = require('./routes/taxas.routes');
 const areasLazerRoutes = require('./routes/areasLazer.routes');
 const configuracoesRoutes = require('./routes/configuracoes.routes');
 const notificacoesRoutes = require('./routes/notificacoes.routes');
+const pagamentosRoutes = require('./routes/pagamentos.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -90,6 +91,47 @@ app.use('/api/taxas', taxasRoutes);
 app.use('/api/areas-lazer', areasLazerRoutes);
 app.use('/api/configuracoes', configuracoesRoutes);
 app.use('/api/notificacoes', notificacoesRoutes);
+app.use('/api/pagamentos', pagamentosRoutes);
+
+app.use('/morador', (req, res) => {
+  res.redirect('/login.html');
+});
+
+app.get('/financeiro/financeiro-morador.html', (req, res) => {
+  res.redirect('/financeiro/financeiro.html');
+});
+
+app.get('/views/financeiro/financeiro-morador.html', (req, res) => {
+  res.redirect('/financeiro/financeiro.html');
+});
+
+app.get('/financeiro/consumo-morador.html', (req, res) => {
+  res.redirect('/colaborador/monitoramento-iot.html');
+});
+
+app.get('/views/financeiro/consumo-morador.html', (req, res) => {
+  res.redirect('/colaborador/monitoramento-iot.html');
+});
+
+app.get('/ocorrencias/ocorrencias-morador.html', (req, res) => {
+  res.redirect('/ocorrencias/ocorrencias.html');
+});
+
+app.get('/ocorrencias/detalhes-ocorrencia-morador.html', (req, res) => {
+  res.redirect('/ocorrencias/ocorrencias.html');
+});
+
+app.get('/views/ocorrencias/ocorrencias-morador.html', (req, res) => {
+  res.redirect('/ocorrencias/ocorrencias.html');
+});
+
+app.get('/views/ocorrencias/detalhes-ocorrencia-morador.html', (req, res) => {
+  res.redirect('/ocorrencias/ocorrencias.html');
+});
+
+app.use('/views/morador', (req, res) => {
+  res.redirect('/login.html');
+});
 
 app.use('/public', express.static(path.join(__dirname, '../../public')));
 app.use('/views', express.static(path.join(__dirname, '../../views')));
@@ -97,7 +139,6 @@ app.use('/admin', express.static(path.join(__dirname, '../../views/admin')));
 app.use('/colaborador', express.static(path.join(__dirname, '../../views/colaborador')));
 app.use('/financeiro', express.static(path.join(__dirname, '../../views/financeiro')));
 app.use('/ocorrencias', express.static(path.join(__dirname, '../../views/ocorrencias')));
-app.use('/morador', express.static(path.join(__dirname, '../../views/morador')));
 app.use(express.static(path.join(__dirname, '../../views/public')));
 
 app.get('/public/login.html', (req, res) => {

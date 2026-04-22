@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financeiro e Cobrança - NEXUS</title>
+    <title>Financeiro e Cobranca - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -24,11 +24,11 @@
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
                 <li class="active"><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
-                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -36,14 +36,14 @@
 
     <main class="main-content">
         <div class="dashboard-header">
-            <h1>Gestão financeira e cobrança</h1>
-            <p>Controle contas do condomínio, acompanhe recebimentos e centralize a cobrança das unidades em atraso em um único lugar.</p>
+            <h1>Gestao financeira e cobranca</h1>
+            <p>Centralize a emissao de boletos, acompanhe recebimentos, gere 2a via e deixe pronto o fluxo de envio por e-mail ou WhatsApp.</p>
         </div>
 
         <div class="financial-summary">
             <div class="widget">
                 <i class="fas fa-money-check-alt icon-positive"></i>
-                <h3>Saldo atual</h3>
+                <h3>Recebido</h3>
                 <p class="stat-number positive" data-fin-saldo>R$ 0,00</p>
             </div>
             <div class="widget">
@@ -58,6 +58,8 @@
             </div>
         </div>
 
+        <div id="financeiro-feedback" class="admin-inline-feedback" aria-live="polite"></div>
+
         <div class="tabs-container">
             <button class="tab-button active" type="button" data-financeiro-tab="contas-pagar">Contas a Pagar</button>
             <button class="tab-button" type="button" data-financeiro-tab="contas-receber">Contas a Receber</button>
@@ -68,11 +70,11 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Descrição</th>
+                        <th>Descricao</th>
                         <th>Vencimento</th>
                         <th>Valor</th>
                         <th>Status</th>
-                        <th>Ações</th>
+                        <th>Acoes</th>
                     </tr>
                 </thead>
                 <tbody id="contas-pagar-body"></tbody>
@@ -83,11 +85,11 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Descrição</th>
-                        <th>Vencimento</th>
+                        <th>Morador</th>
+                        <th>Referencia</th>
                         <th>Valor</th>
                         <th>Status</th>
-                        <th>Ações</th>
+                        <th>Acoes</th>
                     </tr>
                 </thead>
                 <tbody id="contas-receber-body"></tbody>
@@ -98,45 +100,19 @@
             <section class="widget admin-ops-panel">
                 <div class="section-heading">
                     <div>
-                        <h2>Registrar nova unidade em atraso</h2>
-                        <p>Cadastre a cobrança em aberto para manter o histórico de negociação, cobrança e quitação no mesmo painel financeiro.</p>
+                        <h2>Unidades em atraso</h2>
+                        <p>Visualize rapidamente quem esta com cobranca pendente ou atrasada, gere boleto e deixe preparada a segunda via para compartilhamento.</p>
                     </div>
                 </div>
-
-                <form class="admin-inline-form" id="inadimplencia-form-financeiro">
-                    <input type="text" id="inadimplente-nome" placeholder="Responsável pela unidade" required>
-                    <input type="email" id="inadimplente-email" placeholder="E-mail do morador" required>
-                    <input type="text" id="inadimplente-bloco" placeholder="Bloco" maxlength="10" required>
-                    <input type="text" id="inadimplente-apartamento" placeholder="Apartamento" maxlength="10" required>
-                    <input type="number" id="inadimplente-valor" min="0" step="0.01" placeholder="Valor em aberto" required>
-                    <input type="date" id="inadimplente-vencimento" required>
-                    <button type="submit" class="primary-button"><i class="fas fa-plus-circle"></i> Registrar atraso</button>
-                </form>
-                <p class="admin-inline-feedback" id="inadimplencia-feedback-financeiro" aria-live="polite"></p>
-            </section>
-
-            <section class="widget admin-ops-panel">
-                <div class="controls-container">
-                    <div class="search-group">
-                        <input type="search" class="search-input" id="inadimplencia-search" placeholder="Buscar por nome, bloco, apartamento ou e-mail...">
-                    </div>
-                    <select class="action-select admin-filter-select" id="inadimplencia-status-filter">
-                        <option value="">Todos os status</option>
-                        <option value="em_aberto">Em aberto</option>
-                        <option value="negociacao">Em negociação</option>
-                        <option value="quitado">Quitado</option>
-                    </select>
-                </div>
-
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Responsável</th>
+                            <th>Responsavel</th>
                             <th>Unidade</th>
                             <th>Total em Aberto</th>
-                            <th>Dias em Atraso</th>
+                            <th>Maior atraso</th>
                             <th>Status</th>
-                            <th>Ações</th>
+                            <th>Acoes</th>
                         </tr>
                     </thead>
                     <tbody id="inadimplencia-body">
@@ -156,7 +132,7 @@
             <div class="admin-dialog-header">
                 <div>
                     <h2 id="financeiro-dialog-title">Detalhes financeiros</h2>
-                    <p id="financeiro-dialog-subtitle">Acompanhe a movimentação selecionada.</p>
+                    <p id="financeiro-dialog-subtitle">Acompanhe a movimentacao selecionada.</p>
                 </div>
                 <button type="button" class="dialog-close-button" data-dialog-close="financeiro-dialog"><i class="fas fa-times"></i></button>
             </div>
@@ -165,68 +141,80 @@
         </div>
     </dialog>
 
-    <script src="../../public/js/script.js"></script>
+    <div class="finance-toast" id="finance-toast" aria-live="polite" aria-atomic="true" hidden>
+        <div class="finance-toast-icon"><i class="fas fa-check-circle"></i></div>
+        <div class="finance-toast-content">
+            <strong>Envio realizado</strong>
+            <p id="finance-toast-message">A cobranca foi reenviada com sucesso.</p>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const pagarStorageKey = 'nexus_financeiro_pagar_v1';
-            const receberStorageKey = 'nexus_financeiro_receber_v1';
-            const inadimplenciaKey = 'nexus_inadimplencia_admin_v2';
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html?role=admin';
+                return;
+            }
+
             const pagarSeed = [
-                { id: 'pag-1', descricao: 'Conta de energia elétrica da área comum', detalhe: 'Fatura principal da concessionária referente à iluminação, elevadores e garagem.', vencimento: '10/11/2025', valor: 6500, status: 'A Pagar', fornecedor: 'Energia Paulista', metodoPagamento: '', pagoEm: '' },
-                { id: 'pag-2', descricao: 'Folha da portaria', detalhe: 'Folha operacional da equipe interna do mês.', vencimento: '05/11/2025', valor: 2800, status: 'A Pagar', fornecedor: 'Equipe interna', metodoPagamento: '', pagoEm: '' },
-                { id: 'pag-3', descricao: 'Manutenção preventiva do elevador', detalhe: 'Contrato mensal da empresa terceirizada com visita técnica e reposição básica.', vencimento: '15/10/2025', valor: 1200, status: 'Paga', fornecedor: 'Elevadores Sigma', metodoPagamento: 'Transferência', pagoEm: '15/10/2025' }
-            ];
-            const receberSeed = [
-                { id: 'rec-1', descricao: 'Taxa operacional da unidade 201', detalhe: 'Rateio mensal de despesas ordinárias do condomínio.', vencimento: '05/11/2025', valor: 750, status: 'A Receber', morador: 'Carlos Menezes', motivo: 'Condomínio mensal', dataPagamento: '', formaPagamento: '', email: 'carlos.menezes@email.com' },
-                { id: 'rec-2', descricao: 'Fundo de reserva (Outubro)', detalhe: 'Receita consolidada de aportes extraordinários para obras e manutenções futuras.', vencimento: '30/10/2025', valor: 15000, status: 'Recebida', morador: 'Moradores do bloco B', motivo: 'Fundo de reserva', dataPagamento: '29/10/2025', formaPagamento: 'PIX coletivo', email: '' }
-            ];
-            const inadimplenciaSeed = [
-                { id: 'ina-1', nome: 'Ana Luiza Martins', email: 'ana.luiza@email.com', bloco: 'A', apartamento: '101', valor: 1320, vencimento: '2025-01-10', status: 'em_aberto' },
-                { id: 'ina-2', nome: 'Paulo Henrique Souza', email: 'paulo.souza@email.com', bloco: 'B', apartamento: '205', valor: 2875.4, vencimento: '2024-12-05', status: 'negociacao' },
-                { id: 'ina-3', nome: 'Mariana Costa', email: 'mariana.costa@email.com', bloco: 'C', apartamento: '304', valor: 980, vencimento: '2025-02-14', status: 'em_aberto' }
+                { id: 'pag-1', descricao: 'Conta de energia eletrica da area comum', detalhe: 'Fatura principal da concessionaria referente a iluminacao, elevadores e garagem.', vencimento: '2025-11-10', valor: 6500, status: 'A Pagar', fornecedor: 'Energia Paulista', metodoPagamento: '', pagoEm: '' },
+                { id: 'pag-2', descricao: 'Folha da portaria', detalhe: 'Folha operacional da equipe interna do mes.', vencimento: '2025-11-05', valor: 2800, status: 'A Pagar', fornecedor: 'Equipe interna', metodoPagamento: '', pagoEm: '' },
+                { id: 'pag-3', descricao: 'Manutencao preventiva do elevador', detalhe: 'Contrato mensal da empresa terceirizada com visita tecnica e reposicao basica.', vencimento: '2025-10-15', valor: 1200, status: 'Paga', fornecedor: 'Elevadores Sigma', metodoPagamento: 'Transferencia', pagoEm: '2025-10-15' }
             ];
 
             const pagarBody = document.getElementById('contas-pagar-body');
             const receberBody = document.getElementById('contas-receber-body');
             const inadBody = document.getElementById('inadimplencia-body');
-            const inadForm = document.getElementById('inadimplencia-form-financeiro');
-            const inadFeedback = document.getElementById('inadimplencia-feedback-financeiro');
-            const inadSearch = document.getElementById('inadimplencia-search');
-            const inadFilter = document.getElementById('inadimplencia-status-filter');
+            const feedback = document.getElementById('financeiro-feedback');
             const dialog = document.getElementById('financeiro-dialog');
             const dialogTitle = document.getElementById('financeiro-dialog-title');
             const dialogSubtitle = document.getElementById('financeiro-dialog-subtitle');
             const dialogBody = document.getElementById('financeiro-dialog-body');
             const dialogActions = document.getElementById('financeiro-dialog-actions');
+            const toast = document.getElementById('finance-toast');
+            const toastMessage = document.getElementById('finance-toast-message');
+            let toastTimer = null;
 
-            function readData(key, seed) {
-                try {
-                    const raw = localStorage.getItem(key);
-                    if (!raw) {
-                        localStorage.setItem(key, JSON.stringify(seed));
-                        return seed.slice();
-                    }
-                    const parsed = JSON.parse(raw);
-                    return Array.isArray(parsed) ? parsed : seed.slice();
-                } catch {
-                    return seed.slice();
-                }
-            }
-
-            function saveData(key, data) {
-                localStorage.setItem(key, JSON.stringify(data));
+            function authHeaders(json = false) {
+                return {
+                    Authorization: `Bearer ${token}`,
+                    ...(json ? { 'Content-Type': 'application/json' } : {}),
+                };
             }
 
             function formatCurrency(value) {
                 return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             }
 
-            function diffInDays(vencimento) {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const due = new Date(`${vencimento}T00:00:00`);
-                const diff = Math.floor((today - due) / (1000 * 60 * 60 * 24));
-                return Math.max(diff, 0);
+            function formatDate(value) {
+                if (!value) return '-';
+                return new Date(value).toLocaleDateString('pt-BR');
+            }
+
+            function referenceLabel(item) {
+                return `${String(item.mes).padStart(2, '0')}/${item.ano}`;
+            }
+
+            function setFeedback(message, success) {
+                feedback.textContent = message || '';
+                feedback.className = `admin-inline-feedback${message ? success ? ' is-success' : ' is-error' : ''}`;
+            }
+
+            function showToast(message) {
+                if (!toast || !toastMessage) return;
+                toastMessage.textContent = message;
+                toast.hidden = false;
+                toast.classList.add('is-visible');
+                if (toastTimer) {
+                    window.clearTimeout(toastTimer);
+                }
+                toastTimer = window.setTimeout(function () {
+                    toast.classList.remove('is-visible');
+                    window.setTimeout(function () {
+                        toast.hidden = true;
+                    }, 220);
+                }, 2600);
             }
 
             function openDialog(title, subtitle, bodyHtml, actionsHtml) {
@@ -241,26 +229,75 @@
                 return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(texto)}`;
             }
 
-            function updateSummary() {
-                const pagar = readData(pagarStorageKey, pagarSeed);
-                const receber = readData(receberStorageKey, receberSeed);
-                const inad = readData(inadimplenciaKey, inadimplenciaSeed);
-
-                document.querySelector('[data-fin-pagar]').textContent = formatCurrency(pagar.filter((item) => item.status !== 'Paga').reduce((sum, item) => sum + Number(item.valor || 0), 0));
-                document.querySelector('[data-fin-atraso]').textContent = formatCurrency(inad.filter((item) => item.status !== 'quitado').reduce((sum, item) => sum + Number(item.valor || 0), 0));
-                const saldo = receber.filter((item) => item.status === 'Recebida').reduce((sum, item) => sum + Number(item.valor || 0), 0)
-                    - pagar.filter((item) => item.status === 'Paga').reduce((sum, item) => sum + Number(item.valor || 0), 0);
-                document.querySelector('[data-fin-saldo]').textContent = formatCurrency(saldo);
+            function buildWhatsApp(phone, texto) {
+                const digits = String(phone || '').replace(/\D/g, '');
+                return digits ? `https://wa.me/55${digits}?text=${encodeURIComponent(texto)}` : '#';
             }
 
-            function renderFinanceiro() {
-                const pagar = readData(pagarStorageKey, pagarSeed);
-                const receber = readData(receberStorageKey, receberSeed);
+            function secondViaLabel(item) {
+                return item.bankSlipUrl || item.invoiceUrl ? '2a via pronta' : 'Aguardando geracao';
+            }
 
-                pagarBody.innerHTML = pagar.map((item) => `
+            function dueInfo(item) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const due = new Date(item.vencimento);
+                due.setHours(0, 0, 0, 0);
+                const diff = Math.floor((today - due) / 86400000);
+                return {
+                    isLate: diff > 0,
+                    daysLate: Math.max(diff, 0),
+                };
+            }
+
+            function computedChargeState(item) {
+                const hasCharge = Boolean(item.bankSlipUrl || item.invoiceUrl);
+                const { isLate, daysLate } = dueInfo(item);
+
+                if (item.status === 'PAGA') {
+                    return { key: 'paid', label: 'Pago', flowLabel: 'Pagamento concluido', statusClassName: 'status-ativo', hasCharge, isLate: false, daysLate: 0 };
+                }
+                if (isLate && hasCharge) {
+                    return { key: 'late', label: 'Atrasado', flowLabel: 'Cobranca automatica em atraso', statusClassName: 'status-alta', hasCharge, isLate, daysLate };
+                }
+                if (isLate && !hasCharge) {
+                    return { key: 'late_missing_charge', label: 'Atrasado', flowLabel: 'Atrasada sem boleto gerado', statusClassName: 'status-alta', hasCharge, isLate, daysLate };
+                }
+                if (hasCharge) {
+                    return { key: 'pending_with_charge', label: 'A vencer', flowLabel: 'Boleto gerado automaticamente', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
+                }
+                return { key: 'pending_without_charge', label: 'Pendente', flowLabel: 'Cobranca aguardando geracao', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
+            }
+
+            function buildChargePayload(item) {
+                const boletoUrl = item.bankSlipUrl || item.invoiceUrl || '';
+                const email = item.morador.user?.email || '';
+                const phone = item.morador.telefone || '';
+                const assunto = `Cobranca ${referenceLabel(item)} - ${item.descricao}`;
+                const mensagem = [
+                    `Ola, ${item.morador.nome}.`,
+                    `Segue a cobranca ${item.descricao} referente a ${referenceLabel(item)} no valor de ${formatCurrency(item.valor)}.`,
+                    boletoUrl ? `Link do boleto: ${boletoUrl}` : 'O boleto sera anexado/compartilhado assim que a cobranca for gerada.',
+                    'Esta tela do TCC deixa o envio pronto, mas nao dispara mensagens reais.'
+                ].join(' ');
+
+                return {
+                    boletoUrl,
+                    email,
+                    phone,
+                    assunto,
+                    mensagem,
+                    mailto: email ? buildMailto(email, assunto, mensagem) : '',
+                    whatsapp: phone ? buildWhatsApp(phone, mensagem) : '',
+                };
+            }
+
+
+            function renderPagar() {
+                pagarBody.innerHTML = pagarSeed.map((item) => `
                     <tr>
                         <td><strong>${item.descricao}</strong><br><small>${item.detalhe}</small></td>
-                        <td>${item.vencimento}</td>
+                        <td>${formatDate(item.vencimento)}</td>
                         <td class="negative-value">${formatCurrency(item.valor)}</td>
                         <td class="${item.status === 'Paga' ? 'status-ativo' : 'status-pendente'}">${item.status}</td>
                         <td>${item.status === 'Paga'
@@ -268,84 +305,357 @@
                             : `<a href="#" class="action-link action-pay" data-financeiro-pay="${item.id}">Pagar</a>`}</td>
                     </tr>
                 `).join('');
-
-                receberBody.innerHTML = receber.map((item) => `
-                    <tr>
-                        <td><strong>${item.descricao}</strong><br><small>${item.detalhe}</small></td>
-                        <td>${item.vencimento}</td>
-                        <td class="positive-value">${formatCurrency(item.valor)}</td>
-                        <td class="${item.status === 'Recebida' ? 'status-ativo' : 'status-pendente'}">${item.status}</td>
-                        <td>
-                            ${item.status === 'Recebida'
-                                ? `<a href="#" class="action-link" data-financeiro-view="receber" data-id="${item.id}">Ver</a>`
-                                : `<a href="${buildMailto(item.email || '', `Cobranca referente a ${item.descricao}`, `Olá, ${item.morador}. Identificamos a pendência referente a ${item.descricao} no valor de ${formatCurrency(item.valor)} com vencimento em ${item.vencimento}. Favor regularizar ou responder esta mensagem para negociação.`)}" class="action-link action-collect">Cobrar</a>`}
-                        </td>
-                    </tr>
-                `).join('');
-
-                updateSummary();
+                document.querySelector('[data-fin-pagar]').textContent = formatCurrency(
+                    pagarSeed.filter((item) => item.status !== 'Paga').reduce((sum, item) => sum + Number(item.valor || 0), 0)
+                );
             }
 
-            function statusLabel(status) {
-                if (status === 'negociacao') return 'Em negociação';
-                if (status === 'quitado') return 'Quitado';
-                return 'Em aberto';
+            function mergeTaxas(taxas, cobrancas) {
+                const chargeMap = new Map(cobrancas.map((item) => [Number(item.id), item]));
+                return taxas.map((item) => ({ ...item, ...(chargeMap.get(Number(item.id)) || {}) }));
             }
 
-            function statusClass(status) {
-                if (status === 'negociacao') return 'status-media';
-                if (status === 'quitado') return 'status-ativo';
-                return 'status-pendente';
+            async function loadFinanceiro() {
+                setFeedback('', true);
+                try {
+                    const [taxasRes, cobrancasRes] = await Promise.all([
+                        fetch('/api/taxas', { headers: authHeaders() }),
+                        fetch('/api/pagamentos/asaas/taxas', { headers: authHeaders() }),
+                    ]);
+
+                    if (taxasRes.status === 401 || cobrancasRes.status === 401) {
+                        localStorage.removeItem('nexus_token');
+                        localStorage.removeItem('nexus_user');
+                        window.location.href = '/login.html?role=admin';
+                        return;
+                    }
+
+                    if (!taxasRes.ok || !cobrancasRes.ok) {
+                        throw new Error('Nao foi possivel carregar o financeiro.');
+                    }
+
+                    const taxas = await taxasRes.json();
+                    const cobrancas = await cobrancasRes.json();
+                    const taxasComCobranca = mergeTaxas(taxas, cobrancas);
+
+                    renderReceber(taxasComCobranca);
+                    renderInadimplencia(taxasComCobranca);
+                    updateSummaryReceber(taxasComCobranca);
+                } catch (error) {
+                    receberBody.innerHTML = '<tr><td colspan="5" style="text-align:center">Erro ao carregar contas a receber.</td></tr>';
+                    inadBody.innerHTML = '<tr><td colspan="6" style="text-align:center">Erro ao carregar inadimplencia.</td></tr>';
+                    setFeedback(error.message || 'Erro ao carregar financeiro.', false);
+                }
             }
 
-            function renderInadimplencia() {
-                const data = readData(inadimplenciaKey, inadimplenciaSeed);
-                const query = String(inadSearch.value || '').toLowerCase();
-                const filter = inadFilter.value;
-                const filtered = data.filter((item) => {
-                    const matchesQuery = [item.nome, item.email, item.bloco, item.apartamento].join(' ').toLowerCase().includes(query);
-                    const matchesStatus = !filter || item.status === filter;
-                    return matchesQuery && matchesStatus;
-                });
+            function updateSummaryReceber(taxas) {
+                const totalRecebido = taxas
+                    .filter((item) => item.status === 'PAGA')
+                    .reduce((sum, item) => sum + Number(item.valor || 0), 0);
+                const totalAtraso = taxas
+                    .filter((item) => item.status !== 'PAGA')
+                    .reduce((sum, item) => sum + Number(item.valor || 0), 0);
 
-                if (!filtered.length) {
-                    inadBody.innerHTML = '<tr><td colspan="6" style="text-align:center">Nenhuma unidade encontrada para os filtros atuais.</td></tr>';
+                document.querySelector('[data-fin-saldo]').textContent = formatCurrency(totalRecebido);
+                document.querySelector('[data-fin-atraso]').textContent = formatCurrency(totalAtraso);
+            }
+
+            function rowActions(item) {
+                const payload = buildChargePayload(item);
+                const state = computedChargeState(item);
+                let primaryAction = '';
+                let helperText = '';
+                const secondaryParts = [];
+
+                if (state.key === 'paid') {
+                    primaryAction = `<button type="button" class="finance-primary-button is-neutral" data-financeiro-view="receber" data-id="${item.id}">Ver detalhes</button>`;
+                    helperText = 'Pagamento confirmado. Em producao, o webhook atualizaria esta linha automaticamente.';
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
+                } else if (state.key === 'late') {
+                    primaryAction = `<button type="button" class="finance-primary-button is-alert" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>`;
+                    helperText = 'No fluxo automatico, a régua de cobranca enviaria a 2a via automaticamente apos o vencimento.';
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
+                    secondaryParts.push(`<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="table-action-button finance-secondary-link">Abrir boleto</a>`);
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
+                } else if (state.key === 'late_missing_charge') {
+                    primaryAction = `<button type="button" class="finance-primary-button is-alert" data-gerar-cobranca="${item.id}">Gerar boleto urgente</button>`;
+                    helperText = 'Esta linha simula uma excecao: a taxa venceu sem boleto gerado.';
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
+                } else if (state.key === 'pending_with_charge') {
+                    primaryAction = `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="finance-primary-link">Abrir boleto</a>`;
+                    helperText = 'Boleto pronto. Em um fluxo automatico, o envio seria programado antes do vencimento.';
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>`);
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
+                } else {
+                    primaryAction = `<button type="button" class="finance-primary-button" data-gerar-cobranca="${item.id}">Gerar boleto</button>`;
+                    helperText = 'Na demonstracao o admin gera manualmente. Em producao, esta etapa poderia acontecer automaticamente.';
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Enviar manualmente</button>`);
+                }
+
+                return `
+                    <div class="finance-actions-stack">
+                        <div class="finance-flow-chip ${state.hasCharge ? 'is-ready' : 'is-pending'} ${state.isLate ? 'is-late' : ''}">${state.flowLabel}</div>
+                        <div class="finance-primary-action">
+                            ${primaryAction}
+                        </div>
+                        <div class="finance-secondary-actions">
+                            ${secondaryParts.join('')}
+                        </div>
+                        <small class="finance-actions-note">${helperText}</small>
+                    </div>
+                `;
+            }
+
+            function renderReceber(taxas) {
+                if (!taxas.length) {
+                    receberBody.innerHTML = '<tr><td colspan="5" style="text-align:center">Nenhuma conta a receber cadastrada.</td></tr>';
                     return;
                 }
 
-                inadBody.innerHTML = filtered.map((item) => `
+                receberBody.innerHTML = taxas.map((item) => `
                     <tr>
-                        <td><strong>${item.nome}</strong><br><small>${item.email}</small></td>
-                        <td>Bloco ${item.bloco} - Apto ${item.apartamento}</td>
-                        <td class="negative-value">${formatCurrency(item.valor)}</td>
-                        <td><span class="delay-pill">${diffInDays(item.vencimento)} dias</span></td>
-                        <td class="${statusClass(item.status)}">${statusLabel(item.status)}</td>
-                        <td>
-                            <a href="${buildMailto(item.email, `Cobranca da unidade ${item.apartamento}`, `Olá, ${item.nome}. Consta em nosso sistema um valor em aberto de ${formatCurrency(item.valor)} referente à unidade ${item.apartamento}, bloco ${item.bloco}. Favor regularizar ou entrar em contato para negociação.`)}" class="action-link">Cobrar</a>
-                            <button type="button" class="table-action-button" data-inad-action="negociacao" data-id="${item.id}">Negociar</button>
-                            <button type="button" class="table-action-button is-success" data-inad-action="quitado" data-id="${item.id}">Quitar</button>
-                        </td>
+                        <td><strong>${item.morador.nome}</strong><br><small>Bloco ${item.morador.bloco} / Unidade ${item.morador.unidade}</small></td>
+                        <td>${referenceLabel(item)}<br><small>${formatDate(item.vencimento)}</small></td>
+                        <td class="${item.status === 'PAGA' ? 'positive-value' : 'negative-value'}">${formatCurrency(item.valor)}</td>
+                        <td class="${computedChargeState(item).statusClassName}">${computedChargeState(item).label}</td>
+                        <td>${rowActions(item)}</td>
                     </tr>
                 `).join('');
-
-                updateSummary();
             }
 
-            function activateFinanceiroTab(tabName) {
-                const safeTab = ['contas-pagar', 'contas-receber', 'inadimplencia'].includes(tabName) ? tabName : 'contas-pagar';
-                document.querySelectorAll('[data-financeiro-tab]').forEach((item) => {
-                    item.classList.toggle('active', item.dataset.financeiroTab === safeTab);
+            function renderInadimplencia(taxas) {
+                const map = new Map();
+                taxas.filter((item) => computedChargeState(item).isLate).forEach((item) => {
+                    const key = item.moradorId;
+                    if (!map.has(key)) {
+                        map.set(key, {
+                            morador: item.morador,
+                            total: 0,
+                            dias: 0,
+                            taxas: [],
+                        });
+                    }
+                    const group = map.get(key);
+                    group.total += Number(item.valor || 0);
+                    group.dias = Math.max(group.dias, dueInfo(item).daysLate);
+                    group.taxas.push(item);
                 });
-                document.querySelectorAll('.tab-content').forEach((panel) => {
-                    panel.classList.toggle('hidden', panel.id !== safeTab);
-                });
+
+                const rows = Array.from(map.values());
+                if (!rows.length) {
+                    inadBody.innerHTML = '<tr><td colspan="6" style="text-align:center">Nenhuma unidade em atraso no momento.</td></tr>';
+                    return;
+                }
+
+                inadBody.innerHTML = rows.map((item) => {
+                    const primeiraTaxa = item.taxas[0];
+                    return `
+                        <tr>
+                            <td><strong>${item.morador.nome}</strong><br><small>${item.morador.user?.email || '-'}</small></td>
+                            <td>Bloco ${item.morador.bloco} - Unidade ${item.morador.unidade}</td>
+                            <td class="negative-value">${formatCurrency(item.total)}</td>
+                            <td><span class="delay-pill">${item.dias} dias</span></td>
+                            <td class="status-alta">Em cobranca</td>
+                            <td>${rowActions(primeiraTaxa)}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            async function gerarCobranca(id) {
+                setFeedback('Gerando boleto...', true);
+                try {
+                    const response = await fetch(`/api/pagamentos/asaas/taxas/${id}/cobranca`, {
+                        method: 'POST',
+                        headers: authHeaders(true),
+                        body: JSON.stringify({ billingType: 'BOLETO', customerCpfCnpj: '52998224725' }),
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Nao foi possivel gerar o boleto.');
+                    }
+                    setFeedback('Boleto gerado com sucesso. Na demonstracao essa etapa foi manual; em um fluxo automatico, a cobranca e os lembretes seriam preparados pelo sistema.', true);
+                    await loadFinanceiro();
+                } catch (error) {
+                    setFeedback(error.message || 'Erro ao gerar boleto.', false);
+                }
+            }
+
+            function openReceberDialog(item) {
+                const payload = buildChargePayload(item);
+                const boletoUrl = payload.boletoUrl || '-';
+                openDialog(
+                    'Detalhes da cobranca',
+                    'Consulte o status da taxa e os dados da segunda via.',
+                    `<div class="dialog-detail-grid">
+                        <div><span>Morador</span><strong>${item.morador.nome}</strong></div>
+                        <div><span>Unidade</span><strong>Bloco ${item.morador.bloco} / ${item.morador.unidade}</strong></div>
+                        <div><span>Referencia</span><strong>${referenceLabel(item)}</strong></div>
+                        <div><span>Vencimento</span><strong>${formatDate(item.vencimento)}</strong></div>
+                        <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
+                        <div><span>Status</span><strong>${computedChargeState(item).label}</strong></div>
+                        <div><span>Tipo</span><strong>${item.billingType || '-'}</strong></div>
+                        <div><span>Pagamento Asaas</span><strong>${item.asaasPaymentId || '-'}</strong></div>
+                        <div><span>2a via</span><strong>${secondViaLabel(item)}</strong></div>
+                        <div><span>E-mail</span><strong>${payload.email || 'Nao cadastrado'}</strong></div>
+                        <div><span>WhatsApp</span><strong>${payload.phone || 'Nao cadastrado'}</strong></div>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Link da cobranca</span>
+                        <p>${boletoUrl}</p>
+                    </div>`,
+                    `
+                        ${boletoUrl !== '-' ? `<a href="${boletoUrl}" target="_blank" rel="noopener" class="primary-button" style="text-decoration:none;">Abrir boleto</a>` : ''}
+                        ${boletoUrl !== '-' ? `<button type="button" class="table-action-button" data-copy-link="${boletoUrl}">Copiar 2a via</button>` : ''}
+                        <button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>
+                    `
+                );
+            }
+
+            function openEnvioDialog(item) {
+                const payload = buildChargePayload(item);
+                const destinos = [
+                    payload.email ? `E-mail: ${payload.email}` : '',
+                    payload.phone ? `WhatsApp: ${payload.phone}` : '',
+                ].filter(Boolean);
+                openDialog(
+                    'Reenviar cobranca',
+                    'Reenvie a cobranca usando os dados cadastrados do morador.',
+                    `<div class="dialog-detail-grid">
+                        <div><span>Morador</span><strong>${item.morador.nome}</strong></div>
+                        <div><span>Referencia</span><strong>${referenceLabel(item)}</strong></div>
+                        <div><span>Status da cobranca</span><strong>${payload.boletoUrl ? 'Boleto gerado' : 'Boleto ainda nao gerado'}</strong></div>
+                        <div><span>E-mail de destino</span><strong>${payload.email || 'Nao cadastrado'}</strong></div>
+                        <div><span>WhatsApp de destino</span><strong>${payload.phone || 'Nao cadastrado'}</strong></div>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Mensagem pronta</span>
+                        <p>${payload.mensagem}</p>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Canais de envio</span>
+                        <p>O sistema utiliza o e-mail e o WhatsApp cadastrados para reenviar a cobranca e a segunda via ao morador.</p>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Destino selecionado</span>
+                        <p>${destinos.length ? destinos.join(' | ') : 'Nenhum dado de contato cadastrado para simulacao de envio.'}</p>
+                    </div>`,
+                    `
+                        <div class="dialog-actions-group">
+                            ${payload.boletoUrl ? `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="primary-button" style="text-decoration:none;">Abrir boleto</a>` : `<button type="button" class="table-action-button" data-gerar-cobranca="${item.id}">Gerar boleto primeiro</button>`}
+                            ${payload.boletoUrl ? `<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">Copiar 2a via</button>` : ''}
+                        </div>
+                        ${payload.boletoUrl ? `<button type="button" class="primary-button dialog-send-button" data-simular-envio="${item.id}">Enviar</button>` : ''}
+                    `
+                );
+            }
+
+            async function findMergedTaxa(id) {
+                const [taxasRes, cobrancasRes] = await Promise.all([
+                    fetch('/api/taxas', { headers: authHeaders() }),
+                    fetch('/api/pagamentos/asaas/taxas', { headers: authHeaders() }),
+                ]);
+                const taxas = await taxasRes.json();
+                const cobrancas = await cobrancasRes.json();
+                return mergeTaxas(taxas, cobrancas).find((row) => Number(row.id) === Number(id));
             }
 
             document.querySelectorAll('[data-financeiro-tab]').forEach((button) => {
                 button.addEventListener('click', function () {
-                    activateFinanceiroTab(button.dataset.financeiroTab);
-                    history.replaceState(null, '', `#${button.dataset.financeiroTab}`);
+                    const tab = button.dataset.financeiroTab;
+                    document.querySelectorAll('[data-financeiro-tab]').forEach((item) => item.classList.toggle('active', item === button));
+                    document.querySelectorAll('.tab-content').forEach((panel) => panel.classList.toggle('hidden', panel.id !== tab));
+                    history.replaceState(null, '', `#${tab}`);
                 });
+            });
+
+            receberBody.addEventListener('click', async function (event) {
+                const generateButton = event.target.closest('[data-gerar-cobranca]');
+                if (generateButton) {
+                    await gerarCobranca(generateButton.dataset.gerarCobranca);
+                    return;
+                }
+
+                const copyButton = event.target.closest('[data-copy-link]');
+                if (copyButton) {
+                    await navigator.clipboard.writeText(copyButton.dataset.copyLink);
+                    setFeedback('Link da 2a via copiado.', true);
+                    return;
+                }
+
+                const viewButton = event.target.closest('[data-financeiro-view="receber"]');
+                if (viewButton) {
+                    try {
+                        const item = await findMergedTaxa(viewButton.dataset.id);
+                        if (item) openReceberDialog(item);
+                    } catch {}
+                    return;
+                }
+
+                const envioButton = event.target.closest('[data-financeiro-view="envio"]');
+                if (envioButton) {
+                    try {
+                        const item = await findMergedTaxa(envioButton.dataset.id);
+                        if (item) openEnvioDialog(item);
+                    } catch {}
+                }
+            });
+
+            inadBody.addEventListener('click', async function (event) {
+                const generateButton = event.target.closest('[data-gerar-cobranca]');
+                if (generateButton) {
+                    await gerarCobranca(generateButton.dataset.gerarCobranca);
+                    return;
+                }
+                const copyButton = event.target.closest('[data-copy-link]');
+                if (copyButton) {
+                    await navigator.clipboard.writeText(copyButton.dataset.copyLink);
+                    setFeedback('Link da 2a via copiado.', true);
+                    return;
+                }
+
+                const envioButton = event.target.closest('[data-financeiro-view="envio"]');
+                if (envioButton) {
+                    try {
+                        const item = await findMergedTaxa(envioButton.dataset.id);
+                        if (item) openEnvioDialog(item);
+                    } catch {}
+                }
+            });
+
+            dialog.addEventListener('click', async function (event) {
+                const copyButton = event.target.closest('[data-copy-link]');
+                if (copyButton) {
+                    await navigator.clipboard.writeText(copyButton.dataset.copyLink);
+                    setFeedback('Link da 2a via copiado.', true);
+                    return;
+                }
+
+                const generateButton = event.target.closest('[data-gerar-cobranca]');
+                if (generateButton) {
+                    dialog.close();
+                    await gerarCobranca(generateButton.dataset.gerarCobranca);
+                    return;
+                }
+
+                const envioButton = event.target.closest('[data-financeiro-view="envio"]');
+                if (envioButton) {
+                    const item = await findMergedTaxa(envioButton.dataset.id);
+                    if (item) openEnvioDialog(item);
+                    return;
+                }
+
+                const sendButton = event.target.closest('[data-simular-envio]');
+                if (sendButton) {
+                    const item = await findMergedTaxa(sendButton.dataset.simularEnvio);
+                    if (!item) return;
+                    const message = `A cobranca foi reenviada com sucesso para ${item.morador.nome}.`;
+                    dialog.close();
+                    setFeedback(message, true);
+                    showToast(message);
+                }
             });
 
             pagarBody.addEventListener('click', function (event) {
@@ -353,20 +663,15 @@
                 const viewLink = event.target.closest('[data-financeiro-view="pagar"]');
                 if (!payLink && !viewLink) return;
                 event.preventDefault();
-
-                const pagar = readData(pagarStorageKey, pagarSeed);
-                const item = pagar.find((entry) => entry.id === (payLink?.dataset.financeiroPay || viewLink?.dataset.id));
+                const item = pagarSeed.find((entry) => entry.id === (payLink?.dataset.financeiroPay || viewLink?.dataset.id));
                 if (!item) return;
-
                 if (payLink) {
                     item.status = 'Paga';
-                    item.pagoEm = new Date().toLocaleDateString('pt-BR');
-                    item.metodoPagamento = 'Transferência bancária';
-                    saveData(pagarStorageKey, pagar);
-                    renderFinanceiro();
+                    item.pagoEm = new Date().toISOString();
+                    item.metodoPagamento = 'Transferencia bancaria';
+                    renderPagar();
                     return;
                 }
-
                 openDialog(
                     'Detalhes da conta paga',
                     'Resumo do pagamento realizado.',
@@ -374,77 +679,16 @@
                         <div><span>Conta</span><strong>${item.descricao}</strong></div>
                         <div><span>Fornecedor</span><strong>${item.fornecedor}</strong></div>
                         <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
-                        <div><span>Pago em</span><strong>${item.pagoEm || '-'}</strong></div>
+                        <div><span>Pago em</span><strong>${formatDate(item.pagoEm)}</strong></div>
                         <div><span>Forma de pagamento</span><strong>${item.metodoPagamento || '-'}</strong></div>
                         <div><span>Status</span><strong>${item.status}</strong></div>
                     </div>
                     <div class="dialog-note-block">
-                        <span>Descrição</span>
+                        <span>Descricao</span>
                         <p>${item.detalhe}</p>
                     </div>`
                 );
             });
-
-            receberBody.addEventListener('click', function (event) {
-                const viewLink = event.target.closest('[data-financeiro-view="receber"]');
-                if (!viewLink) return;
-                event.preventDefault();
-
-                const receber = readData(receberStorageKey, receberSeed);
-                const item = receber.find((entry) => entry.id === viewLink.dataset.id);
-                if (!item) return;
-
-                openDialog(
-                    'Detalhes do recebimento',
-                    'Histórico da receita registrada.',
-                    `<div class="dialog-detail-grid">
-                        <div><span>Quem pagou</span><strong>${item.morador}</strong></div>
-                        <div><span>Motivo</span><strong>${item.motivo}</strong></div>
-                        <div><span>Data</span><strong>${item.dataPagamento || '-'}</strong></div>
-                        <div><span>Forma</span><strong>${item.formaPagamento || '-'}</strong></div>
-                        <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
-                        <div><span>Status</span><strong>${item.status}</strong></div>
-                    </div>
-                    <div class="dialog-note-block">
-                        <span>Descrição</span>
-                        <p>${item.detalhe}</p>
-                    </div>`
-                );
-            });
-
-            inadForm.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const data = readData(inadimplenciaKey, inadimplenciaSeed);
-                data.unshift({
-                    id: `ina-${Date.now()}`,
-                    nome: document.getElementById('inadimplente-nome').value.trim(),
-                    email: document.getElementById('inadimplente-email').value.trim(),
-                    bloco: document.getElementById('inadimplente-bloco').value.trim(),
-                    apartamento: document.getElementById('inadimplente-apartamento').value.trim(),
-                    valor: Number(document.getElementById('inadimplente-valor').value || 0),
-                    vencimento: document.getElementById('inadimplente-vencimento').value,
-                    status: 'em_aberto'
-                });
-                saveData(inadimplenciaKey, data);
-                inadForm.reset();
-                inadFeedback.textContent = 'Unidade registrada com sucesso no financeiro.';
-                inadFeedback.className = 'admin-inline-feedback is-success';
-                renderInadimplencia();
-            });
-
-            inadBody.addEventListener('click', function (event) {
-                const actionButton = event.target.closest('[data-inad-action]');
-                if (!actionButton) return;
-                const data = readData(inadimplenciaKey, inadimplenciaSeed);
-                const target = data.find((item) => item.id === actionButton.dataset.id);
-                if (!target) return;
-                target.status = actionButton.dataset.inadAction;
-                saveData(inadimplenciaKey, data);
-                renderInadimplencia();
-            });
-
-            inadSearch.addEventListener('input', renderInadimplencia);
-            inadFilter.addEventListener('change', renderInadimplencia);
 
             document.querySelectorAll('[data-dialog-close]').forEach((button) => {
                 button.addEventListener('click', function () {
@@ -460,9 +704,14 @@
                 window.location.href = '/';
             });
 
-            activateFinanceiroTab((window.location.hash || '').replace('#', ''));
-            renderFinanceiro();
-            renderInadimplencia();
+            const initialTab = (window.location.hash || '').replace('#', '');
+            if (initialTab) {
+                const button = document.querySelector(`[data-financeiro-tab="${initialTab}"]`);
+                if (button) button.click();
+            }
+
+            renderPagar();
+            loadFinanceiro();
         });
     </script>
 </body>

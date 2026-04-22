@@ -149,7 +149,7 @@
             formTitle.textContent = 'Editar morador';
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Salvar alterações';
 
-            fetch(`/api/colaboradores/${editId}`, {
+            fetch(`/api/moradores/${editId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
                 .then((res) => res.json())
@@ -179,7 +179,7 @@
                 email: document.getElementById('email').value
             };
 
-            const url = editId ? `/api/colaboradores/${editId}` : '/api/colaboradores';
+            const url = editId ? `/api/moradores/${editId}` : '/api/moradores';
             const method = editId ? 'PUT' : 'POST';
 
             submitBtn.disabled = true;

@@ -1,0 +1,264 @@
+{
+  "generatedAt": "2026-04-22T00:23:57.101Z",
+  "colaboradores": [
+    {
+      "id": 1,
+      "userId": 2,
+      "nome": "Ana Silva",
+      "cpf": "111.111.111-11",
+      "nascimento": null,
+      "telefone": "(11) 91111-1111",
+      "bloco": "A",
+      "unidade": "101",
+      "status": "ATIVO",
+      "createdAt": "2026-04-07T18:24:13.980Z",
+      "updatedAt": "2026-04-07T18:24:13.980Z",
+      "user": {
+        "id": 2,
+        "email": "ana.silva@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:13.980Z",
+        "updatedAt": "2026-04-07T18:24:13.980Z"
+      },
+      "veiculos": [
+        {
+          "id": 1,
+          "colaboradorId": 1,
+          "placa": "ABC-1234",
+          "tipo": "CARRO",
+          "createdAt": "2026-04-07T18:24:14.047Z"
+        },
+        {
+          "id": 2,
+          "colaboradorId": 1,
+          "placa": "XYZ-9876",
+          "tipo": "MOTO",
+          "createdAt": "2026-04-07T18:24:14.058Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "nome": "Carlos Pereira",
+      "cpf": "222.222.222-22",
+      "nascimento": null,
+      "telefone": "(11) 92222-2222",
+      "bloco": "B",
+      "unidade": "205",
+      "status": "ATIVO",
+      "createdAt": "2026-04-07T18:24:13.994Z",
+      "updatedAt": "2026-04-07T18:24:13.994Z",
+      "user": {
+        "id": 3,
+        "email": "carlos.pereira@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:13.994Z",
+        "updatedAt": "2026-04-07T18:24:13.994Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 3,
+      "userId": 4,
+      "nome": "Mariana Costa",
+      "cpf": "333.333.333-33",
+      "nascimento": null,
+      "telefone": "(11) 93333-3333",
+      "bloco": "A",
+      "unidade": "302",
+      "status": "PENDENTE",
+      "createdAt": "2026-04-07T18:24:14.000Z",
+      "updatedAt": "2026-04-07T18:24:14.000Z",
+      "user": {
+        "id": 4,
+        "email": "mariana.costa@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:14.000Z",
+        "updatedAt": "2026-04-07T18:24:14.000Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 4,
+      "userId": 5,
+      "nome": "Joao Fernandes",
+      "cpf": "444.444.444-44",
+      "nascimento": null,
+      "telefone": "(11) 94444-4444",
+      "bloco": "A",
+      "unidade": "102",
+      "status": "ATIVO",
+      "createdAt": "2026-04-07T18:24:14.008Z",
+      "updatedAt": "2026-04-07T18:24:14.008Z",
+      "user": {
+        "id": 5,
+        "email": "joao.fernandes@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:14.008Z",
+        "updatedAt": "2026-04-07T18:24:14.008Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 5,
+      "userId": 6,
+      "nome": "Beatriz Mendes",
+      "cpf": "555.555.555-55",
+      "nascimento": null,
+      "telefone": "(11) 95555-5555",
+      "bloco": "C",
+      "unidade": "401",
+      "status": "PENDENTE",
+      "createdAt": "2026-04-07T18:24:14.016Z",
+      "updatedAt": "2026-04-07T18:24:14.016Z",
+      "user": {
+        "id": 6,
+        "email": "beatriz.mendes@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:14.016Z",
+        "updatedAt": "2026-04-07T18:24:14.016Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 6,
+      "userId": 7,
+      "nome": "Felipe Castro",
+      "cpf": "666.666.666-66",
+      "nascimento": null,
+      "telefone": "(11) 96666-6666",
+      "bloco": "B",
+      "unidade": "201",
+      "status": "ATIVO",
+      "createdAt": "2026-04-07T18:24:14.024Z",
+      "updatedAt": "2026-04-07T18:24:14.024Z",
+      "user": {
+        "id": 7,
+        "email": "felipe.castro@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:14.024Z",
+        "updatedAt": "2026-04-07T18:24:14.024Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 7,
+      "userId": 8,
+      "nome": "Gabriela Lima",
+      "cpf": "777.777.777-77",
+      "nascimento": null,
+      "telefone": "(11) 97777-7777",
+      "bloco": "C",
+      "unidade": "305",
+      "status": "ATIVO",
+      "createdAt": "2026-04-07T18:24:14.030Z",
+      "updatedAt": "2026-04-07T18:24:14.030Z",
+      "user": {
+        "id": 8,
+        "email": "gabriela.lima@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:14.030Z",
+        "updatedAt": "2026-04-07T18:24:14.030Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 8,
+      "userId": 9,
+      "nome": "Ricardo Alves",
+      "cpf": "888.888.888-88",
+      "nascimento": null,
+      "telefone": "(11) 98888-8888",
+      "bloco": "A",
+      "unidade": "501",
+      "status": "PENDENTE",
+      "createdAt": "2026-04-07T18:24:14.037Z",
+      "updatedAt": "2026-04-07T18:24:14.037Z",
+      "user": {
+        "id": 9,
+        "email": "ricardo.alves@nexus.com",
+        "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-07T18:24:14.037Z",
+        "updatedAt": "2026-04-07T18:24:14.037Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 9,
+      "userId": 14,
+      "nome": "Carolaine Silva",
+      "cpf": "657.546.879-90",
+      "nascimento": "2000-06-13T00:00:00.000Z",
+      "telefone": "62 98765677",
+      "bloco": "B",
+      "unidade": "Portaria",
+      "status": "PENDENTE",
+      "createdAt": "2026-04-08T21:54:19.564Z",
+      "updatedAt": "2026-04-08T21:54:19.564Z",
+      "user": {
+        "id": 14,
+        "email": "carolainesilva@gmail.com",
+        "password": "$2b$10$4X.Pw7Qmp6IZ5hSeLcf24eFcrUNrCps/Fg6xsVevstQTmYa1F/plu",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-08T21:54:19.564Z",
+        "updatedAt": "2026-04-08T21:54:19.564Z"
+      },
+      "veiculos": []
+    },
+    {
+      "id": 10,
+      "userId": 15,
+      "nome": "Giovanna Ferreira Queiroz",
+      "cpf": "067.140.431-80",
+      "nascimento": "2001-04-06T00:00:00.000Z",
+      "telefone": "(62) 98622-6246",
+      "bloco": "C",
+      "unidade": "22",
+      "status": "ATIVO",
+      "createdAt": "2026-04-22T00:17:56.311Z",
+      "updatedAt": "2026-04-22T00:18:07.081Z",
+      "user": {
+        "id": 15,
+        "email": "giovannaqueiroz0604@gmail.com",
+        "password": "$2b$10$uFW8DMKRCkdOOBQDsCMANOOM2y53wiKdInMX.aR3fmIanJE28ixZS",
+        "role": "COLABORADOR",
+        "accessLevel": "COLABORADOR",
+        "createdAt": "2026-04-22T00:17:56.311Z",
+        "updatedAt": "2026-04-22T00:18:07.081Z"
+      },
+      "veiculos": []
+    }
+  ],
+  "ocorrenciasComColaborador": [
+    {
+      "id": 1,
+      "colaboradorId": 1,
+      "tipo": "Elevador",
+      "local": "TORRE B",
+      "descricao": "Elevador com defeito",
+      "prioridade": "MEDIA",
+      "status": "EM_ANALISE",
+      "createdAt": "2026-04-08T22:56:11.565Z",
+      "updatedAt": "2026-04-08T22:56:11.565Z"
+    }
+  ],
+  "turnosComColaborador": []
+}

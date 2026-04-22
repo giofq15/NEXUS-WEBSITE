@@ -1,0 +1,23 @@
+{
+  "id": 2,
+  "email": "ana.silva@nexus.com",
+  "password": "$2b$10$7GHGK0cYFUOnoLMS6nXJou82ghXqMRRUynba6.A1/RcNfzPWYzz/m",
+  "role": "MORADOR",
+  "accessLevel": "MORADOR",
+  "createdAt": "2026-04-07T18:24:13.980Z",
+  "updatedAt": "2026-04-22T00:24:20.663Z",
+  "morador": {
+    "id": 15,
+    "userId": 2,
+    "nome": "Ana Silva",
+    "cpf": "111.111.111-11",
+    "nascimento": null,
+    "telefone": "(11) 91111-1111",
+    "bloco": "A",
+    "unidade": "101",
+    "status": "ATIVO",
+    "createdAt": "2026-04-22T00:24:20.646Z",
+    "updatedAt": "2026-04-22T00:24:20.646Z"
+  },
+  "colaborador": null
+}

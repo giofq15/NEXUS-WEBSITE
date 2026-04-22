@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal da Portaria - NEXUS</title>
+    <title>Portal do Colaborador - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -12,11 +12,11 @@
 <body class="admin-body">
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Portal da portaria">
+            <div class="nexus-brand" aria-label="Portal do colaborador">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
                     <strong data-condominio-nome>NEXUS</strong>
-                    <span>PORTARIA</span>
+                    <span>COLABORADOR</span>
                 </div>
             </div>
         </div>
@@ -34,11 +34,11 @@
 
     <main class="main-content">
         <div class="dashboard-header">
-            <h1>Painel da portaria</h1>
+            <h1>Painel do colaborador</h1>
             <p>Acompanhe ocorrências abertas, comunicados em vigor e a agenda operacional do condomínio.</p>
         </div>
 
-        <section class="admin-kpi-grid admin-kpi-grid-simplified" aria-label="Resumo operacional da portaria">
+        <section class="admin-kpi-grid admin-kpi-grid-simplified" aria-label="Resumo operacional do colaborador">
             <article class="admin-kpi-card">
                 <div class="admin-kpi-icon"><i class="fas fa-triangle-exclamation"></i></div>
                 <div>
@@ -79,7 +79,7 @@
                     <div class="admin-syndic-list" data-portaria-ocorrencias-list>
                         <article class="admin-syndic-item">
                             <strong>Nenhuma ocorrência carregada</strong>
-                            <p>As ocorrências abertas pela portaria aparecerão aqui com o status atualizado.</p>
+                            <p>As ocorrências abertas pela equipe aparecerão aqui com o status atualizado.</p>
                             <span>Aguardando dados</span>
                         </article>
                     </div>
@@ -102,7 +102,7 @@
                         <input type="text" id="turno-resumo-portaria" placeholder="Resumo rapido do turno" required>
                         <button type="submit" class="primary-button"><i class="fas fa-book"></i> Registrar turno</button>
                         <textarea id="turno-pendencias-portaria" class="admin-inline-textarea" placeholder="Pendencias que o proximo turno precisa acompanhar"></textarea>
-                        <textarea id="turno-orientacoes-portaria" class="admin-inline-textarea" placeholder="Orientacoes para o proximo porteiro"></textarea>
+                        <textarea id="turno-orientacoes-portaria" class="admin-inline-textarea" placeholder="Orientacoes para o proximo colaborador"></textarea>
                     </form>
                     <div class="button-group" style="margin-top: 0.75rem;">
                         <button type="button" class="reset-button" id="turno-cancelar-edicao-portaria" hidden>Cancelar edicao</button>
@@ -213,7 +213,7 @@
 
                 turnoList.innerHTML = turnos.slice(0, 5).map((item) => `
                     <article class="admin-syndic-item">
-                        <strong>${item.turno} • ${item.colaborador?.nome || 'Portaria'}</strong>
+                        <strong>${item.turno} • ${item.colaborador?.nome || 'Equipe'}</strong>
                         <p>${item.resumo}</p>
                         <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendencia registrada.'}</p>
                         <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientacoes adicionais.'}</p>
@@ -277,7 +277,7 @@
                 resolvidasField.textContent = String(ocorrencias.filter((item) => item.status === 'RESOLVIDA').length);
 
                 if (!ocorrencias.length) {
-                    textField.textContent = 'Nenhuma ocorrência vinculada à portaria no momento.';
+                    textField.textContent = 'Nenhuma ocorrência vinculada à equipe no momento.';
                     return;
                 }
 
@@ -295,7 +295,7 @@
                     </article>
                 `).join('');
             } catch {
-                textField.textContent = 'Nao foi possivel carregar as ocorrências da portaria.';
+                textField.textContent = 'Nao foi possivel carregar as ocorrências da equipe.';
             }
 
             let turnosCache = await loadTurnos();
