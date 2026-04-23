@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const { isAdminLevel } = require('../middleware/auth.middleware');
+const { isAreaReservavel } = require('../utils/areasLazer');
 
 const prisma = new PrismaClient();
 
@@ -97,8 +98,8 @@ async function disponibilidade(req, res) {
     }
 
     const area = await prisma.areaLazer.findUnique({ where: { id: Number(areaId) } });
-    if (!area) {
-      return res.status(404).json({ error: 'Area de lazer nao encontrada' });
+    if (!area || !area.ativo || !isAreaReservavel(area)) {
+      return res.status(404).json({ error: 'Area de lazer nao disponivel para reserva' });
     }
 
     const reservasNoDia = await prisma.reserva.findMany({
@@ -151,7 +152,7 @@ async function create(req, res) {
     }
 
     const area = await prisma.areaLazer.findUnique({ where: { id: Number(areaLazerId) } });
-    if (!area || !area.ativo) {
+    if (!area || !area.ativo || !isAreaReservavel(area)) {
       return res.status(404).json({ error: 'Area de lazer nao disponivel' });
     }
 

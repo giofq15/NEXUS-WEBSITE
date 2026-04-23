@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
+const { isAreaReservavel } = require('../src/utils/areasLazer');
 
 const prisma = new PrismaClient();
 
@@ -124,11 +125,19 @@ async function main() {
 
   const areasCriadas = [];
   for (const area of areasData) {
+    const data = {
+      ...area,
+      ativo: isAreaReservavel(area.nome),
+    };
     const existing = await prisma.areaLazer.findFirst({ where: { nome: area.nome } });
     if (existing) {
-      areasCriadas.push(existing);
+      const atualizada = await prisma.areaLazer.update({
+        where: { id: existing.id },
+        data,
+      });
+      areasCriadas.push(atualizada);
     } else {
-      const criada = await prisma.areaLazer.create({ data: area });
+      const criada = await prisma.areaLazer.create({ data });
       areasCriadas.push(criada);
     }
   }

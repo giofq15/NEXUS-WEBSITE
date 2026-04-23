@@ -1,14 +1,18 @@
 const { PrismaClient } = require('@prisma/client');
 const { isAdminLevel } = require('../middleware/auth.middleware');
+const { getAreasReservaveisWhere, isAreaReservavel } = require('../utils/areasLazer');
 
 const prisma = new PrismaClient();
 
 async function list(req, res) {
   try {
     const apenasAtivos = !isAdminLevel(req.user);
+    const where = apenasAtivos
+      ? { ativo: true, ...getAreasReservaveisWhere() }
+      : {};
 
     const areas = await prisma.areaLazer.findMany({
-      where: apenasAtivos ? { ativo: true } : {},
+      where,
       orderBy: { nome: 'asc' },
     });
 
@@ -24,7 +28,7 @@ async function getById(req, res) {
     const id = Number(req.params.id);
 
     const area = await prisma.areaLazer.findUnique({ where: { id } });
-    if (!area) {
+    if (!area || (!isAdminLevel(req.user) && (!area.ativo || !isAreaReservavel(area)))) {
       return res.status(404).json({ error: 'Area de lazer nao encontrada' });
     }
 

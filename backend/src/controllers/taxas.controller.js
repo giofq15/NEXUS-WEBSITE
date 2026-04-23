@@ -5,6 +5,16 @@ const prisma = new PrismaClient();
 
 const STATUS_VALIDOS = ['PAGA', 'PENDENTE', 'ATRASADA'];
 
+function serializeTaxa(taxa) {
+  if (!taxa) return taxa;
+
+  return {
+    ...taxa,
+    pixEncodedImage: taxa.pixQrCodeImage ?? null,
+    pixExpirationDate: taxa.pixExpirationDate ?? null,
+  };
+}
+
 function normalizeStatus(v) {
   const val = String(v || '').toUpperCase();
   return STATUS_VALIDOS.includes(val) ? val : 'PENDENTE';
@@ -36,7 +46,7 @@ async function list(req, res) {
       orderBy: [{ ano: 'desc' }, { mes: 'desc' }],
     });
 
-    res.json(taxas);
+    res.json(taxas.map(serializeTaxa));
   } catch (error) {
     console.error('Erro ao listar taxas:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -62,7 +72,7 @@ async function getById(req, res) {
       return res.status(403).json({ error: 'Sem permissao para acessar esta taxa' });
     }
 
-    res.json(taxa);
+    res.json(serializeTaxa(taxa));
   } catch (error) {
     console.error('Erro ao buscar taxa:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -93,7 +103,7 @@ async function create(req, res) {
       },
     });
 
-    res.status(201).json(taxa);
+    res.status(201).json(serializeTaxa(taxa));
   } catch (error) {
     console.error('Erro ao criar taxa:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -121,7 +131,7 @@ async function marcarPago(req, res) {
       },
     });
 
-    res.json(updated);
+    res.json(serializeTaxa(updated));
   } catch (error) {
     console.error('Erro ao marcar taxa como paga:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -143,7 +153,7 @@ async function updateStatus(req, res) {
       data: { status: normalizeStatus(status) },
     });
 
-    res.json(updated);
+    res.json(serializeTaxa(updated));
   } catch (error) {
     console.error('Erro ao atualizar status da taxa:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
