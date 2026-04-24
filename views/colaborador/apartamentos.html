@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestao de Apartamentos - NEXUS</title>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="admin-body">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="nexus-brand" aria-label="Gestao de apartamentos">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
+                <div class="nexus-brand-text">
+                    <strong data-condominio-nome>NEXUS</strong>
+                    <span>OPERACAO</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul id="apartamentos-menu-admin" hidden>
+                <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
+                <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li class="active"><a href="apartamentos.html"><i class="fas fa-building"></i> Gestao de Apartamentos</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+            <ul id="apartamentos-menu-portaria" hidden>
+                <li><a href="painel-colaborador.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="../ocorrencias/ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrencias</a></li>
+                <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
+                <li><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li class="active"><a href="apartamentos.html"><i class="fas fa-building"></i> Gestao de Apartamentos</a></li>
+                <li><a href="avisos.html"><i class="fas fa-bell"></i> Comunicados</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>Gestao de apartamentos</h1>
+            <p>Cadastre novas unidades, acompanhe contexto comercial e marque apartamentos em manutencao quando necessario.</p>
+        </div>
+
+        <section class="widget admin-ops-panel">
+            <form class="admin-inline-form" id="apartamento-form">
+                <select id="apartamento-finalidade" class="action-select" required>
+                    <option value="alugar">Alugar</option>
+                    <option value="vender">Vender</option>
+                    <option value="manutencao">Manutencao</option>
+                </select>
+                <input type="text" id="apartamento-bloco" placeholder="Bloco" maxlength="10" required>
+                <input type="text" id="apartamento-numero" placeholder="Apartamento" maxlength="10" required>
+                <input type="text" id="apartamento-perfil" placeholder="Perfil da unidade" required>
+                <input type="text" id="apartamento-contato" placeholder="Contato responsavel" required>
+                <select id="apartamento-status" class="action-select" required>
+                    <option value="disponivel">Disponivel</option>
+                    <option value="reservado">Reservado</option>
+                    <option value="manutencao">Manutencao</option>
+                </select>
+                <div class="admin-inline-form-actions" id="apartamento-campos-comerciais">
+                    <input type="text" id="apartamento-corretor" placeholder="Corretor / imobiliaria responsavel">
+                    <input type="text" id="apartamento-faixa" placeholder="Faixa de valor ou aluguel">
+                </div>
+                <div class="admin-inline-form-actions hidden" id="apartamento-campos-manutencao">
+                    <input type="text" id="apartamento-servico" placeholder="Servico em andamento">
+                    <input type="text" id="apartamento-previsao" placeholder="Previsao de liberacao">
+                </div>
+                <textarea id="apartamento-observacoes" class="admin-inline-textarea" placeholder="Observacoes da unidade, chaves, visitas, condicoes e afins."></textarea>
+                <div class="admin-inline-form-actions">
+                    <button type="submit" class="primary-button" id="apartamento-submit-button"><i class="fas fa-plus-circle"></i> Salvar apartamento</button>
+                </div>
+            </form>
+            <p class="admin-inline-feedback" id="apartamento-feedback" aria-live="polite"></p>
+
+            <div class="controls-container">
+                <div class="search-group">
+                    <input type="search" class="search-input" id="apartamentos-search" placeholder="Buscar por bloco, apartamento, contato ou perfil...">
+                </div>
+                <select class="action-select admin-filter-select" id="apartamentos-status-filter">
+                    <option value="">Todos</option>
+                    <option value="disponivel">Disponivel</option>
+                    <option value="reservado">Reservado</option>
+                    <option value="manutencao">Manutencao</option>
+                </select>
+            </div>
+
+            <div class="apartamentos-grid" id="apartamentos-grid"></div>
+        </section>
+
+        <footer class="content-footer">
+            <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
+        </footer>
+    </main>
+
+    <dialog class="admin-dialog" id="apartamento-dialog">
+        <div class="admin-dialog-content">
+            <div class="admin-dialog-header">
+                <div>
+                    <h2>Detalhes do apartamento</h2>
+                    <p>Visualize observacoes, contato e contexto operacional da unidade.</p>
+                </div>
+                <button type="button" class="dialog-close-button" data-dialog-close="apartamento-dialog"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="admin-dialog-body" id="apartamento-dialog-body"></div>
+        </div>
+    </dialog>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = localStorage.getItem('nexus_token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem('nexus_user') || '{}');
+            const isAdmin = user.accessLevel === 'ROOT' || user.accessLevel === 'ADMIN' || user.role === 'ADMIN';
+            document.getElementById(isAdmin ? 'apartamentos-menu-admin' : 'apartamentos-menu-portaria').hidden = false;
+
+            const apartamentosStorageKey = 'nexus_apartamentos_disponiveis_v2';
+            const apartamentosSeed = [
+                { id: 'apt-1', bloco: 'A', apartamento: '102', perfil: '2 quartos', status: 'disponivel', contato: 'Marina Alves - (11) 98888-1212', finalidade: 'alugar', corretor: 'Imobiliaria Centro', faixa: 'R$ 2.200/mes', observacoes: 'Unidade com pintura nova e vaga coberta.' },
+                { id: 'apt-2', bloco: 'B', apartamento: '305', perfil: '3 quartos', status: 'reservado', contato: 'Carlos Mendonca - (11) 97777-3030', finalidade: 'vender', corretor: 'Consultor local', faixa: 'R$ 520 mil', observacoes: 'Cliente aguardando proposta formal.' },
+                { id: 'apt-3', bloco: 'C', apartamento: '401', perfil: 'Cobertura', status: 'manutencao', contato: 'Equipe interna', finalidade: 'manutencao', servico: 'Reparo do forro', previsao: '15/04/2026', observacoes: 'Liberacao prevista apos conclusao do reparo.' },
+                { id: 'apt-4', bloco: 'A', apartamento: '203', perfil: 'Studio', status: 'disponivel', contato: 'Bianca Souza - (11) 96666-8899', finalidade: 'vender', corretor: 'Bianca Souza', faixa: 'R$ 290 mil', observacoes: 'Visitas permitidas no periodo da tarde.' }
+            ];
+
+            const apartamentosGrid = document.getElementById('apartamentos-grid');
+            const apartamentosSearch = document.getElementById('apartamentos-search');
+            const apartamentosStatusFilter = document.getElementById('apartamentos-status-filter');
+            const apartamentoForm = document.getElementById('apartamento-form');
+            const apartamentoFeedback = document.getElementById('apartamento-feedback');
+            const apartamentoDialog = document.getElementById('apartamento-dialog');
+            const apartamentoDialogBody = document.getElementById('apartamento-dialog-body');
+            const apartamentoSubmitButton = document.getElementById('apartamento-submit-button');
+            const apartamentoFinalidadeSelect = document.getElementById('apartamento-finalidade');
+            let editingApartamentoId = null;
+
+            function readData(key, seed) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) {
+                        localStorage.setItem(key, JSON.stringify(seed));
+                        return seed.slice();
+                    }
+                    const parsed = JSON.parse(raw);
+                    return Array.isArray(parsed) ? parsed : seed.slice();
+                } catch {
+                    return seed.slice();
+                }
+            }
+
+            function saveData(key, data) {
+                localStorage.setItem(key, JSON.stringify(data));
+            }
+
+            function syncApartamentoFields() {
+                const finalidade = apartamentoFinalidadeSelect.value || 'alugar';
+                const isManutencao = finalidade === 'manutencao';
+                document.getElementById('apartamento-campos-comerciais').classList.toggle('hidden', isManutencao);
+                document.getElementById('apartamento-campos-manutencao').classList.toggle('hidden', !isManutencao);
+                if (isManutencao) document.getElementById('apartamento-status').value = 'manutencao';
+            }
+
+            function resetApartamentoForm() {
+                apartamentoForm.reset();
+                editingApartamentoId = null;
+                apartamentoSubmitButton.innerHTML = '<i class="fas fa-plus-circle"></i> Salvar apartamento';
+                apartamentoFeedback.textContent = '';
+                apartamentoFeedback.className = 'admin-inline-feedback';
+                syncApartamentoFields();
+            }
+
+            function openApartamentoDialog(item) {
+                apartamentoDialogBody.innerHTML = `
+                    <div class="dialog-detail-grid">
+                        <div><span>Bloco</span><strong>${item.bloco}</strong></div>
+                        <div><span>Apartamento</span><strong>${item.apartamento}</strong></div>
+                        <div><span>Perfil</span><strong>${item.perfil}</strong></div>
+                        <div><span>Status</span><strong>${item.status}</strong></div>
+                        <div><span>Contato</span><strong>${item.contato}</strong></div>
+                        <div><span>Finalidade</span><strong>${item.finalidade === 'manutencao' ? 'Manutencao' : item.finalidade === 'vender' ? 'Venda' : 'Locacao'}</strong></div>
+                    </div>
+                    <div class="dialog-note-block">
+                        <span>Observacoes</span>
+                        <p>${item.observacoes || 'Nenhuma observacao cadastrada.'}</p>
+                    </div>
+                `;
+                apartamentoDialog.showModal();
+            }
+
+            function fillApartamentoForm(item) {
+                document.getElementById('apartamento-bloco').value = item.bloco;
+                document.getElementById('apartamento-numero').value = item.apartamento;
+                document.getElementById('apartamento-perfil').value = item.perfil;
+                document.getElementById('apartamento-contato').value = item.contato;
+                document.getElementById('apartamento-status').value = item.status;
+                document.getElementById('apartamento-finalidade').value = item.finalidade || 'alugar';
+                document.getElementById('apartamento-corretor').value = item.corretor || '';
+                document.getElementById('apartamento-faixa').value = item.faixa || '';
+                document.getElementById('apartamento-servico').value = item.servico || '';
+                document.getElementById('apartamento-previsao').value = item.previsao || '';
+                document.getElementById('apartamento-observacoes').value = item.observacoes || '';
+                editingApartamentoId = item.id;
+                apartamentoSubmitButton.innerHTML = '<i class="fas fa-save"></i> Atualizar apartamento';
+                apartamentoFeedback.textContent = 'Modo de edicao habilitado para a unidade selecionada.';
+                apartamentoFeedback.className = 'admin-inline-feedback is-success';
+                syncApartamentoFields();
+            }
+
+            function renderApartamentos() {
+                const query = String(apartamentosSearch.value || '').toLowerCase();
+                const filter = apartamentosStatusFilter.value;
+                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed).filter((item) => {
+                    const searchable = [item.bloco, item.apartamento, item.perfil, item.status, item.contato, item.finalidade, item.observacoes, item.corretor, item.faixa, item.servico, item.previsao].join(' ').toLowerCase();
+                    return searchable.includes(query) && (!filter || item.status === filter);
+                });
+
+                if (!apartamentos.length) {
+                    apartamentosGrid.innerHTML = '<p class="veiculos-empty-state">Nenhum apartamento encontrado para os filtros atuais.</p>';
+                    return;
+                }
+
+                apartamentosGrid.innerHTML = apartamentos.map((item) => `
+                    <article class="apartamento-card">
+                        <span class="apartamento-card-kicker">Bloco ${item.bloco}</span>
+                        <h3>Apartamento ${item.apartamento}</h3>
+                        <p>${item.perfil}</p>
+                        <p><strong>${item.finalidade === 'manutencao' ? 'Manutencao' : item.finalidade === 'vender' ? 'Venda' : 'Locacao'}</strong> • ${item.contato}</p>
+                        <strong class="apartamento-status apartamento-status-${item.status}">${item.status}</strong>
+                        <div class="apartamento-card-actions">
+                            <button type="button" class="table-action-button" data-apartamento-action="view" data-id="${item.id}">Ver</button>
+                            <button type="button" class="table-action-button is-success" data-apartamento-action="edit" data-id="${item.id}">Editar</button>
+                        </div>
+                    </article>
+                `).join('');
+            }
+
+            apartamentosGrid.addEventListener('click', function (event) {
+                const button = event.target.closest('[data-apartamento-action]');
+                if (!button) return;
+                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed);
+                const item = apartamentos.find((entry) => entry.id === button.dataset.id);
+                if (!item) return;
+
+                if (button.dataset.apartamentoAction === 'view') {
+                    openApartamentoDialog(item);
+                    return;
+                }
+
+                fillApartamentoForm(item);
+            });
+
+            apartamentoForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed);
+                const payload = {
+                    bloco: document.getElementById('apartamento-bloco').value.trim(),
+                    apartamento: document.getElementById('apartamento-numero').value.trim(),
+                    perfil: document.getElementById('apartamento-perfil').value.trim(),
+                    contato: document.getElementById('apartamento-contato').value.trim(),
+                    status: document.getElementById('apartamento-status').value,
+                    finalidade: document.getElementById('apartamento-finalidade').value,
+                    corretor: document.getElementById('apartamento-corretor').value.trim(),
+                    faixa: document.getElementById('apartamento-faixa').value.trim(),
+                    servico: document.getElementById('apartamento-servico').value.trim(),
+                    previsao: document.getElementById('apartamento-previsao').value.trim(),
+                    observacoes: document.getElementById('apartamento-observacoes').value.trim()
+                };
+
+                if (editingApartamentoId) {
+                    const target = apartamentos.find((item) => item.id === editingApartamentoId);
+                    if (target) Object.assign(target, payload);
+                    apartamentoFeedback.textContent = 'Apartamento atualizado com sucesso.';
+                } else {
+                    payload.id = `apt-${Date.now()}`;
+                    apartamentos.unshift(payload);
+                    apartamentoFeedback.textContent = 'Apartamento cadastrado com sucesso.';
+                }
+
+                apartamentoFeedback.className = 'admin-inline-feedback is-success';
+                saveData(apartamentosStorageKey, apartamentos);
+                resetApartamentoForm();
+                renderApartamentos();
+            });
+
+            document.querySelectorAll('[data-dialog-close]').forEach((button) => {
+                button.addEventListener('click', function () {
+                    const dialog = document.getElementById(button.dataset.dialogClose);
+                    if (dialog) dialog.close();
+                });
+            });
+
+            apartamentosSearch.addEventListener('input', renderApartamentos);
+            apartamentosStatusFilter.addEventListener('change', renderApartamentos);
+            apartamentoFinalidadeSelect.addEventListener('change', syncApartamentoFields);
+
+            document.querySelector('a[href="/"]').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/';
+            });
+
+            syncApartamentoFields();
+            renderApartamentos();
+        });
+    </script>
+</body>
+
+</html>

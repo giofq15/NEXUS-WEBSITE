@@ -42,6 +42,14 @@ function getWebhookUrl() {
   return `${publicBaseUrl.replace(/\/+$/, '')}/api/pagamentos/asaas/webhook`;
 }
 
+function mapChargeRow(row) {
+  return {
+    ...row,
+    pixEncodedImage: row.pixQrCodeImage ?? null,
+    pixExpirationDate: row.pixExpirationDate ?? null,
+  };
+}
+
 async function getConfig(req, res) {
   try {
     assertConfigured();
@@ -62,29 +70,40 @@ async function listTaxaCharges(req, res) {
   try {
     const isAdmin = isAdminLevel(req.user);
     const moradorId = isAdmin ? Number(req.query.moradorId || 0) || null : req.user.moradorId;
-    const rows = moradorId
-      ? await prisma.$queryRawUnsafe(
-          `SELECT id, morador_id AS "moradorId", asaas_payment_id AS "asaasPaymentId",
+    const hasPixExpirationDateColumn = await prisma.$queryRawUnsafe(
+      `SELECT EXISTS (
+         SELECT 1
+           FROM information_schema.columns
+          WHERE table_schema = 'public'
+            AND table_name = 'taxas'
+            AND column_name = 'pix_expiration_date'
+       ) AS "exists"`
+    );
+    const pixExpirationDateSelect = hasPixExpirationDateColumn?.[0]?.exists
+      ? `pix_expiration_date AS "pixExpirationDate",`
+      : `NULL::timestamp AS "pixExpirationDate",`;
+
+    const baseSelect = `SELECT id, morador_id AS "moradorId", asaas_payment_id AS "asaasPaymentId",
                   asaas_customer_id AS "asaasCustomerId", billing_type AS "billingType",
                   invoice_url AS "invoiceUrl", bank_slip_url AS "bankSlipUrl",
                   pix_payload AS "pixPayload", pix_qr_code_image AS "pixQrCodeImage",
+                  ${pixExpirationDateSelect}
                   cobranca_gerada_em AS "cobrancaGeradaEm"
-             FROM taxas
+             FROM taxas`;
+
+    const rows = moradorId
+      ? await prisma.$queryRawUnsafe(
+          `${baseSelect}
             WHERE morador_id = $1
             ORDER BY ano DESC, mes DESC`,
           moradorId
         )
       : await prisma.$queryRawUnsafe(
-          `SELECT id, morador_id AS "moradorId", asaas_payment_id AS "asaasPaymentId",
-                  asaas_customer_id AS "asaasCustomerId", billing_type AS "billingType",
-                  invoice_url AS "invoiceUrl", bank_slip_url AS "bankSlipUrl",
-                  pix_payload AS "pixPayload", pix_qr_code_image AS "pixQrCodeImage",
-                  cobranca_gerada_em AS "cobrancaGeradaEm"
-             FROM taxas
+          `${baseSelect}
             ORDER BY ano DESC, mes DESC`
         );
 
-    res.json(rows);
+    res.json(rows.map(mapChargeRow));
   } catch (error) {
     console.error('Erro ao listar cobrancas Asaas:', error);
     res.status(500).json({ error: 'Erro interno ao listar cobrancas' });
@@ -192,7 +211,8 @@ async function createTaxaCharge(req, res) {
               bank_slip_url = $6,
               pix_payload = $7,
               pix_qr_code_image = $8,
-              cobranca_gerada_em = $9,
+              pix_expiration_date = $9,
+              cobranca_gerada_em = $10,
               updated_at = NOW()
         WHERE id = $1`,
       taxa.id,
@@ -203,6 +223,7 @@ async function createTaxaCharge(req, res) {
       payment.bankSlipUrl || payment.invoiceUrl || null,
       payload.pixQrCode?.payload || null,
       payload.pixQrCode?.encodedImage || null,
+      payload.pixQrCode?.expirationDate ? new Date(payload.pixQrCode.expirationDate) : null,
       new Date()
     );
 
@@ -212,6 +233,10 @@ async function createTaxaCharge(req, res) {
       billingType: payment.billingType || billingType,
       invoiceUrl: payment.invoiceUrl || null,
       bankSlipUrl: payment.bankSlipUrl || payment.invoiceUrl || null,
+      pixPayload: payload.pixQrCode?.payload || null,
+      pixQrCodeImage: payload.pixQrCode?.encodedImage || null,
+      pixEncodedImage: payload.pixQrCode?.encodedImage || null,
+      pixExpirationDate: payload.pixQrCode?.expirationDate || null,
       cobrancaGeradaEm: new Date(),
     };
 

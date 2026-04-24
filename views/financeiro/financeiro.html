@@ -28,6 +28,7 @@
                 <li class="active"><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="../colaborador/apartamentos.html"><i class="fas fa-building"></i> Gestao de Apartamentos</a></li>
                 <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
@@ -234,7 +235,20 @@
                 return digits ? `https://wa.me/55${digits}?text=${encodeURIComponent(texto)}` : '#';
             }
 
+            function hasPixCharge(item) {
+                return Boolean(item.pixPayload || item.pixEncodedImage || item.pixQrCodeImage);
+            }
+
+            function getPixImage(item) {
+                return item.pixEncodedImage || item.pixQrCodeImage || '';
+            }
+
+            function hasChargeData(item) {
+                return Boolean(item.bankSlipUrl || item.invoiceUrl || hasPixCharge(item));
+            }
+
             function secondViaLabel(item) {
+                if (hasPixCharge(item)) return 'Pix pronto';
                 return item.bankSlipUrl || item.invoiceUrl ? '2a via pronta' : 'Aguardando geracao';
             }
 
@@ -251,7 +265,7 @@
             }
 
             function computedChargeState(item) {
-                const hasCharge = Boolean(item.bankSlipUrl || item.invoiceUrl);
+                const hasCharge = hasChargeData(item);
                 const { isLate, daysLate } = dueInfo(item);
 
                 if (item.status === 'PAGA') {
@@ -264,25 +278,36 @@
                     return { key: 'late_missing_charge', label: 'Atrasado', flowLabel: 'Atrasada sem boleto gerado', statusClassName: 'status-alta', hasCharge, isLate, daysLate };
                 }
                 if (hasCharge) {
-                    return { key: 'pending_with_charge', label: 'A vencer', flowLabel: 'Boleto gerado automaticamente', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
+                    return { key: 'pending_with_charge', label: 'A vencer', flowLabel: 'Cobranca gerada automaticamente', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
                 }
                 return { key: 'pending_without_charge', label: 'Pendente', flowLabel: 'Cobranca aguardando geracao', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
             }
 
             function buildChargePayload(item) {
                 const boletoUrl = item.bankSlipUrl || item.invoiceUrl || '';
+                const pixPayload = item.pixPayload || '';
+                const pixEncodedImage = getPixImage(item);
+                const pixExpirationDate = item.pixExpirationDate || '';
                 const email = item.morador.user?.email || '';
                 const phone = item.morador.telefone || '';
                 const assunto = `Cobranca ${referenceLabel(item)} - ${item.descricao}`;
+                const chargeLine = pixPayload
+                    ? `Pix copia e cola: ${pixPayload}`
+                    : boletoUrl
+                        ? `Link do boleto: ${boletoUrl}`
+                        : 'A cobranca sera anexada/compartilhada assim que for gerada.';
                 const mensagem = [
                     `Ola, ${item.morador.nome}.`,
                     `Segue a cobranca ${item.descricao} referente a ${referenceLabel(item)} no valor de ${formatCurrency(item.valor)}.`,
-                    boletoUrl ? `Link do boleto: ${boletoUrl}` : 'O boleto sera anexado/compartilhado assim que a cobranca for gerada.',
+                    chargeLine,
                     'Esta tela do TCC deixa o envio pronto, mas nao dispara mensagens reais.'
                 ].join(' ');
 
                 return {
                     boletoUrl,
+                    pixPayload,
+                    pixEncodedImage,
+                    pixExpirationDate,
                     email,
                     phone,
                     assunto,
@@ -374,17 +399,29 @@
                 } else if (state.key === 'late') {
                     primaryAction = `<button type="button" class="finance-primary-button is-alert" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>`;
                     helperText = 'No fluxo automatico, a régua de cobranca enviaria a 2a via automaticamente apos o vencimento.';
-                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
-                    secondaryParts.push(`<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="table-action-button finance-secondary-link">Abrir boleto</a>`);
+                    if (payload.boletoUrl) {
+                        secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
+                        secondaryParts.push(`<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="table-action-button finance-secondary-link">Abrir boleto</a>`);
+                    }
+                    if (payload.pixPayload) {
+                        secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.pixPayload}">Copiar Pix</button>`);
+                    }
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
                 } else if (state.key === 'late_missing_charge') {
                     primaryAction = `<button type="button" class="finance-primary-button is-alert" data-gerar-cobranca="${item.id}">Gerar boleto urgente</button>`;
                     helperText = 'Esta linha simula uma excecao: a taxa venceu sem boleto gerado.';
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
                 } else if (state.key === 'pending_with_charge') {
-                    primaryAction = `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="finance-primary-link">Abrir boleto</a>`;
-                    helperText = 'Boleto pronto. Em um fluxo automatico, o envio seria programado antes do vencimento.';
-                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
+                    primaryAction = payload.boletoUrl
+                        ? `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="finance-primary-link">Abrir boleto</a>`
+                        : `<button type="button" class="finance-primary-button" data-financeiro-view="receber" data-id="${item.id}">Ver Pix</button>`;
+                    helperText = 'Cobranca pronta. Em um fluxo automatico, o envio seria programado antes do vencimento.';
+                    if (payload.boletoUrl) {
+                        secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
+                    }
+                    if (payload.pixPayload) {
+                        secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.pixPayload}">Copiar Pix</button>`);
+                    }
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>`);
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
                 } else {
@@ -486,6 +523,18 @@
             function openReceberDialog(item) {
                 const payload = buildChargePayload(item);
                 const boletoUrl = payload.boletoUrl || '-';
+                const pixInfo = payload.pixPayload
+                    ? `
+                    <div class="dialog-note-block">
+                        <span>Pix copia e cola</span>
+                        <p>${payload.pixPayload}</p>
+                    </div>
+                    ${payload.pixEncodedImage ? `<div class="dialog-note-block"><span>QR Code Pix</span><p><img src="${payload.pixEncodedImage}" alt="QR Code Pix" style="max-width:220px;width:100%;height:auto;border-radius:16px;"></p></div>` : ''}
+                    <div class="dialog-note-block">
+                        <span>Expiracao do Pix</span>
+                        <p>${payload.pixExpirationDate ? formatDate(payload.pixExpirationDate) : '-'}</p>
+                    </div>`
+                    : '';
                 openDialog(
                     'Detalhes da cobranca',
                     'Consulte o status da taxa e os dados da segunda via.',
@@ -505,10 +554,12 @@
                     <div class="dialog-note-block">
                         <span>Link da cobranca</span>
                         <p>${boletoUrl}</p>
-                    </div>`,
+                    </div>
+                    ${pixInfo}`,
                     `
                         ${boletoUrl !== '-' ? `<a href="${boletoUrl}" target="_blank" rel="noopener" class="primary-button" style="text-decoration:none;">Abrir boleto</a>` : ''}
                         ${boletoUrl !== '-' ? `<button type="button" class="table-action-button" data-copy-link="${boletoUrl}">Copiar 2a via</button>` : ''}
+                        ${payload.pixPayload ? `<button type="button" class="table-action-button" data-copy-link="${payload.pixPayload}">Copiar Pix</button>` : ''}
                         <button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>
                     `
                 );
@@ -526,7 +577,7 @@
                     `<div class="dialog-detail-grid">
                         <div><span>Morador</span><strong>${item.morador.nome}</strong></div>
                         <div><span>Referencia</span><strong>${referenceLabel(item)}</strong></div>
-                        <div><span>Status da cobranca</span><strong>${payload.boletoUrl ? 'Boleto gerado' : 'Boleto ainda nao gerado'}</strong></div>
+                        <div><span>Status da cobranca</span><strong>${hasChargeData(item) ? 'Cobranca gerada' : 'Cobranca ainda nao gerada'}</strong></div>
                         <div><span>E-mail de destino</span><strong>${payload.email || 'Nao cadastrado'}</strong></div>
                         <div><span>WhatsApp de destino</span><strong>${payload.phone || 'Nao cadastrado'}</strong></div>
                     </div>
@@ -544,10 +595,11 @@
                     </div>`,
                     `
                         <div class="dialog-actions-group">
-                            ${payload.boletoUrl ? `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="primary-button" style="text-decoration:none;">Abrir boleto</a>` : `<button type="button" class="table-action-button" data-gerar-cobranca="${item.id}">Gerar boleto primeiro</button>`}
+                            ${payload.boletoUrl ? `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="primary-button" style="text-decoration:none;">Abrir boleto</a>` : payload.pixPayload ? `<button type="button" class="table-action-button" data-copy-link="${payload.pixPayload}">Copiar Pix</button>` : `<button type="button" class="table-action-button" data-gerar-cobranca="${item.id}">Gerar boleto primeiro</button>`}
                             ${payload.boletoUrl ? `<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">Copiar 2a via</button>` : ''}
+                            ${payload.pixPayload ? `<button type="button" class="table-action-button" data-copy-link="${payload.pixPayload}">Copiar Pix</button>` : ''}
                         </div>
-                        ${payload.boletoUrl ? `<button type="button" class="primary-button dialog-send-button" data-simular-envio="${item.id}">Enviar</button>` : ''}
+                        ${hasChargeData(item) ? `<button type="button" class="primary-button dialog-send-button" data-simular-envio="${item.id}">Enviar</button>` : ''}
                     `
                 );
             }

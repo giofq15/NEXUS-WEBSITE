@@ -153,6 +153,7 @@ model Taxa {
   bankSlipUrl      String?    @map("bank_slip_url")
   pixPayload       String?    @map("pix_payload")
   pixQrCodeImage   String?    @map("pix_qr_code_image")
+  pixExpirationDate DateTime? @map("pix_expiration_date")
   cobrancaGeradaEm DateTime?  @map("cobranca_gerada_em")
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")

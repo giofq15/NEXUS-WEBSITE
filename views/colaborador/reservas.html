@@ -28,6 +28,7 @@
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
                 <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
                 <li class="active"><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="apartamentos.html"><i class="fas fa-building"></i> Gestao de Apartamentos</a></li>
                 <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
@@ -36,6 +37,7 @@
                 <li><a href="../ocorrencias/ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrencias</a></li>
                 <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
                 <li class="active"><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
+                <li><a href="apartamentos.html"><i class="fas fa-building"></i> Gestao de Apartamentos</a></li>
                 <li><a href="avisos.html"><i class="fas fa-bell"></i> Comunicados</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
@@ -49,11 +51,11 @@
         </div>
 
         <div class="tabs-container">
-            <button class="tab-button active" type="button" data-admin-tab="reservas">Agenda de Reservas</button>
-            <button class="tab-button" type="button" data-admin-tab="apartamentos">Gestao de Apartamentos</button>
+            <button class="tab-button active" type="button" data-admin-tab="agenda">Agenda de Reservas</button>
+            <button class="tab-button" type="button" data-admin-tab="proximas">Proximas Reservas do Condominio</button>
         </div>
 
-        <section class="tab-content" data-admin-panel="reservas">
+        <section class="tab-content" data-admin-panel="agenda">
             <div class="form-container">
                 <h2><i class="fas fa-calendar-plus"></i> Registrar Novo Agendamento</h2>
                 <form action="reservas.html" method="POST" id="reserva-form">
@@ -74,18 +76,11 @@
                                 <label for="area">Area desejada</label>
                                 <select id="area" required>
                                     <option value="">Selecione a area...</option>
-                                    <option>Salao de Festas Principal</option>
-                                    <option>Churrasqueira 1</option>
-                                    <option>Espaco Gourmet</option>
-                                    <option>Sala de Reunioes</option>
-                                    <option>Elevador de Servico</option>
-                                    <option>Area Tecnica</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="data">Data da reserva</label>
                                 <input type="date" id="data" required>
-                                <small class="admin-inline-note" id="reservas-datas-bloqueadas">Datas com agendamento ativo nao podem ser usadas.</small>
                             </div>
                             <div class="form-group">
                                 <label for="periodo">Periodo</label>
@@ -164,7 +159,9 @@
                     </div>
                 </form>
             </div>
+        </section>
 
+        <section class="tab-content hidden" data-admin-panel="proximas">
             <div class="widget admin-ops-panel">
                 <h2><i class="fas fa-list-alt"></i> Proximas Reservas do Condominio</h2>
                 <table class="data-table" id="reservas-table">
@@ -184,77 +181,10 @@
             </div>
         </section>
 
-        <section class="tab-content hidden" data-admin-panel="apartamentos">
-            <div class="widget admin-ops-panel">
-                <div class="section-heading">
-                    <div>
-                        <h2>Gestao de apartamentos</h2>
-                        <p>Cadastre novas unidades, acompanhe contexto comercial e marque apartamentos em manutencao quando necessario.</p>
-                    </div>
-                </div>
-                <form class="admin-inline-form" id="apartamento-form">
-                    <select id="apartamento-finalidade" class="action-select" required>
-                        <option value="alugar">Alugar</option>
-                        <option value="vender">Vender</option>
-                        <option value="manutencao">Manutencao</option>
-                    </select>
-                    <input type="text" id="apartamento-bloco" placeholder="Bloco" maxlength="10" required>
-                    <input type="text" id="apartamento-numero" placeholder="Apartamento" maxlength="10" required>
-                    <input type="text" id="apartamento-perfil" placeholder="Perfil da unidade" required>
-                    <input type="text" id="apartamento-contato" placeholder="Contato responsavel" required>
-                    <select id="apartamento-status" class="action-select" required>
-                        <option value="disponivel">Disponivel</option>
-                        <option value="reservado">Reservado</option>
-                        <option value="manutencao">Manutencao</option>
-                    </select>
-                    <div class="admin-inline-form-actions" id="apartamento-campos-comerciais">
-                        <input type="text" id="apartamento-corretor" placeholder="Corretor / imobiliaria responsavel">
-                        <input type="text" id="apartamento-faixa" placeholder="Faixa de valor ou aluguel">
-                    </div>
-                    <div class="admin-inline-form-actions hidden" id="apartamento-campos-manutencao">
-                        <input type="text" id="apartamento-servico" placeholder="Servico em andamento">
-                        <input type="text" id="apartamento-previsao" placeholder="Previsao de liberacao">
-                    </div>
-                    <textarea id="apartamento-observacoes" class="admin-inline-textarea" placeholder="Observacoes da unidade, chaves, visitas, condicoes e afins."></textarea>
-                    <div class="admin-inline-form-actions">
-                        <button type="submit" class="primary-button" id="apartamento-submit-button"><i class="fas fa-plus-circle"></i> Salvar apartamento</button>
-                    </div>
-                </form>
-                <p class="admin-inline-feedback" id="apartamento-feedback" aria-live="polite"></p>
-
-                <div class="controls-container">
-                    <div class="search-group">
-                        <input type="search" class="search-input" id="apartamentos-search" placeholder="Buscar por bloco, apartamento, contato ou perfil...">
-                    </div>
-                    <select class="action-select admin-filter-select" id="apartamentos-status-filter">
-                        <option value="">Todos</option>
-                        <option value="disponivel">Disponivel</option>
-                        <option value="reservado">Reservado</option>
-                        <option value="manutencao">Manutencao</option>
-                    </select>
-                </div>
-
-                <div class="apartamentos-grid" id="apartamentos-grid"></div>
-            </div>
-        </section>
-
         <footer class="content-footer">
             <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
         </footer>
     </main>
-
-    <dialog class="admin-dialog" id="apartamento-dialog">
-        <div class="admin-dialog-content">
-            <div class="admin-dialog-header">
-                <div>
-                    <h2>Detalhes do apartamento</h2>
-                    <p>Visualize observacoes, contato e contexto operacional da unidade.</p>
-                </div>
-                <button type="button" class="dialog-close-button" data-dialog-close="apartamento-dialog"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="admin-dialog-body" id="apartamento-dialog-body"></div>
-        </div>
-    </dialog>
 
     <script src="../../public/js/script.js"></script>
     <script>
@@ -269,59 +199,26 @@
             const isAdmin = user.accessLevel === 'ROOT' || user.accessLevel === 'ADMIN' || user.role === 'ADMIN';
             document.getElementById(isAdmin ? 'reservas-menu-admin' : 'reservas-menu-portaria').hidden = false;
 
-            const reservasStorageKey = 'nexus_reservas_admin_v2';
-            const apartamentosStorageKey = 'nexus_apartamentos_disponiveis_v2';
-            const reservasSeed = [
-                { id: 1, tipoSolicitacao: 'evento', area: 'Churrasqueira 1', data: '25/11/2025', periodo: 'Tarde', convidados: '20', status: 'Confirmada', responsavel: 'Portaria', unidade: 'Bloco A / Apto 101' },
-                { id: 2, tipoSolicitacao: 'manutencao', area: 'Salao de Festas Principal', data: '10/01/2026', periodo: 'Dia inteiro', convidados: '0', status: 'Solicitada', manutencaoTipo: 'Eletrica', manutencaoPrestador: 'Equipe tecnica' }
-            ];
-            const apartamentosSeed = [
-                { id: 'apt-1', bloco: 'A', apartamento: '102', perfil: '2 quartos', status: 'disponivel', contato: 'Marina Alves - (11) 98888-1212', finalidade: 'alugar', corretor: 'Imobiliaria Centro', faixa: 'R$ 2.200/mes', observacoes: 'Unidade com pintura nova e vaga coberta.' },
-                { id: 'apt-2', bloco: 'B', apartamento: '305', perfil: '3 quartos', status: 'reservado', contato: 'Carlos Mendonca - (11) 97777-3030', finalidade: 'vender', corretor: 'Consultor local', faixa: 'R$ 520 mil', observacoes: 'Cliente aguardando proposta formal.' },
-                { id: 'apt-3', bloco: 'C', apartamento: '401', perfil: 'Cobertura', status: 'manutencao', contato: 'Equipe interna', finalidade: 'manutencao', servico: 'Reparo do forro', previsao: '15/04/2026', observacoes: 'Liberacao prevista apos conclusao do reparo.' },
-                { id: 'apt-4', bloco: 'A', apartamento: '203', perfil: 'Studio', status: 'disponivel', contato: 'Bianca Souza - (11) 96666-8899', finalidade: 'vender', corretor: 'Bianca Souza', faixa: 'R$ 290 mil', observacoes: 'Visitas permitidas no periodo da tarde.' }
-            ];
-
             const form = document.getElementById('reserva-form');
             const reservasBody = document.getElementById('reservas-body');
-            const apartamentosGrid = document.getElementById('apartamentos-grid');
-            const apartamentosSearch = document.getElementById('apartamentos-search');
-            const apartamentosStatusFilter = document.getElementById('apartamentos-status-filter');
-            const apartamentoForm = document.getElementById('apartamento-form');
-            const apartamentoFeedback = document.getElementById('apartamento-feedback');
-            const apartamentoDialog = document.getElementById('apartamento-dialog');
-            const apartamentoDialogBody = document.getElementById('apartamento-dialog-body');
-            const apartamentoSubmitButton = document.getElementById('apartamento-submit-button');
+            const areaSelect = document.getElementById('area');
             const reservaDataInput = document.getElementById('data');
             const reservaTipoSelect = document.getElementById('tipo-solicitacao');
-            const reservasBloqueadasHint = document.getElementById('reservas-datas-bloqueadas');
-            const apartamentoFinalidadeSelect = document.getElementById('apartamento-finalidade');
             const reservaResetButton = document.getElementById('reserva-reset');
-            let editingId = null;
-            let editingApartamentoId = null;
-            
-            function readData(key, seed) {
-                try {
-                    const raw = localStorage.getItem(key);
-                    if (!raw) {
-                        localStorage.setItem(key, JSON.stringify(seed));
-                        return seed.slice();
-                    }
-                    const parsed = JSON.parse(raw);
-                    return Array.isArray(parsed) ? parsed : seed.slice();
-                } catch {
-                    return seed.slice();
-                }
+            let reservasCache = [];
+            let areasCache = [];
+
+            function authHeaders(json = false) {
+                return {
+                    Authorization: `Bearer ${token}`,
+                    ...(json ? { 'Content-Type': 'application/json' } : {}),
+                };
             }
 
-            function saveData(key, data) {
-                localStorage.setItem(key, JSON.stringify(data));
-            }
-
-            function formatDate(isoDate) {
-                const [year, month, day] = String(isoDate).split('-');
-                if (!year || !month || !day) return isoDate;
-                return `${day}/${month}/${year}`;
+            function formatDate(value) {
+                const date = new Date(value);
+                if (Number.isNaN(date.getTime())) return value;
+                return date.toLocaleDateString('pt-BR');
             }
 
             function formatTipoSolicitacao(value) {
@@ -334,21 +231,39 @@
                 return labels[value] || 'Evento';
             }
 
+            function formatPeriodo(value) {
+                const labels = {
+                    MANHA: 'Manha',
+                    TARDE: 'Tarde',
+                    DIA_INTEIRO: 'Dia inteiro',
+                };
+                return labels[value] || value || '-';
+            }
+
+            function formatStatus(value) {
+                const labels = {
+                    PENDENTE: 'Solicitada',
+                    CONFIRMADA: 'Confirmada',
+                    CANCELADA: 'Cancelada',
+                };
+                return labels[value] || value || '-';
+            }
+
             function renderReservaActions(id, status) {
-                if (status === 'Cancelada') return '<span style="color:#777;">Sem acoes disponiveis</span>';
-                const confirmAction = status === 'Solicitada'
+                if (!isAdmin) return '<span style="color:#777;">Somente administradores podem gerenciar</span>';
+                if (status === 'CANCELADA') return '<span style="color:#777;">Sem acoes disponiveis</span>';
+                const confirmAction = status === 'PENDENTE'
                     ? `<a href="reservas.html?acao=confirmar&id=${id}" class="action-link" data-reserva-action="confirmar" style="color:#1f8a4c;"><i class="fas fa-check-circle"></i> Confirmar</a>`
                     : '';
                 return `
                     ${confirmAction}
-                    <a href="reservas.html?acao=editar&id=${id}" class="action-link" data-reserva-action="editar"><i class="fas fa-edit"></i> Editar</a>
                     <a href="reservas.html?acao=cancelar&id=${id}" class="action-link" data-reserva-action="cancelar" style="color:#e74c3c;"><i class="fas fa-times-circle"></i> Cancelar</a>
                 `;
             }
 
             function statusClass(status) {
-                if (status === 'Confirmada') return 'status-ativo';
-                if (status === 'Solicitada') return 'status-media';
+                if (status === 'CONFIRMADA') return 'status-ativo';
+                if (status === 'PENDENTE') return 'status-media';
                 return 'status-baixa';
             }
 
@@ -360,41 +275,41 @@
                 document.getElementById('reserva-campos-vistoria').classList.toggle('hidden', tipo !== 'vistoria');
             }
 
-            function syncApartamentoFields() {
-                const finalidade = apartamentoFinalidadeSelect.value || 'alugar';
-                const isManutencao = finalidade === 'manutencao';
-                document.getElementById('apartamento-campos-comerciais').classList.toggle('hidden', isManutencao);
-                document.getElementById('apartamento-campos-manutencao').classList.toggle('hidden', !isManutencao);
-                if (isManutencao) document.getElementById('apartamento-status').value = 'manutencao';
-            }
-
             function renderReservas() {
-                const reservas = readData(reservasStorageKey, reservasSeed);
-                updateBlockedDatesHint(reservas);
-                reservasBody.innerHTML = reservas.map((item) => `
+                if (!reservasCache.length) {
+                    reservasBody.innerHTML = '<tr><td colspan="7" style="text-align:center">Nenhuma reserva encontrada.</td></tr>';
+                    return;
+                }
+
+                reservasBody.innerHTML = reservasCache.map((item) => `
                     <tr data-reserva-id="${item.id}">
-                        <td>${formatTipoSolicitacao(item.tipoSolicitacao)}</td>
-                        <td>${item.area}</td>
-                        <td>${item.data}</td>
-                        <td>${item.periodo}</td>
-                        <td>${item.convidados}</td>
-                        <td class="${statusClass(item.status)}">${item.status}</td>
+                        <td>${formatTipoSolicitacao('evento')}</td>
+                        <td>${item.areaLazer?.nome || '-'}</td>
+                        <td>${formatDate(item.data)}</td>
+                        <td>${formatPeriodo(item.periodo)}</td>
+                        <td>${item.convidados ?? 0}</td>
+                        <td class="${statusClass(item.status)}">${formatStatus(item.status)}</td>
                         <td>${renderReservaActions(item.id, item.status)}</td>
                     </tr>
                 `).join('');
             }
 
-            function isDateReserved(dateValue, ignoreId) {
-                const reservas = readData(reservasStorageKey, reservasSeed);
-                const dateLabel = formatDate(dateValue);
-                return reservas.some((item) => item.data === dateLabel && item.status !== 'Cancelada' && item.id !== ignoreId);
+            function renderAreas() {
+                areaSelect.innerHTML = '<option value="">Selecione a area...</option>';
+                areasCache.forEach((item) => {
+                    const option = document.createElement('option');
+                    option.value = item.nome;
+                    option.textContent = item.nome;
+                    areaSelect.appendChild(option);
+                });
             }
 
-            function updateBlockedDatesHint(reservas) {
-                const blocked = reservas.filter((item) => item.status !== 'Cancelada').map((item) => item.data).filter((value, index, list) => list.indexOf(value) === index);
-                reservasBloqueadasHint.textContent = blocked.length
-                    ? `Datas com agendamento ativo: ${blocked.join(', ')}.`
-                    : 'Nenhuma data bloqueada no momento.';
+            function isDateReserved(dateValue) {
+                const targetValue = String(dateValue || '').slice(0, 10);
+                return reservasCache.some((item) => {
+                    const itemValue = String(item.data || '').slice(0, 10);
+                    return itemValue === targetValue && item.status !== 'CANCELADA';
+                });
             }
 
             function validateReservaDate() {
@@ -403,7 +318,7 @@
                     return true;
                 }
 
-                if (isDateReserved(reservaDataInput.value, editingId)) {
+                if (isDateReserved(reservaDataInput.value)) {
                     reservaDataInput.setCustomValidity('Esta data ja possui agendamento ativo.');
                     reservaDataInput.reportValidity();
                     return false;
@@ -413,217 +328,128 @@
                 return true;
             }
 
-            function resetApartamentoForm() {
-                apartamentoForm.reset();
-                editingApartamentoId = null;
-                apartamentoSubmitButton.innerHTML = '<i class="fas fa-plus-circle"></i> Salvar apartamento';
-                apartamentoFeedback.textContent = '';
-                apartamentoFeedback.className = 'admin-inline-feedback';
-                syncApartamentoFields();
+            async function loadReservas() {
+                try {
+                    const response = await fetch('/api/reservas', { headers: authHeaders() });
+                    if (response.status === 401) {
+                        localStorage.removeItem('nexus_token');
+                        localStorage.removeItem('nexus_user');
+                        window.location.href = '/login.html';
+                        return;
+                    }
+
+                    if (!response.ok) {
+                        const data = await response.json().catch(() => ({}));
+                        throw new Error(data.error || 'Nao foi possivel carregar as reservas.');
+                    }
+
+                    reservasCache = await response.json();
+                    renderReservas();
+                } catch (error) {
+                    reservasBody.innerHTML = `<tr><td colspan="7" style="text-align:center">${error.message || 'Erro ao carregar reservas.'}</td></tr>`;
+                }
             }
 
-            function openApartamentoDialog(item) {
-                apartamentoDialogBody.innerHTML = `
-                    <div class="dialog-detail-grid">
-                        <div><span>Bloco</span><strong>${item.bloco}</strong></div>
-                        <div><span>Apartamento</span><strong>${item.apartamento}</strong></div>
-                        <div><span>Perfil</span><strong>${item.perfil}</strong></div>
-                        <div><span>Status</span><strong>${item.status}</strong></div>
-                        <div><span>Contato</span><strong>${item.contato}</strong></div>
-                        <div><span>Finalidade</span><strong>${item.finalidade === 'manutencao' ? 'Manutencao' : item.finalidade === 'vender' ? 'Venda' : 'Locacao'}</strong></div>
-                    </div>
-                    <div class="dialog-note-block">
-                        <span>Observacoes</span>
-                        <p>${item.observacoes || 'Nenhuma observacao cadastrada.'}</p>
-                    </div>
-                `;
-                apartamentoDialog.showModal();
-            }
-
-            function fillApartamentoForm(item) {
-                document.getElementById('apartamento-bloco').value = item.bloco;
-                document.getElementById('apartamento-numero').value = item.apartamento;
-                document.getElementById('apartamento-perfil').value = item.perfil;
-                document.getElementById('apartamento-contato').value = item.contato;
-                document.getElementById('apartamento-status').value = item.status;
-                document.getElementById('apartamento-finalidade').value = item.finalidade || 'alugar';
-                document.getElementById('apartamento-corretor').value = item.corretor || '';
-                document.getElementById('apartamento-faixa').value = item.faixa || '';
-                document.getElementById('apartamento-servico').value = item.servico || '';
-                document.getElementById('apartamento-previsao').value = item.previsao || '';
-                document.getElementById('apartamento-observacoes').value = item.observacoes || '';
-                editingApartamentoId = item.id;
-                apartamentoSubmitButton.innerHTML = '<i class="fas fa-save"></i> Atualizar apartamento';
-                apartamentoFeedback.textContent = 'Modo de edicao habilitado para a unidade selecionada.';
-                apartamentoFeedback.className = 'admin-inline-feedback is-success';
-                syncApartamentoFields();
-            }
-
-            function renderApartamentos() {
-                const query = String(apartamentosSearch.value || '').toLowerCase();
-                const filter = apartamentosStatusFilter.value;
-                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed).filter((item) => {
-                    const searchable = [item.bloco, item.apartamento, item.perfil, item.status, item.contato, item.finalidade, item.observacoes, item.corretor, item.faixa, item.servico, item.previsao].join(' ').toLowerCase();
-                    return searchable.includes(query) && (!filter || item.status === filter);
-                });
-
-                if (!apartamentos.length) {
-                    apartamentosGrid.innerHTML = '<p class="veiculos-empty-state">Nenhum apartamento encontrado para os filtros atuais.</p>';
-                    return;
+            async function loadAreas() {
+                const response = await fetch('/api/areas-lazer', { headers: authHeaders() });
+                if (!response.ok) {
+                    const data = await response.json().catch(() => ({}));
+                    throw new Error(data.error || 'Nao foi possivel carregar as areas de lazer.');
                 }
 
-                apartamentosGrid.innerHTML = apartamentos.map((item) => `
-                    <article class="apartamento-card">
-                        <span class="apartamento-card-kicker">Bloco ${item.bloco}</span>
-                        <h3>Apartamento ${item.apartamento}</h3>
-                        <p>${item.perfil}</p>
-                        <p><strong>${item.finalidade === 'manutencao' ? 'Manutencao' : item.finalidade === 'vender' ? 'Venda' : 'Locacao'}</strong> • ${item.contato}</p>
-                        <strong class="apartamento-status apartamento-status-${item.status}">${item.status}</strong>
-                        <div class="apartamento-card-actions">
-                            <button type="button" class="table-action-button" data-apartamento-action="view" data-id="${item.id}">Ver</button>
-                            <button type="button" class="table-action-button is-success" data-apartamento-action="edit" data-id="${item.id}">Editar</button>
-                        </div>
-                    </article>
-                `).join('');
+                areasCache = await response.json();
+                renderAreas();
             }
 
-            reservasBody.addEventListener('click', function (event) {
+            reservasBody.addEventListener('click', async function (event) {
                 const actionLink = event.target.closest('[data-reserva-action]');
                 if (!actionLink) return;
                 event.preventDefault();
+
                 const row = actionLink.closest('tr');
                 if (!row) return;
-                const reservas = readData(reservasStorageKey, reservasSeed);
                 const id = Number(row.dataset.reservaId);
-                const target = reservas.find((item) => item.id === id);
-                if (!target) return;
 
-                if (actionLink.dataset.reservaAction === 'editar') {
-                    const [d, m, y] = target.data.split('/');
-                    document.getElementById('tipo-solicitacao').value = target.tipoSolicitacao || 'evento';
-                    document.getElementById('area').value = target.area;
-                    document.getElementById('data').value = `${y}-${m}-${d}`;
-                    document.getElementById('periodo').value = target.periodo;
-                    document.getElementById('convidados').value = target.convidados;
-                    document.getElementById('reserva-responsavel').value = target.responsavel || '';
-                    document.getElementById('reserva-unidade').value = target.unidade || '';
-                    document.getElementById('mudanca-unidade').value = target.mudancaUnidade || '';
-                    document.getElementById('mudanca-elevador').value = target.mudancaElevador || '';
-                    document.getElementById('manutencao-tipo').value = target.manutencaoTipo || '';
-                    document.getElementById('manutencao-prestador').value = target.manutencaoPrestador || '';
-                    document.getElementById('vistoria-visitante').value = target.vistoriaVisitante || '';
-                    document.getElementById('vistoria-documento').value = target.vistoriaDocumento || '';
-                    syncReservaFields();
-                    editingId = id;
-                    validateReservaDate();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    return;
-                }
+                try {
+                    if (actionLink.dataset.reservaAction === 'confirmar') {
+                        const response = await fetch(`/api/reservas/${id}/status`, {
+                            method: 'PATCH',
+                            headers: authHeaders(true),
+                            body: JSON.stringify({ status: 'CONFIRMADA' }),
+                        });
 
-                if (actionLink.dataset.reservaAction === 'confirmar') {
-                    target.status = 'Confirmada';
-                    saveData(reservasStorageKey, reservas);
-                    renderReservas();
-                    return;
-                }
-
-                if (actionLink.dataset.reservaAction === 'cancelar') {
-                    target.status = 'Cancelada';
-                    saveData(reservasStorageKey, reservas);
-                    if (editingId === id) {
-                        editingId = null;
-                        form.reset();
-                        syncReservaFields();
+                        if (!response.ok) {
+                            const data = await response.json().catch(() => ({}));
+                            throw new Error(data.error || 'Nao foi possivel confirmar a reserva.');
+                        }
                     }
-                    renderReservas();
+
+                    if (actionLink.dataset.reservaAction === 'cancelar') {
+                        const response = await fetch(`/api/reservas/${id}/cancelar`, {
+                            method: 'PATCH',
+                            headers: authHeaders(),
+                        });
+
+                        if (!response.ok) {
+                            const data = await response.json().catch(() => ({}));
+                            throw new Error(data.error || 'Nao foi possivel cancelar a reserva.');
+                        }
+                    }
+
+                    await loadReservas();
+                } catch (error) {
+                    window.alert(error.message || 'Erro ao atualizar a reserva.');
                 }
             });
 
-            apartamentosGrid.addEventListener('click', function (event) {
-                const button = event.target.closest('[data-apartamento-action]');
-                if (!button) return;
-                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed);
-                const item = apartamentos.find((entry) => entry.id === button.dataset.id);
-                if (!item) return;
-
-                if (button.dataset.apartamentoAction === 'view') {
-                    openApartamentoDialog(item);
-                    return;
-                }
-
-                fillApartamentoForm(item);
-            });
-
-            form.addEventListener('submit', function (event) {
+            form.addEventListener('submit', async function (event) {
                 event.preventDefault();
                 if (!validateReservaDate()) return;
 
-                const reservas = readData(reservasStorageKey, reservasSeed);
-                const payload = {
-                    tipoSolicitacao: document.getElementById('tipo-solicitacao').value,
-                    area: document.getElementById('area').value,
-                    data: formatDate(document.getElementById('data').value),
-                    periodo: document.getElementById('periodo').value,
-                    convidados: document.getElementById('convidados').value || '0',
-                    responsavel: document.getElementById('reserva-responsavel').value.trim(),
-                    unidade: document.getElementById('reserva-unidade').value.trim(),
-                    mudancaUnidade: document.getElementById('mudanca-unidade').value.trim(),
-                    mudancaElevador: document.getElementById('mudanca-elevador').value,
-                    manutencaoTipo: document.getElementById('manutencao-tipo').value,
-                    manutencaoPrestador: document.getElementById('manutencao-prestador').value.trim(),
-                    vistoriaVisitante: document.getElementById('vistoria-visitante').value.trim(),
-                    vistoriaDocumento: document.getElementById('vistoria-documento').value.trim(),
-                    status: editingId ? (reservas.find((item) => item.id === editingId)?.status || 'Solicitada') : 'Solicitada'
-                };
-
-                if (editingId) {
-                    const target = reservas.find((item) => item.id === editingId);
-                    if (target) Object.assign(target, payload);
-                    editingId = null;
-                } else {
-                    payload.id = reservas.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0) + 1;
-                    reservas.unshift(payload);
+                if (!isAdmin) {
+                    window.alert('Somente administradores podem registrar reservas pelo website.');
+                    return;
                 }
 
-                saveData(reservasStorageKey, reservas);
-                form.reset();
-                editingId = null;
-                reservaDataInput.setCustomValidity('');
-                syncReservaFields();
-                renderReservas();
-            });
+                try {
+                    if (!areasCache.length) {
+                        await loadAreas();
+                    }
 
-            apartamentoForm.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const apartamentos = readData(apartamentosStorageKey, apartamentosSeed);
-                const payload = {
-                    bloco: document.getElementById('apartamento-bloco').value.trim(),
-                    apartamento: document.getElementById('apartamento-numero').value.trim(),
-                    perfil: document.getElementById('apartamento-perfil').value.trim(),
-                    contato: document.getElementById('apartamento-contato').value.trim(),
-                    status: document.getElementById('apartamento-status').value,
-                    finalidade: document.getElementById('apartamento-finalidade').value,
-                    corretor: document.getElementById('apartamento-corretor').value.trim(),
-                    faixa: document.getElementById('apartamento-faixa').value.trim(),
-                    servico: document.getElementById('apartamento-servico').value.trim(),
-                    previsao: document.getElementById('apartamento-previsao').value.trim(),
-                    observacoes: document.getElementById('apartamento-observacoes').value.trim()
-                };
+                    const area = areasCache.find((item) => item.nome === areaSelect.value);
+                    if (!area) {
+                        throw new Error('Area de lazer nao encontrada.');
+                    }
 
-                if (editingApartamentoId) {
-                    const target = apartamentos.find((item) => item.id === editingApartamentoId);
-                    if (target) Object.assign(target, payload);
-                    apartamentoFeedback.textContent = 'Apartamento atualizado com sucesso.';
-                } else {
-                    payload.id = `apt-${Date.now()}`;
-                    apartamentos.unshift(payload);
-                    apartamentoFeedback.textContent = 'Apartamento cadastrado com sucesso.';
+                    const periodo = ({
+                        'Manha (08h - 13h)': 'MANHA',
+                        'Tarde (14h - 22h)': 'TARDE',
+                        'Dia inteiro (08h - 22h)': 'DIA_INTEIRO',
+                    })[document.getElementById('periodo').value];
+
+                    const response = await fetch('/api/reservas', {
+                        method: 'POST',
+                        headers: authHeaders(true),
+                        body: JSON.stringify({
+                            areaLazerId: area.id,
+                            data: document.getElementById('data').value,
+                            periodo,
+                            convidados: Number(document.getElementById('convidados').value || 0),
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        const data = await response.json().catch(() => ({}));
+                        throw new Error(data.error || 'Nao foi possivel criar a reserva.');
+                    }
+
+                    form.reset();
+                    reservaDataInput.setCustomValidity('');
+                    syncReservaFields();
+                    await loadReservas();
+                } catch (error) {
+                    window.alert(error.message || 'Erro ao criar a reserva.');
                 }
-
-                apartamentoFeedback.className = 'admin-inline-feedback is-success';
-                saveData(apartamentosStorageKey, apartamentos);
-                resetApartamentoForm();
-                renderApartamentos();
             });
 
             document.querySelectorAll('[data-admin-tab]').forEach((button) => {
@@ -635,21 +461,10 @@
                 });
             });
 
-            document.querySelectorAll('[data-dialog-close]').forEach((button) => {
-                button.addEventListener('click', function () {
-                    const dialog = document.getElementById(button.dataset.dialogClose);
-                    if (dialog) dialog.close();
-                });
-            });
-
-            apartamentosSearch.addEventListener('input', renderApartamentos);
-            apartamentosStatusFilter.addEventListener('change', renderApartamentos);
             reservaDataInput.addEventListener('change', validateReservaDate);
             reservaDataInput.addEventListener('input', validateReservaDate);
             reservaTipoSelect.addEventListener('change', syncReservaFields);
-            apartamentoFinalidadeSelect.addEventListener('change', syncApartamentoFields);
             reservaResetButton.addEventListener('click', function () {
-                editingId = null;
                 window.setTimeout(syncReservaFields, 0);
             });
 
@@ -661,9 +476,7 @@
             });
 
             syncReservaFields();
-            syncApartamentoFields();
-            renderReservas();
-            renderApartamentos();
+            Promise.all([loadAreas(), loadReservas()]).catch(() => {});
         });
     </script>
 </body>
