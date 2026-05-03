@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuracoes do Condominio - NEXUS</title>
+    <title>Configurações do Condomínio - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -12,7 +12,7 @@
 <body class="admin-body">
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Portal do Condominio">
+            <div class="nexus-brand" aria-label="Portal do Condomínio">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo do portal" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
                     <strong data-condominio-nome>NEXUS</strong>
@@ -24,11 +24,11 @@
             <ul>
                 <li><a href="painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
-                <li class="active"><a href="configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li class="active"><a href="configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -36,8 +36,8 @@
 
     <main class="main-content">
         <div class="dashboard-header">
-            <h1>Configuracoes do Condominio</h1>
-            <p>Centralize os dados institucionais, operacionais e de contato do condominio para refletir o portal em todas as telas.</p>
+            <h1>Configurações do Condomínio</h1>
+            <p>Centralize os dados institucionais, operacionais e de contato do condomínio para refletir o portal em todas as telas.</p>
         </div>
 
         <section class="admin-kpi-grid admin-kpi-grid-compact">
@@ -71,14 +71,14 @@
             <div class="section-heading">
                 <div>
                     <h2>Dados cadastrais e operacionais</h2>
-                    <p>Essas configuracoes passam a valer nas principais telas do admin e em visoes institucionais do portal.</p>
+                    <p>Essas configurações passam a valer nas principais telas do admin e em visoes institucionais do portal.</p>
                 </div>
             </div>
 
             <form class="admin-config-form" data-configuracoes-form>
                 <div class="admin-config-grid">
                     <div class="form-group">
-                        <label for="config-nome">Nome do condominio</label>
+                        <label for="config-nome">Nome do condomínio</label>
                         <input id="config-nome" name="nome" type="text" maxlength="40" placeholder="Ex.: Residencial Alameda">
                     </div>
                     <div class="form-group">
@@ -98,17 +98,17 @@
                         <input id="config-colaboradores" name="quantidadeColaboradores" type="number" min="0" placeholder="12">
                     </div>
                     <div class="form-group">
-                        <label for="config-sindico">Sindico / responsavel principal</label>
-                        <input id="config-sindico" name="sindico" type="text" placeholder="Nome do sindico ou gestora">
+                        <label for="config-sindico">Síndico / responsável principal</label>
+                        <input id="config-sindico" name="sindico" type="text" placeholder="Nome do síndico ou gestora">
                     </div>
                     <div class="form-group form-group-full">
-                        <label for="config-endereco">Endereco completo do condominio</label>
+                        <label for="config-endereco">Endereço completo do condomínio</label>
                         <input id="config-endereco" name="endereco" type="text" placeholder="Rua, numero, bairro, cidade e CEP">
                     </div>
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" class="submit-button"><i class="fas fa-save"></i> Salvar configuracoes</button>
+                    <button type="submit" class="submit-button"><i class="fas fa-save"></i> Salvar configurações</button>
                     <button type="reset" class="reset-button"><i class="fas fa-eraser"></i> Limpar formulario</button>
                 </div>
                 <p class="admin-inline-feedback" data-configuracoes-feedback aria-live="polite"></p>
@@ -125,9 +125,9 @@
 
             <div class="admin-config-summary">
                 <article class="admin-config-summary-card">
-                    <span>Condominio</span>
+                    <span>Condomínio</span>
                     <strong data-condominio-nome>NEXUS</strong>
-                    <p data-condominio-razao-social>Nexus Gestao Condominial Ltda.</p>
+                    <p data-condominio-razao-social>Nexus Gestão Condominial Ltda.</p>
                 </article>
                 <article class="admin-config-summary-card">
                     <span>CNPJ</span>
@@ -135,14 +135,14 @@
                     <p>Base fiscal e institucional do empreendimento</p>
                 </article>
                 <article class="admin-config-summary-card">
-                    <span>Endereco</span>
-                    <strong data-condominio-endereco>Endereco do condominio nao informado</strong>
-                    <p>Referencia publica de localizacao do predio</p>
+                    <span>Endereço</span>
+                    <strong data-condominio-endereco>Endereço do condomínio não informado</strong>
+                    <p>Referência publica de localizacao do predio</p>
                 </article>
                 <article class="admin-config-summary-card">
-                    <span>Responsavel</span>
-                    <strong data-condominio-sindico>Responsavel nao informado</strong>
-                    <p>Contato principal da administracao</p>
+                    <span>Responsável</span>
+                    <strong data-condominio-sindico>Responsável não informado</strong>
+                    <p>Contato principal da administração</p>
                 </article>
             </div>
         </section>

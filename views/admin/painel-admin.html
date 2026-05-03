@@ -378,7 +378,7 @@
                     `).join('');
                 }
             } catch {
-                document.querySelector('[data-dashboard-abertas-texto]').textContent = 'Nao foi possivel carregar as ocorrências.';
+                document.querySelector('[data-dashboard-abertas-texto]').textContent = 'Não foi possível carregar as ocorrências.';
             }
 
             try {
@@ -393,8 +393,8 @@
                             <article class="admin-syndic-item">
                                 <strong>${item.turno} • ${item.colaborador?.nome || 'Portaria'}</strong>
                                 <p>${item.resumo}</p>
-                                <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendencia registrada.'}</p>
-                                <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientacoes adicionais.'}</p>
+                                <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendência registrada.'}</p>
+                                <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientações adicionais.'}</p>
                                 <span>${new Date(item.createdAt).toLocaleString('pt-BR')}</span>
                             </article>
                         `).join('');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestao de Ocorrencias - NEXUS</title>
+    <title>Gestão de Ocorrências - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-            <div class="tabs-container" aria-label="Status das ocorrencias">
+            <div class="tabs-container" aria-label="Status das ocorrências">
                 <button class="tab-button active" type="button" data-oc-status-tab="PENDENTE">Pendentes</button>
                 <button class="tab-button" type="button" data-oc-status-tab="EM_ANDAMENTO">Em andamento</button>
                 <button class="tab-button" type="button" data-oc-status-tab="RESOLVIDA">Resolvidas</button>
@@ -217,7 +217,7 @@
                 updateTabs();
 
                 if (!filtered.length) {
-                    body.innerHTML = `<tr><td colspan="7" style="text-align:center">Nenhuma ocorrencia ${statusLabel(activeStatus).toLowerCase()} encontrada.</td></tr>`;
+                    body.innerHTML = `<tr><td colspan="7" style="text-align:center">Nenhuma ocorrência ${statusLabel(activeStatus).toLowerCase()} encontrada.</td></tr>`;
                     return;
                 }
 
@@ -251,7 +251,7 @@
             function resetFormState() {
                 editingId = null;
                 form.reset();
-                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-plus-circle"></i> Registrar ocorrencia';
+                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-plus-circle"></i> Registrar ocorrência';
                 cancelButton.hidden = true;
                 feedback.textContent = '';
                 feedback.className = 'admin-inline-feedback';
@@ -263,9 +263,9 @@
                 document.getElementById('oc-local').value = item.local;
                 document.getElementById('oc-descricao').value = item.descricao;
                 document.getElementById('oc-prioridade').value = item.prioridade;
-                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Salvar ocorrencia';
+                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Salvar ocorrência';
                 cancelButton.hidden = false;
-                feedback.textContent = `Editando a ocorrencia #${String(item.id).padStart(4, '0')}.`;
+                feedback.textContent = `Editando a ocorrência #${String(item.id).padStart(4, '0')}.`;
                 feedback.className = 'admin-inline-feedback is-success';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
@@ -300,7 +300,7 @@
                     });
                     const data = await res.json();
                     if (!res.ok) {
-                        throw new Error(data.error || 'Nao foi possivel atualizar o status.');
+                        throw new Error(data.error || 'Não foi possível atualizar o status.');
                     }
                     ocorrencias = ocorrencias.map((item) => item.id === id ? data : item);
                     activeStatus = normalizedStatus(data.status);
@@ -334,17 +334,17 @@
                     });
                     const data = await res.json();
                     if (!res.ok) {
-                        throw new Error(data.error || (data.errors || []).map((item) => item.msg).join(', ') || 'Erro ao registrar ocorrencia.');
+                        throw new Error(data.error || (data.errors || []).map((item) => item.msg).join(', ') || 'Erro ao registrar ocorrência.');
                     }
                     resetFormState();
                     feedback.textContent = wasEditing
-                        ? `Ocorrencia #${String(data.id).padStart(4, '0')} atualizada com sucesso.`
-                        : `Ocorrencia #${String(data.id).padStart(4, '0')} registrada com sucesso.`;
+                        ? `Ocorrência #${String(data.id).padStart(4, '0')} atualizada com sucesso.`
+                        : `Ocorrência #${String(data.id).padStart(4, '0')} registrada com sucesso.`;
                     feedback.className = 'admin-inline-feedback is-success';
                     activeStatus = normalizedStatus(data.status);
                     await loadOcorrencias();
                 } catch (error) {
-                    feedback.textContent = error.message || 'Erro ao registrar ocorrencia.';
+                    feedback.textContent = error.message || 'Erro ao registrar ocorrência.';
                     feedback.className = 'admin-inline-feedback is-error';
                 }
             });
@@ -366,7 +366,7 @@
                 const deleteButton = event.target.closest('[data-delete-id]');
                 if (!deleteButton) return;
                 const id = Number(deleteButton.dataset.deleteId);
-                if (!confirm('Deseja realmente excluir esta ocorrencia?')) return;
+                if (!confirm('Deseja realmente excluir esta ocorrência?')) return;
 
                 try {
                     const res = await fetch(`/api/ocorrencias/${id}`, {
@@ -375,14 +375,14 @@
                     });
                     const data = await res.json();
                     if (!res.ok) {
-                        throw new Error(data.error || 'Nao foi possivel excluir a ocorrencia.');
+                        throw new Error(data.error || 'Não foi possível excluir a ocorrência.');
                     }
                     if (editingId === id) {
                         resetFormState();
                     }
                     await loadOcorrencias();
                 } catch (error) {
-                    alert(error.message || 'Erro ao excluir ocorrencia.');
+                    alert(error.message || 'Erro ao excluir ocorrência.');
                 }
             });
 

@@ -99,13 +99,13 @@
                             <option value="Tarde">Turno da tarde</option>
                             <option value="Noite">Turno da noite</option>
                         </select>
-                        <input type="text" id="turno-resumo-portaria" placeholder="Resumo rapido do turno" required>
+                        <input type="text" id="turno-resumo-portaria" placeholder="Resumo rápido do turno" required>
                         <button type="submit" class="primary-button"><i class="fas fa-book"></i> Registrar turno</button>
-                        <textarea id="turno-pendencias-portaria" class="admin-inline-textarea" placeholder="Pendencias que o proximo turno precisa acompanhar"></textarea>
-                        <textarea id="turno-orientacoes-portaria" class="admin-inline-textarea" placeholder="Orientacoes para o proximo colaborador"></textarea>
+                        <textarea id="turno-pendencias-portaria" class="admin-inline-textarea" placeholder="Pendências que o próximo turno precisa acompanhar"></textarea>
+                        <textarea id="turno-orientacoes-portaria" class="admin-inline-textarea" placeholder="Orientações para o próximo colaborador"></textarea>
                     </form>
                     <div class="button-group" style="margin-top: 0.75rem;">
-                        <button type="button" class="reset-button" id="turno-cancelar-edicao-portaria" hidden>Cancelar edicao</button>
+                        <button type="button" class="reset-button" id="turno-cancelar-edicao-portaria" hidden>Cancelar edição</button>
                     </div>
                     <p class="admin-inline-feedback" id="turno-feedback-portaria" aria-live="polite"></p>
 
@@ -215,8 +215,8 @@
                     <article class="admin-syndic-item">
                         <strong>${item.turno} • ${item.colaborador?.nome || 'Equipe'}</strong>
                         <p>${item.resumo}</p>
-                        <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendencia registrada.'}</p>
-                        <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientacoes adicionais.'}</p>
+                        <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendência registrada.'}</p>
+                        <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientações adicionais.'}</p>
                         <span>${new Date(item.createdAt).toLocaleString('pt-BR')}</span>
                         <div class="admin-quick-actions">
                             <button type="button" class="table-action-button is-success" data-turno-edit="${item.id}">Editar</button>
@@ -241,7 +241,7 @@
                     turnoList.innerHTML = `
                         <article class="admin-syndic-item">
                             <strong>Erro ao carregar turnos</strong>
-                            <p>Nao foi possivel ler a passagem de turno neste momento.</p>
+                            <p>Não foi possível ler a passagem de turno neste momento.</p>
                             <span>Erro</span>
                         </article>
                     `;
@@ -295,7 +295,7 @@
                     </article>
                 `).join('');
             } catch {
-                textField.textContent = 'Nao foi possivel carregar as ocorrências da equipe.';
+                textField.textContent = 'Não foi possível carregar as ocorrências da equipe.';
             }
 
             let turnosCache = await loadTurnos();
@@ -321,7 +321,7 @@
                     });
                     const data = await res.json();
                     if (!res.ok) {
-                        throw new Error(data.error || 'Nao foi possivel salvar a passagem de turno.');
+                        throw new Error(data.error || 'Não foi possível salvar a passagem de turno.');
                     }
                     resetTurnoForm();
                     turnoFeedback.textContent = wasEditing ? 'Passagem de turno atualizada.' : 'Passagem de turno registrada.';
@@ -363,7 +363,7 @@
                     });
                     const data = await res.json();
                     if (!res.ok) {
-                        throw new Error(data.error || 'Nao foi possivel excluir o registro de turno.');
+                        throw new Error(data.error || 'Não foi possível excluir o registro de turno.');
                     }
                     if (editingTurnoId === id) {
                         resetTurnoForm();

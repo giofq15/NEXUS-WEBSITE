@@ -17,6 +17,28 @@ function buildUserPayload(user) {
   };
 }
 
+function normalizePortal(portal) {
+  return portal === 'admin' ? 'admin' : 'colaborador';
+}
+
+function isAdminPortalUser(user) {
+  return user.accessLevel === 'ROOT' || user.accessLevel === 'ADMIN' || user.role === 'ADMIN';
+}
+
+function isColaboradorPortalUser(user) {
+  return user.accessLevel === 'COLABORADOR' || user.role === 'COLABORADOR';
+}
+
+function canAccessPortal(user, portal) {
+  return portal === 'admin' ? isAdminPortalUser(user) : isColaboradorPortalUser(user);
+}
+
+function portalAccessError(portal) {
+  return portal === 'admin'
+    ? 'Use uma conta de administrador para acessar este portal'
+    : 'Use uma conta de colaborador para acessar este portal';
+}
+
 async function issueAuthForUser(user) {
   const condominio = await prisma.condominio.findUnique({ where: { id: 1 } });
   const payload = buildUserPayload(user);
@@ -64,6 +86,7 @@ async function findUserByEmail(email) {
 async function login(req, res) {
   try {
     const { email, password } = req.body;
+    const portal = normalizePortal(req.body.portal || req.body.role);
 
     const user = await findUserByEmail(email);
     if (!user) {
@@ -73,6 +96,10 @@ async function login(req, res) {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ error: 'E-mail ou senha invalidos' });
+    }
+
+    if (!canAccessPortal(user, portal)) {
+      return res.status(403).json({ error: portalAccessError(portal) });
     }
 
     const authData = await issueAuthForUser(user);
@@ -86,6 +113,7 @@ async function login(req, res) {
 async function loginWithGoogle(req, res) {
   try {
     const { idToken, accessToken } = req.body;
+    const portal = normalizePortal(req.body.portal || req.body.role);
     if (!idToken && !accessToken) {
       return res.status(400).json({ error: 'idToken ou accessToken é obrigatório' });
     }
@@ -122,6 +150,10 @@ async function loginWithGoogle(req, res) {
       return res.status(403).json({ error: 'Conta não autorizada. Solicite cadastro ao administrador.' });
     }
 
+    if (!canAccessPortal(user, portal)) {
+      return res.status(403).json({ error: portalAccessError(portal) });
+    }
+
     const authData = await issueAuthForUser(user);
     res.json(authData);
   } catch (error) {
@@ -133,6 +165,7 @@ async function loginWithGoogle(req, res) {
 async function loginWithFacebook(req, res) {
   try {
     const { accessToken } = req.body;
+    const portal = normalizePortal(req.body.portal || req.body.role);
     if (!accessToken) {
       return res.status(400).json({ error: 'accessToken é obrigatório' });
     }
@@ -172,6 +205,10 @@ async function loginWithFacebook(req, res) {
     const user = await findUserByEmail(me.email);
     if (!user) {
       return res.status(403).json({ error: 'Conta não autorizada. Solicite cadastro ao administrador.' });
+    }
+
+    if (!canAccessPortal(user, portal)) {
+      return res.status(403).json({ error: portalAccessError(portal) });
     }
 
     const authData = await issueAuthForUser(user);

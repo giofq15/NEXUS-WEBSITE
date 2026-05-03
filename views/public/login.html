@@ -220,7 +220,7 @@
             text-decoration: underline;
         }
 
-        @media (max-width: 400px) {
+        @média (max-width: 400px) {
             .login-container {
                 width: 90%;
                 padding: 30px 25px;
@@ -277,6 +277,7 @@
         document.addEventListener('DOMContentLoaded', async function () {
             const params = new URLSearchParams(window.location.search);
             const role = params.get('role');
+            const portal = role === 'admin' ? 'admin' : 'colaborador';
             const heading = document.getElementById('login-heading');
             const form = document.getElementById('login-form');
             const password = document.getElementById('password');
@@ -289,7 +290,7 @@
             let destino;
 
             // Define título e redirecionamento
-            if (role === 'admin') {
+            if (portal === 'admin') {
                 heading.textContent = 'Acesso do Administrador';
                 destino = '../admin/painel-admin.html';
             } else {
@@ -312,7 +313,7 @@
                     const res = await fetch('/api/auth/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password: pwd }),
+                        body: JSON.stringify({ email, password: pwd, portal }),
                     });
 
                     const data = await res.json();
@@ -327,11 +328,7 @@
                     localStorage.setItem('nexus_token', data.token);
                     localStorage.setItem('nexus_user', JSON.stringify(data.user));
 
-                    if (data.user.accessLevel === 'ROOT' || data.user.accessLevel === 'ADMIN' || data.user.role === 'ADMIN') {
-                        window.location.href = '../admin/painel-admin.html';
-                    } else {
-                        window.location.href = '../colaborador/painel-colaborador.html';
-                    }
+                    window.location.href = destino;
                 } catch (err) {
                     alert('Erro de conexão com o servidor');
                     btn.disabled = false;
@@ -344,18 +341,14 @@
                 localStorage.setItem('nexus_user', JSON.stringify(data.user));
                 localStorage.setItem('nexus_refresh_token', data.refreshToken || '');
 
-                if (data.user.accessLevel === 'ROOT' || data.user.accessLevel === 'ADMIN' || data.user.role === 'ADMIN') {
-                    window.location.href = '../admin/painel-admin.html';
-                } else {
-                    window.location.href = '../colaborador/painel-colaborador.html';
-                }
+                window.location.href = destino;
             }
 
             async function postOAuth(provider, payload) {
                 const res = await fetch(`/api/auth/oauth/${provider}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
+                    body: JSON.stringify({ ...payload, portal }),
                 });
                 const data = await res.json();
                 if (!res.ok) {

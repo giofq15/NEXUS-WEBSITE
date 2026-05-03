@@ -12,7 +12,7 @@
 <body class="admin-body">
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="nexus-brand" aria-label="Operacao do condominio">
+            <div class="nexus-brand" aria-label="Operacao do condomínio">
                 <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="nexus-brand-mark">
                 <div class="nexus-brand-text">
                     <strong data-condominio-nome>NEXUS</strong>
@@ -24,17 +24,17 @@
             <ul id="reservas-menu-admin" hidden>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
+                <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
                 <li class="active"><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
-                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
             <ul id="reservas-menu-portaria" hidden>
                 <li><a href="painel-colaborador.html"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="../ocorrencias/ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrencias</a></li>
-                <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
+                <li><a href="../ocorrencias/ocorrencias-colaborador.html"><i class="fas fa-comment-dots"></i> Ocorrências</a></li>
+                <li><a href="plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
                 <li class="active"><a href="reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
                 <li><a href="avisos.html"><i class="fas fa-bell"></i> Comunicados</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
@@ -45,12 +45,12 @@
     <main class="main-content">
         <div class="dashboard-header">
             <h1>Agenda e reservas</h1>
-            <p>Organize reservas, mudancas, visitas tecnicas e controle a disponibilidade operacional do condominio.</p>
+            <p>Organize reservas, mudanças, visitas técnicas e controle a disponibilidade operacional do condomínio.</p>
         </div>
 
         <div class="tabs-container">
             <button class="tab-button active" type="button" data-admin-tab="reservas">Agenda de Reservas</button>
-            <button class="tab-button" type="button" data-admin-tab="apartamentos">Gestao de Apartamentos</button>
+            <button class="tab-button" type="button" data-admin-tab="apartamentos">Gestão de Apartamentos</button>
         </div>
 
         <section class="tab-content" data-admin-panel="reservas">
@@ -65,33 +65,33 @@
                                 <select id="tipo-solicitacao" required>
                                     <option value="">Selecione o tipo...</option>
                                     <option value="evento">Evento / reserva</option>
-                                    <option value="mudanca">Mudanca</option>
-                                    <option value="manutencao">Manutencao</option>
-                                    <option value="vistoria">Vistoria / visita tecnica</option>
+                                    <option value="mudanca">Mudança</option>
+                                    <option value="manutencao">Manutenção</option>
+                                    <option value="vistoria">Vistoria / visita técnica</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="area">Area desejada</label>
+                                <label for="area">Área desejada</label>
                                 <select id="area" required>
-                                    <option value="">Selecione a area...</option>
-                                    <option>Salao de Festas Principal</option>
+                                    <option value="">Selecione a Área...</option>
+                                    <option>Salão de Festas Principal</option>
                                     <option>Churrasqueira 1</option>
-                                    <option>Espaco Gourmet</option>
-                                    <option>Sala de Reunioes</option>
-                                    <option>Elevador de Servico</option>
-                                    <option>Area Tecnica</option>
+                                    <option>Espaço Gourmet</option>
+                                    <option>Sala de Reuniões</option>
+                                    <option>Elevador de Serviço</option>
+                                    <option>Área Técnica</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="data">Data da reserva</label>
                                 <input type="date" id="data" required>
-                                <small class="admin-inline-note" id="reservas-datas-bloqueadas">Datas com agendamento ativo nao podem ser usadas.</small>
+                                <small class="admin-inline-note" id="reservas-datas-bloqueadas">Datas com agendamento ativo não podem ser usadas.</small>
                             </div>
                             <div class="form-group">
-                                <label for="periodo">Periodo</label>
+                                <label for="periodo">Período</label>
                                 <select id="periodo" required>
-                                    <option value="">Selecione o periodo...</option>
-                                    <option>Manha (08h - 13h)</option>
+                                    <option value="">Selecione o período...</option>
+                                    <option>Manhã (08h - 13h)</option>
                                     <option>Tarde (14h - 22h)</option>
                                     <option>Dia inteiro (08h - 22h)</option>
                                 </select>
@@ -104,8 +104,8 @@
 
                         <div class="form-grid" id="reserva-campos-evento">
                             <div class="form-group">
-                                <label for="reserva-responsavel">Responsavel</label>
-                                <input type="text" id="reserva-responsavel" placeholder="Nome do responsavel">
+                                <label for="reserva-responsavel">Responsável</label>
+                                <input type="text" id="reserva-responsavel" placeholder="Nome do responsável">
                             </div>
                             <div class="form-group">
                                 <label for="reserva-unidade">Unidade / bloco</label>
@@ -119,22 +119,22 @@
                                 <input type="text" id="mudanca-unidade" placeholder="Ex: Bloco B / Apto 203">
                             </div>
                             <div class="form-group">
-                                <label for="mudanca-elevador">Uso do elevador de servico</label>
+                                <label for="mudanca-elevador">Uso do elevador de serviço</label>
                                 <select id="mudanca-elevador">
                                     <option value="">Selecione...</option>
                                     <option>Sim</option>
-                                    <option>Nao</option>
+                                    <option>Não</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-grid hidden" id="reserva-campos-manutencao">
                             <div class="form-group">
-                                <label for="manutencao-tipo">Tipo de manutencao</label>
+                                <label for="manutencao-tipo">Tipo de manutenção</label>
                                 <select id="manutencao-tipo">
                                     <option value="">Selecione...</option>
-                                    <option>Eletrica</option>
-                                    <option>Hidraulica</option>
+                                    <option>Elétrica</option>
+                                    <option>Hidráulica</option>
                                     <option>Elevador</option>
                                     <option>Estrutural</option>
                                     <option>Outro</option>
@@ -142,7 +142,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="manutencao-prestador">Prestador / empresa</label>
-                                <input type="text" id="manutencao-prestador" placeholder="Nome da empresa ou responsavel">
+                                <input type="text" id="manutencao-prestador" placeholder="Nome da empresa ou responsável">
                             </div>
                         </div>
 
@@ -152,8 +152,8 @@
                                 <input type="text" id="vistoria-visitante" placeholder="Quem fara a visita">
                             </div>
                             <div class="form-group">
-                                <label for="vistoria-documento">Documento / observacao</label>
-                                <input type="text" id="vistoria-documento" placeholder="RG, empresa ou observacao">
+                                <label for="vistoria-documento">Documento / observação</label>
+                                <input type="text" id="vistoria-documento" placeholder="RG, empresa ou observação">
                             </div>
                         </div>
                     </fieldset>
@@ -166,17 +166,17 @@
             </div>
 
             <div class="widget admin-ops-panel">
-                <h2><i class="fas fa-list-alt"></i> Proximas Reservas do Condominio</h2>
+                <h2><i class="fas fa-list-alt"></i> Próximas Reservas do Condomínio</h2>
                 <table class="data-table" id="reservas-table">
                     <thead>
                         <tr>
                             <th>Tipo</th>
-                            <th>Area</th>
+                            <th>Área</th>
                             <th>Data</th>
-                            <th>Periodo</th>
+                            <th>Período</th>
                             <th>Capacidade</th>
                             <th>Status</th>
-                            <th>Acoes</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody id="reservas-body"></tbody>
@@ -188,34 +188,34 @@
             <div class="widget admin-ops-panel">
                 <div class="section-heading">
                     <div>
-                        <h2>Gestao de apartamentos</h2>
-                        <p>Cadastre novas unidades, acompanhe contexto comercial e marque apartamentos em manutencao quando necessario.</p>
+                        <h2>Gestão de apartamentos</h2>
+                        <p>Cadastre novas unidades, acompanhe contexto comercial e marque apartamentos em manutenção quando necessário.</p>
                     </div>
                 </div>
                 <form class="admin-inline-form" id="apartamento-form">
                     <select id="apartamento-finalidade" class="action-select" required>
                         <option value="alugar">Alugar</option>
                         <option value="vender">Vender</option>
-                        <option value="manutencao">Manutencao</option>
+                        <option value="manutencao">Manutenção</option>
                     </select>
                     <input type="text" id="apartamento-bloco" placeholder="Bloco" maxlength="10" required>
                     <input type="text" id="apartamento-numero" placeholder="Apartamento" maxlength="10" required>
                     <input type="text" id="apartamento-perfil" placeholder="Perfil da unidade" required>
-                    <input type="text" id="apartamento-contato" placeholder="Contato responsavel" required>
+                    <input type="text" id="apartamento-contato" placeholder="Contato responsável" required>
                     <select id="apartamento-status" class="action-select" required>
-                        <option value="disponivel">Disponivel</option>
+                        <option value="disponivel">Disponível</option>
                         <option value="reservado">Reservado</option>
-                        <option value="manutencao">Manutencao</option>
+                        <option value="manutencao">Manutenção</option>
                     </select>
                     <div class="admin-inline-form-actions" id="apartamento-campos-comerciais">
-                        <input type="text" id="apartamento-corretor" placeholder="Corretor / imobiliaria responsavel">
+                        <input type="text" id="apartamento-corretor" placeholder="Corretor / imobiliária responsável">
                         <input type="text" id="apartamento-faixa" placeholder="Faixa de valor ou aluguel">
                     </div>
                     <div class="admin-inline-form-actions hidden" id="apartamento-campos-manutencao">
-                        <input type="text" id="apartamento-servico" placeholder="Servico em andamento">
-                        <input type="text" id="apartamento-previsao" placeholder="Previsao de liberacao">
+                        <input type="text" id="apartamento-servico" placeholder="Serviço em andamento">
+                        <input type="text" id="apartamento-previsao" placeholder="Previsao de liberação">
                     </div>
-                    <textarea id="apartamento-observacoes" class="admin-inline-textarea" placeholder="Observacoes da unidade, chaves, visitas, condicoes e afins."></textarea>
+                    <textarea id="apartamento-observacoes" class="admin-inline-textarea" placeholder="Observações da unidade, chaves, visitas, condições e afins."></textarea>
                     <div class="admin-inline-form-actions">
                         <button type="submit" class="primary-button" id="apartamento-submit-button"><i class="fas fa-plus-circle"></i> Salvar apartamento</button>
                     </div>
@@ -228,9 +228,9 @@
                     </div>
                     <select class="action-select admin-filter-select" id="apartamentos-status-filter">
                         <option value="">Todos</option>
-                        <option value="disponivel">Disponivel</option>
+                        <option value="disponivel">Disponível</option>
                         <option value="reservado">Reservado</option>
-                        <option value="manutencao">Manutencao</option>
+                        <option value="manutencao">Manutenção</option>
                     </select>
                 </div>
 
@@ -248,7 +248,7 @@
             <div class="admin-dialog-header">
                 <div>
                     <h2>Detalhes do apartamento</h2>
-                    <p>Visualize observacoes, contato e contexto operacional da unidade.</p>
+                    <p>Visualize observações, contato e contexto operacional da unidade.</p>
                 </div>
                 <button type="button" class="dialog-close-button" data-dialog-close="apartamento-dialog"><i class="fas fa-times"></i></button>
             </div>
@@ -273,13 +273,13 @@
             const apartamentosStorageKey = 'nexus_apartamentos_disponiveis_v2';
             const reservasSeed = [
                 { id: 1, tipoSolicitacao: 'evento', area: 'Churrasqueira 1', data: '25/11/2025', periodo: 'Tarde', convidados: '20', status: 'Confirmada', responsavel: 'Portaria', unidade: 'Bloco A / Apto 101' },
-                { id: 2, tipoSolicitacao: 'manutencao', area: 'Salao de Festas Principal', data: '10/01/2026', periodo: 'Dia inteiro', convidados: '0', status: 'Solicitada', manutencaoTipo: 'Eletrica', manutencaoPrestador: 'Equipe tecnica' }
+                { id: 2, tipoSolicitacao: 'manutencao', area: 'Salão de Festas Principal', data: '10/01/2026', periodo: 'Dia inteiro', convidados: '0', status: 'Solicitada', manutencaoTipo: 'Elétrica', manutencaoPrestador: 'Equipe técnica' }
             ];
             const apartamentosSeed = [
-                { id: 'apt-1', bloco: 'A', apartamento: '102', perfil: '2 quartos', status: 'disponivel', contato: 'Marina Alves - (11) 98888-1212', finalidade: 'alugar', corretor: 'Imobiliaria Centro', faixa: 'R$ 2.200/mes', observacoes: 'Unidade com pintura nova e vaga coberta.' },
-                { id: 'apt-2', bloco: 'B', apartamento: '305', perfil: '3 quartos', status: 'reservado', contato: 'Carlos Mendonca - (11) 97777-3030', finalidade: 'vender', corretor: 'Consultor local', faixa: 'R$ 520 mil', observacoes: 'Cliente aguardando proposta formal.' },
-                { id: 'apt-3', bloco: 'C', apartamento: '401', perfil: 'Cobertura', status: 'manutencao', contato: 'Equipe interna', finalidade: 'manutencao', servico: 'Reparo do forro', previsao: '15/04/2026', observacoes: 'Liberacao prevista apos conclusao do reparo.' },
-                { id: 'apt-4', bloco: 'A', apartamento: '203', perfil: 'Studio', status: 'disponivel', contato: 'Bianca Souza - (11) 96666-8899', finalidade: 'vender', corretor: 'Bianca Souza', faixa: 'R$ 290 mil', observacoes: 'Visitas permitidas no periodo da tarde.' }
+                { id: 'apt-1', bloco: 'A', apartamento: '102', perfil: '2 quartos', status: 'disponivel', contato: 'Marina Alves - (11) 98888-1212', finalidade: 'alugar', corretor: 'Imobiliária Centro', faixa: 'R$ 2.200/mês', observacoes: 'Unidade com pintura nova e vaga coberta.' },
+                { id: 'apt-2', bloco: 'B', apartamento: '305', perfil: '3 quartos', status: 'reservado', contato: 'Carlos Mendonça - (11) 97777-3030', finalidade: 'vender', corretor: 'Consultor local', faixa: 'R$ 520 mil', observacoes: 'Cliente aguardando proposta formal.' },
+                { id: 'apt-3', bloco: 'C', apartamento: '401', perfil: 'Cobertura', status: 'manutencao', contato: 'Equipe interna', finalidade: 'manutencao', servico: 'Reparo do forro', previsao: '15/04/2026', observacoes: 'Liberação prevista após conclusão do reparo.' },
+                { id: 'apt-4', bloco: 'A', apartamento: '203', perfil: 'Studio', status: 'disponivel', contato: 'Bianca Souza - (11) 96666-8899', finalidade: 'vender', corretor: 'Bianca Souza', faixa: 'R$ 290 mil', observacoes: 'Visitas permitidas no período da tarde.' }
             ];
 
             const form = document.getElementById('reserva-form');
@@ -327,15 +327,15 @@
             function formatTipoSolicitacao(value) {
                 const labels = {
                     evento: 'Evento',
-                    mudanca: 'Mudanca',
-                    manutencao: 'Manutencao',
+                    mudanca: 'Mudança',
+                    manutencao: 'Manutenção',
                     vistoria: 'Vistoria'
                 };
                 return labels[value] || 'Evento';
             }
 
             function renderReservaActions(id, status) {
-                if (status === 'Cancelada') return '<span style="color:#777;">Sem acoes disponiveis</span>';
+                if (status === 'Cancelada') return '<span style="color:#777;">Sem ações disponíveis</span>';
                 const confirmAction = status === 'Solicitada'
                     ? `<a href="reservas.html?acao=confirmar&id=${id}" class="action-link" data-reserva-action="confirmar" style="color:#1f8a4c;"><i class="fas fa-check-circle"></i> Confirmar</a>`
                     : '';
@@ -362,10 +362,10 @@
 
             function syncApartamentoFields() {
                 const finalidade = apartamentoFinalidadeSelect.value || 'alugar';
-                const isManutencao = finalidade === 'manutencao';
-                document.getElementById('apartamento-campos-comerciais').classList.toggle('hidden', isManutencao);
-                document.getElementById('apartamento-campos-manutencao').classList.toggle('hidden', !isManutencao);
-                if (isManutencao) document.getElementById('apartamento-status').value = 'manutencao';
+                const isManutenção = finalidade === 'manutencao';
+                document.getElementById('apartamento-campos-comerciais').classList.toggle('hidden', isManutenção);
+                document.getElementById('apartamento-campos-manutencao').classList.toggle('hidden', !isManutenção);
+                if (isManutenção) document.getElementById('apartamento-status').value = 'manutencao';
             }
 
             function renderReservas() {
@@ -404,7 +404,7 @@
                 }
 
                 if (isDateReserved(reservaDataInput.value, editingId)) {
-                    reservaDataInput.setCustomValidity('Esta data ja possui agendamento ativo.');
+                    reservaDataInput.setCustomValidity('Esta data já possui agendamento ativo.');
                     reservaDataInput.reportValidity();
                     return false;
                 }
@@ -430,11 +430,11 @@
                         <div><span>Perfil</span><strong>${item.perfil}</strong></div>
                         <div><span>Status</span><strong>${item.status}</strong></div>
                         <div><span>Contato</span><strong>${item.contato}</strong></div>
-                        <div><span>Finalidade</span><strong>${item.finalidade === 'manutencao' ? 'Manutencao' : item.finalidade === 'vender' ? 'Venda' : 'Locacao'}</strong></div>
+                        <div><span>Finalidade</span><strong>${item.finalidade === 'manutencao' ? 'Manutenção' : item.finalidade === 'vender' ? 'Venda' : 'Locação'}</strong></div>
                     </div>
                     <div class="dialog-note-block">
-                        <span>Observacoes</span>
-                        <p>${item.observacoes || 'Nenhuma observacao cadastrada.'}</p>
+                        <span>Observações</span>
+                        <p>${item.observacoes || 'Nenhuma observação cadastrada.'}</p>
                     </div>
                 `;
                 apartamentoDialog.showModal();
@@ -454,7 +454,7 @@
                 document.getElementById('apartamento-observacoes').value = item.observacoes || '';
                 editingApartamentoId = item.id;
                 apartamentoSubmitButton.innerHTML = '<i class="fas fa-save"></i> Atualizar apartamento';
-                apartamentoFeedback.textContent = 'Modo de edicao habilitado para a unidade selecionada.';
+                apartamentoFeedback.textContent = 'Modo de edição habilitado para a unidade selecionada.';
                 apartamentoFeedback.className = 'admin-inline-feedback is-success';
                 syncApartamentoFields();
             }
@@ -477,7 +477,7 @@
                         <span class="apartamento-card-kicker">Bloco ${item.bloco}</span>
                         <h3>Apartamento ${item.apartamento}</h3>
                         <p>${item.perfil}</p>
-                        <p><strong>${item.finalidade === 'manutencao' ? 'Manutencao' : item.finalidade === 'vender' ? 'Venda' : 'Locacao'}</strong> • ${item.contato}</p>
+                        <p><strong>${item.finalidade === 'manutencao' ? 'Manutenção' : item.finalidade === 'vender' ? 'Venda' : 'Locação'}</strong> • ${item.contato}</p>
                         <strong class="apartamento-status apartamento-status-${item.status}">${item.status}</strong>
                         <div class="apartamento-card-actions">
                             <button type="button" class="table-action-button" data-apartamento-action="view" data-id="${item.id}">Ver</button>

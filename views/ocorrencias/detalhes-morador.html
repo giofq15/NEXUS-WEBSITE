@@ -24,11 +24,11 @@
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li class="active"><a href="../admin/moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li><a href="../financeiro/financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
-                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
@@ -52,7 +52,7 @@
                 <div class="colaborador-hero-copy">
                     <p class="colaborador-hero-label">Morador selecionado</p>
                     <h2 id="colaborador-hero-name">Carregando...</h2>
-                    <p id="colaborador-unidade-hero">Unidade em analise</p>
+                    <p id="colaborador-unidade-hero">Unidade em análise</p>
                 </div>
             </div>
             <div class="colaborador-hero-status">
@@ -67,7 +67,7 @@
                     <div class="section-heading">
                         <div>
                             <h2>Informacoes de Contato</h2>
-                            <p>Dados principais para identificacao e comunicacao.</p>
+                            <p>Dados principais para identificação e comunicação.</p>
                         </div>
                         <a id="edit-link" href="#" class="primary-button"><i class="fas fa-pen"></i> Editar Dados</a>
                     </div>
@@ -100,7 +100,7 @@
                     <div class="section-heading">
                         <div>
                             <h2>Veiculos</h2>
-                            <p>Veiculos autorizados para entrada no condominio.</p>
+                            <p>Veiculos autorizados para entrada no condomínio.</p>
                         </div>
                         <button class="new-button" id="add-placa-btn" type="button"><i class="fas fa-plus"></i> Adicionar Placa</button>
                     </div>
@@ -116,7 +116,7 @@
                     <h2>Resumo Rápido</h2>
                     <div class="colaborador-summary-list">
                         <div>
-                            <span>Situacao atual</span>
+                            <span>Situação atual</span>
                             <strong id="colaborador-summary-status">--</strong>
                         </div>
                         <div>
@@ -131,23 +131,23 @@
                 </article>
 
                 <article class="widget logs-card">
-                    <h2>Logs e Historico</h2>
+                    <h2>Logs e Histórico</h2>
                     <div class="colaborador-log-list">
                         <div class="colaborador-log-item">
                             <span class="colaborador-log-icon"><i class="fas fa-bell"></i></span>
                             <div>
-                                <strong>Ocorrencias em aberto</strong>
+                                <strong>Ocorrências em aberto</strong>
                                 <p>1 registro pendente para acompanhamento.</p>
                             </div>
                         </div>
                         <div class="colaborador-log-item">
                             <span class="colaborador-log-icon"><i class="fas fa-tint"></i></span>
                             <div>
-                                <strong>Economia media de agua</strong>
-                                <p>15% acima da media do bloco.</p>
+                                <strong>Economia média de Água</strong>
+                                <p>15% acima da média do bloco.</p>
                             </div>
                         </div>
-                        <a href="#" class="action-link">Ver Historico de Ocorrencias</a>
+                        <a href="#" class="action-link">Ver Histórico de Ocorrências</a>
                     </div>
                 </article>
             </aside>
@@ -221,7 +221,7 @@
         function renderVeiculos(veiculos) {
             const list = document.getElementById('veiculos-list');
             if (!veiculos.length) {
-                list.innerHTML = '<p class="veiculos-empty-state">Nenhum veiculo cadastrado no momento.</p>';
+                list.innerHTML = '<p class="veiculos-empty-state">Nenhum veículo cadastrado no momento.</p>';
                 return;
             }
 
@@ -250,7 +250,7 @@
 
             const tipo = prompt('Tipo: CARRO ou MOTO?')?.toUpperCase();
             if (tipo !== 'CARRO' && tipo !== 'MOTO') {
-                alert('Tipo invalido');
+                alert('Tipo inválido');
                 return;
             }
 
@@ -275,7 +275,7 @@
         });
 
         async function removeVeiculo(veiculoId) {
-            if (!confirm('Remover este veiculo?')) return;
+            if (!confirm('Remover este veículo?')) return;
             try {
                 await fetch(`/api/colaboradores/${colaboradorId}/veiculos/${veiculoId}`, {
                     method: 'DELETE',

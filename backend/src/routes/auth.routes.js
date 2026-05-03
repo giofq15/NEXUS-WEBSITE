@@ -17,6 +17,7 @@ router.post(
   [
     body('email').isEmail().withMessage('E-mail invalido'),
     body('password').notEmpty().withMessage('Senha e obrigatoria'),
+    body('portal').optional().isIn(['admin', 'colaborador']).withMessage('Portal invalido'),
   ],
   validate,
   login
@@ -35,6 +36,7 @@ router.get('/oauth/config', oauthConfig);
 router.post(
   '/oauth/google',
   [
+    body('portal').optional().isIn(['admin', 'colaborador']).withMessage('Portal invalido'),
     body().custom((value) => {
       if (!value?.idToken && !value?.accessToken) {
         throw new Error('idToken ou accessToken é obrigatório');
@@ -48,7 +50,10 @@ router.post(
 
 router.post(
   '/oauth/facebook',
-  [body('accessToken').notEmpty().withMessage('accessToken é obrigatório')],
+  [
+    body('accessToken').notEmpty().withMessage('accessToken e obrigatorio'),
+    body('portal').optional().isIn(['admin', 'colaborador']).withMessage('Portal invalido'),
+  ],
   validate,
   loginWithFacebook
 );

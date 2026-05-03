@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financeiro e Cobranca - NEXUS</title>
+    <title>Financeiro e Cobrança - NEXUS</title>
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -24,99 +24,217 @@
             <ul>
                 <li><a href="../admin/painel-admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="../admin/moradores.html"><i class="fas fa-users"></i> Moradores</a></li>
-                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrencias</a></li>
+                <li><a href="../ocorrencias/ocorrencias.html"><i class="fas fa-bell"></i> Ocorrências</a></li>
                 <li class="active"><a href="financeiro.html"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantao e Agenda</a></li>
+                <li><a href="../colaborador/plantao.html"><i class="fas fa-clipboard-list"></i> Plantão e Agenda</a></li>
                 <li><a href="../colaborador/reservas.html"><i class="fas fa-calendar-alt"></i> Reservas</a></li>
-                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configuracoes</a></li>
+                <li><a href="../admin/configuracoes.html"><i class="fas fa-sliders-h"></i> Configurações</a></li>
                 <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
     </aside>
 
-    <main class="main-content">
+    <main class="main-content" data-financeiro-page>
         <div class="dashboard-header">
-            <h1>Gestao financeira e cobranca</h1>
-            <p>Centralize a emissao de boletos, acompanhe recebimentos, gere 2a via e deixe pronto o fluxo de envio por e-mail ou WhatsApp.</p>
-        </div>
-
-        <div class="financial-summary">
-            <div class="widget">
-                <i class="fas fa-money-check-alt icon-positive"></i>
-                <h3>Recebido</h3>
-                <p class="stat-number positive" data-fin-saldo>R$ 0,00</p>
-            </div>
-            <div class="widget">
-                <i class="fas fa-calendar-alt icon-alert"></i>
-                <h3>Contas a pagar</h3>
-                <p class="stat-number alert" data-fin-pagar>R$ 0,00</p>
-            </div>
-            <div class="widget">
-                <i class="fas fa-exclamation-triangle icon-negative"></i>
-                <h3>Unidades em atraso</h3>
-                <p class="stat-number negative" data-fin-atraso>R$ 0,00</p>
-            </div>
+            <h1>Gestão financeira e cobrança</h1>
+            <p>Acompanhe o rateio do mês, as cobranças emitidas e o status das unidades.</p>
         </div>
 
         <div id="financeiro-feedback" class="admin-inline-feedback" aria-live="polite"></div>
 
-        <div class="tabs-container">
-            <button class="tab-button active" type="button" data-financeiro-tab="contas-pagar">Contas a Pagar</button>
-            <button class="tab-button" type="button" data-financeiro-tab="contas-receber">Contas a Receber</button>
-            <button class="tab-button" type="button" data-financeiro-tab="inadimplencia">Unidades em Atraso</button>
+        <div class="tabs-container" aria-label="Abas do financeiro">
+            <button class="tab-button active" type="button" data-financeiro-tab="rateio-condominio">Rateio mensal</button>
+            <button class="tab-button" type="button" data-financeiro-tab="contas-receber">Cobranças dos moradores</button>
         </div>
 
-        <section id="contas-pagar" class="tab-content">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Descricao</th>
-                        <th>Vencimento</th>
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Acoes</th>
-                    </tr>
-                </thead>
-                <tbody id="contas-pagar-body"></tbody>
-            </table>
+        <section id="rateio-condominio" class="tab-content">
+            <section class="widget finance-section-panel">
+                <div class="section-heading finance-section-heading">
+                    <div>
+                        <h2>Rateio da competência</h2>
+                        <p>Fechamento mensal por competência.</p>
+                    </div>
+                    <div class="admin-filter-group finance-filter-group">
+                        <label class="finance-filter-label" for="finance-rateio-competencia">Competência</label>
+                        <select id="finance-rateio-competencia" class="admin-filter-select" aria-label="Selecionar competência do rateio"></select>
+                    </div>
+                </div>
+
+                <div id="finance-rateio-feedback" class="admin-inline-feedback" aria-live="polite"></div>
+
+                <div class="finance-rateio-summary" aria-label="Resumo do rateio">
+                    <article class="finance-rateio-card">
+                        <span>Competência selecionada</span>
+                        <strong id="finance-rateio-competencia-label">-</strong>
+                        <p>Base atual do fechamento.</p>
+                    </article>
+                    <article class="finance-rateio-card">
+                        <span>Total lancado</span>
+                        <strong id="finance-rateio-total-despesas">R$ 0,00</strong>
+                        <p>Despesas da competência.</p>
+                    </article>
+                    <article class="finance-rateio-card">
+                        <span>Unidades com taxa</span>
+                        <strong id="finance-rateio-total-unidades">0</strong>
+                        <p>Unidades com cobrança no período.</p>
+                    </article>
+                    <article class="finance-rateio-card">
+                        <span>Valor medio por unidade</span>
+                        <strong id="finance-rateio-ticket-medio">R$ 0,00</strong>
+                        <p>Média do valor por unidade.</p>
+                    </article>
+                </div>
+
+                <div class="finance-rateio-grid">
+                    <section class="finance-subpanel" aria-labelledby="finance-rateio-despesas-title">
+                        <div class="finance-subpanel-header">
+                            <div class="finance-subpanel-copy">
+                                <h3 id="finance-rateio-despesas-title">Lançamentos e despesas da competência</h3>
+                                <p>Despesas consideradas no fechamento.</p>
+                            </div>
+                            <div class="finance-subpanel-actions">
+                                <button type="button" class="finance-primary-button finance-toolbar-button" id="finance-nova-despesa">Nova despesa</button>
+                            </div>
+                        </div>
+                        <div class="finance-scroll-table" tabindex="0" aria-label="Lista de lançamentos e despesas da competência">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Vencimento</th>
+                                        <th>Valor</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="finance-rateio-despesas-body">
+                                    <tr class="finance-table-state-row">
+                                        <td colspan="5">Carregando lançamentos...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="finance-subpanel" aria-labelledby="finance-rateio-unidades-title">
+                        <div class="finance-subpanel-header">
+                            <div>
+                                <h3 id="finance-rateio-unidades-title">Prévia por apartamento</h3>
+                                <p>Valor estimado para cada apartamento antes do fechamento.</p>
+                            </div>
+                        </div>
+                        <div class="finance-scroll-table" tabindex="0" aria-label="Prévia do rateio por apartamento">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Apartamento</th>
+                                        <th>Responsável</th>
+                                        <th>Valor</th>
+                                        <th>Status</th>
+                                        <th>Observação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="finance-rateio-unidades-body">
+                                    <tr class="finance-table-state-row">
+                                        <td colspan="5">Carregando prévia...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <section class="finance-subpanel finance-rateio-closeout" aria-labelledby="finance-rateio-fechamento-title">
+                    <div class="finance-subpanel-header finance-closeout-header">
+                        <div class="finance-subpanel-copy">
+                            <h3 id="finance-rateio-fechamento-title">Fechamento do rateio</h3>
+                            <p>Revise a competência antes de consolidar os valores do mês.</p>
+                        </div>
+                    </div>
+                    <div class="finance-closeout-grid">
+                        <article class="finance-closeout-card">
+                            <span>Status da competência</span>
+                            <strong id="finance-rateio-status">Em edição</strong>
+                            <p id="finance-rateio-status-text">Você ainda pode incluir ou editar despesas antes do fechamento.</p>
+                        </article>
+                        <article class="finance-closeout-card">
+                            <span>Competência</span>
+                            <strong id="finance-rateio-closeout-competencia">-</strong>
+                            <p>Mês de referência para consolidação.</p>
+                        </article>
+                        <article class="finance-closeout-card">
+                            <span>Total lancado</span>
+                            <strong id="finance-rateio-closeout-total">R$ 0,00</strong>
+                            <p>Total de despesas consideradas no fechamento.</p>
+                        </article>
+                        <article class="finance-closeout-card">
+                            <span>Unidades no rateio</span>
+                            <strong id="finance-rateio-closeout-unidades">0</strong>
+                            <p>Quantidade de unidades na prévia desta competência.</p>
+                        </article>
+                    </div>
+                    <div class="finance-closeout-actions">
+                        <p class="finance-closeout-note">Ao confirmar o fechamento, esta competência passa a ser a base para gerar as cobranças.</p>
+                        <button type="button" class="finance-primary-button finance-toolbar-button" id="finance-calcular-rateio">Fechar e calcular rateio</button>
+                    </div>
+                </section>
+            </section>
         </section>
 
         <section id="contas-receber" class="tab-content hidden">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Morador</th>
-                        <th>Referencia</th>
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Acoes</th>
-                    </tr>
-                </thead>
-                <tbody id="contas-receber-body"></tbody>
-            </table>
+            <section class="widget admin-ops-panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>Cobranças dos moradores</h2>
+                        <p>Acompanhe as cobranças geradas pelo rateio, veja quem já tem boleto e gere segunda via quando necessário.</p>
+                    </div>
+                </div>
+                <div class="tabs-container finance-inner-tabs" aria-label="Filtros de cobranças dos moradores">
+                    <button class="tab-button active" type="button" data-cobrancas-tab="abertas">Em aberto</button>
+                    <button class="tab-button" type="button" data-cobrancas-tab="atrasadas">Em atraso</button>
+                    <button class="tab-button" type="button" data-cobrancas-tab="historico">Histórico de pagamentos</button>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Morador</th>
+                            <th>Referência</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contas-receber-body">
+                        <tr class="finance-table-state-row">
+                            <td colspan="5">Carregando cobranças dos moradores...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
         </section>
 
         <section id="inadimplencia" class="tab-content hidden">
             <section class="widget admin-ops-panel">
                 <div class="section-heading">
                     <div>
-                        <h2>Unidades em atraso</h2>
-                        <p>Visualize rapidamente quem esta com cobranca pendente ou atrasada, gere boleto e deixe preparada a segunda via para compartilhamento.</p>
+                        <h2>Moradores em atraso</h2>
+                        <p>Veja somente as unidades com cobrança vencida e valores ainda em aberto.</p>
                     </div>
                 </div>
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Responsavel</th>
+                            <th>Responsável</th>
                             <th>Unidade</th>
-                            <th>Total em Aberto</th>
+                            <th>Total em aberto</th>
                             <th>Maior atraso</th>
                             <th>Status</th>
-                            <th>Acoes</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody id="inadimplencia-body">
-                        <tr><td colspan="6" style="text-align:center">Carregando dados...</td></tr>
+                        <tr class="finance-table-state-row">
+                            <td colspan="6">Carregando moradores em atraso...</td>
+                        </tr>
                     </tbody>
                 </table>
             </section>
@@ -134,21 +252,126 @@
                     <h2 id="financeiro-dialog-title">Detalhes financeiros</h2>
                     <p id="financeiro-dialog-subtitle">Acompanhe a movimentacao selecionada.</p>
                 </div>
-                <button type="button" class="dialog-close-button" data-dialog-close="financeiro-dialog"><i class="fas fa-times"></i></button>
+                <button type="button" class="dialog-close-button" data-dialog-close="financeiro-dialog" aria-label="Fechar janela"><i class="fas fa-times"></i></button>
             </div>
             <div class="admin-dialog-body" id="financeiro-dialog-body"></div>
             <div class="admin-dialog-actions" id="financeiro-dialog-actions"></div>
         </div>
     </dialog>
 
+    <dialog class="admin-dialog" id="finance-despesa-dialog">
+        <div class="admin-dialog-content">
+            <div class="admin-dialog-header">
+                <div>
+                    <h2 id="finance-despesa-dialog-title">Nova despesa</h2>
+                    <p id="finance-despesa-dialog-subtitle">Cadastre um lançamento para entrar no rateio da competência.</p>
+                </div>
+                <button type="button" class="dialog-close-button" data-dialog-close="finance-despesa-dialog" aria-label="Fechar lançamento"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="admin-dialog-body">
+                <form id="finance-despesa-form" class="finance-despesa-form">
+                    <input type="hidden" id="finance-despesa-id">
+                    <section class="finance-despesa-card">
+                        <div class="finance-despesa-card-header">
+                            <h3>Dados do lançamento</h3>
+                            <p>Preencha os dados principais da despesa.</p>
+                        </div>
+                        <div class="finance-despesa-grid">
+                            <div class="finance-field finance-field-full">
+                                <label for="finance-despesa-descricao">Descrição</label>
+                                <input type="text" id="finance-despesa-descricao" required maxlength="120" placeholder="Ex.: Manutenção do járdim">
+                            </div>
+                            <div class="finance-field">
+                                <label for="finance-despesa-fornecedor">Fornecedor</label>
+                                <input type="text" id="finance-despesa-fornecedor" required maxlength="120" placeholder="Ex.: Verde Vida Ltda">
+                            </div>
+                            <div class="finance-field">
+                                <label for="finance-despesa-categoria">Categoria</label>
+                                <select id="finance-despesa-categoria" required>
+                                    <option value="Manutenção">Manutenção</option>
+                                    <option value="Energia">Energia</option>
+                                    <option value="Folha">Folha</option>
+                                    <option value="Limpeza">Limpeza</option>
+                                    <option value="Consumo">Consumo</option>
+                                    <option value="Fundo">Fundo</option>
+                                    <option value="Outros">Outros</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="finance-despesa-card">
+                        <div class="finance-despesa-card-header">
+                            <h3>Competência e valor</h3>
+                            <p>Defina quando essa despesa entra no fechamento.</p>
+                        </div>
+                        <div class="finance-despesa-grid">
+                            <div class="finance-field">
+                                <label for="finance-despesa-competencia">Competência</label>
+                                <input type="month" id="finance-despesa-competencia" required>
+                            </div>
+                            <div class="finance-field">
+                                <label for="finance-despesa-vencimento">Vencimento</label>
+                                <input type="date" id="finance-despesa-vencimento" required>
+                            </div>
+                            <div class="finance-field">
+                                <label for="finance-despesa-valor">Valor</label>
+                                <input type="text" id="finance-despesa-valor" required inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="finance-despesa-footer">
+                        <div id="finance-despesa-feedback" class="admin-inline-feedback" aria-live="polite"></div>
+                        <div class="finance-despesa-actions">
+                            <button type="button" class="table-action-button finance-toolbar-button" id="finance-despesa-cancelar">Cancelar</button>
+                            <button type="submit" class="primary-button finance-toolbar-button" id="finance-despesa-submit">Salvar despesa</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog class="admin-dialog" id="finance-rateio-close-dialog">
+        <div class="admin-dialog-content">
+            <div class="admin-dialog-header">
+                <div>
+                    <h2>Fechar rateio</h2>
+                    <p>Confirme a consolidação da competência antes de gerar o rateio.</p>
+                </div>
+                <button type="button" class="dialog-close-button" data-dialog-close="finance-rateio-close-dialog" aria-label="Fechar confirmacao"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="admin-dialog-body">
+                <div class="dialog-note-block">
+                    <span>Competência</span>
+                    <p id="finance-close-dialog-competencia">-</p>
+                </div>
+                <div class="dialog-note-block">
+                    <span>Resumo</span>
+                    <p id="finance-close-dialog-summary">Revise os dados antes de confirmar o fechamento.</p>
+                </div>
+                <div class="dialog-note-block">
+                    <span>Aviso</span>
+                    <p>Depois de confirmar, esta competência será tratada como base para emissão das cobranças do mês. Nesta versão, o fechamento distribui o total igualmente entre as unidades ativas.</p>
+                </div>
+                <div class="admin-dialog-actions">
+                    <button type="button" class="table-action-button finance-toolbar-button" id="finance-close-dialog-cancel">Voltar</button>
+                    <button type="button" class="finance-primary-button finance-toolbar-button" id="finance-close-dialog-confirm">Confirmar fechamento</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <div class="finance-toast" id="finance-toast" aria-live="polite" aria-atomic="true" hidden>
         <div class="finance-toast-icon"><i class="fas fa-check-circle"></i></div>
         <div class="finance-toast-content">
-            <strong>Envio realizado</strong>
-            <p id="finance-toast-message">A cobranca foi reenviada com sucesso.</p>
+            <strong>Ação concluída</strong>
+            <p id="finance-toast-message">A cobrança foi reenviada com sucesso.</p>
         </div>
     </div>
 
+    <script src="../../public/js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const token = localStorage.getItem('nexus_token');
@@ -157,48 +380,143 @@
                 return;
             }
 
-            const pagarSeed = [
-                { id: 'pag-1', descricao: 'Conta de energia eletrica da area comum', detalhe: 'Fatura principal da concessionaria referente a iluminacao, elevadores e garagem.', vencimento: '2025-11-10', valor: 6500, status: 'A Pagar', fornecedor: 'Energia Paulista', metodoPagamento: '', pagoEm: '' },
-                { id: 'pag-2', descricao: 'Folha da portaria', detalhe: 'Folha operacional da equipe interna do mes.', vencimento: '2025-11-05', valor: 2800, status: 'A Pagar', fornecedor: 'Equipe interna', metodoPagamento: '', pagoEm: '' },
-                { id: 'pag-3', descricao: 'Manutencao preventiva do elevador', detalhe: 'Contrato mensal da empresa terceirizada com visita tecnica e reposicao basica.', vencimento: '2025-10-15', valor: 1200, status: 'Paga', fornecedor: 'Elevadores Sigma', metodoPagamento: 'Transferencia', pagoEm: '2025-10-15' }
-            ];
+            const state = {
+                taxas: [],
+                charges: [],
+                moradores: [],
+                mergedTaxas: [],
+                selectedCompetencia: '',
+                selectedCobrancasTab: 'abertas',
+                pagarSeed: [
+                    { id: 'pag-demo-1', descricao: 'Limpeza das áreas comuns', detalhe: 'Serviço mensal de limpeza para halls, garagem e áreas compartilhadas.', vencimento: '2026-05-06', valor: 1200, status: 'Lançada', fornecedor: 'Equipe interna', metodoPagamento: '', pagoEm: '', ano: 2026, mes: 5 },
+                    { id: 'pag-demo-2', descricao: 'Conta de água da área comum', detalhe: 'Consumo de água referente a jardins, limpeza e áreas de apoio.', vencimento: '2026-05-10', valor: 900, status: 'Lançada', fornecedor: 'Sabesp', metodoPagamento: '', pagoEm: '', ano: 2026, mes: 5 },
+                    { id: 'pag-demo-3', descricao: 'Jardinagem e paisagismo', detalhe: 'Manutenção preventiva dos jardins e vasos das áreas comuns.', vencimento: '2026-05-14', valor: 700, status: 'Lançada', fornecedor: 'Verde Vida Jardins', metodoPagamento: '', pagoEm: '', ano: 2026, mes: 5 },
+                    { id: 'pag-demo-4', descricao: 'Internet e CFTV da portaria', detalhe: 'Infraestrutura de rede para câmeras, portaria e monitoramento.', vencimento: '2026-05-18', valor: 600, status: 'Lançada', fornecedor: 'Nexus Telecom', metodoPagamento: '', pagoEm: '', ano: 2026, mes: 5 },
+                    { id: 'pag-1', descricao: 'Conta de energia elétrica da Área comum', detalhe: 'Fatura da concessionária referente a iluminação, elevadores e garagem.', vencimento: '2026-04-10', valor: 6500, status: 'Lançada', fornecedor: 'Energia Paulista', metodoPagamento: '', pagoEm: '', ano: 2026, mes: 4 },
+                    { id: 'pag-2', descricao: 'Folha da portaria', detalhe: 'Folha operacional da equipe interna do mês.', vencimento: '2026-04-05', valor: 2800, status: 'Lançada', fornecedor: 'Equipe interna', metodoPagamento: '', pagoEm: '', ano: 2026, mes: 4 },
+                    { id: 'pag-3', descricao: 'Manutenção preventiva do elevador', detalhe: 'Contrato mensal com visita técnica e reposição básica.', vencimento: '2026-04-15', valor: 1200, status: 'Paga', fornecedor: 'Elevadores Sigma', metodoPagamento: 'Transferência', pagoEm: '2026-04-15', ano: 2026, mes: 4 },
+                    { id: 'pag-4', descricao: 'Limpeza de caixa d`agua', detalhe: 'Serviço preventivo extraordinario da competencia anterior.', vencimento: '2026-03-18', valor: 980, status: 'Paga', fornecedor: 'Hidro Clean', metodoPagamento: 'PIX', pagoEm: '2026-03-18', ano: 2026, mes: 3 }
+                ],
+                rateioStatusByCompetencia: {},
+            };
 
-            const pagarBody = document.getElementById('contas-pagar-body');
             const receberBody = document.getElementById('contas-receber-body');
             const inadBody = document.getElementById('inadimplencia-body');
+            const rateioDespesasBody = document.getElementById('finance-rateio-despesas-body');
+            const rateioUnidadesBody = document.getElementById('finance-rateio-unidades-body');
             const feedback = document.getElementById('financeiro-feedback');
+            const rateioFeedback = document.getElementById('finance-rateio-feedback');
+            const competenciaSelect = document.getElementById('finance-rateio-competencia');
+            const rateioCompetenciaLabel = document.getElementById('finance-rateio-competencia-label');
+            const rateioTotalDespesas = document.getElementById('finance-rateio-total-despesas');
+            const rateioTotalUnidades = document.getElementById('finance-rateio-total-unidades');
+            const rateioTicketMedio = document.getElementById('finance-rateio-ticket-medio');
             const dialog = document.getElementById('financeiro-dialog');
             const dialogTitle = document.getElementById('financeiro-dialog-title');
             const dialogSubtitle = document.getElementById('financeiro-dialog-subtitle');
             const dialogBody = document.getElementById('financeiro-dialog-body');
             const dialogActions = document.getElementById('financeiro-dialog-actions');
+            const despesaDialog = document.getElementById('finance-despesa-dialog');
+            const despesaDialogTitle = document.getElementById('finance-despesa-dialog-title');
+            const despesaDialogSubtitle = document.getElementById('finance-despesa-dialog-subtitle');
+            const despesaForm = document.getElementById('finance-despesa-form');
+            const despesaFeedback = document.getElementById('finance-despesa-feedback');
+            const closeRateioDialog = document.getElementById('finance-rateio-close-dialog');
+            const closeRateioCompetencia = document.getElementById('finance-close-dialog-competencia');
+            const closeRateioSummary = document.getElementById('finance-close-dialog-summary');
+            const closeRateioCancelButton = document.getElementById('finance-close-dialog-cancel');
+            const closeRateioConfirmButton = document.getElementById('finance-close-dialog-confirm');
+            const novaDespesaButton = document.getElementById('finance-nova-despesa');
+            const calcularRateioButton = document.getElementById('finance-calcular-rateio');
+            const despesaCancelarButton = document.getElementById('finance-despesa-cancelar');
+            const despesaIdField = document.getElementById('finance-despesa-id');
+            const despesaDescricaoField = document.getElementById('finance-despesa-descricao');
+            const despesaFornecedorField = document.getElementById('finance-despesa-fornecedor');
+            const despesaCategoriaField = document.getElementById('finance-despesa-categoria');
+            const despesaCompetenciaField = document.getElementById('finance-despesa-competencia');
+            const despesaVencimentoField = document.getElementById('finance-despesa-vencimento');
+            const despesaValorField = document.getElementById('finance-despesa-valor');
+            const rateioStatusField = document.getElementById('finance-rateio-status');
+            const rateioStatusTextField = document.getElementById('finance-rateio-status-text');
+            const closeoutCompetenciaField = document.getElementById('finance-rateio-closeout-competencia');
+            const closeoutTotalField = document.getElementById('finance-rateio-closeout-total');
+            const closeoutUnidadesField = document.getElementById('finance-rateio-closeout-unidades');
             const toast = document.getElementById('finance-toast');
             const toastMessage = document.getElementById('finance-toast-message');
             let toastTimer = null;
 
-            function authHeaders(json = false) {
+            function authHeaders(json) {
                 return {
                     Authorization: `Bearer ${token}`,
                     ...(json ? { 'Content-Type': 'application/json' } : {}),
                 };
             }
 
+            function escapeHtml(value) {
+                return String(value ?? '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
             function formatCurrency(value) {
                 return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             }
 
+            function formatCurrencyInput(value) {
+                const digits = String(value || '').replace(/\D/g, '');
+                if (!digits) return '';
+                return (Number(digits) / 100).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                });
+            }
+
+            function parseCurrencyInput(value) {
+                const normalized = String(value || '')
+                    .replace(/[^\d,]/g, '')
+                    .replace(/\./g, '')
+                    .replace(',', '.');
+                const parsed = Number(normalized);
+                return Number.isFinite(parsed) ? parsed : 0;
+            }
+
             function formatDate(value) {
                 if (!value) return '-';
-                return new Date(value).toLocaleDateString('pt-BR');
+                const date = new Date(value);
+                if (Number.isNaN(date.getTime())) return '-';
+                return date.toLocaleDateString('pt-BR');
             }
 
             function referenceLabel(item) {
                 return `${String(item.mes).padStart(2, '0')}/${item.ano}`;
             }
 
+            function competenciaKey(ano, mes) {
+                return `${ano}-${String(mes).padStart(2, '0')}`;
+            }
+
+            function competenciaLabelFromKey(key) {
+                if (!key || !key.includes('-')) return '-';
+                const [ano, mes] = key.split('-');
+                return `${mes}/${ano}`;
+            }
+
             function setFeedback(message, success) {
                 feedback.textContent = message || '';
                 feedback.className = `admin-inline-feedback${message ? success ? ' is-success' : ' is-error' : ''}`;
+            }
+
+            function setRateioFeedback(message, success) {
+                rateioFeedback.textContent = message || '';
+                rateioFeedback.className = `admin-inline-feedback${message ? success ? ' is-success' : ' is-error' : ''}`;
+            }
+
+            function setDespesaFeedback(message, success) {
+                despesaFeedback.textContent = message || '';
+                despesaFeedback.className = `admin-inline-feedback${message ? success ? ' is-success' : ' is-error' : ''}`;
             }
 
             function showToast(message) {
@@ -215,6 +533,18 @@
                         toast.hidden = true;
                     }, 220);
                 }, 2600);
+            }
+
+            function handleUnauthorized(response) {
+                if (response.status !== 401) return false;
+                localStorage.removeItem('nexus_token');
+                localStorage.removeItem('nexus_user');
+                window.location.href = '/login.html?role=admin';
+                return true;
+            }
+
+            function setTableState(tbody, colspan, message) {
+                tbody.innerHTML = `<tr class="finance-table-state-row"><td colspan="${colspan}">${escapeHtml(message)}</td></tr>`;
             }
 
             function openDialog(title, subtitle, bodyHtml, actionsHtml) {
@@ -235,7 +565,7 @@
             }
 
             function secondViaLabel(item) {
-                return item.bankSlipUrl || item.invoiceUrl ? '2a via pronta' : 'Aguardando geracao';
+                return item.bankSlipUrl || item.invoiceUrl ? '2ª via pronta' : 'Aguardando geração';
             }
 
             function dueInfo(item) {
@@ -252,33 +582,33 @@
 
             function computedChargeState(item) {
                 const hasCharge = Boolean(item.bankSlipUrl || item.invoiceUrl);
-                const { isLate, daysLate } = dueInfo(item);
+                const info = dueInfo(item);
 
                 if (item.status === 'PAGA') {
-                    return { key: 'paid', label: 'Pago', flowLabel: 'Pagamento concluido', statusClassName: 'status-ativo', hasCharge, isLate: false, daysLate: 0 };
+                    return { key: 'paid', label: 'Pago', flowLabel: 'Pagamento confirmado', statusClassName: 'status-ativo', hasCharge, isLate: false, daysLate: 0 };
                 }
-                if (isLate && hasCharge) {
-                    return { key: 'late', label: 'Atrasado', flowLabel: 'Cobranca automatica em atraso', statusClassName: 'status-alta', hasCharge, isLate, daysLate };
+                if (info.isLate && hasCharge) {
+                    return { key: 'late', label: 'Atrasado', flowLabel: 'Em atraso com cobrança ativa', statusClassName: 'status-alta', hasCharge, isLate: true, daysLate: info.daysLate };
                 }
-                if (isLate && !hasCharge) {
-                    return { key: 'late_missing_charge', label: 'Atrasado', flowLabel: 'Atrasada sem boleto gerado', statusClassName: 'status-alta', hasCharge, isLate, daysLate };
+                if (info.isLate && !hasCharge) {
+                    return { key: 'late_missing_charge', label: 'Atrasado', flowLabel: 'Em atraso sem cobrança gerada', statusClassName: 'status-alta', hasCharge, isLate: true, daysLate: info.daysLate };
                 }
                 if (hasCharge) {
-                    return { key: 'pending_with_charge', label: 'A vencer', flowLabel: 'Boleto gerado automaticamente', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
+                    return { key: 'pending_with_charge', label: 'A vencer', flowLabel: 'Cobrança pronta para envio', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
                 }
-                return { key: 'pending_without_charge', label: 'Pendente', flowLabel: 'Cobranca aguardando geracao', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
+                return { key: 'pending_without_charge', label: 'Pendente', flowLabel: 'Aguardando geração de cobrança', statusClassName: 'status-pendente', hasCharge, isLate: false, daysLate: 0 };
             }
 
             function buildChargePayload(item) {
                 const boletoUrl = item.bankSlipUrl || item.invoiceUrl || '';
                 const email = item.morador.user?.email || '';
                 const phone = item.morador.telefone || '';
-                const assunto = `Cobranca ${referenceLabel(item)} - ${item.descricao}`;
+                const assunto = `Cobrança ${referenceLabel(item)} - ${item.descricao}`;
                 const mensagem = [
                     `Ola, ${item.morador.nome}.`,
-                    `Segue a cobranca ${item.descricao} referente a ${referenceLabel(item)} no valor de ${formatCurrency(item.valor)}.`,
-                    boletoUrl ? `Link do boleto: ${boletoUrl}` : 'O boleto sera anexado/compartilhado assim que a cobranca for gerada.',
-                    'Esta tela do TCC deixa o envio pronto, mas nao dispara mensagens reais.'
+                    `Segue a cobrança ${item.descricao} referente a ${referenceLabel(item)} no valor de ${formatCurrency(item.valor)}.`,
+                    boletoUrl ? `Link da cobrança: ${boletoUrl}` : 'A cobrança será disponibilizada assim que o boleto for gerado.',
+                    'No fluxo recomendado, o Asaas envia a cobrança inicial e o Nexus reforça lembretes.',
                 ].join(' ');
 
                 return {
@@ -292,191 +622,459 @@
                 };
             }
 
+            function mergeTaxas(taxas, cobrancas, moradores) {
+                const chargeMap = new Map(cobrancas.map((item) => [Number(item.id), item]));
+                const moradorMap = new Map(moradores.map((item) => [Number(item.id), item]));
+
+                return taxas.map(function (item) {
+                    const moradorDetalhado = moradorMap.get(Number(item.moradorId)) || {};
+                    return {
+                        ...item,
+                        ...(chargeMap.get(Number(item.id)) || {}),
+                        morador: {
+                            ...(item.morador || {}),
+                            ...moradorDetalhado,
+                            user: moradorDetalhado.user || item.morador?.user || null,
+                        },
+                    };
+                });
+            }
+
+            function getMergedTaxaById(id) {
+                return state.mergedTaxas.find((row) => Number(row.id) === Number(id)) || null;
+            }
+
+            function getRateioRows() {
+                return state.mergedTaxas.filter((item) => competenciaKey(item.ano, item.mes) === state.selectedCompetencia);
+            }
+
+            function getDespesasRows() {
+                return state.pagarSeed.filter((item) => competenciaKey(item.ano, item.mes) === state.selectedCompetencia);
+            }
+
+            function getMoradoresAtivos() {
+                return state.moradores.filter((item) => item.status !== 'BLOQUEADO');
+            }
+
+            function getPreviewRateioCalculado() {
+                const despesas = getDespesasRows();
+                const moradores = getMoradoresAtivos();
+                const totalDespesas = despesas.reduce((sum, item) => sum + Number(item.valor || 0), 0);
+                const valorPorUnidade = moradores.length ? Number((totalDespesas / moradores.length).toFixed(2)) : 0;
+
+                return {
+                    despesas,
+                    moradores,
+                    totalDespesas,
+                    valorPorUnidade,
+                };
+            }
+
+            function collectCompetencias() {
+                const values = new Set();
+                state.mergedTaxas.forEach((item) => values.add(competenciaKey(item.ano, item.mes)));
+                state.pagarSeed.forEach((item) => values.add(competenciaKey(item.ano, item.mes)));
+                return Array.from(values).sort().reverse();
+            }
+
+            function renderCompetenciaOptions() {
+                const competencias = collectCompetencias();
+                if (!competencias.length) {
+                    competenciaSelect.innerHTML = '<option value="">Sem competencias</option>';
+                    state.selectedCompetencia = '';
+                    return;
+                }
+
+                if (!competencias.includes(state.selectedCompetencia)) {
+                    state.selectedCompetencia = competencias[0];
+                }
+
+                competenciaSelect.innerHTML = competencias.map(function (key) {
+                    const selected = key === state.selectedCompetencia ? ' selected' : '';
+                    return `<option value="${escapeHtml(key)}"${selected}>${escapeHtml(competenciaLabelFromKey(key))}</option>`;
+                }).join('');
+            }
 
             function renderPagar() {
-                pagarBody.innerHTML = pagarSeed.map((item) => `
-                    <tr>
-                        <td><strong>${item.descricao}</strong><br><small>${item.detalhe}</small></td>
-                        <td>${formatDate(item.vencimento)}</td>
-                        <td class="negative-value">${formatCurrency(item.valor)}</td>
-                        <td class="${item.status === 'Paga' ? 'status-ativo' : 'status-pendente'}">${item.status}</td>
-                        <td>${item.status === 'Paga'
-                            ? `<a href="#" class="action-link" data-financeiro-view="pagar" data-id="${item.id}">Ver</a>`
-                            : `<a href="#" class="action-link action-pay" data-financeiro-pay="${item.id}">Pagar</a>`}</td>
-                    </tr>
-                `).join('');
-                document.querySelector('[data-fin-pagar]').textContent = formatCurrency(
-                    pagarSeed.filter((item) => item.status !== 'Paga').reduce((sum, item) => sum + Number(item.valor || 0), 0)
+                const pagarSummary = document.querySelector('[data-fin-pagar]');
+                if (!pagarSummary) return;
+
+                pagarSummary.textContent = formatCurrency(
+                    state.pagarSeed.filter((item) => item.status !== 'Paga').reduce((sum, item) => sum + Number(item.valor || 0), 0)
                 );
-            }
-
-            function mergeTaxas(taxas, cobrancas) {
-                const chargeMap = new Map(cobrancas.map((item) => [Number(item.id), item]));
-                return taxas.map((item) => ({ ...item, ...(chargeMap.get(Number(item.id)) || {}) }));
-            }
-
-            async function loadFinanceiro() {
-                setFeedback('', true);
-                try {
-                    const [taxasRes, cobrancasRes] = await Promise.all([
-                        fetch('/api/taxas', { headers: authHeaders() }),
-                        fetch('/api/pagamentos/asaas/taxas', { headers: authHeaders() }),
-                    ]);
-
-                    if (taxasRes.status === 401 || cobrancasRes.status === 401) {
-                        localStorage.removeItem('nexus_token');
-                        localStorage.removeItem('nexus_user');
-                        window.location.href = '/login.html?role=admin';
-                        return;
-                    }
-
-                    if (!taxasRes.ok || !cobrancasRes.ok) {
-                        throw new Error('Nao foi possivel carregar o financeiro.');
-                    }
-
-                    const taxas = await taxasRes.json();
-                    const cobrancas = await cobrancasRes.json();
-                    const taxasComCobranca = mergeTaxas(taxas, cobrancas);
-
-                    renderReceber(taxasComCobranca);
-                    renderInadimplencia(taxasComCobranca);
-                    updateSummaryReceber(taxasComCobranca);
-                } catch (error) {
-                    receberBody.innerHTML = '<tr><td colspan="5" style="text-align:center">Erro ao carregar contas a receber.</td></tr>';
-                    inadBody.innerHTML = '<tr><td colspan="6" style="text-align:center">Erro ao carregar inadimplencia.</td></tr>';
-                    setFeedback(error.message || 'Erro ao carregar financeiro.', false);
-                }
-            }
-
-            function updateSummaryReceber(taxas) {
-                const totalRecebido = taxas
-                    .filter((item) => item.status === 'PAGA')
-                    .reduce((sum, item) => sum + Number(item.valor || 0), 0);
-                const totalAtraso = taxas
-                    .filter((item) => item.status !== 'PAGA')
-                    .reduce((sum, item) => sum + Number(item.valor || 0), 0);
-
-                document.querySelector('[data-fin-saldo]').textContent = formatCurrency(totalRecebido);
-                document.querySelector('[data-fin-atraso]').textContent = formatCurrency(totalAtraso);
             }
 
             function rowActions(item) {
                 const payload = buildChargePayload(item);
-                const state = computedChargeState(item);
+                const chargeState = computedChargeState(item);
                 let primaryAction = '';
                 let helperText = '';
                 const secondaryParts = [];
 
-                if (state.key === 'paid') {
+                if (chargeState.key === 'paid') {
                     primaryAction = `<button type="button" class="finance-primary-button is-neutral" data-financeiro-view="receber" data-id="${item.id}">Ver detalhes</button>`;
-                    helperText = 'Pagamento confirmado. Em producao, o webhook atualizaria esta linha automaticamente.';
+                    helperText = 'Pagamento confirmado. O webhook do Asaas mantém esta linha sincronizada quando configurado.';
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
-                } else if (state.key === 'late') {
-                    primaryAction = `<button type="button" class="finance-primary-button is-alert" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>`;
-                    helperText = 'No fluxo automatico, a régua de cobranca enviaria a 2a via automaticamente apos o vencimento.';
-                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
-                    secondaryParts.push(`<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="table-action-button finance-secondary-link">Abrir boleto</a>`);
+                } else if (chargeState.key === 'late') {
+                    primaryAction = `<button type="button" class="finance-primary-button is-alert" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobrança</button>`;
+                    helperText = 'Fluxo recomendado: Asaas envia a cobrança inicial e o Nexus reforça no atraso.';
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${escapeHtml(payload.boletoUrl)}">2ª via</button>`);
+                    secondaryParts.push(`<a href="${escapeHtml(payload.boletoUrl)}" target="_blank" rel="noopener" class="table-action-button finance-secondary-link">Abrir boleto</a>`);
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
-                } else if (state.key === 'late_missing_charge') {
+                } else if (chargeState.key === 'late_missing_charge') {
                     primaryAction = `<button type="button" class="finance-primary-button is-alert" data-gerar-cobranca="${item.id}">Gerar boleto urgente</button>`;
-                    helperText = 'Esta linha simula uma excecao: a taxa venceu sem boleto gerado.';
+                    helperText = 'Existe taxa vencida sem cobrança emitida. Esta é a principal exceção operacional.';
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
-                } else if (state.key === 'pending_with_charge') {
-                    primaryAction = `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="finance-primary-link">Abrir boleto</a>`;
-                    helperText = 'Boleto pronto. Em um fluxo automatico, o envio seria programado antes do vencimento.';
-                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">2a via</button>`);
-                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>`);
+                } else if (chargeState.key === 'pending_with_charge') {
+                    primaryAction = `<a href="${escapeHtml(payload.boletoUrl)}" target="_blank" rel="noopener" class="finance-primary-link">Abrir boleto</a>`;
+                    helperText = 'Cobrança pronta. O disparo inicial deve sair pelo Asaas.';
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-copy-link="${escapeHtml(payload.boletoUrl)}">2ª via</button>`);
+                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobrança</button>`);
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
                 } else {
                     primaryAction = `<button type="button" class="finance-primary-button" data-gerar-cobranca="${item.id}">Gerar boleto</button>`;
-                    helperText = 'Na demonstracao o admin gera manualmente. Em producao, esta etapa poderia acontecer automaticamente.';
+                    helperText = 'A taxa existe, mas a cobrança ainda não foi emitida no Asaas.';
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
                     secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Enviar manualmente</button>`);
                 }
 
                 return `
                     <div class="finance-actions-stack">
-                        <div class="finance-flow-chip ${state.hasCharge ? 'is-ready' : 'is-pending'} ${state.isLate ? 'is-late' : ''}">${state.flowLabel}</div>
-                        <div class="finance-primary-action">
-                            ${primaryAction}
-                        </div>
-                        <div class="finance-secondary-actions">
-                            ${secondaryParts.join('')}
-                        </div>
-                        <small class="finance-actions-note">${helperText}</small>
+                        <div class="finance-flow-chip ${chargeState.hasCharge ? 'is-ready' : 'is-pending'} ${chargeState.isLate ? 'is-late' : ''}">${escapeHtml(chargeState.flowLabel)}</div>
+                        <div class="finance-primary-action">${primaryAction}</div>
+                        <div class="finance-secondary-actions">${secondaryParts.join('')}</div>
+                        <small class="finance-actions-note">${escapeHtml(helperText)}</small>
                     </div>
                 `;
             }
 
-            function renderReceber(taxas) {
-                if (!taxas.length) {
-                    receberBody.innerHTML = '<tr><td colspan="5" style="text-align:center">Nenhuma conta a receber cadastrada.</td></tr>';
+            function renderReceber() {
+                if (!state.mergedTaxas.length) {
+                    setTableState(receberBody, 5, 'Nenhuma cobrança de morador cadastrada.');
                     return;
                 }
 
-                receberBody.innerHTML = taxas.map((item) => `
-                    <tr>
-                        <td><strong>${item.morador.nome}</strong><br><small>Bloco ${item.morador.bloco} / Unidade ${item.morador.unidade}</small></td>
-                        <td>${referenceLabel(item)}<br><small>${formatDate(item.vencimento)}</small></td>
-                        <td class="${item.status === 'PAGA' ? 'positive-value' : 'negative-value'}">${formatCurrency(item.valor)}</td>
-                        <td class="${computedChargeState(item).statusClassName}">${computedChargeState(item).label}</td>
-                        <td>${rowActions(item)}</td>
-                    </tr>
-                `).join('');
-            }
-
-            function renderInadimplencia(taxas) {
-                const map = new Map();
-                taxas.filter((item) => computedChargeState(item).isLate).forEach((item) => {
-                    const key = item.moradorId;
-                    if (!map.has(key)) {
-                        map.set(key, {
-                            morador: item.morador,
-                            total: 0,
-                            dias: 0,
-                            taxas: [],
-                        });
-                    }
-                    const group = map.get(key);
-                    group.total += Number(item.valor || 0);
-                    group.dias = Math.max(group.dias, dueInfo(item).daysLate);
-                    group.taxas.push(item);
-                });
-
-                const rows = Array.from(map.values());
+                const rows = filterCobrancasRows();
                 if (!rows.length) {
-                    inadBody.innerHTML = '<tr><td colspan="6" style="text-align:center">Nenhuma unidade em atraso no momento.</td></tr>';
+                    setTableState(receberBody, 5, emptyCobrancasMessage());
                     return;
                 }
 
-                inadBody.innerHTML = rows.map((item) => {
-                    const primeiraTaxa = item.taxas[0];
+                receberBody.innerHTML = rows.map(function (item) {
+                    const chargeState = computedChargeState(item);
                     return `
                         <tr>
-                            <td><strong>${item.morador.nome}</strong><br><small>${item.morador.user?.email || '-'}</small></td>
-                            <td>Bloco ${item.morador.bloco} - Unidade ${item.morador.unidade}</td>
-                            <td class="negative-value">${formatCurrency(item.total)}</td>
-                            <td><span class="delay-pill">${item.dias} dias</span></td>
-                            <td class="status-alta">Em cobranca</td>
-                            <td>${rowActions(primeiraTaxa)}</td>
+                            <td><strong>${escapeHtml(item.morador.nome)}</strong><br><small>Bloco ${escapeHtml(item.morador.bloco)} / Unidade ${escapeHtml(item.morador.unidade)}</small></td>
+                            <td>${escapeHtml(referenceLabel(item))}<br><small>${escapeHtml(formatDate(item.vencimento))}</small></td>
+                            <td class="${item.status === 'PAGA' ? 'positive-value' : 'negative-value'}">${escapeHtml(formatCurrency(item.valor))}</td>
+                            <td class="${chargeState.statusClassName}">${escapeHtml(chargeState.label)}</td>
+                            <td>${rowActions(item)}</td>
                         </tr>
                     `;
                 }).join('');
             }
 
-            async function gerarCobranca(id) {
-                setFeedback('Gerando boleto...', true);
+            function filterCobrancasRows() {
+                return state.mergedTaxas.filter(function (item) {
+                    const chargeState = computedChargeState(item);
+                    if (state.selectedCobrancasTab === 'historico') {
+                        return chargeState.key === 'paid';
+                    }
+                    if (state.selectedCobrancasTab === 'atrasadas') {
+                        return chargeState.isLate;
+                    }
+                    return chargeState.key !== 'paid' && !chargeState.isLate;
+                });
+            }
+
+            function emptyCobrancasMessage() {
+                if (state.selectedCobrancasTab === 'historico') {
+                    return 'Nenhum pagamento confirmado no histórico.';
+                }
+                if (state.selectedCobrancasTab === 'atrasadas') {
+                    return 'Nenhuma cobrança em atraso no momento.';
+                }
+                return 'Nenhuma cobrança em aberto no momento.';
+            }
+
+            function renderInadimplencia() {
+                const grouped = new Map();
+
+                state.mergedTaxas
+                    .filter((item) => computedChargeState(item).isLate)
+                    .forEach(function (item) {
+                        const key = Number(item.moradorId);
+                        if (!grouped.has(key)) {
+                            grouped.set(key, {
+                                morador: item.morador,
+                                total: 0,
+                                dias: 0,
+                                taxas: [],
+                            });
+                        }
+                        const bucket = grouped.get(key);
+                        bucket.total += Number(item.valor || 0);
+                        bucket.dias = Math.max(bucket.dias, dueInfo(item).daysLate);
+                        bucket.taxas.push(item);
+                    });
+
+                const rows = Array.from(grouped.values());
+                if (!rows.length) {
+                    setTableState(inadBody, 6, 'Nenhuma unidade em atraso no momento.');
+                    return;
+                }
+
+                inadBody.innerHTML = rows.map(function (item) {
+                    const principal = item.taxas[0];
+                    return `
+                        <tr>
+                            <td><strong>${escapeHtml(item.morador.nome)}</strong><br><small>${escapeHtml(item.morador.user?.email || 'E-mail não cadastrado')}</small></td>
+                            <td>Bloco ${escapeHtml(item.morador.bloco)} - Unidade ${escapeHtml(item.morador.unidade)}</td>
+                            <td class="negative-value">${escapeHtml(formatCurrency(item.total))}</td>
+                            <td><span class="delay-pill">${escapeHtml(String(item.dias))} dias</span></td>
+                            <td class="status-alta">Em cobrança</td>
+                            <td>${rowActions(principal)}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            function renderRateioSummary() {
+                const despesas = getDespesasRows();
+                const taxas = getRateioRows();
+                const preview = getPreviewRateioCalculado();
+                const totalDespesas = despesas.reduce((sum, item) => sum + Number(item.valor || 0), 0);
+                const totalTaxas = taxas.reduce((sum, item) => sum + Number(item.valor || 0), 0);
+                const hasCompleteRateio = taxas.length && (!preview.moradores.length || taxas.length >= preview.moradores.length);
+                const totalUnidades = hasCompleteRateio ? taxas.length : preview.moradores.length;
+                const media = hasCompleteRateio ? totalTaxas / taxas.length : preview.valorPorUnidade;
+
+                rateioCompetenciaLabel.textContent = competenciaLabelFromKey(state.selectedCompetencia);
+                rateioTotalDespesas.textContent = formatCurrency(totalDespesas);
+                rateioTotalUnidades.textContent = String(totalUnidades);
+                rateioTicketMedio.textContent = formatCurrency(media);
+            }
+
+            function renderRateioCloseout() {
+                const despesas = getDespesasRows();
+                const taxas = getRateioRows();
+                const preview = getPreviewRateioCalculado();
+                const totalDespesas = despesas.reduce((sum, item) => sum + Number(item.valor || 0), 0);
+                const hasCompleteRateio = taxas.length && (!preview.moradores.length || taxas.length >= preview.moradores.length);
+                const status = state.rateioStatusByCompetencia[state.selectedCompetencia] || (hasCompleteRateio ? 'closed' : 'editing');
+                const labels = status === 'closed'
+                    ? {
+                        title: 'Fechado',
+                        text: 'Esta competência já foi consolidada e as taxas já estão refletidas nas seções abaixo.',
+                    }
+                    : {
+                        title: 'Em edição',
+                        text: 'Você ainda pode incluir ou editar despesas antes do fechamento.',
+                    };
+
+                rateioStatusField.textContent = labels.title;
+                rateioStatusTextField.textContent = labels.text;
+                closeoutCompetenciaField.textContent = competenciaLabelFromKey(state.selectedCompetencia);
+                closeoutTotalField.textContent = formatCurrency(totalDespesas);
+                closeoutUnidadesField.textContent = String(hasCompleteRateio ? taxas.length : preview.moradores.length);
+                calcularRateioButton.textContent = status === 'closed' ? 'Revisar fechamento' : 'Fechar e calcular rateio';
+            }
+
+            function renderRateioDespesas() {
+                const despesas = getDespesasRows();
+                if (!despesas.length) {
+                    setTableState(rateioDespesasBody, 5, 'Nenhum lançamento interno encontrado para esta competência.');
+                    return;
+                }
+
+                rateioDespesasBody.innerHTML = despesas.map(function (item) {
+                    return `
+                        <tr>
+                            <td><strong>${escapeHtml(item.descricao)}</strong><br><small>${escapeHtml(item.detalhe)}</small></td>
+                            <td>${escapeHtml(formatDate(item.vencimento))}</td>
+                            <td class="negative-value">${escapeHtml(formatCurrency(item.valor))}</td>
+                            <td class="${item.status === 'Paga' ? 'status-ativo' : 'status-pendente'}">${escapeHtml(item.status)}</td>
+                            <td>
+                                <button type="button" class="table-action-button" data-editar-despesa="${escapeHtml(item.id)}">Editar</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            function renderRateioPreview() {
+                const taxas = getRateioRows();
+                const preview = getPreviewRateioCalculado();
+                const hasCompleteRateio = taxas.length && (!preview.moradores.length || taxas.length >= preview.moradores.length);
+                const shouldShowOfficialTaxas = state.rateioStatusByCompetencia[state.selectedCompetencia] === 'closed' || hasCompleteRateio;
+
+                if (!state.selectedCompetencia) {
+                    setTableState(rateioUnidadesBody, 5, 'Nenhuma competência disponível para exibir a prévia.');
+                    return;
+                }
+
+                if (!shouldShowOfficialTaxas) {
+                    if (!preview.despesas.length) {
+                        setTableState(rateioUnidadesBody, 5, 'Lance despesas nesta competência para ver a prévia por apartamento.');
+                        return;
+                    }
+
+                    if (!preview.moradores.length) {
+                        setTableState(rateioUnidadesBody, 5, 'Nenhum morador ativo encontrado para calcular o rateio.');
+                        return;
+                    }
+
+                    rateioUnidadesBody.innerHTML = preview.moradores.map(function (morador) {
+                        return `
+                            <tr>
+                                <td>Bloco ${escapeHtml(morador.bloco)} / ${escapeHtml(morador.unidade)}</td>
+                                <td><strong>${escapeHtml(morador.nome)}</strong><br><small>${escapeHtml(morador.user?.email || 'Contato não informado')}</small></td>
+                                <td>${escapeHtml(formatCurrency(preview.valorPorUnidade))}</td>
+                                <td class="status-pendente">Prévia</td>
+                                <td>Valor estimado antes do fechamento</td>
+                            </tr>
+                        `;
+                    }).join('');
+                    return;
+                }
+
+                rateioUnidadesBody.innerHTML = taxas.map(function (item) {
+                    const chargeState = computedChargeState(item);
+                    const observação = item.asaasPaymentId
+                        ? `Cobrança ${item.billingType || 'Asaas'} já emitida`
+                        : 'Taxa cadastrada; cobrança ainda não gerada';
+
+                    return `
+                        <tr>
+                            <td>Bloco ${escapeHtml(item.morador.bloco)} / ${escapeHtml(item.morador.unidade)}</td>
+                            <td><strong>${escapeHtml(item.morador.nome)}</strong><br><small>${escapeHtml(item.morador.user?.email || 'Contato não informado')}</small></td>
+                            <td>${escapeHtml(formatCurrency(item.valor))}</td>
+                            <td class="${chargeState.statusClassName}">${escapeHtml(chargeState.label)}</td>
+                            <td>${escapeHtml(observação)}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            function updateFinancialSummary() {
+                const totalRecebido = state.mergedTaxas
+                    .filter((item) => item.status === 'PAGA')
+                    .reduce((sum, item) => sum + Number(item.valor || 0), 0);
+
+                const overdueResidents = new Set(
+                    state.mergedTaxas
+                        .filter((item) => computedChargeState(item).isLate)
+                        .map((item) => Number(item.moradorId))
+                );
+
+                const saldoSummary = document.querySelector('[data-fin-saldo]');
+                const atrasoSummary = document.querySelector('[data-fin-atraso]');
+
+                if (saldoSummary) {
+                    saldoSummary.textContent = formatCurrency(totalRecebido);
+                }
+                if (atrasoSummary) {
+                    atrasoSummary.textContent = String(overdueResidents.size);
+                }
+            }
+
+            function renderAll() {
+                renderCompetenciaOptions();
+                renderPagar();
+                renderReceber();
+                renderInadimplencia();
+                renderRateioSummary();
+                renderRateioDespesas();
+                renderRateioPreview();
+                renderRateioCloseout();
+                updateFinancialSummary();
+            }
+
+            async function loadFinanceiro() {
+                setFeedback('', true);
+                setRateioFeedback('', true);
+                setTableState(receberBody, 5, 'Carregando cobranças dos moradores...');
+                setTableState(inadBody, 6, 'Carregando moradores em atraso...');
+                setTableState(rateioDespesasBody, 5, 'Carregando lançamentos...');
+                setTableState(rateioUnidadesBody, 5, 'Carregando prévia...');
+
                 try {
+                    const responses = await Promise.all([
+                        fetch('/api/taxas', { headers: authHeaders() }),
+                        fetch('/api/pagamentos/asaas/taxas', { headers: authHeaders() }),
+                        fetch('/api/moradores', { headers: authHeaders() }),
+                    ]);
+
+                    if (responses.some(handleUnauthorized)) {
+                        return;
+                    }
+
+                    if (!responses[0].ok || !responses[1].ok) {
+                        throw new Error('Não foi possível carregar o financeiro.');
+                    }
+
+                    const taxas = await responses[0].json();
+                    const cobrancas = await responses[1].json();
+                    const moradores = responses[2].ok ? await responses[2].json() : [];
+
+                    state.taxas = Array.isArray(taxas) ? taxas : [];
+                    state.charges = Array.isArray(cobrancas) ? cobrancas : [];
+                    state.moradores = Array.isArray(moradores) ? moradores : [];
+                    state.mergedTaxas = mergeTaxas(state.taxas, state.charges, state.moradores);
+
+                    renderAll();
+                } catch (error) {
+                    setTableState(receberBody, 5, 'Erro ao carregar cobranças dos moradores.');
+                    setTableState(inadBody, 6, 'Erro ao carregar moradores em atraso.');
+                    setTableState(rateioDespesasBody, 5, 'Erro ao carregar lançamentos.');
+                    setTableState(rateioUnidadesBody, 5, 'Erro ao carregar prévia do rateio.');
+                    setFeedback(error.message || 'Erro ao carregar financeiro.', false);
+                }
+            }
+
+            async function createTaxa(payload) {
+                const response = await fetch('/api/taxas', {
+                    method: 'POST',
+                    headers: authHeaders(true),
+                    body: JSON.stringify(payload),
+                });
+
+                if (handleUnauthorized(response)) {
+                    throw new Error('Sessao expirada.');
+                }
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Não foi possível criar a taxa.');
+                }
+
+                return data;
+            }
+
+            async function gerarCobranca(id) {
+                setFeedback('Gerando cobrança no Asaas...', true);
+                try {
+                    const item = getMergedTaxaById(id);
                     const response = await fetch(`/api/pagamentos/asaas/taxas/${id}/cobranca`, {
                         method: 'POST',
                         headers: authHeaders(true),
-                        body: JSON.stringify({ billingType: 'BOLETO', customerCpfCnpj: '52998224725' }),
+                        body: JSON.stringify({
+                            billingType: 'BOLETO',
+                            customerCpfCnpj: item?.morador?.cpf || '',
+                            customerEmail: item?.morador?.user?.email || '',
+                            customerPhone: item?.morador?.telefone || '',
+                        }),
                     });
+
+                    if (handleUnauthorized(response)) return;
+
                     const data = await response.json();
                     if (!response.ok) {
-                        throw new Error(data.error || 'Nao foi possivel gerar o boleto.');
+                        throw new Error(data.error || 'Não foi possível gerar o boleto.');
                     }
-                    setFeedback('Boleto gerado com sucesso. Na demonstracao essa etapa foi manual; em um fluxo automatico, a cobranca e os lembretes seriam preparados pelo sistema.', true);
+
+                    setFeedback('Cobrança gerada com sucesso no Asaas.', true);
+                    showToast('Cobrança gerada com sucesso.');
                     await loadFinanceiro();
                 } catch (error) {
                     setFeedback(error.message || 'Erro ao gerar boleto.', false);
@@ -486,30 +1084,31 @@
             function openReceberDialog(item) {
                 const payload = buildChargePayload(item);
                 const boletoUrl = payload.boletoUrl || '-';
+
                 openDialog(
-                    'Detalhes da cobranca',
+                    'Detalhes da cobrança',
                     'Consulte o status da taxa e os dados da segunda via.',
                     `<div class="dialog-detail-grid">
-                        <div><span>Morador</span><strong>${item.morador.nome}</strong></div>
-                        <div><span>Unidade</span><strong>Bloco ${item.morador.bloco} / ${item.morador.unidade}</strong></div>
-                        <div><span>Referencia</span><strong>${referenceLabel(item)}</strong></div>
-                        <div><span>Vencimento</span><strong>${formatDate(item.vencimento)}</strong></div>
-                        <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
-                        <div><span>Status</span><strong>${computedChargeState(item).label}</strong></div>
-                        <div><span>Tipo</span><strong>${item.billingType || '-'}</strong></div>
-                        <div><span>Pagamento Asaas</span><strong>${item.asaasPaymentId || '-'}</strong></div>
-                        <div><span>2a via</span><strong>${secondViaLabel(item)}</strong></div>
-                        <div><span>E-mail</span><strong>${payload.email || 'Nao cadastrado'}</strong></div>
-                        <div><span>WhatsApp</span><strong>${payload.phone || 'Nao cadastrado'}</strong></div>
+                        <div><span>Morador</span><strong>${escapeHtml(item.morador.nome)}</strong></div>
+                        <div><span>Unidade</span><strong>Bloco ${escapeHtml(item.morador.bloco)} / ${escapeHtml(item.morador.unidade)}</strong></div>
+                        <div><span>Referencia</span><strong>${escapeHtml(referenceLabel(item))}</strong></div>
+                        <div><span>Vencimento</span><strong>${escapeHtml(formatDate(item.vencimento))}</strong></div>
+                        <div><span>Valor</span><strong>${escapeHtml(formatCurrency(item.valor))}</strong></div>
+                        <div><span>Status</span><strong>${escapeHtml(computedChargeState(item).label)}</strong></div>
+                        <div><span>Tipo</span><strong>${escapeHtml(item.billingType || '-')}</strong></div>
+                        <div><span>Pagamento Asaas</span><strong>${escapeHtml(item.asaasPaymentId || '-')}</strong></div>
+                        <div><span>2ª via</span><strong>${escapeHtml(secondViaLabel(item))}</strong></div>
+                        <div><span>E-mail</span><strong>${escapeHtml(payload.email || 'Não cadastrado')}</strong></div>
+                        <div><span>WhatsApp</span><strong>${escapeHtml(payload.phone || 'Não cadastrado')}</strong></div>
                     </div>
                     <div class="dialog-note-block">
-                        <span>Link da cobranca</span>
-                        <p>${boletoUrl}</p>
+                        <span>Link da cobrança</span>
+                        <p>${escapeHtml(boletoUrl)}</p>
                     </div>`,
                     `
-                        ${boletoUrl !== '-' ? `<a href="${boletoUrl}" target="_blank" rel="noopener" class="primary-button" style="text-decoration:none;">Abrir boleto</a>` : ''}
-                        ${boletoUrl !== '-' ? `<button type="button" class="table-action-button" data-copy-link="${boletoUrl}">Copiar 2a via</button>` : ''}
-                        <button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobranca</button>
+                        ${boletoUrl !== '-' ? `<a href="${escapeHtml(boletoUrl)}" target="_blank" rel="noopener" class="finance-primary-link">Abrir boleto</a>` : ''}
+                        ${boletoUrl !== '-' ? `<button type="button" class="table-action-button" data-copy-link="${escapeHtml(boletoUrl)}">Copiar 2ª via</button>` : ''}
+                        <button type="button" class="table-action-button" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobrança</button>
                     `
                 );
             }
@@ -520,55 +1119,248 @@
                     payload.email ? `E-mail: ${payload.email}` : '',
                     payload.phone ? `WhatsApp: ${payload.phone}` : '',
                 ].filter(Boolean);
+
                 openDialog(
-                    'Reenviar cobranca',
-                    'Reenvie a cobranca usando os dados cadastrados do morador.',
+                    'Reenviar cobrança',
+                    'Use os contatos do morador para reforçar a cobrança emitida.',
                     `<div class="dialog-detail-grid">
-                        <div><span>Morador</span><strong>${item.morador.nome}</strong></div>
-                        <div><span>Referencia</span><strong>${referenceLabel(item)}</strong></div>
-                        <div><span>Status da cobranca</span><strong>${payload.boletoUrl ? 'Boleto gerado' : 'Boleto ainda nao gerado'}</strong></div>
-                        <div><span>E-mail de destino</span><strong>${payload.email || 'Nao cadastrado'}</strong></div>
-                        <div><span>WhatsApp de destino</span><strong>${payload.phone || 'Nao cadastrado'}</strong></div>
+                        <div><span>Morador</span><strong>${escapeHtml(item.morador.nome)}</strong></div>
+                        <div><span>Referencia</span><strong>${escapeHtml(referenceLabel(item))}</strong></div>
+                        <div><span>Status da cobrança</span><strong>${escapeHtml(payload.boletoUrl ? 'Boleto gerado' : 'Boleto ainda não gerado')}</strong></div>
+                        <div><span>E-mail de destino</span><strong>${escapeHtml(payload.email || 'Não cadastrado')}</strong></div>
+                        <div><span>WhatsApp de destino</span><strong>${escapeHtml(payload.phone || 'Não cadastrado')}</strong></div>
                     </div>
                     <div class="dialog-note-block">
                         <span>Mensagem pronta</span>
-                        <p>${payload.mensagem}</p>
-                    </div>
-                    <div class="dialog-note-block">
-                        <span>Canais de envio</span>
-                        <p>O sistema utiliza o e-mail e o WhatsApp cadastrados para reenviar a cobranca e a segunda via ao morador.</p>
+                        <p>${escapeHtml(payload.mensagem)}</p>
                     </div>
                     <div class="dialog-note-block">
                         <span>Destino selecionado</span>
-                        <p>${destinos.length ? destinos.join(' | ') : 'Nenhum dado de contato cadastrado para simulacao de envio.'}</p>
+                        <p>${escapeHtml(destinos.length ? destinos.join(' | ') : 'Nenhum dado de contato cadastrado para simulação de envio.')}</p>
                     </div>`,
                     `
                         <div class="dialog-actions-group">
-                            ${payload.boletoUrl ? `<a href="${payload.boletoUrl}" target="_blank" rel="noopener" class="primary-button" style="text-decoration:none;">Abrir boleto</a>` : `<button type="button" class="table-action-button" data-gerar-cobranca="${item.id}">Gerar boleto primeiro</button>`}
-                            ${payload.boletoUrl ? `<button type="button" class="table-action-button" data-copy-link="${payload.boletoUrl}">Copiar 2a via</button>` : ''}
+                            ${payload.boletoUrl ? `<a href="${escapeHtml(payload.boletoUrl)}" target="_blank" rel="noopener" class="finance-primary-link">Abrir boleto</a>` : `<button type="button" class="table-action-button" data-gerar-cobranca="${item.id}">Gerar boleto primeiro</button>`}
+                            ${payload.boletoUrl ? `<button type="button" class="table-action-button" data-copy-link="${escapeHtml(payload.boletoUrl)}">Copiar 2ª via</button>` : ''}
+                            ${payload.mailto ? `<a href="${payload.mailto}" class="table-action-button finance-secondary-link">Abrir e-mail</a>` : ''}
+                            ${payload.whatsapp ? `<a href="${payload.whatsapp}" target="_blank" rel="noopener" class="table-action-button finance-secondary-link">Abrir WhatsApp</a>` : ''}
                         </div>
-                        ${payload.boletoUrl ? `<button type="button" class="primary-button dialog-send-button" data-simular-envio="${item.id}">Enviar</button>` : ''}
+                        ${payload.boletoUrl ? `<button type="button" class="finance-primary-button dialog-send-button" data-simular-envio="${item.id}">Registrar reenvio</button>` : ''}
                     `
                 );
             }
 
-            async function findMergedTaxa(id) {
-                const [taxasRes, cobrancasRes] = await Promise.all([
-                    fetch('/api/taxas', { headers: authHeaders() }),
-                    fetch('/api/pagamentos/asaas/taxas', { headers: authHeaders() }),
-                ]);
-                const taxas = await taxasRes.json();
-                const cobrancas = await cobrancasRes.json();
-                return mergeTaxas(taxas, cobrancas).find((row) => Number(row.id) === Number(id));
+            function openCloseRateioDialog() {
+                if (!state.selectedCompetencia) {
+                    setRateioFeedback('Selecione uma competência válida.', false);
+                    return;
+                }
+
+                const competencia = competenciaLabelFromKey(state.selectedCompetencia);
+                const despesas = getDespesasRows();
+                const taxas = getRateioRows();
+                const totalDespesas = despesas.reduce((sum, item) => sum + Number(item.valor || 0), 0);
+
+                closeRateioCompetencia.textContent = competencia;
+                closeRateioSummary.textContent = `${despesas.length} despesa(s), ${taxas.length} taxa(s) já existente(s) e total de ${formatCurrency(totalDespesas)} nesta competência. O fechamento desta versão distribui igualmente entre unidades ativas.`;
+                closeRateioDialog.showModal();
             }
 
-            document.querySelectorAll('[data-financeiro-tab]').forEach((button) => {
-                button.addEventListener('click', function () {
-                    const tab = button.dataset.financeiroTab;
-                    document.querySelectorAll('[data-financeiro-tab]').forEach((item) => item.classList.toggle('active', item === button));
-                    document.querySelectorAll('.tab-content').forEach((panel) => panel.classList.toggle('hidden', panel.id !== tab));
-                    history.replaceState(null, '', `#${tab}`);
+            async function confirmCloseRateio() {
+                if (!state.selectedCompetencia) return;
+
+                const despesas = getDespesasRows();
+                const totalDespesas = despesas.reduce((sum, item) => sum + Number(item.valor || 0), 0);
+                const moradoresAtivos = state.moradores.filter((item) => item.status !== 'BLOQUEADO');
+                const existingTaxas = getRateioRows();
+
+                if (!despesas.length || totalDespesas <= 0) {
+                    setRateioFeedback('Adicione despesas válidas antes de fechar o rateio.', false);
+                    closeRateioDialog.close();
+                    return;
+                }
+
+                if (!moradoresAtivos.length) {
+                    setRateioFeedback('Não há moradores ativos para gerar as taxas desta competência.', false);
+                    closeRateioDialog.close();
+                    return;
+                }
+
+                const [anoRaw, mesRaw] = state.selectedCompetencia.split('-');
+                const ano = Number(anoRaw);
+                const mes = Number(mesRaw);
+                const perUnitValue = Number((totalDespesas / moradoresAtivos.length).toFixed(2));
+                const vencimento = `${state.selectedCompetencia}-10`;
+                const existingMoradorIds = new Set(existingTaxas.map((item) => Number(item.moradorId)));
+                const missingMoradores = moradoresAtivos.filter((item) => !existingMoradorIds.has(Number(item.id)));
+
+                try {
+                    setRateioFeedback('Fechando rateio e gerando taxas da competência...', true);
+                    closeRateioConfirmButton.disabled = true;
+                    closeRateioCancelButton.disabled = true;
+
+                    for (const morador of missingMoradores) {
+                        await createTaxa({
+                            moradorId: Number(morador.id),
+                            descricao: `Taxa de Condomínio ${competenciaLabelFromKey(state.selectedCompetencia)}`,
+                            mes,
+                            ano,
+                            valor: perUnitValue,
+                            vencimento,
+                            status: 'PENDENTE',
+                        });
+                    }
+
+                    state.rateioStatusByCompetencia[state.selectedCompetencia] = 'closed';
+                    closeRateioDialog.close();
+                    await loadFinanceiro();
+                    const competencia = competenciaLabelFromKey(state.selectedCompetencia);
+                    const message = missingMoradores.length
+                        ? `Rateio de ${competencia} fechado e ${missingMoradores.length} taxa(s) gerada(s).`
+                        : `Rateio de ${competencia} revisado. As taxas dessa competência já existiam.`;
+                    setRateioFeedback(message, true);
+                    showToast(message);
+                } catch (error) {
+                    setRateioFeedback(error.message || 'Não foi possível fechar o rateio.', false);
+                } finally {
+                    closeRateioConfirmButton.disabled = false;
+                    closeRateioCancelButton.disabled = false;
+                }
+            }
+
+            function fillDespesaForm(item) {
+                despesaIdField.value = item?.id || '';
+                despesaDescricaoField.value = item?.descricao || '';
+                despesaFornecedorField.value = item?.fornecedor || '';
+                despesaCategoriaField.value = item?.categoria || 'Outros';
+                despesaCompetenciaField.value = item ? `${item.ano}-${String(item.mes).padStart(2, '0')}` : state.selectedCompetencia;
+                despesaVencimentoField.value = item?.vencimento ? new Date(item.vencimento).toISOString().slice(0, 10) : '';
+                despesaValorField.value = item?.valor ? formatCurrency(item.valor) : '';
+            }
+
+            function openDespesaDialog(item) {
+                const editing = Boolean(item);
+                despesaDialogTitle.textContent = editing ? 'Editar despesa' : 'Nova despesa';
+                despesaDialogSubtitle.textContent = editing
+                    ? 'Atualize os dados do lançamento desta competência.'
+                    : 'Cadastre um lançamento para entrar no rateio da competência.';
+                setDespesaFeedback('', true);
+                fillDespesaForm(item || null);
+                despesaDialog.showModal();
+            }
+
+            function resetDespesaForm() {
+                fillDespesaForm(null);
+                setDespesaFeedback('', true);
+            }
+
+            async function copyToClipboard(text) {
+                if (!text) return;
+                await navigator.clipboard.writeText(text);
+                setFeedback('Link da 2ª via copiado.', true);
+            }
+
+            function activateTab(tabId) {
+                document.querySelectorAll('[data-financeiro-tab]').forEach(function (button) {
+                    button.classList.toggle('active', button.dataset.financeiroTab === tabId);
                 });
+                document.querySelectorAll('.tab-content').forEach(function (panel) {
+                    panel.classList.toggle('hidden', panel.id !== tabId);
+                });
+                history.replaceState(null, '', `#${tabId}`);
+            }
+
+            function activateCobrancasTab(tabId) {
+                state.selectedCobrancasTab = tabId;
+                document.querySelectorAll('[data-cobrancas-tab]').forEach(function (button) {
+                    button.classList.toggle('active', button.dataset.cobrancasTab === tabId);
+                });
+                renderReceber();
+            }
+
+            document.querySelectorAll('[data-financeiro-tab]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    activateTab(button.dataset.financeiroTab);
+                });
+            });
+
+            document.querySelectorAll('[data-cobrancas-tab]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    activateCobrancasTab(button.dataset.cobrancasTab);
+                });
+            });
+
+            competenciaSelect.addEventListener('change', function () {
+                state.selectedCompetencia = competenciaSelect.value;
+                renderRateioSummary();
+                renderRateioDespesas();
+                renderRateioPreview();
+            });
+            calcularRateioButton.addEventListener('click', openCloseRateioDialog);
+            novaDespesaButton.addEventListener('click', function () {
+                openDespesaDialog(null);
+            });
+            despesaCancelarButton.addEventListener('click', function () {
+                despesaDialog.close();
+            });
+            despesaValorField.addEventListener('input', function () {
+                despesaValorField.value = formatCurrencyInput(despesaValorField.value);
+            });
+            closeRateioCancelButton.addEventListener('click', function () {
+                closeRateioDialog.close();
+            });
+            closeRateioConfirmButton.addEventListener('click', confirmCloseRateio);
+
+            despesaForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const competencia = String(despesaCompetenciaField.value || '');
+                if (!competencia.includes('-')) {
+                    setDespesaFeedback('Selecione uma competência válida.', false);
+                    return;
+                }
+
+                const [anoRaw, mesRaw] = competencia.split('-');
+                const payload = {
+                    id: despesaIdField.value || `pag-${Date.now()}`,
+                    descricao: despesaDescricaoField.value.trim(),
+                    fornecedor: despesaFornecedorField.value.trim(),
+                    categoria: despesaCategoriaField.value,
+                    detalhe: `${despesaCategoriaField.value} - ${despesaFornecedorField.value.trim()}`,
+                    vencimento: despesaVencimentoField.value,
+                    valor: parseCurrencyInput(despesaValorField.value),
+                    status: 'Lançada',
+                    metodoPagamento: '',
+                    pagoEm: '',
+                    ano: Number(anoRaw),
+                    mes: Number(mesRaw),
+                };
+
+                if (!payload.descricao || !payload.fornecedor || !payload.vencimento || payload.valor <= 0) {
+                    setDespesaFeedback('Preencha descrição, fornecedor, vencimento e valor.', false);
+                    return;
+                }
+
+                const existingIndex = state.pagarSeed.findIndex(function (item) {
+                    return item.id === payload.id;
+                });
+
+                if (existingIndex >= 0) {
+                    state.pagarSeed[existingIndex] = {
+                        ...state.pagarSeed[existingIndex],
+                        ...payload,
+                    };
+                } else {
+                    state.pagarSeed.unshift(payload);
+                }
+
+                state.selectedCompetencia = competenciaKey(payload.ano, payload.mes);
+                state.rateioStatusByCompetencia[state.selectedCompetencia] = 'editing';
+                renderAll();
+                despesaDialog.close();
+                resetDespesaForm();
+                setRateioFeedback('Lançamento salvo com sucesso.', true);
+                showToast('Despesa salva com sucesso.');
             });
 
             receberBody.addEventListener('click', async function (event) {
@@ -580,26 +1372,21 @@
 
                 const copyButton = event.target.closest('[data-copy-link]');
                 if (copyButton) {
-                    await navigator.clipboard.writeText(copyButton.dataset.copyLink);
-                    setFeedback('Link da 2a via copiado.', true);
+                    await copyToClipboard(copyButton.dataset.copyLink);
                     return;
                 }
 
                 const viewButton = event.target.closest('[data-financeiro-view="receber"]');
                 if (viewButton) {
-                    try {
-                        const item = await findMergedTaxa(viewButton.dataset.id);
-                        if (item) openReceberDialog(item);
-                    } catch {}
+                    const item = getMergedTaxaById(viewButton.dataset.id);
+                    if (item) openReceberDialog(item);
                     return;
                 }
 
                 const envioButton = event.target.closest('[data-financeiro-view="envio"]');
                 if (envioButton) {
-                    try {
-                        const item = await findMergedTaxa(envioButton.dataset.id);
-                        if (item) openEnvioDialog(item);
-                    } catch {}
+                    const item = getMergedTaxaById(envioButton.dataset.id);
+                    if (item) openEnvioDialog(item);
                 }
             });
 
@@ -609,27 +1396,24 @@
                     await gerarCobranca(generateButton.dataset.gerarCobranca);
                     return;
                 }
+
                 const copyButton = event.target.closest('[data-copy-link]');
                 if (copyButton) {
-                    await navigator.clipboard.writeText(copyButton.dataset.copyLink);
-                    setFeedback('Link da 2a via copiado.', true);
+                    await copyToClipboard(copyButton.dataset.copyLink);
                     return;
                 }
 
                 const envioButton = event.target.closest('[data-financeiro-view="envio"]');
                 if (envioButton) {
-                    try {
-                        const item = await findMergedTaxa(envioButton.dataset.id);
-                        if (item) openEnvioDialog(item);
-                    } catch {}
+                    const item = getMergedTaxaById(envioButton.dataset.id);
+                    if (item) openEnvioDialog(item);
                 }
             });
 
             dialog.addEventListener('click', async function (event) {
                 const copyButton = event.target.closest('[data-copy-link]');
                 if (copyButton) {
-                    await navigator.clipboard.writeText(copyButton.dataset.copyLink);
-                    setFeedback('Link da 2a via copiado.', true);
+                    await copyToClipboard(copyButton.dataset.copyLink);
                     return;
                 }
 
@@ -642,55 +1426,36 @@
 
                 const envioButton = event.target.closest('[data-financeiro-view="envio"]');
                 if (envioButton) {
-                    const item = await findMergedTaxa(envioButton.dataset.id);
+                    const item = getMergedTaxaById(envioButton.dataset.id);
                     if (item) openEnvioDialog(item);
                     return;
                 }
 
                 const sendButton = event.target.closest('[data-simular-envio]');
                 if (sendButton) {
-                    const item = await findMergedTaxa(sendButton.dataset.simularEnvio);
+                    const item = getMergedTaxaById(sendButton.dataset.simularEnvio);
                     if (!item) return;
-                    const message = `A cobranca foi reenviada com sucesso para ${item.morador.nome}.`;
+                    const message = `Reenvio registrado para ${item.morador.nome}.`;
                     dialog.close();
                     setFeedback(message, true);
                     showToast(message);
                 }
             });
 
-            pagarBody.addEventListener('click', function (event) {
-                const payLink = event.target.closest('[data-financeiro-pay]');
-                const viewLink = event.target.closest('[data-financeiro-view="pagar"]');
-                if (!payLink && !viewLink) return;
-                event.preventDefault();
-                const item = pagarSeed.find((entry) => entry.id === (payLink?.dataset.financeiroPay || viewLink?.dataset.id));
+            rateioDespesasBody.addEventListener('click', function (event) {
+                const editButton = event.target.closest('[data-editar-despesa]');
+                if (!editButton) return;
+
+                const item = state.pagarSeed.find(function (entry) {
+                    return entry.id === editButton.dataset.editarDespesa;
+                });
+
                 if (!item) return;
-                if (payLink) {
-                    item.status = 'Paga';
-                    item.pagoEm = new Date().toISOString();
-                    item.metodoPagamento = 'Transferencia bancaria';
-                    renderPagar();
-                    return;
-                }
-                openDialog(
-                    'Detalhes da conta paga',
-                    'Resumo do pagamento realizado.',
-                    `<div class="dialog-detail-grid">
-                        <div><span>Conta</span><strong>${item.descricao}</strong></div>
-                        <div><span>Fornecedor</span><strong>${item.fornecedor}</strong></div>
-                        <div><span>Valor</span><strong>${formatCurrency(item.valor)}</strong></div>
-                        <div><span>Pago em</span><strong>${formatDate(item.pagoEm)}</strong></div>
-                        <div><span>Forma de pagamento</span><strong>${item.metodoPagamento || '-'}</strong></div>
-                        <div><span>Status</span><strong>${item.status}</strong></div>
-                    </div>
-                    <div class="dialog-note-block">
-                        <span>Descricao</span>
-                        <p>${item.detalhe}</p>
-                    </div>`
-                );
+
+                openDespesaDialog(item);
             });
 
-            document.querySelectorAll('[data-dialog-close]').forEach((button) => {
+            document.querySelectorAll('[data-dialog-close]').forEach(function (button) {
                 button.addEventListener('click', function () {
                     const target = document.getElementById(button.dataset.dialogClose);
                     if (target) target.close();
@@ -705,11 +1470,12 @@
             });
 
             const initialTab = (window.location.hash || '').replace('#', '');
-            if (initialTab) {
-                const button = document.querySelector(`[data-financeiro-tab="${initialTab}"]`);
-                if (button) button.click();
-            }
+            const initialFinanceiroTab = document.querySelector(`[data-financeiro-tab="${initialTab}"]`)
+                ? initialTab
+                : 'rateio-condominio';
+            activateTab(initialFinanceiroTab);
 
+            resetDespesaForm();
             renderPagar();
             loadFinanceiro();
         });
