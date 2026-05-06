@@ -1,70 +1,66 @@
-# NEXUS
+# NEXUS Website
 
-Plataforma web para apoio a gestao condominial, desenvolvida como projeto de conclusao de curso.
+Plataforma web full stack para gestão condominial, criada como projeto acadêmico de conclusão de curso.
 
-O sistema foi pensado para centralizar rotinas administrativas de um condominio em uma unica interface, reunindo controle de colaboradores, ocorrencias, inadimplencia, reservas, infraestrutura e operacao financeira. A proposta do projeto e oferecer uma base digital para organizacao interna, acompanhamento de pendencias e melhoria da comunicacao entre administracao, equipe operacional e moradores.
+O NEXUS centraliza rotinas administrativas e operacionais em um único sistema, com foco em organização interna, acompanhamento de demandas e melhor comunicação entre administração, colaboradores e moradores.
 
-## Finalidade do Projeto
+---
 
-O NEXUS foi desenvolvido com foco em cenarios de administracao condominial que exigem visao operacional e controle centralizado. Entre os principais objetivos do projeto estao:
+## ✨ Principais funcionalidades
 
-- organizar o cadastro e a gestao de colaboradores
-- acompanhar ocorrencias e demandas operacionais
-- controlar unidades em atraso e apoiar rotinas de cobranca
-- administrar reservas e disponibilidade de apartamentos
-- concentrar informacoes institucionais do condominio
-- oferecer uma interface moderna para apresentacao academica e demonstracao funcional
+- **Autenticação com JWT** e controle de acesso por perfil.
+- **Painel administrativo** com visão geral operacional.
+- **Gestão de colaboradores e moradores** (cadastro, edição e controle).
+- **Módulo de ocorrências** com fluxo por perfis (admin, colaborador e morador).
+- **Módulo financeiro** com telas de apoio e acompanhamento.
+- **Reservas e áreas de lazer** com rotas e interfaces dedicadas.
+- **Configurações do condomínio** em área administrativa.
+- **Notificações e turnos** para suporte à operação.
 
-## Principais Modulos
+---
 
-- `Dashboard Administrativo`: visao geral das operacoes, indicadores e atalhos de gestao
-- `Colaboradores`: cadastro, edicao, visualizacao e inativacao de colaboradores
-- `Unidades em Atraso`: acompanhamento de inadimplencia e situacoes de cobranca
-- `Ocorrencias`: registro e acompanhamento de ocorrencias operacionais
-- `Financeiro`: controle visual de contas a pagar e a receber
-- `Reservas e Apartamentos`: agenda de reservas e gestao de apartamentos disponiveis
-- `Configuracoes`: personalizacao dos dados institucionais do condominio
-- `Infraestrutura`: area voltada a apoio operacional e visao estrutural do condominio
-
-## Tecnologias Utilizadas
+## 🧱 Stack do projeto
 
 ### Backend
 
-- `Node.js`
-- `Express`
-- `Prisma ORM`
-- `PostgreSQL`
-- `JWT` para autenticacao
-- `bcryptjs` para hash de senhas
-- `express-validator` para validacoes de entrada
-- `dotenv` para variaveis de ambiente
+- Node.js
+- Express
+- Prisma ORM
+- JWT (`jsonwebtoken`)
+- `bcryptjs`
+- `express-validator`
+- `dotenv`
+- CORS
+
+### Banco de dados
+
+- Prisma (migrations e seed)
+- Banco relacional via `DATABASE_URL` (ex.: PostgreSQL em produção)
 
 ### Frontend
 
-- `HTML5`
-- `CSS3`
-- `JavaScript vanilla`
-- `Font Awesome` para iconografia
-- `localStorage` para persistencia de configuracoes e fluxos de demonstracao no frontend
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- Font Awesome
 
-### Ferramentas de Desenvolvimento
+---
 
-- `Nodemon`
-- `Prisma CLI`
-- `Git e GitHub`
-- `Render` para publicacao inicial
-
-## Arquitetura do Projeto
+## 📁 Estrutura de diretórios
 
 ```text
 NEXUS-WEBSITE/
 ├── backend/
 │   ├── prisma/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── middlewares/
-│   │   ├── routes/
-│   │   └── server.js
+│   │   ├── schema.prisma
+│   │   ├── seed.js
+│   │   └── migrations/
+│   └── src/
+│       ├── controllers/
+│       ├── middleware/
+│       ├── routes/
+│       ├── services/
+│       └── server.js
 ├── public/
 │   ├── css/
 │   ├── img/
@@ -73,120 +69,140 @@ NEXUS-WEBSITE/
 │   ├── admin/
 │   ├── colaborador/
 │   ├── financeiro/
-│   ├── morador/
 │   ├── ocorrencias/
 │   └── public/
-└── deploy/
+├── deploy/
+├── package.json
+└── README.md
 ```
 
-## Modelo Atual de Dados
+---
 
-No estado atual do projeto, o banco contempla principalmente:
+## 🚀 Como rodar localmente
 
-- `users`
-- `colaboradores`
-- `veiculos`
-- `ocorrencias`
+### 1) Pré-requisitos
 
-O modulo financeiro atualmente possui comportamento funcional no frontend para demonstracao, com persistencia local no navegador. Caso o projeto evolua, o proximo passo natural e modelar `contas_a_pagar` e `contas_a_receber` no banco com Prisma.
+- Node.js 18+
+- npm 9+
+- Banco de dados configurado (via `DATABASE_URL`)
 
-## Como Executar Localmente
+### 2) Instalar dependências
 
-### 1. Instalar dependencias
+Na raiz do projeto:
+
+```bash
+npm run install:backend
+```
+
+Ou, se preferir manualmente:
 
 ```bash
 cd backend
 npm install
 ```
 
-### 2. Configurar variaveis de ambiente
+### 3) Configurar variáveis de ambiente
 
-Crie ou ajuste o arquivo `backend/.env` com os dados do PostgreSQL e da aplicacao:
+Crie o arquivo `backend/.env`:
 
 ```env
-DATABASE_URL=postgresql://usuario:senha@localhost:5432/nome_do_banco
-JWT_SECRET=sua_chave_secreta
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/nexus"
+JWT_SECRET="sua_chave_super_secreta"
 PORT=3000
 HOST=0.0.0.0
 ```
 
-### 3. Gerar o client do Prisma
+### 4) Gerar client do Prisma
 
 ```bash
-npx prisma generate
+npm run prisma:generate
 ```
 
-### 4. Aplicar migrations
+### 5) Aplicar migrations
 
 ```bash
-npx prisma migrate deploy
+npm run prisma:migrate
 ```
 
-### 5. Popular o banco com dados iniciais
+### 6) Popular o banco (seed)
 
 ```bash
 npm run seed
 ```
 
-### 6. Iniciar o servidor
+### 7) Subir a aplicação
+
+Modo desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-Depois disso, a aplicacao fica disponivel em:
+Modo produção/local simples:
 
-- `http://localhost:3000`
+```bash
+npm run start
+```
 
-## Scripts Disponiveis
+Servidor disponível em: `http://localhost:3000`
 
-Em [backend/package.json](/c:/Users/Pedro/NEXUS-WEBSITE/backend/package.json):
+---
 
-- `npm run dev`: inicia o servidor com `nodemon`
-- `npm start`: inicia o servidor em modo normal
-- `npm run prisma:generate`: gera o client do Prisma
-- `npm run prisma:migrate`: executa `prisma migrate deploy`
-- `npm run seed`: popula o banco com dados iniciais
-- `npm run start:prod`: gera Prisma, aplica migration e inicia a aplicacao
+## 📜 Scripts disponíveis
 
-## Autenticacao e Perfis
+### Scripts na raiz (`package.json`)
 
-O projeto trabalha com perfis de acesso para cenarios administrativos e operacionais:
+- `npm run dev` → executa `backend` em modo dev.
+- `npm run start` → executa servidor backend.
+- `npm run install:backend` → instala dependências em `backend`.
+- `npm run prisma:generate` → gera Prisma Client.
+- `npm run prisma:migrate` → aplica migrations.
+- `npm run seed` → executa seed.
+
+### Scripts em `backend/package.json`
+
+- `npm run dev` → `nodemon src/server.js`
+- `npm start` → `node src/server.js`
+- `npm run prisma:generate` → `prisma generate`
+- `npm run prisma:migrate` → `prisma migrate deploy`
+- `npm run seed` → `node prisma/seed.js`
+- `npm run start:prod` → gera Prisma, aplica migrations e inicia servidor
+
+---
+
+## 🔐 Perfis e acesso
+
+Atualmente o sistema contempla os perfis:
 
 - `ADMIN`
 - `COLABORADOR`
 
-A autenticacao e baseada em token JWT.
+As rotas protegidas utilizam autenticação por token JWT via middleware.
 
-## Deploy
+---
 
-### Render
+## ☁️ Deploy
 
-Para publicacao rapida, o projeto pode ser executado no Render. O guia esta em [deploy/render.md](/c:/Users/Pedro/NEXUS-WEBSITE/deploy/render.md).
+Guias disponíveis na pasta `deploy/`:
 
-### Oracle Cloud / VM
+- `deploy/render.md`
+- `deploy/oracle-vm.md`
 
-Para apresentacoes academicas com menor risco de expiracao de servicos gratuitos, a opcao mais segura e uma VM com Node.js + PostgreSQL. O passo a passo esta em [deploy/oracle-vm.md](/c:/Users/Pedro/NEXUS-WEBSITE/deploy/oracle-vm.md).
+---
 
-## Observacoes Importantes
+## 🧪 Status e evolução
 
-- O frontend ja foi adaptado para um contexto mais realista de gestao condominial.
-- Parte das interacoes visuais usa `localStorage` para sustentar a demonstracao funcional.
-- O backend principal hoje cobre autenticacao, colaboradores e ocorrencias.
-- O projeto pode ser expandido com modulos reais de financeiro, reservas persistidas em banco e comunicacao integrada.
+O projeto já possui base funcional para autenticação, gestão de usuários operacionais, ocorrências e módulos administrativos.
 
-## Valor Academico do Projeto
+Próximos passos recomendados:
 
-O NEXUS demonstra a aplicacao integrada de conceitos de:
+- ampliar persistência de módulos hoje com comportamento parcial no frontend;
+- fortalecer observabilidade e logs de produção;
+- adicionar testes automatizados (API e integração);
+- evoluir documentação de endpoints (ex.: OpenAPI/Swagger).
 
-- desenvolvimento web full stack
-- modelagem de banco de dados relacional
-- autenticacao e controle de acesso
-- integracao entre frontend e backend
-- organizacao modular de software
-- experiencia do usuario voltada a sistemas administrativos
+---
 
-## Autores
+## 👥 Autoria
 
-Projeto academico desenvolvido para conclusao de curso, em dupla.
-
+Projeto acadêmico desenvolvido para conclusão de curso.
