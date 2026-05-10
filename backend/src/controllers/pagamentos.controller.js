@@ -136,11 +136,15 @@ async function createTaxaCharge(req, res) {
       notificationDisabled: true,
     });
 
+    const hoje = formatDate(new Date());
+    const vencimentoFormatado = formatDate(taxa.vencimento);
+    const dueDate = req.body.dueDate || (vencimentoFormatado >= hoje ? vencimentoFormatado : hoje);
+
     const payment = await createPayment({
       customer: customer.id,
       billingType,
       value: Number(taxa.valor),
-      dueDate: req.body.dueDate || formatDate(taxa.vencimento),
+      dueDate,
       description: buildTaxaDescription(taxa),
       externalReference: `taxa:${taxa.id}`,
     });
