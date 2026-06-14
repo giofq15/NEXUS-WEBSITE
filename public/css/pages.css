@@ -131,91 +131,12 @@
 /*
     Parte 6: Divisor "Ou"
 */
-.divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 1.5rem 0;
-    color: #999;
-    font-size: 0.9rem;
-}
-
-.divider::before,
-.divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #eee;
-}
-
-.divider:not(:empty)::before {
-    margin-right: 1rem;
-}
-
-.divider:not(:empty)::after {
-    margin-left: 1rem;
-}
-
 /*
     Parte 7: Botões de Social Login
 */
-.social-login button {
-    width: 100%;
-    padding: 0.8rem;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-bottom: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.social-login .google-btn {
-    background-color: #fff;
-    color: #333;
-    border: 1px solid #ccc;
-}
-
-.social-login .google-btn:hover {
-    background-color: #f5f5f5;
-}
-
-.social-login .facebook-btn {
-    background-color: #fff;
-    color: #3b5998;
-    border: 1px solid #ccc;
-}
-
-.social-login .facebook-btn:hover {
-    background-color: #f0f2f5;
-}
-
-.social-login i {
-    font-size: 1.2rem;
-}
-
 /*
     Parte 8: Link de Cadastro
 */
-.signup-link {
-    display: block;
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: #555;
-}
-
-.signup-link a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.signup-link a:hover {
-    text-decoration: underline;
-}
-
 /*
     Parte 10: Estilo da Pagina Inicial - Hero
 */
@@ -574,94 +495,6 @@ header {
 }
 
 
-/*
-    Parte 19: Estilos Específicos para Monitoramento IoT (Cards de Métricas)
-*/
-
-/* --- Grid de Métricas --- */
-.metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-/* --- Cards de Métricas (Apenas o visual) --- */
-.metric-card {
-    /* Reutiliza .widget */
-    text-align: left;
-}
-
-.metric-card i {
-    font-size: 2.2rem;
-    margin-bottom: 0.8rem;
-    display: block;
-}
-
-.metric-card h3 {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-}
-
-.metric-card .metric-value {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 0;
-}
-
-.metric-card .metric-change {
-    display: block;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-}
-
-/* Cores específicas para os cards */
-.metric-card.water-metric i,
-.metric-card.water-metric .metric-value {
-    color: #3498db;
-}
-
-.metric-card.energy-metric i,
-.metric-card.energy-metric .metric-value {
-    color: #f1c40f;
-}
-
-.metric-card.economy-metric i,
-.metric-card.economy-metric .metric-value {
-    color: #27ae60;
-}
-
-/* Cores para o status de mudança */
-.metric-change.positive {
-    color: #27ae60;
-    /* Verde */
-    font-weight: bold;
-}
-
-.metric-change.negative {
-    color: #e74c3c;
-    /* Vermelho */
-    font-weight: bold;
-}
-
-/* --- Seção de Gráficos --- */
-.charts-section h2 {
-    font-size: 1.8rem;
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #eee;
-}
-
-.charts-section h3 {
-    font-size: 1.2rem;
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    margin-top: 0;
-}
-
 /* ===========================
    DROPDOWN / CTA (ALINHAMENTO CORRIGIDO + SEM BORDAS BRANCAS)
    =========================== */
@@ -787,7 +620,7 @@ header {
 
 .contact-hero {
     position: relative;
-    min-height: 520px;
+    min-height: 190px;
     background:
         linear-gradient(120deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)),
         url('../../public/predios.jpg') center/cover no-repeat;
@@ -836,6 +669,7 @@ header {
 }
 
 .contact-hero-content {
+    display: none;
     position: relative;
     z-index: 2;
     max-width: 760px;
@@ -903,7 +737,7 @@ header {
 
 .contact-shell {
     max-width: 1280px;
-    margin: -70px auto 0;
+    margin: -42px auto 0;
     padding: 0 60px 80px;
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
@@ -917,6 +751,11 @@ header {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+
+.contact-intro-card,
+.contact-highlight-card {
+    display: none;
 }
 
 .contact-intro-card,
@@ -1103,6 +942,31 @@ header {
     color: var(--accent);
 }
 
+.contact-form-feedback {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    font-weight: 700;
+}
+
+.contact-form-feedback.is-success,
+.contact-form-feedback.is-error {
+    display: block;
+}
+
+.contact-form-feedback.is-success {
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #86efac;
+}
+
+.contact-form-feedback.is-error {
+    color: #991b1b;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+}
+
 @media (max-width: 1100px) {
     .contact-shell,
     .contact-option-grid,
@@ -1146,6 +1010,342 @@ header {
     }
 
 .contact-form-actions .primary-button-lg {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* --- Pagina publica: funcionalidades --- */
+.features-page {
+    background:
+        radial-gradient(circle at top left, rgba(249, 115, 22, 0.1), transparent 24%),
+        linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
+    color: #1f2937;
+}
+
+.features-hero {
+    position: relative;
+    min-height: 560px;
+    background:
+        linear-gradient(120deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.78)),
+        url('../../public/predios.jpg') center/cover no-repeat;
+    color: #fff;
+    overflow: hidden;
+}
+
+.features-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 18% 18%, rgba(249, 115, 22, 0.26), transparent 24%),
+        radial-gradient(circle at 86% 24%, rgba(255, 255, 255, 0.12), transparent 19%);
+}
+
+.features-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 90px 60px 140px;
+}
+
+.features-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    color: #fdba74;
+    background: rgba(249, 115, 22, 0.16);
+    border: 1px solid rgba(249, 115, 22, 0.35);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.features-hero-content h1 {
+    max-width: 14ch;
+    margin: 1rem 0 1.25rem;
+    font-size: clamp(2.35rem, 4.2vw, 4.6rem);
+    line-height: 1.04;
+}
+
+.features-hero-content p {
+    max-width: 66ch;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1.08rem;
+}
+
+.features-shell {
+    max-width: 1280px;
+    margin: -78px auto 0;
+    padding: 0 60px 84px;
+    position: relative;
+    z-index: 3;
+}
+
+.features-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 4rem;
+}
+
+.features-summary-card,
+.features-module-card,
+.features-workflow-grid article,
+.features-profile-section,
+.features-cta {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 24px;
+    box-shadow: 0 20px 54px rgba(15, 23, 42, 0.1);
+}
+
+.features-summary-card {
+    min-height: 190px;
+    padding: 1.55rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.features-summary-card i,
+.features-module-icon,
+.features-profile-list i {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+    color: #fff;
+    font-size: 1.15rem;
+}
+
+.features-summary-card strong {
+    color: #0f172a;
+    font-size: 1.12rem;
+}
+
+.features-summary-card span {
+    color: #526072;
+}
+
+.features-section,
+.features-workflow,
+.features-profile-section {
+    margin-top: 4rem;
+}
+
+.features-section-heading {
+    max-width: 760px;
+    margin-bottom: 1.5rem;
+}
+
+.features-section-heading h2,
+.features-profile-content h2,
+.features-cta h2 {
+    margin: 0.9rem 0 0.65rem;
+    color: #0f172a;
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.1;
+}
+
+.features-section-heading p,
+.features-profile-content p {
+    color: #526072;
+    font-size: 1.02rem;
+}
+
+.features-module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.features-module-card {
+    min-height: 390px;
+    padding: 1.55rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.features-module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+}
+
+.features-module-card h3 {
+    margin: 1rem 0 0.6rem;
+    color: #0f172a;
+    font-size: 1.22rem;
+}
+
+.features-module-card p {
+    color: #526072;
+    margin-bottom: 1rem;
+}
+
+.features-module-card ul {
+    display: grid;
+    gap: 0.55rem;
+    list-style: none;
+}
+
+.features-module-card li {
+    position: relative;
+    padding-left: 1.35rem;
+    color: #334155;
+    font-weight: 600;
+}
+
+.features-module-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--accent);
+}
+
+.features-workflow-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.features-workflow-grid article {
+    padding: 1.6rem;
+    min-height: 210px;
+}
+
+.features-workflow-grid span {
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.features-workflow-grid h3 {
+    color: #0f172a;
+    margin: 0.55rem 0;
+    font-size: 1.28rem;
+}
+
+.features-workflow-grid p {
+    color: #526072;
+}
+
+.features-profile-section {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.features-profile-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.features-profile-list div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 1rem;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.features-profile-list i {
+    grid-row: span 2;
+}
+
+.features-profile-list strong {
+    color: #0f172a;
+}
+
+.features-profile-list span {
+    color: #526072;
+}
+
+.features-cta {
+    margin-top: 4rem;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.94)),
+        url('../../public/predios.jpg') center/cover no-repeat;
+}
+
+.features-cta h2 {
+    color: #fff;
+    max-width: 18ch;
+}
+
+.features-cta .info-badge {
+    color: #fdba74;
+    background: rgba(251, 146, 60, 0.12);
+}
+
+.features-cta .primary-button-lg {
+    margin-top: 0;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+    white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+    .features-summary-grid,
+    .features-module-grid,
+    .features-workflow-grid,
+    .features-profile-section {
+        grid-template-columns: 1fr;
+    }
+
+    .features-module-card {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .features-hero-content,
+    .features-shell {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .features-hero {
+        min-height: 520px;
+    }
+
+    .features-hero-content {
+        padding-top: 58px;
+        padding-bottom: 118px;
+    }
+
+    .features-shell {
+        margin-top: -64px;
+    }
+
+    .features-profile-section,
+    .features-cta {
+        padding: 1.25rem;
+    }
+
+    .features-cta {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .features-cta .primary-button-lg {
         width: 100%;
         text-align: center;
     }
@@ -2594,7 +2794,7 @@ header {
     }
 }
 
-/* --- Configuracoes do condominio e charts de IoT --- */
+/* --- Configuracoes do condominio e infraestrutura --- */
 .admin-config-form {
     display: grid;
     gap: 1.25rem;
@@ -2640,39 +2840,6 @@ header {
 .admin-config-summary-card p {
     margin: 0;
     color: #64748b;
-}
-
-.iot-chart-svg {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.graph-placeholder[data-iot-line-chart],
-.graph-placeholder[data-iot-bar-chart] {
-    display: block;
-    min-height: auto;
-    padding: 1rem;
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.92)),
-        #fff;
-    border: 1px solid #e2e8f0;
-}
-
-.iot-chart-legend {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 0.75rem;
-    color: #475569;
-    font-weight: 700;
-}
-
-.iot-chart-legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
 }
 
 .infra-shell {

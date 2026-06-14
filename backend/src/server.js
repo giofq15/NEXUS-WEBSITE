@@ -105,14 +105,6 @@ app.get('/views/financeiro/financeiro-morador.html', (req, res) => {
   res.redirect('/financeiro/financeiro.html');
 });
 
-app.get('/financeiro/consumo-morador.html', (req, res) => {
-  res.redirect('/colaborador/monitoramento-iot.html');
-});
-
-app.get('/views/financeiro/consumo-morador.html', (req, res) => {
-  res.redirect('/colaborador/monitoramento-iot.html');
-});
-
 app.get('/ocorrencias/ocorrencias-morador.html', (req, res) => {
   res.redirect('/ocorrencias/ocorrencias.html');
 });

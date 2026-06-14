@@ -213,7 +213,7 @@
 
                 turnoList.innerHTML = turnos.slice(0, 5).map((item) => `
                     <article class="admin-syndic-item">
-                        <strong>${item.turno} • ${item.colaborador?.nome || 'Equipe'}</strong>
+                        <strong>${item.turno} - ${item.colaborador?.nome || 'Equipe'}</strong>
                         <p>${item.resumo}</p>
                         <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendência registrada.'}</p>
                         <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientações adicionais.'}</p>
@@ -289,7 +289,7 @@
                 listRoot.innerHTML = ocorrencias.slice(0, 3).map((item) => `
                     <article class="admin-syndic-item">
                         <strong>${item.tipo}</strong>
-                        <p>${item.local} • ${item.descricao}</p>
+                        <p>${item.local} - ${item.descricao}</p>
                         <span>${String(item.status || '').replaceAll('_', ' ')}</span>
                         <a href="../ocorrencias/detalhes-ocorrencia-colaborador.html?id=${item.id}" class="action-link">Ver detalhes</a>
                     </article>
