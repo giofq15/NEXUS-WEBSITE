@@ -254,7 +254,7 @@
                 </div>
             </div>
 
-            <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            <a href="forgot-password.html" class="forgot-password" id="forgot-password-link">Esqueceu a senha?</a>
 
             <button type="submit" class="login-button">Acessar</button>
 
@@ -284,6 +284,7 @@
             const togglePassword = document.getElementById('togglePassword');
             const googleBtn = document.querySelector('.google-btn');
             const facebookBtn = document.querySelector('.facebook-btn');
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
             let oauthConfig = { googleClientId: null, facebookAppId: null };
             let googleTokenClient = null;
 
@@ -297,6 +298,8 @@
                 heading.textContent = 'Acesso do Colaborador';
                 destino = '../colaborador/painel-colaborador.html';
             }
+
+            forgotPasswordLink.href = `forgot-password.html${role ? `?role=${encodeURIComponent(role)}` : ''}`;
 
             // Login via API
             form.addEventListener('submit', async function (e) {

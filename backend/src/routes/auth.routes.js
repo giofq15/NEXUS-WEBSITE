@@ -8,6 +8,8 @@ const {
   loginWithGoogle,
   loginWithFacebook,
   oauthConfig,
+  forgotPassword,
+  resetPassword,
 } = require('../controllers/auth.controller');
 
 const router = Router();
@@ -56,6 +58,24 @@ router.post(
   ],
   validate,
   loginWithFacebook
+);
+
+// Rotas de reset de senha
+router.post(
+  '/forgot-password',
+  [body('email').isEmail().withMessage('E-mail invalido')],
+  validate,
+  forgotPassword
+);
+
+router.post(
+  '/reset-password',
+  [
+    body('token').notEmpty().withMessage('Token é obrigatório'),
+    body('newPassword').isLength({ min: 6 }).withMessage('Senha deve ter no mínimo 6 caracteres'),
+  ],
+  validate,
+  resetPassword
 );
 
 module.exports = router;
