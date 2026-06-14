@@ -185,7 +185,7 @@
                 </div>
             </div>
 
-            <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            <a href="forgot-password.html" class="forgot-password" id="forgot-password-link">Esqueceu a senha?</a>
 
             <button type="submit" class="login-button">Acessar</button>
         </form>
@@ -200,6 +200,7 @@
             const form = document.getElementById('login-form');
             const password = document.getElementById('password');
             const togglePassword = document.getElementById('togglePassword');
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
 
             const destino = portal === 'admin'
                 ? '../admin/painel-admin.html'
@@ -208,6 +209,8 @@
             heading.textContent = portal === 'admin'
                 ? 'Acesso do Administrador'
                 : 'Acesso do Colaborador';
+
+            forgotPasswordLink.href = `forgot-password.html${role ? `?role=${encodeURIComponent(role)}` : ''}`;
 
             form.addEventListener('submit', async function (event) {
                 event.preventDefault();

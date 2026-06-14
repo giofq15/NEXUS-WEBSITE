@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const { generateToken, generateRefreshToken, refreshTokenExpiresAt } = require('../utils/jwt');
 
 const prisma = new PrismaClient();
@@ -279,4 +280,134 @@ function oauthConfig(req, res) {
   });
 }
 
-module.exports = { login, refresh, logout, loginWithGoogle, loginWithFacebook, oauthConfig };
+async function forgotPassword(req, res) {
+  try {
+    const { email } = req.body;
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+
+    console.log('🔄 Forgot password request for:', normalizedEmail);
+
+    // Encontrar usuário
+    const user = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
+
+    // Por segurança, sempre retornar mensagem de sucesso mesmo se usuário não existir
+    if (!user) {
+      console.log('⚠️  Usuário não encontrado:', normalizedEmail);
+      return res.json({
+        message: 'Se o e-mail existir em nossa base de dados, você receberá um link de redefinição',
+      });
+    }
+
+    console.log('✓ Usuário encontrado:', user.email);
+
+    // Limpar tokens antigos expirados
+    await prisma.passwordResetToken.deleteMany({
+      where: {
+        userId: user.id,
+        expiresAt: { lt: new Date() },
+      },
+    });
+
+    // Gerar novo token (válido por 1 hora)
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hora
+
+    const resetTokenRecord = await prisma.passwordResetToken.create({
+      data: {
+        userId: user.id,
+        token,
+        expiresAt,
+      },
+    });
+
+    console.log('✓ Token criado:', token.substring(0, 10) + '...');
+
+    // Enviar email com link de reset
+    try {
+      const { sendPasswordResetEmail } = require('../utils/email');
+      const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/views/public/forgot-password.html?token=${token}`;
+      
+      console.log('📧 Enviando email para:', user.email);
+      await sendPasswordResetEmail(user.email, token, resetUrl);
+      console.log('✓ Email enviado com sucesso');
+    } catch (emailError) {
+      console.error('✗ Erro ao enviar email:', emailError.message);
+      // Mesmo se o email falhar, retornar sucesso ao usuário por segurança
+    }
+
+    res.json({
+      message: 'Se o e-mail existir em nossa base de dados, você receberá um link de redefinição',
+    });
+  } catch (error) {
+    console.error('✗ Erro no forgot password:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
+async function resetPassword(req, res) {
+  try {
+    const { token, newPassword } = req.body;
+
+    // Validações básicas
+    if (!token || !newPassword) {
+      return res.status(400).json({ error: 'Token e nova senha são obrigatórios' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'Senha deve ter no mínimo 6 caracteres' });
+    }
+
+    // Encontrar token válido
+    const resetToken = await prisma.passwordResetToken.findUnique({
+      where: { token },
+      include: { user: true },
+    });
+
+    if (!resetToken) {
+      return res.status(400).json({ error: 'Token inválido ou não encontrado' });
+    }
+
+    if (resetToken.expiresAt < new Date()) {
+      // Deletar token expirado
+      await prisma.passwordResetToken.delete({ where: { id: resetToken.id } });
+      return res.status(400).json({ error: 'Link de redefinição expirou. Solicite um novo.' });
+    }
+
+    // Hash da nova senha
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Atualizar senha do usuário
+    await prisma.user.update({
+      where: { id: resetToken.userId },
+      data: { password: hashedPassword },
+    });
+
+    // Deletar todos os tokens de reset desse usuário
+    await prisma.passwordResetToken.deleteMany({
+      where: { userId: resetToken.userId },
+    });
+
+    // Deletar todos os refresh tokens para forçar novo login
+    await prisma.refreshToken.deleteMany({
+      where: { userId: resetToken.userId },
+    });
+
+    res.json({ message: 'Senha redefinida com sucesso. Por favor, faça login novamente.' });
+  } catch (error) {
+    console.error('Erro no reset password:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
+module.exports = { 
+  login, 
+  refresh, 
+  logout, 
+  loginWithGoogle, 
+  loginWithFacebook, 
+  oauthConfig,
+  forgotPassword,
+  resetPassword,
+};
