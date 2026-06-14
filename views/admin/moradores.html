@@ -59,6 +59,18 @@
             <a href="novo-morador.html" class="new-button">+ Novo Morador</a>
         </div>
 
+        <div class="tabs-container" aria-label="Filtros de situação dos moradores">
+            <button class="tab-button active" type="button" data-moradores-status-tab="ATIVO">
+                Ativos <span data-moradores-status-count="ATIVO">0</span>
+            </button>
+            <button class="tab-button" type="button" data-moradores-status-tab="PENDENTE">
+                Pendentes <span data-moradores-status-count="PENDENTE">0</span>
+            </button>
+            <button class="tab-button" type="button" data-moradores-status-tab="INATIVO">
+                Inativos <span data-moradores-status-count="INATIVO">0</span>
+            </button>
+        </div>
+
         <table class="data-table" data-moradores-table>
             <thead>
                 <tr>
@@ -85,8 +97,11 @@
 
         const tbody = document.getElementById('moradores-tbody');
         const searchInput = document.querySelector('.search-input');
+        const searchMeta = document.querySelector('[data-moradores-search-meta]');
         const totalColaboradoresField = document.getElementById('total-colaboradores');
         let currentSearch = '';
+        let currentMoradores = [];
+        let selectedStatusTab = 'ATIVO';
 
         async function loadColaboradores(search = '') {
             const url = search ? `/api/moradores?search=${encodeURIComponent(search)}` : '/api/moradores';
@@ -100,39 +115,70 @@
                     return;
                 }
 
-                const colaboradores = await res.json();
-                updateSummary(colaboradores);
-                renderColaboradores(colaboradores);
+                currentMoradores = await res.json();
+                updateSummary(currentMoradores);
+                renderColaboradores();
             } catch {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Erro ao carregar os moradores.</td></tr>';
             }
         }
 
         function updateSummary(colaboradores) {
-            totalColaboradoresField.textContent = String(colaboradores.filter((item) => item.status === 'ATIVO').length);
+            const counts = colaboradores.reduce((acc, item) => {
+                const status = normalizedStatus(item.status);
+                acc[status] = (acc[status] || 0) + 1;
+                return acc;
+            }, { ATIVO: 0, PENDENTE: 0, INATIVO: 0 });
+
+            totalColaboradoresField.textContent = String(counts.ATIVO);
+            document.querySelectorAll('[data-moradores-status-count]').forEach(function (field) {
+                field.textContent = String(counts[field.dataset.moradoresStatusCount] || 0);
+            });
+        }
+
+        function normalizedStatus(status) {
+            if (status === 'BLOQUEADO' || status === 'INATIVO') return 'INATIVO';
+            if (status === 'PENDENTE') return 'PENDENTE';
+            return 'ATIVO';
         }
 
         function statusLabel(status) {
-            if (status === 'BLOQUEADO') return 'Inativo';
-            if (status === 'PENDENTE') return 'Pendente';
+            const normalized = normalizedStatus(status);
+            if (normalized === 'INATIVO') return 'Inativo';
+            if (normalized === 'PENDENTE') return 'Pendente';
             return 'Ativo';
         }
 
         function statusClass(status) {
-            if (status === 'BLOQUEADO') return 'status-bloqueado';
-            if (status === 'PENDENTE') return 'status-pendente';
+            const normalized = normalizedStatus(status);
+            if (normalized === 'INATIVO') return 'status-bloqueado';
+            if (normalized === 'PENDENTE') return 'status-pendente';
             return 'status-ativo';
         }
 
-        function renderColaboradores(colaboradores) {
+        function emptyStatusMessage() {
+            if (selectedStatusTab === 'PENDENTE') return 'Nenhum morador pendente encontrado.';
+            if (selectedStatusTab === 'INATIVO') return 'Nenhum morador inativo encontrado.';
+            return 'Nenhum morador ativo encontrado.';
+        }
+
+        function renderColaboradores() {
+            const colaboradores = currentMoradores.filter(function (item) {
+                return normalizedStatus(item.status) === selectedStatusTab;
+            });
+
+            if (searchMeta) {
+                searchMeta.textContent = `${colaboradores.length} morador(es) ${selectedStatusTab === 'ATIVO' ? 'ativo(s)' : selectedStatusTab === 'PENDENTE' ? 'pendente(s)' : 'inativo(s)'} encontrados.`;
+            }
+
             if (!colaboradores.length) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nenhum cadastro encontrado.</td></tr>';
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center">${emptyStatusMessage()}</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = colaboradores.map(function (colaborador) {
                 const cargo = colaborador.unidade || 'Unidade não informada';
-                const isInactive = colaborador.status === 'BLOQUEADO';
+                const isInactive = normalizedStatus(colaborador.status) === 'INATIVO';
                 const statusAction = isInactive ? 'reativar' : 'inativar';
                 return `<tr>
                     <td>${colaborador.nome}</td>
@@ -211,6 +257,16 @@
             clearTimeout(searchTimeout);
             currentSearch = this.value;
             searchTimeout = setTimeout(() => loadColaboradores(currentSearch), 300);
+        });
+
+        document.querySelectorAll('[data-moradores-status-tab]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                selectedStatusTab = button.dataset.moradoresStatusTab;
+                document.querySelectorAll('[data-moradores-status-tab]').forEach(function (tabButton) {
+                    tabButton.classList.toggle('active', tabButton === button);
+                });
+                renderColaboradores();
+            });
         });
 
         tbody.addEventListener('click', function (event) {

@@ -18,10 +18,13 @@
     color: #fff;
     padding-top: 0;
     flex-shrink: 0;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    bottom: 0;
     height: 100vh;
     overflow-y: auto;
+    z-index: 100;
 }
 
 .sidebar-header {
@@ -95,6 +98,7 @@
 .main-content {
     flex-grow: 1;
     min-width: 0;
+    margin-left: 250px;
     padding: 2rem;
     background-color: #f4f7f9;
 }
@@ -196,6 +200,7 @@
     }
 
     .main-content {
+        margin-left: 0;
         padding: 1rem;
     }
 

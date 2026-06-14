@@ -714,7 +714,6 @@
                 if (chargeState.key === 'paid') {
                     primaryAction = `<button type="button" class="finance-primary-button is-neutral" data-financeiro-view="receber" data-id="${item.id}">Ver detalhes</button>`;
                     helperText = 'Pagamento confirmado. O webhook do Asaas mantém esta linha sincronizada quando configurado.';
-                    secondaryParts.push(`<button type="button" class="table-action-button" data-financeiro-view="receber" data-id="${item.id}">Detalhes</button>`);
                 } else if (chargeState.key === 'late') {
                     primaryAction = `<button type="button" class="finance-primary-button is-alert" data-financeiro-view="envio" data-id="${item.id}">Reenviar cobrança</button>`;
                     helperText = 'Fluxo recomendado: Asaas envia a cobrança inicial e o Nexus reforça no atraso.';

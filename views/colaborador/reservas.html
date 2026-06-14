@@ -192,15 +192,47 @@
                         <p>Cadastre novas unidades, acompanhe contexto comercial e marque apartamentos em manutenção quando necessário.</p>
                     </div>
                 </div>
-                <form class="admin-inline-form" id="apartamento-form">
+                <div class="apartamento-form-layout">
+                <form class="admin-inline-form apartamento-guided-form" id="apartamento-form">
                     <select id="apartamento-finalidade" class="action-select" required>
                         <option value="alugar">Alugar</option>
                         <option value="vender">Vender</option>
                         <option value="manutencao">Manutenção</option>
                     </select>
-                    <input type="text" id="apartamento-bloco" placeholder="Bloco" maxlength="10" required>
-                    <input type="text" id="apartamento-numero" placeholder="Apartamento" maxlength="10" required>
-                    <input type="text" id="apartamento-perfil" placeholder="Perfil da unidade" required>
+                    <select id="apartamento-bloco" class="action-select" required>
+                        <option value="">Bloco</option>
+                        <option value="A">Bloco A</option>
+                        <option value="B">Bloco B</option>
+                        <option value="C">Bloco C</option>
+                    </select>
+                    <select id="apartamento-andar" class="action-select" required>
+                        <option value="">Andar</option>
+                        <option value="1">1º andar</option>
+                        <option value="2">2º andar</option>
+                        <option value="3">3º andar</option>
+                        <option value="4">4º andar</option>
+                        <option value="5">5º andar</option>
+                    </select>
+                    <select id="apartamento-final" class="action-select" required>
+                        <option value="">Final</option>
+                        <option value="01">Final 01</option>
+                        <option value="02">Final 02</option>
+                        <option value="03">Final 03</option>
+                        <option value="04">Final 04</option>
+                        <option value="05">Final 05</option>
+                        <option value="06">Final 06</option>
+                        <option value="07">Final 07</option>
+                        <option value="08">Final 08</option>
+                    </select>
+                    <input type="text" id="apartamento-numero" placeholder="Apartamento" maxlength="10" required readonly>
+                    <select id="apartamento-perfil" class="action-select" required>
+                        <option value="">Perfil da unidade</option>
+                        <option value="Studio">Studio</option>
+                        <option value="1 quarto">1 quarto</option>
+                        <option value="2 quartos">2 quartos</option>
+                        <option value="3 quartos">3 quartos</option>
+                        <option value="Cobertura">Cobertura</option>
+                    </select>
                     <input type="text" id="apartamento-contato" placeholder="Contato responsável" required>
                     <select id="apartamento-status" class="action-select" required>
                         <option value="disponivel">Disponível</option>
@@ -218,8 +250,20 @@
                     <textarea id="apartamento-observacoes" class="admin-inline-textarea" placeholder="Observações da unidade, chaves, visitas, condições e afins."></textarea>
                     <div class="admin-inline-form-actions">
                         <button type="submit" class="primary-button" id="apartamento-submit-button"><i class="fas fa-plus-circle"></i> Salvar apartamento</button>
+                            <button type="button" class="table-action-button" id="apartamento-reset-button"><i class="fas fa-eraser"></i> Limpar</button>
                     </div>
                 </form>
+                <aside class="apartamento-preview-card" aria-label="Resumo da unidade">
+                    <span class="apartamento-card-kicker" id="apartamento-preview-finalidade">Locação</span>
+                    <h3 id="apartamento-preview-unidade">Selecione a unidade</h3>
+                    <p id="apartamento-preview-perfil">Perfil ainda não informado</p>
+                    <dl>
+                        <div><dt>Status</dt><dd id="apartamento-preview-status">Disponível</dd></div>
+                        <div><dt>Contato</dt><dd id="apartamento-preview-contato">-</dd></div>
+                        <div><dt>Valor/serviço</dt><dd id="apartamento-preview-detalhe">-</dd></div>
+                    </dl>
+                </aside>
+                </div>
                 <p class="admin-inline-feedback" id="apartamento-feedback" aria-live="polite"></p>
 
                 <div class="controls-container">
@@ -292,10 +336,26 @@
             const apartamentoDialog = document.getElementById('apartamento-dialog');
             const apartamentoDialogBody = document.getElementById('apartamento-dialog-body');
             const apartamentoSubmitButton = document.getElementById('apartamento-submit-button');
+            const apartamentoResetButton = document.getElementById('apartamento-reset-button');
             const reservaDataInput = document.getElementById('data');
             const reservaTipoSelect = document.getElementById('tipo-solicitacao');
             const reservasBloqueadasHint = document.getElementById('reservas-datas-bloqueadas');
             const apartamentoFinalidadeSelect = document.getElementById('apartamento-finalidade');
+            const apartamentoBlocoSelect = document.getElementById('apartamento-bloco');
+            const apartamentoAndarSelect = document.getElementById('apartamento-andar');
+            const apartamentoFinalSelect = document.getElementById('apartamento-final');
+            const apartamentoNumeroInput = document.getElementById('apartamento-numero');
+            const apartamentoPerfilSelect = document.getElementById('apartamento-perfil');
+            const apartamentoContatoInput = document.getElementById('apartamento-contato');
+            const apartamentoStatusSelect = document.getElementById('apartamento-status');
+            const apartamentoFaixaInput = document.getElementById('apartamento-faixa');
+            const apartamentoServicoInput = document.getElementById('apartamento-servico');
+            const apartamentoPreviewFinalidade = document.getElementById('apartamento-preview-finalidade');
+            const apartamentoPreviewUnidade = document.getElementById('apartamento-preview-unidade');
+            const apartamentoPreviewPerfil = document.getElementById('apartamento-preview-perfil');
+            const apartamentoPreviewStatus = document.getElementById('apartamento-preview-status');
+            const apartamentoPreviewContato = document.getElementById('apartamento-preview-contato');
+            const apartamentoPreviewDetalhe = document.getElementById('apartamento-preview-detalhe');
             const reservaResetButton = document.getElementById('reserva-reset');
             let editingId = null;
             let editingApartamentoId = null;
@@ -352,6 +412,48 @@
                 return 'status-baixa';
             }
 
+            function apartamentoFinalidadeLabel(value) {
+                if (value === 'manutencao') return 'Manutenção';
+                if (value === 'vender') return 'Venda';
+                return 'Locação';
+            }
+
+            function apartamentoStatusLabel(value) {
+                if (value === 'manutencao') return 'Manutenção';
+                if (value === 'reservado') return 'Reservado';
+                return 'Disponível';
+            }
+
+            function buildApartamentoNumero() {
+                if (!apartamentoAndarSelect.value || !apartamentoFinalSelect.value) return '';
+                return `${apartamentoAndarSelect.value}${apartamentoFinalSelect.value}`;
+            }
+
+            function parseApartamentoNumero(value) {
+                const digits = String(value || '').replace(/\D/g, '');
+                if (digits.length >= 3) {
+                    apartamentoAndarSelect.value = digits.charAt(0);
+                    apartamentoFinalSelect.value = digits.slice(1, 3);
+                }
+            }
+
+            function updateApartamentoPreview() {
+                apartamentoNumeroInput.value = buildApartamentoNumero();
+                const unidade = apartamentoNumeroInput.value && apartamentoBlocoSelect.value
+                    ? `Bloco ${apartamentoBlocoSelect.value} - Apto ${apartamentoNumeroInput.value}`
+                    : 'Selecione a unidade';
+                const isManutencao = apartamentoFinalidadeSelect.value === 'manutencao';
+
+                apartamentoPreviewFinalidade.textContent = apartamentoFinalidadeLabel(apartamentoFinalidadeSelect.value);
+                apartamentoPreviewUnidade.textContent = unidade;
+                apartamentoPreviewPerfil.textContent = apartamentoPerfilSelect.value || 'Perfil ainda não informado';
+                apartamentoPreviewStatus.textContent = apartamentoStatusLabel(apartamentoStatusSelect.value);
+                apartamentoPreviewContato.textContent = apartamentoContatoInput.value.trim() || '-';
+                apartamentoPreviewDetalhe.textContent = isManutencao
+                    ? (apartamentoServicoInput.value.trim() || 'Serviço não informado')
+                    : (apartamentoFaixaInput.value.trim() || 'Valor não informado');
+            }
+
             function syncReservaFields() {
                 const tipo = reservaTipoSelect.value || 'evento';
                 document.getElementById('reserva-campos-evento').classList.toggle('hidden', tipo !== 'evento');
@@ -362,10 +464,14 @@
 
             function syncApartamentoFields() {
                 const finalidade = apartamentoFinalidadeSelect.value || 'alugar';
-                const isManutenção = finalidade === 'manutencao';
-                document.getElementById('apartamento-campos-comerciais').classList.toggle('hidden', isManutenção);
-                document.getElementById('apartamento-campos-manutencao').classList.toggle('hidden', !isManutenção);
-                if (isManutenção) document.getElementById('apartamento-status').value = 'manutencao';
+                const isManutencao = finalidade === 'manutencao';
+                document.getElementById('apartamento-campos-comerciais').classList.toggle('hidden', isManutencao);
+                document.getElementById('apartamento-campos-manutencao').classList.toggle('hidden', !isManutencao);
+                if (isManutencao) apartamentoStatusSelect.value = 'manutencao';
+                if (!isManutencao && apartamentoStatusSelect.value === 'manutencao') {
+                    apartamentoStatusSelect.value = 'disponivel';
+                }
+                updateApartamentoPreview();
             }
 
             function renderReservas() {
@@ -420,6 +526,7 @@
                 apartamentoFeedback.textContent = '';
                 apartamentoFeedback.className = 'admin-inline-feedback';
                 syncApartamentoFields();
+                updateApartamentoPreview();
             }
 
             function openApartamentoDialog(item) {
@@ -442,6 +549,7 @@
 
             function fillApartamentoForm(item) {
                 document.getElementById('apartamento-bloco').value = item.bloco;
+                parseApartamentoNumero(item.apartamento);
                 document.getElementById('apartamento-numero').value = item.apartamento;
                 document.getElementById('apartamento-perfil').value = item.perfil;
                 document.getElementById('apartamento-contato').value = item.contato;
@@ -457,6 +565,7 @@
                 apartamentoFeedback.textContent = 'Modo de edição habilitado para a unidade selecionada.';
                 apartamentoFeedback.className = 'admin-inline-feedback is-success';
                 syncApartamentoFields();
+                updateApartamentoPreview();
             }
 
             function renderApartamentos() {
@@ -595,6 +704,7 @@
 
             apartamentoForm.addEventListener('submit', function (event) {
                 event.preventDefault();
+                updateApartamentoPreview();
                 const apartamentos = readData(apartamentosStorageKey, apartamentosSeed);
                 const payload = {
                     bloco: document.getElementById('apartamento-bloco').value.trim(),
@@ -648,6 +758,20 @@
             reservaDataInput.addEventListener('input', validateReservaDate);
             reservaTipoSelect.addEventListener('change', syncReservaFields);
             apartamentoFinalidadeSelect.addEventListener('change', syncApartamentoFields);
+            [
+                apartamentoBlocoSelect,
+                apartamentoAndarSelect,
+                apartamentoFinalSelect,
+                apartamentoPerfilSelect,
+                apartamentoContatoInput,
+                apartamentoStatusSelect,
+                apartamentoFaixaInput,
+                apartamentoServicoInput
+            ].forEach((field) => {
+                field.addEventListener('input', updateApartamentoPreview);
+                field.addEventListener('change', updateApartamentoPreview);
+            });
+            apartamentoResetButton.addEventListener('click', resetApartamentoForm);
             reservaResetButton.addEventListener('click', function () {
                 editingId = null;
                 window.setTimeout(syncReservaFields, 0);
