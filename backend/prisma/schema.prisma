@@ -167,6 +167,11 @@ model Condominio {
   razaoSocial             String?  @map("razao_social")
   cnpj                    String?
   endereco                String?
+  rua                     String?
+  bairro                  String?
+  numero                  String?
+  cidade                  String?
+  cep                     String?
   telefonePredio          String?  @map("telefone_predio")
   quantidadeColaboradores Int?     @map("quantidade_colaboradores")
   sindico                 String?

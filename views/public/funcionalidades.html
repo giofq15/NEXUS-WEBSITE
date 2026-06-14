@@ -1,65 +1,199 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funcionalidades do Nexus</title>
+    <title>Funcionalidades | Nexus</title>
     <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <header>
-        <h1>Funcionalidades do Projeto Nexus</h1>
-        <p>Conheça os módulos que tornam o Nexus um ERP inteligente.</p>
+<body class="features-page">
+    <section class="features-hero">
+        <div class="features-hero-overlay"></div>
 
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="funcionalidades.html">Funcionalidades</a>
-            <a href="contato.html">Contato</a>
-        </nav>
-    </header>
+        <header class="contact-header">
+            <a href="index.html" class="logo home-brand" aria-label="Nexus">
+                <img src="../../public/img/nexus-logo.svg" alt="Logo Nexus" class="home-brand-mark">
+                <span>NEXUS</span>
+            </a>
 
-    <section id="monitoramento">
-        <h2>Monitoramento de Consumo Sustentável</h2>
-        <p>O módulo de monitoramento é a espinha dorsal da sustentabilidade no Nexus. Ele utiliza sensores IoT para
-            coletar dados em tempo real sobre o consumo de água e energia de cada unidade. Essa informação é processada
-            e armazenada em um banco de dados **MongoDB**.</p>
-        <p>Quando o consumo excede um limite pré-definido, o sistema **dispara alertas automáticos** para os moradores e
-            síndicos, promovendo a conscientização e a economia de recursos.</p>
-    </section>
+            <nav class="contact-nav" aria-label="Navegacao principal">
+                <a href="index.html">Início</a>
+                <a href="funcionalidades.html" class="is-active">Funcionalidades</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+        </header>
 
-    <section id="ocorrencias">
-        <h2>Gerenciamento de Ocorrências</h2>
-        <p>Este módulo simplifica a comunicação entre moradores e a administração do condomínio. Um morador pode
-            registrar uma ocorrência (como um problema no elevador ou vazamento de água) que é enviada diretamente para
-            o síndico.</p>
-        <p>Cada ocorrência tem um status que evolui conforme o problema é tratado. Inicialmente, o status é
-            **"Pendente"**. Após ser analisada pelo síndico, a ocorrência pode se tornar um comunicado ou ser resolvida.
-        </p>
-    </section>
-
-    <section id="seguranca">
-        <h2>Segurança com Integração IoT</h2>
-        <p>O Nexus eleva a segurança do condomínio ao integrar o controle de acesso com dispositivos IoT. O sistema
-            permite o cadastro e a gestão de visitantes de forma segura, usando um banco de dados **PostgreSQL** para
-            garantir a integridade dos dados, conforme exigido pela LGPD.</p>
-        <p>A autenticação é reforçada por tecnologias como **JWT (JSON Web Tokens)**, que garantem que apenas usuários
-            autorizados tenham acesso às informações. Essa arquitetura de segurança é projetada para ser robusta e
-            escalável, protegendo tanto os dados quanto os moradores.</p>
-    </section>
-
-    <section id="grafico-consumo">
-        <h2>Gráfico de Consumo (Água e Energia)</h2>
-        <p>Acompanhe o consumo diário, semanal e mensal de recursos através de gráficos intuitivos.</p>
-        <div class="grafico-container">
-            <p><strong>Espaço para o Gráfico de Consumo.</strong></p>
-            <p>Em um sistema real, aqui seria exibido um gráfico interativo com dados em tempo real, gerado a partir do
-                banco de dados MongoDB do seu projeto.</p>
+        <div class="features-hero-content">
+            <span class="features-eyebrow">Gestão condominial inteligente</span>
+            <h1>Recursos completos para administrar condomínios com mais controle, economia e transparência.</h1>
+            <p>O Nexus conecta administração, moradores, colaboradores, financeiro, ocorrências e comunicação em uma experiencia unica e organizada.</p>
         </div>
     </section>
 
-    <footer>
+    <main class="features-shell">
+        <section class="features-summary-grid" aria-label="Resumo das funcionalidades">
+            <article class="features-summary-card">
+                <i class="fas fa-building"></i>
+                <strong>Gestão centralizada</strong>
+                <span>Cadastros, configurações do condomínio, moradores e equipes em um único ambiente.</span>
+            </article>
+
+            <article class="features-summary-card">
+                <i class="fas fa-bolt"></i>
+                <strong>Operação em tempo real</strong>
+                <span>Acompanhamento de ocorrências, avisos, plantão, reservas e indicadores operacionais.</span>
+            </article>
+
+            <article class="features-summary-card">
+                <i class="fas fa-chart-line"></i>
+                <strong>Decisões com dados</strong>
+                <span>Métricas financeiras, ocorrências e indicadores operacionais para identificar gargalos rapidamente.</span>
+            </article>
+        </section>
+
+        <section class="features-section">
+            <div class="features-section-heading">
+                <span class="info-badge">Módulos principais</span>
+                <h2>O que o sistema pode fazer</h2>
+                <p>As funcionalidades foram pensadas para cobrir a rotina real de um condomínio: comunicação, controle financeiro, atendimento, segurança e organização operacional.</p>
+            </div>
+
+            <div class="features-module-grid">
+                <article class="features-module-card">
+                    <div class="features-module-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Moradores e unidades</h3>
+                    <p>Organize moradores, blocos, apartamentos, contatos e status cadastrais com uma visao clara da base do condomínio.</p>
+                    <ul>
+                        <li>Cadastro e edição de moradores</li>
+                        <li>Associação por bloco e unidade</li>
+                        <li>Histórico básico para acompanhamento</li>
+                    </ul>
+                </article>
+
+                <article class="features-module-card">
+                    <div class="features-module-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Ocorrências e atendimento</h3>
+                    <p>Receba chamados, acompanhe o andamento e mantenha a administração alinhada sobre problemas do dia à dia.</p>
+                    <ul>
+                        <li>Abertura de ocorrências pelos usuários</li>
+                        <li>Status de acompanhamento</li>
+                        <li>Detalhamento para equipe responsável</li>
+                    </ul>
+                </article>
+
+                <article class="features-module-card">
+                    <div class="features-module-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Avisos e comunicados</h3>
+                    <p>Centralize mensagens importantes para moradores e colaboradores, reduzindo ruidos na comunicação.</p>
+                    <ul>
+                        <li>Publicação de avisos</li>
+                        <li>Prioridades por tipo de mensagem</li>
+                        <li>Consulta rápida pelos moradores</li>
+                    </ul>
+                </article>
+
+                <article class="features-module-card">
+                    <div class="features-module-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Reservas e áreas comuns</h3>
+                    <p>Facilite a rotina de reserva de espacos compartilhados e ajude a administração a evitar conflitos de agenda.</p>
+                    <ul>
+                        <li>Solicitações de reserva</li>
+                        <li>Controle de datas e disponibilidade</li>
+                        <li>Visão organizada para aprovação</li>
+                    </ul>
+                </article>
+
+                <article class="features-module-card">
+                    <div class="features-module-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Financeiro e inadimplência</h3>
+                    <p>Acompanhe cobranças, pagamentos, rateios e informações financeiras essenciais para a gestão condominial.</p>
+                    <ul>
+                        <li>Resumo financeiro por período</li>
+                        <li>Controle de pagamentos</li>
+                        <li>Indicadores de inadimplência</li>
+                    </ul>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="features-workflow">
+            <div class="features-section-heading">
+                <span class="info-badge">Fluxo de uso</span>
+                <h2>Da solicitação a decisão</h2>
+            </div>
+
+            <div class="features-workflow-grid">
+                <article>
+                    <span>01</span>
+                    <h3>Registro</h3>
+                    <p>Moradores, administradores e colaboradores registram dados, chamados, reservas e movimentações.</p>
+                </article>
+
+                <article>
+                    <span>02</span>
+                    <h3>Acompanhamento</h3>
+                    <p>A equipe acompanha status, prioridades, comunicados, indicadores e pendências em painéis objetivos.</p>
+                </article>
+
+                <article>
+                    <span>03</span>
+                    <h3>Ação</h3>
+                    <p>O condomínio toma decisões com base em informações organizadas, reduzindo retrabalho e perda de contexto.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="features-profile-section">
+            <div class="features-profile-content">
+                <span class="info-badge">Perfis do sistema</span>
+                <h2>Cada usuario enxerga o que precisa</h2>
+                <p>O Nexus separa a experiencia por perfil para deixar a rotina mais simples: administradores cuidam da gestão, colaboradores acompanham operações e moradores acessam serviços do condomínio.</p>
+            </div>
+
+            <div class="features-profile-list">
+                <div>
+                    <i class="fas fa-user-shield"></i>
+                    <strong>Administrador</strong>
+                    <span>Visão completa de condomínio, moradores, financeiro, configurações e indicadores.</span>
+                </div>
+                <div>
+                    <i class="fas fa-user-cog"></i>
+                    <strong>Colaborador</strong>
+                    <span>Acompanhamento de ocorrências, plantão, reservas, avisos e operação diária.</span>
+                </div>
+                <div>
+                    <i class="fas fa-user"></i>
+                    <strong>Morador</strong>
+                    <span>Acesso a comunicados, solicitações, reservas e informações relevantes do condomínio.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-cta">
+            <div>
+                <span class="info-badge">Pronto para apresentar</span>
+                <h2>Veja como o Nexus se adapta a rotina do seu condomínio.</h2>
+            </div>
+            <a href="contato.html" class="primary-button-lg">Pedir demonstração</a>
+        </section>
+    </main>
+
+    <footer class="main-footer">
         <p>&copy; 2025 Projeto Nexus. Todos os direitos reservados.</p>
     </footer>
 

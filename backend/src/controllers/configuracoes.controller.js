@@ -18,7 +18,20 @@ async function getConfig(req, res) {
 
 async function updateConfig(req, res) {
   try {
-    const { nome, razaoSocial, cnpj, endereco, telefonePredio, quantidadeColaboradores, sindico } = req.body;
+    const {
+      nome,
+      razaoSocial,
+      cnpj,
+      endereco,
+      rua,
+      bairro,
+      numero,
+      cidade,
+      cep,
+      telefonePredio,
+      quantidadeColaboradores,
+      sindico,
+    } = req.body;
 
     const config = await prisma.condominio.upsert({
       where: { id: SINGLETON_ID },
@@ -27,6 +40,11 @@ async function updateConfig(req, res) {
         razaoSocial: razaoSocial || null,
         cnpj: cnpj || null,
         endereco: endereco || null,
+        rua: rua || null,
+        bairro: bairro || null,
+        numero: numero || null,
+        cidade: cidade || null,
+        cep: cep || null,
         telefonePredio: telefonePredio || null,
         quantidadeColaboradores: quantidadeColaboradores ? Number(quantidadeColaboradores) : null,
         sindico: sindico || null,
@@ -37,6 +55,11 @@ async function updateConfig(req, res) {
         razaoSocial: razaoSocial || null,
         cnpj: cnpj || null,
         endereco: endereco || null,
+        rua: rua || null,
+        bairro: bairro || null,
+        numero: numero || null,
+        cidade: cidade || null,
+        cep: cep || null,
         telefonePredio: telefonePredio || null,
         quantidadeColaboradores: quantidadeColaboradores ? Number(quantidadeColaboradores) : null,
         sindico: sindico || null,

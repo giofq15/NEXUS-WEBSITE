@@ -204,7 +204,6 @@
                     <h3>Atalhos úteis</h3>
                     <div class="admin-quick-actions">
                         <a href="../financeiro/financeiro.html" class="action-link"><i class="fas fa-chart-line"></i> Revisar financeiro</a>
-                        <a href="../financeiro/financeiro.html#inadimplencia" class="action-link"><i class="fas fa-file-invoice-dollar"></i> Cobranças em atraso</a>
                         <a href="../colaborador/reservas.html" class="action-link"><i class="fas fa-calendar-days"></i> Ver reservas</a>
                     </div>
                 </section>
@@ -324,7 +323,7 @@
                         .map((item) => `
                             <li>
                                 <strong>${item.hora || '--:--'}</strong>
-                                <span>${item.titulo}${item.local ? ` • ${item.local}` : ''}</span>
+                                <span>${item.titulo}${item.local ? ` - ${item.local}` : ''}</span>
                             </li>
                         `).join('');
                 } else {
@@ -371,7 +370,7 @@
                     listRoot.innerHTML = ocorrencias.slice(0, 3).map((item) => `
                         <article class="admin-syndic-item">
                             <strong>${item.tipo}</strong>
-                            <p>${item.local} • ${item.descricao}</p>
+                            <p>${item.local} - ${item.descricao}</p>
                             <span>${String(item.status || '').replaceAll('_', ' ')}</span>
                             <a href="../ocorrencias/detalhes-ocorrencia.html?id=${item.id}" class="action-link">Ver detalhes</a>
                         </article>
@@ -391,7 +390,7 @@
                     if (turnos.length) {
                         listRoot.innerHTML = turnos.slice(0, 4).map((item) => `
                             <article class="admin-syndic-item">
-                                <strong>${item.turno} • ${item.colaborador?.nome || 'Portaria'}</strong>
+                                <strong>${item.turno} - ${item.colaborador?.nome || 'Portaria'}</strong>
                                 <p>${item.resumo}</p>
                                 <p><strong>Pendencias:</strong> ${item.pendencias || 'Nenhuma pendência registrada.'}</p>
                                 <p><strong>Orientacoes:</strong> ${item.orientacoes || 'Sem orientações adicionais.'}</p>
